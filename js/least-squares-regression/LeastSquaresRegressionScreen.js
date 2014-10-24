@@ -28,7 +28,7 @@ define( function( require ) {
     Screen.call( this, leastSquaresRegressionSimString, icon,
       function() { return new LeastSquaresRegressionModel(); },
       function( model ) { return new LeastSquaresRegressionScreenView( model ); },
-      { backgroundColor: '#D9FCE9' }
+      { backgroundColor: '#ECFFF5' }
     );
   }
 
