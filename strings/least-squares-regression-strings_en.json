@@ -1,3 +1,8 @@
 {
-  "least-squares-regression.name": "Least Squares Regression"
+  "least-squares-regression.name": "Least Squares Regression",
+  "bestFitLine": "Best-Fit Line",
+  "myLine": "My Line",
+  "residuals": "Residuals",
+  "squaredResiduals": "Squared Residuals"
+
 }
