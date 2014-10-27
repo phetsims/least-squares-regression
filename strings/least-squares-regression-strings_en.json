@@ -3,6 +3,7 @@
   "bestFitLine": "Best-Fit Line",
   "myLine": "My Line",
   "residuals": "Residuals",
-  "squaredResiduals": "Squared Residuals"
-
+  "squaredResiduals": "Squared Residuals",
+  "a": "a",
+  "b": "b"
 }
