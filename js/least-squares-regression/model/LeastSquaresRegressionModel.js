@@ -40,7 +40,9 @@ define( function( require ) {
       showSquareResidualsOfMyLine: false,
       showBestFitLine: false,
       showResidualsOfBestFitLine: false,
-      showSquareResidualsOfBestFitLine: false
+      showSquareResidualsOfBestFitLine: false,
+      slope: 0,
+      intercept: 0
     } );
 
 
