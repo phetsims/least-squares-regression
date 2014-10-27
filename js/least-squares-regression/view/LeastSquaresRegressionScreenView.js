@@ -20,6 +20,7 @@ define( function( require ) {
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  var MyLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineBoxNode' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -59,6 +60,10 @@ define( function( require ) {
     var bestFitLineBoxNode = new BestFitLineBoxNode( model );
     this.addChild( bestFitLineBoxNode );
 
+
+    var myLineBoxNode = new MyLineBoxNode( model );
+    this.addChild( myLineBoxNode );
+
     var graphNode = new GraphNode( model.graph, modelViewTransform );
     this.addChild( graphNode );
 
@@ -75,7 +80,6 @@ define( function( require ) {
     this.addChild( compositeNode );
 
 
-
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
       listener: function() {
@@ -88,6 +92,11 @@ define( function( require ) {
 
     // Add the movable shapes issue.
     this.addChild( movableDataPointsLayer );
+    {
+      myLineBoxNode.right = this.layoutBounds.maxX - 10;
+      myLineBoxNode.top = 10;
+    }
+
   }
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView, {
