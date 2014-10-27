@@ -14,7 +14,6 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var FillHighlightListener = require( 'SCENERY_PHET/input/FillHighlightListener' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -22,17 +21,17 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  // var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
 
   // strings
-  var pattern_0value_1units = "{1}{0}";
+//  var pattern_0value_1units = "{1}{0}";
 
   // constants
 
   var RANGE_FONT = new PhetFont( 20 );
-  var VALUE_FONT = new PhetFont( 20 );
+  // var VALUE_FONT = new PhetFont( 20 );
   var THUMB_SIZE = new Dimension2( 38, 15 );
   var THUMB_NORMAL_COLOR = new Color( 89, 156, 212 );
   var THUMB_HIGHLIGHT_COLOR = THUMB_NORMAL_COLOR.brighterColor();
@@ -55,6 +54,7 @@ define( function( require ) {
     var handleEvent = function( event ) {
       var y = thisNode.globalToLocalPoint( event.pointer.point ).y;
       var value = Util.linear( 0, size.height, range.max, range.min, y );
+      property.value = Util.clamp( value, range.min, range.max );
     };
     thisNode.addInputListener( new SimpleDragHandler(
       {

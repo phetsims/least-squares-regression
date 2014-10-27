@@ -10,13 +10,13 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
+  // var AquaRadioButton = require( 'SUN/AquaRadioButton' );
   var CheckBox = require( 'SUN/CheckBox' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
+//  var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+//  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -28,10 +28,7 @@ define( function( require ) {
 
   // constants
   var FONT = new PhetFont( 11 );
-  var RADIO_BUTTON_OPTIONS = {
-    radius: 9,
-    xSpacing: 3
-  };
+
 
   /**
    * {Model} model of the main simulation

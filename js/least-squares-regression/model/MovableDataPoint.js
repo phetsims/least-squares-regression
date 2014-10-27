@@ -12,10 +12,10 @@ define( function( require ) {
 
   // modules
   var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
-  var Color = require( 'SCENERY/util/Color' );
+//  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Shape = require( 'KITE/Shape' );
+//  var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants

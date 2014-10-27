@@ -10,8 +10,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
-  var Dimension2 = require( 'DOT/Dimension2' );
+//  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
+  // var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -23,8 +23,8 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var symbolXString = 'X';
-  var symbolYString = 'Y';
+//  var symbolXString = 'X';
+//  var symbolYString = 'Y';
 //  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   //----------------------------------------------------------------------------------------
@@ -39,12 +39,12 @@ define( function( require ) {
   var MAJOR_GRID_LINE_COLOR = 'rgb( 192, 192, 192 )';
 
   // axes
-  var AXIS_ARROW_SIZE = new Dimension2( 10, 10 );
-  var AXIS_THICKNESS = 1;
+  // var AXIS_ARROW_SIZE = new Dimension2( 10, 10 );
+//  var AXIS_THICKNESS = 1;
   var AXIS_COLOR = 'black';
   var AXIS_EXTENT = 1.0; // how far the arrow extends past the min/max ticks, in model coordinates
-  var AXIS_LABEL_FONT = new PhetFont( 16 );
-  var AXIS_LABEL_SPACING = 2; // space between end of axis and label
+  // var AXIS_LABEL_FONT = new PhetFont( 16 );
+  // var AXIS_LABEL_SPACING = 2; // space between end of axis and label
 
   // ticks
   var MAJOR_TICK_SPACING = 50; // model units
@@ -139,23 +139,14 @@ define( function( require ) {
 
     Node.call( this );
 
-    // horizontal line with arrows at both ends
+    // horizontal line
     var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( 0 ) );
     var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( 0 ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
-      doubleHead: true,
-      headHeight: AXIS_ARROW_SIZE.height,
-      headWidth: AXIS_ARROW_SIZE.width,
-      tailWidth: AXIS_THICKNESS,
       fill: AXIS_COLOR,
       stroke: 'black' } );
     this.addChild( lineNode );
 
-    // label at positive (right) end
-    var labelNode = new Text( symbolXString, { font: AXIS_LABEL_FONT } );
-    this.addChild( labelNode );
-    labelNode.left = lineNode.right + AXIS_LABEL_SPACING;
-    labelNode.centerY = lineNode.centerY;
 
     // ticks
     var numberOfTicks = graph.getWidth() + 1;
@@ -191,23 +182,13 @@ define( function( require ) {
 
     Node.call( this );
 
-    // vertical line with arrows at both ends
+    // vertical line
     var tailLocation = new Vector2( modelViewTransform.modelToViewX( 0 ), modelViewTransform.modelToViewY( graph.yRange.min - AXIS_EXTENT ) );
     var tipLocation = new Vector2( modelViewTransform.modelToViewX( 0 ), modelViewTransform.modelToViewY( graph.yRange.max + AXIS_EXTENT ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
-      doubleHead: false,
-      headHeight: AXIS_ARROW_SIZE.height,
-      headWidth: AXIS_ARROW_SIZE.width,
-      tailWidth: AXIS_THICKNESS,
       fill: AXIS_COLOR,
       stroke: 'black' } );
     this.addChild( lineNode );
-
-    // label at positive (top) end
-    var labelNode = new Text( symbolYString, { font: AXIS_LABEL_FONT } );
-    this.addChild( labelNode );
-    labelNode.centerX = lineNode.centerX;
-    labelNode.bottom = lineNode.top - AXIS_LABEL_SPACING;
 
     // ticks
     var numberOfTicks = graph.getHeight() + 1;

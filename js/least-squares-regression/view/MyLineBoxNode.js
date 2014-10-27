@@ -9,16 +9,13 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AquaRadioButton = require( 'SUN/AquaRadioButton' );
-  var ComboBox = require( 'SUN/ComboBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Panel = require( 'SUN/Panel' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Range = require( 'DOT/Range' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var VerticalSlider = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/VerticalSlider' );
@@ -32,11 +29,8 @@ define( function( require ) {
 
 
   // constants
-  var FONT = new PhetFont( 11 );
-  var RADIO_BUTTON_OPTIONS = {
-    radius: 9,
-    xSpacing: 3
-  };
+  // var FONT = new PhetFont( 11 );
+
 
   /**
    * {Model} model of the main simulation
@@ -53,7 +47,6 @@ define( function( require ) {
           new VerticalSlider( aString, new Dimension2( 10, 100 ), model.interceptProperty, new Range( 0, 20 ) ),
           new VerticalSlider( bString, new Dimension2( 10, 100 ), model.slopeProperty, new Range( 0, 20 ) )]} ),
 
-
         new CheckBox( new Text( residualsString ), model.showResidualsOfMyLineProperty ),
         new CheckBox( new Text( squaredResidualsString ), model.showSquareResidualsOfMyLineProperty )
       ]} ),
@@ -67,9 +60,8 @@ define( function( require ) {
         contentXMargin: 8,
         contentYMargin: 5
       }, options )
-    )
+    );
   }
-
 
   return inherit( Panel, MyLineBoxNode );
 } );

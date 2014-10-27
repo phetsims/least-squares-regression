@@ -9,17 +9,16 @@ define( function( require ) {
 
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
-  // var CustomDataFactory  = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/CustomDataFactory')
-  var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
+  // var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
-  var LinearFunction = require( 'DOT/LinearFunction' );
+  // var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Property = require( 'AXON/Property' );
+  // var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
-  var Util = require( 'DOT/Util' );
+  // var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
 // constants
@@ -35,7 +34,7 @@ define( function( require ) {
 
     PropertySet.call( thisModel, {
       showBucket: true,
-      showMyLine: false,
+      showMyLine: true,
       showResidualsOfMyLine: false,
       showSquareResidualsOfMyLine: false,
       showBestFitLine: false,
@@ -48,22 +47,16 @@ define( function( require ) {
 
     // It is important to set up the charges first (before the sensors)
     // charge particles that make up the model
-    this.dataPointSet = new ObservableArray();
+//    this.dataPointSet = new ObservableArray();
 
     this.movableDataPoints = new ObservableArray(); // @public
 
-    for ( var i = 0; i < 10; i++ ) {
-      var position = new Vector2( 400 * Math.random(), 600 * Math.random() );
-      this.dataPointSet.push( new DataPoint( position ) );
-    }
+//    for ( var i = 0; i < 20; i++ ) {
+//      var position = new Vector2( 400 * Math.random(), 600 * Math.random() );
+//      this.dataPointSet.push( new DataPoint( position ) );
+//    }
 
     this.graph = new Graph( new Range( 0, 100 ), new Range( 0, 100 ) );
-//
-//    thisModel.customData = [
-//      new CustomDataFactory( 'test1' ),
-//      new CustomDataFactory( 'test2' )
-//  ];
-
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -75,6 +68,12 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, LeastSquaresRegressionModel, {
+
+    reset: function() {
+      PropertySet.prototype.reset.call( this );
+//      this.dataPointPlacementGraphs.forEach( function( board ) { board.releaseAllShapes( 'jumpHome' ); } );
+      this.movableDataPoints.clear();
+    },
 
     step: function( dt ) {
       this.movableDataPoints.forEach( function( movableDataPoint ) { movableDataPoint.step( dt ); } );
@@ -189,12 +188,14 @@ define( function( require ) {
       };
       return fitParameters;
     },
-    reset: function() {
-      PropertySet.prototype.reset.call( this );
-//      this.dataPointPlacementGraphs.forEach( function( board ) { board.releaseAllShapes( 'jumpHome' ); } );
-      this.movableDataPoints.clear();
-    }
 
+
+    getPearsonCoefficientCorrelation: function( positionArray ) {
+      var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
+      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
+      var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+      return pearsonCoefficientCorrelation;
+    }
   } );
 } );
 

@@ -9,35 +9,35 @@ define( function( require ) {
 
   // modules
 
-  var AccordionBox = require( 'SUN/AccordionBox' );
+  // var AccordionBox = require( 'SUN/AccordionBox' );
   var BestFitLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineBoxNode' );
-  var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
-  var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  var ComboBox = require( 'SUN/ComboBox' );
+  //var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
+  // var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
+  // var ComboBox = require( 'SUN/ComboBox' );
   var CompositeNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/CompositeNode' );
-  var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
-  var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
+  //var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
+  // var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineBoxNode' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Path = require( 'SCENERY/nodes/Path' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Range = require( 'DOT/Range' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  // var Path = require( 'SCENERY/nodes/Path' );
+  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  // var Range = require( 'DOT/Range' );
+  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
-  var Shape = require( 'KITE/Shape' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  // var Shape = require( 'KITE/Shape' );
+  // var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  // var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
   //constants
 
-  var LABEL_COLOR = 'brown';
-  var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
+  // var LABEL_COLOR = 'brown';
+//  var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+//  var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
 
 
   /**
@@ -53,7 +53,7 @@ define( function( require ) {
     var modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       Vector2.ZERO,
       new Vector2( thisView.layoutBounds.width / 4, 3 * thisView.layoutBounds.height / 4 ),
-      1 );
+      3 );
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
 
