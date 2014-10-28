@@ -32,7 +32,7 @@ define( function( require ) {
 
   var RANGE_FONT = new PhetFont( 20 );
   // var VALUE_FONT = new PhetFont( 20 );
-  var THUMB_SIZE = new Dimension2( 38, 15 );
+  var THUMB_SIZE = new Dimension2( 30, 15 );
   var THUMB_NORMAL_COLOR = new Color( 89, 156, 212 );
   var THUMB_HIGHLIGHT_COLOR = THUMB_NORMAL_COLOR.brighterColor();
   var THUMB_STROKE_COLOR = Color.BLACK;
@@ -150,7 +150,7 @@ define( function( require ) {
     // nodes
     var minNode = new Text( minLabel, RANGE_FONT );
     var trackNode = new Track( trackSize, property, range );
-    var xMargin = 7, yMargin = 7, cornerRadius = 10;
+    var xMargin = 3, yMargin = 3, cornerRadius = 3;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
       { fill: new Color( 200, 200, 200, 140 ) } );
     var thumbNode = new Thumb( THUMB_SIZE, property, range, new Range( 0, trackSize.height ) );

@@ -41,7 +41,7 @@ define( function( require ) {
         new Panel( new Text( 'Equation' ), { fill: 'white', stroke: 'black', cornerRadius: 2 } ),
         new CheckBox( new Text( residualsString ), model.showResidualsOfBestFitLineProperty ),
         new CheckBox( new Text( squaredResidualsString ), model.showSquareResidualsOfBestFitLineProperty )
-      ]} ),
+      ], align: 'left'} ),
 
       _.extend( {
         cornerRadius: 10,
