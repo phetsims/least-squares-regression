@@ -13,14 +13,11 @@ define( function( require ) {
   // modules
   // var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  // var Color = require( 'SCENERY/util/Color' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
-  // var Grid = require( 'LEAST_SQUARE_REGRESSION/least-squares-regression/view/Grid' );
+ // var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
-  // var Path = require( 'SCENERY/nodes/Path' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-//  var Vector2 = require( 'DOT/Vector2' );
+
 
   // constants
   var BORDER_LINE_WIDTH = 1;
@@ -34,19 +31,15 @@ define( function( require ) {
     var self = this;
 
     // Set up the mouse and touch areas for this node so that this can still be grabbed when invisible.
-
-//TODO fixed this
-    //   this.touchArea = movableDataPoint.shape;
-    //   this.mouseArea = movableDataPoint.shape;
+    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
+    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
 
     // Set up a root node whose visibility and opacity will be manipulated below.
     var rootNode = new Node();
     this.addChild( rootNode );
 
-
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Circle( 10, {fill: 'orange', stroke: 'black', lineWidth: BORDER_LINE_WIDTH} );
-
     rootNode.addChild( representation );
 
     // Move this node as the model representation moves
@@ -54,27 +47,10 @@ define( function( require ) {
       self.leftTop = position;
     } );
 
-    // Because a composite dataPoint is often used to depict the overall dataPoint when a dataPoint is on the placement board, this
-    // element may become invisible unless it is user controlled, animating, or fading.
-    var visibleProperty = new DerivedProperty( [
-        movableDataPoint.userControlledProperty,
-        movableDataPoint.animatingProperty,
-        movableDataPoint.invisibleWhenStillProperty ],
-      function( userControlled, animating, invisibleWhenStill ) {
-        return ( userControlled || animating || !invisibleWhenStill );
-      } );
-
-
-    visibleProperty.link( function( visible ) {
-      rootNode.visible = visible;
-    } );
-
-
     movableDataPoint.animatingProperty.link( function( animating ) {
       // To avoid certain complications, make it so that users can't grab this when it is moving.
       self.pickable = !animating;
     } );
-
 
     // Add the listener that will allow the user to drag the dataPoint around.
     this.addInputListener( new SimpleDragHandler( {

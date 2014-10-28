@@ -9,15 +9,14 @@ define( function( require ) {
 
   // modules
 
-  // var AccordionBox = require( 'SUN/AccordionBox' );
+
   var BestFitLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineBoxNode' );
-  //var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
-  // var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  // var ComboBox = require( 'SUN/ComboBox' );
   var CompositeNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/CompositeNode' );
   //var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
   // var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
-  var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
+
+  var DataPointPlacementGraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointPlacementGraphNode' );
+//  var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineBoxNode' );
@@ -64,9 +63,12 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
-    var graphNode = new GraphNode( model.graph, modelViewTransform );
-    this.addChild( graphNode );
+    //  var graphNode = new GraphNode( model.graph, modelViewTransform );
+    //  this.addChild( graphNode );
 
+    var dataPointPlacementGraphNode = new DataPointPlacementGraphNode( model.dataPointPlacementGraph );
+
+    this.addChild( dataPointPlacementGraphNode );
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
     this.addChild( backLayer );

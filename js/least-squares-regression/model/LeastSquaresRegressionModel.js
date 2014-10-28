@@ -9,8 +9,10 @@ define( function( require ) {
 
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
+  var DataPointPlacementGraph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPointPlacementGraph' );
   // var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var Dimension2 = require( 'DOT/Dimension2' );
+
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   // var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -18,6 +20,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   // var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
+
   // var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -58,6 +61,8 @@ define( function( require ) {
 
     this.graph = new Graph( new Range( 0, 100 ), new Range( 0, 100 ) );
 
+    this.dataPointPlacementGraph = new DataPointPlacementGraph( new Dimension2( 300, 300 ), new Vector2( 300, 100 ) );
+
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
       baseColor: '#000080',
@@ -76,14 +81,15 @@ define( function( require ) {
     },
 
     step: function( dt ) {
-      this.movableDataPoints.forEach( function( movableDataPoint ) { movableDataPoint.step( dt ); } );
+
+      this.movableDataPoints.forEach( function( movableDataPoint ) {
+        movableDataPoint.step( dt );
+      } );
     },
 
     placeDataPoint: function( movableDataPoint ) {
       var dataPointPlaced = false;
-//      for ( var i = 0; i < this.dataPointPlacementBoards.length && !dataPointPlaced; i++ ) {
-//        dataPointPlaced = this.dataPointPlacementBoards[i].placeDataPoint( movableDataPoint );
-//      }
+      dataPointPlaced = this.dataPointPlacementGraph.placeDataPoint( movableDataPoint );
       if ( !dataPointPlaced ) {
         movableDataPoint.returnToOrigin( true );
       }
