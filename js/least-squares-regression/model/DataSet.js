@@ -4,12 +4,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Color = require( 'SCENERY/util/Color' );
+  //var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
 
   // strings
-  var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
+//  var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
   var heightVsShoeString = require( 'string!LEAST_SQUARES_REGRESSION/choice.heightVsShoe' );
   var milesVsCostString = require( 'string!LEAST_SQUARES_REGRESSION/choice.milesVsCost' );
 

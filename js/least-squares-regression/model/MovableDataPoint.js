@@ -12,10 +12,8 @@ define( function( require ) {
 
   // modules
   var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
-//  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-//  var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -41,9 +39,6 @@ define( function( require ) {
       // Flag that indicates whether this element is animating from one location to another, should not be set externally.
       animating: false,
 
-      // A flag that indicates whether this individual data point should become invisible when it is done animating.  This
-      // is generally used in cases where it becomes part of a larger composite data point that is depicted instead.
-      invisibleWhenStill: true
     } );
 
     // Destination is used for animation, and should be set through accessor methods only.
@@ -63,6 +58,7 @@ define( function( require ) {
     step: function( dt ) {
       if ( !this.userControlled ) {
 
+
         // perform any animation
         var distanceToDestination = this.position.distance( this.destination );
         if ( distanceToDestination > dt * LeastSquaresRegressionSharedConstants.ANIMATION_VELOCITY ) {
@@ -72,11 +68,12 @@ define( function( require ) {
           this.position = this.position.plus( stepVector );
         }
         else if ( this.animating ) {
-          // Less than one time step away, so just go to the destination.
+          //  Less than one time step away, so just go to the destination.
           this.position = this.destination;
           this.animating = false;
         }
       }
+
     },
 
     /**
