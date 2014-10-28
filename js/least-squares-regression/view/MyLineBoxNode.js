@@ -34,6 +34,7 @@ define( function( require ) {
   // var FONT = new PhetFont( 11 );
 
   var pattern_0slope_1intercept = " y = {0} x + {1} ";
+
   /**
    * {Model} model of the main simulation
    * {Object} options
@@ -69,7 +70,7 @@ define( function( require ) {
 
     var interceptText;
     var slopeText;
-    var equationText;
+
     // move the slider thumb to reflect the model value
     model.interceptProperty.link( function( intercept ) {
       interceptText = Util.toFixedNumber( intercept, 1 );
