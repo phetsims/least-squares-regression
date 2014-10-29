@@ -1,4 +1,4 @@
-//  Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  *
@@ -10,21 +10,17 @@ define( function( require ) {
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
   var DataPointPlacementGraph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPointPlacementGraph' );
-  // var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var Dimension2 = require( 'DOT/Dimension2' );
-
-  var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
-  // var LinearFunction = require( 'DOT/LinearFunction' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   // var Property = require( 'AXON/Property' );
-  var Range = require( 'DOT/Range' );
+  // var Range = require( 'DOT/Range' );
 
   // var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
-// constants
+  // constants
   var BUCKET_SIZE = new Dimension2( 90, 45 );
 
   /**
@@ -47,21 +43,10 @@ define( function( require ) {
       intercept: 0
     } );
 
-
-    // It is important to set up the charges first (before the sensors)
-    // charge particles that make up the model
-//    this.dataPointSet = new ObservableArray();
-
     this.movableDataPoints = new ObservableArray(); // @public
 
-//    for ( var i = 0; i < 20; i++ ) {
-//      var position = new Vector2( 400 * Math.random(), 600 * Math.random() );
-//      this.dataPointSet.push( new DataPoint( position ) );
-//    }
 
-    this.graph = new Graph( new Range( 0, 100 ), new Range( 0, 100 ) );
-
-    this.dataPointPlacementGraph = new DataPointPlacementGraph( new Dimension2( 300, 300 ), new Vector2( 300, 100 ) );
+    this.dataPointPlacementGraph = new DataPointPlacementGraph( new Dimension2( 400, 400 ), new Vector2( 200, 50 ) );
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -76,7 +61,6 @@ define( function( require ) {
 
     reset: function() {
       PropertySet.prototype.reset.call( this );
-//      this.dataPointPlacementGraphs.forEach( function( board ) { board.releaseAllShapes( 'jumpHome' ); } );
       this.movableDataPoints.clear();
     },
 
@@ -110,7 +94,7 @@ define( function( require ) {
         }
       } );
 
-      // The dataPoint will be removed from the model if and when it returns to its origination point.  This is how a dataPoint
+      // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
       // can be 'put back' into the bucket.
       movableDataPoint.on( 'returnedToOrigin', function() {
         if ( !movableDataPoint.userControlled ) {
@@ -195,7 +179,6 @@ define( function( require ) {
       return fitParameters;
     },
 
-
     getPearsonCoefficientCorrelation: function( positionArray ) {
       var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
       var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
@@ -204,8 +187,6 @@ define( function( require ) {
     }
   } );
 } );
-
-
 
 
 
