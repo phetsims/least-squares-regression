@@ -4,7 +4,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
 
@@ -17,25 +16,29 @@ define( function( require ) {
    *
    * @param name
    * @param graphTitle
-   * @param xRange
+   * @param yAxisTitle
+   * @param xAxisTitle
    * @param yRange
+   * @param xRange
    * @param dataXY
    * @constructor
    */
-  function DataSet( name, graphTitle, xRange, yRange, dataXY ) {
+  function DataSet( name, graphTitle, yAxisTitle, xAxisTitle, yRange, xRange, dataXY ) {
 
     this.name = name;
     this.graphTitle = graphTitle;
-    this.xRange = xRange;
+    this.yAxisTitle = yAxisTitle;
+    this.xAxisTitle = xAxisTitle;
     this.yRange = yRange;
+    this.xRange = xRange;
     this.dataXY = dataXY;
   }
 
   inherit( Object, DataSet );
 
-  // 'real world' immutable solutions
+  // 'real world' data
 
-  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', new Range( 0, 20 ), new Range( 0, 20 ),
+  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', 'Height', 'Shoe', new Range( 0, 20 ), new Range( 0, 20 ),
     [
       {x: 1, y: 1},
       {x: 2, y: 2},
@@ -47,7 +50,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.MILES_COST = new DataSet( milesVsCostString, 'Miles vs. Cost', new Range( 0, 20 ), new Range( 0, 20 ),
+  DataSet.MILES_COST = new DataSet( milesVsCostString, 'Miles vs. Cost', 'Miles', 'Cost', new Range( 0, 20 ), new Range( 0, 20 ),
     [
       {x: 1, y: 1},
       {x: 2, y: 2},
