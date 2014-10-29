@@ -13,10 +13,9 @@ define( function( require ) {
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   // var Color = require( 'SCENERY/util/Color' );
-  // var CompositeNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/CompositeNode' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
-  var DataPointPlacementGraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointPlacementGraphNode' );
+  var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var EraserButton = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
@@ -44,9 +43,6 @@ define( function( require ) {
     new Vector2( 13, -2 ),
     new Vector2( -2, 0 )];
 
-  // var LABEL_COLOR = 'brown';
-  // var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-  // var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
 
   /**
    * @param {LeastSquaresRegressionModel} leastSquaresRegressionModel
@@ -57,11 +53,14 @@ define( function( require ) {
     ScreenView.call( this, { renderer: 'svg' } );
     var thisView = this;
 
+
     //model View transform
-    var modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
-      Vector2.ZERO,
-      new Vector2( thisView.layoutBounds.width / 4, 3 * thisView.layoutBounds.height / 4 ),
-      3 );
+    var modelViewTransform = ModelViewTransform2.createSinglePointXYScaleMapping(
+      model.graph.graphOriginPosition,
+      model.graph.viewOriginPosition,
+      model.graph.scaleXFactor,
+      model.graph.scaleYFactor );
+
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
     var bestFitLineBoxNode = new BestFitLineBoxNode( model );
@@ -70,8 +69,8 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
-    var dataPointPlacementGraphNode = new DataPointPlacementGraphNode( model.dataPointPlacementGraph );
-    this.addChild( dataPointPlacementGraphNode );
+    var graphNode = new GraphNode( model.graph );
+    this.addChild( graphNode );
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -105,7 +104,7 @@ define( function( require ) {
       listener: function() { model.dataPoints.clear(); }
     } ) );
 
-    // Handle the comings and goings of movable dataPoints.
+    // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
       // Create and add the view representation for this dataPoint.
@@ -138,8 +137,9 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // Add the movable points issue.
+    // Add the dataPoints layer last .
     this.addChild( dataPointsLayer );
+
     {
       myLineBoxNode.right = this.layoutBounds.maxX - 10;
       myLineBoxNode.top = 10;

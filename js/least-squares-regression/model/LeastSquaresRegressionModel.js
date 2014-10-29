@@ -9,13 +9,13 @@ define( function( require ) {
 
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
-  var DataPointPlacementGraph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPointPlacementGraph' );
+  var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   // var Property = require( 'AXON/Property' );
-  // var Range = require( 'DOT/Range' );
+  var Range = require( 'DOT/Range' );
 
   // var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -44,9 +44,14 @@ define( function( require ) {
     } );
 
     this.dataPoints = new ObservableArray(); // @public
+    this.dataPointsOnGraph = new ObservableArray(); // @public
 
-
-    this.dataPointPlacementGraph = new DataPointPlacementGraph( new Dimension2( 400, 400 ), new Vector2( 200, 50 ) );
+    this.graph = new Graph(
+      new Dimension2( 400, 400 ),
+      new Vector2( 200, 50 ),
+      new Range( 0, 20 ),
+      new Range( 0, 20 )
+    );
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -65,7 +70,6 @@ define( function( require ) {
     },
 
     step: function( dt ) {
-
       this.dataPoints.forEach( function( dataPoint ) {
         dataPoint.step( dt );
       } );
@@ -73,14 +77,14 @@ define( function( require ) {
 
     placeDataPoint: function( dataPoint ) {
       var dataPointPlaced = false;
-      dataPointPlaced = this.dataPointPlacementGraph.placeDataPoint( dataPoint );
+      dataPointPlaced = this.graph.placeDataPoint( dataPoint );
       if ( !dataPointPlaced ) {
         dataPoint.returnToOrigin( true );
       }
     },
 
     /**
-     * Function for adding new movable dataPoints to this model when the user creates them, generally by clicking on some
+     * Function for adding new  dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
      * @public
      * @param dataPoint
@@ -156,11 +160,9 @@ define( function( require ) {
     },
 
     standardDeviationOfX: function( positionArray ) {
-
     },
 
     standardDeviationOfY: function( positionArray ) {
-
     },
 
     getLinearFit: function( positionArray ) {

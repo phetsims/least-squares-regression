@@ -3,7 +3,7 @@
  */
 
 /**
- * A Scenery node that can be clicked upon to create new movable dataPoints in the model.
+ * A Scenery node that can be clicked upon to create new  dataPoints in the model.
  *
  * @author John Blanco
  */

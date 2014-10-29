@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * View representation of a DataPointPlacementGraph, which is a graph where points
+ * View representation of a Graph, which is a graph where points
  * can be placed.
  *
  * @author John Blanco
@@ -19,16 +19,16 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
 
   /**
-   * @param {DataPointPlacementGraph} dataPointPlacementGraph
+   * @param {Graph} graph
    * @constructor
    */
-  function DataPointPlacementGraphNode( dataPointPlacementGraph ) {
+  function GraphNode( graph ) {
     Node.call( this );
 
     // Create and add the graph itself.
-    var graph = Rectangle.bounds( dataPointPlacementGraph.bounds, { fill: 'white', stroke: 'gray' } );
-    this.addChild( graph );
+    var graphNode = Rectangle.bounds( graph.bounds, { fill: 'white', stroke: 'gray' } );
+    this.addChild( graphNode );
   }
 
-  return inherit( Node, DataPointPlacementGraphNode );
+  return inherit( Node, GraphNode );
 } );

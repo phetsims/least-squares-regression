@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that represents a movable dataPoint in the view.
+ * Type that represents a  dataPoint in the view.
  *
  * @author John Blanco
  */
