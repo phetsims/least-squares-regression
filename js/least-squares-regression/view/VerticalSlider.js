@@ -26,11 +26,12 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-//  var pattern_0value_1units = "{1}{0}";
+  // var pattern_0value_1units = "{1}{0}";
 
   // constants
 
-  var RANGE_FONT = new PhetFont( 20 );
+  var RANGE_FONT = new PhetFont( {size: 12, weight: 'bold'} );
+  var RANGE_COLOR = 'blue';
   // var VALUE_FONT = new PhetFont( 20 );
   var THUMB_SIZE = new Dimension2( 30, 15 );
   var THUMB_NORMAL_COLOR = new Color( 89, 156, 212 );
@@ -84,7 +85,7 @@ define( function( require ) {
     Node.call( this );
 
     // nodes
-    var bodyNode = new Rectangle( -size.width / 2, -size.height / 2, size.width, size.height, 10, 10,
+    var bodyNode = new Rectangle( -size.width / 2, -size.height / 2, size.width, size.height, 2, 2,
       { fill: THUMB_NORMAL_COLOR, stroke: THUMB_STROKE_COLOR, lineWidth: 1 } );
     var centerLineNode = new Path( Shape.lineSegment( -( size.width / 2 ) + 3, 0, ( size.width / 2 ) - 3, 0 ),
       { stroke: THUMB_CENTER_LINE_COLOR } );
@@ -134,10 +135,7 @@ define( function( require ) {
   inherit( SimpleDragHandler, ThumbDragHandler );
 
   /**
-   * @param {string} title
-   * @param {string} subtitle
    * @param {string} minLabel
-   * @param {string} maxLabel
    * @param {Dimension2} trackSize
    * @param {Property.<number>} property
    * @param {Range} range
@@ -148,9 +146,9 @@ define( function( require ) {
     Node.call( this );
 
     // nodes
-    var minNode = new Text( minLabel, RANGE_FONT );
+    var minNode = new Text( minLabel, {font: RANGE_FONT, fill: RANGE_COLOR} );
     var trackNode = new Track( trackSize, property, range );
-    var xMargin = 3, yMargin = 3, cornerRadius = 3;
+    var xMargin = 5, yMargin = 10, cornerRadius = 10;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
       { fill: new Color( 200, 200, 200, 140 ) } );
     var thumbNode = new Thumb( THUMB_SIZE, property, range, new Range( 0, trackSize.height ) );
