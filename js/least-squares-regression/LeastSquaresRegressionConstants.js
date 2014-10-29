@@ -11,13 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
+  // var Bounds2 = require( 'DOT/Bounds2' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
 
   return {
     // Layout bounds used throughout the simulation for laying out the screens.
-    LAYOUT_BOUNDS: new Bounds2( 0, 0, 768, 464 ),
     PERIMETER_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
 
     // Velocity at which animated elements move
