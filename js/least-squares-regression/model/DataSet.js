@@ -8,7 +8,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
 
   // strings
-//  var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
+// var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
   var heightVsShoeString = require( 'string!LEAST_SQUARES_REGRESSION/choice.heightVsShoe' );
   var milesVsCostString = require( 'string!LEAST_SQUARES_REGRESSION/choice.milesVsCost' );
 

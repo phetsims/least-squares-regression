@@ -1,4 +1,4 @@
-//  Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * RequireJS configuration file for the sim.
@@ -41,5 +41,5 @@ require.config(
       LEAST_SQUARES_REGRESSION: '.'
     },
 
-    urlArgs: new Date().getTime()  // cache buster to make browser reload all included scripts
+    urlArgs: new Date().getTime() // cache buster to make browser reload all included scripts
   } );
