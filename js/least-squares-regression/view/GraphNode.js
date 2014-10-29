@@ -147,7 +147,6 @@ define( function( require ) {
       stroke: 'black' } );
     this.addChild( lineNode );
 
-
     // ticks
     var numberOfTicks = graph.getWidth() + 1;
     for ( var i = 0; i < numberOfTicks; i++ ) {
@@ -229,7 +228,6 @@ define( function( require ) {
       modelViewTransform.modelToViewDeltaX( graph.getWidth() ), modelViewTransform.modelToViewDeltaY( -graph.getHeight() ),
       { fill: GRID_BACKGROUND } );
     this.addChild( backgroundNode );
-
 
   }
 

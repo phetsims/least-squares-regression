@@ -168,7 +168,6 @@ define( function( require ) {
     thumbNode.centerX = trackNode.centerX;
     thumbNode.centerY = trackNode.centerY;
 
-
     // move the slider thumb to reflect the model value
     property.link( function( value ) {
       // move the thumb

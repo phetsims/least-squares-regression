@@ -41,7 +41,6 @@ define( function( require ) {
     RESIDUAL_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
     RESIDUALS_SQUARE_TRANSPARENCY_FACTOR: 0.6,
 
-
     UNIT_SQUARE_LENGTH: 32 // In screen coordinates, used in several places
   };
 } );

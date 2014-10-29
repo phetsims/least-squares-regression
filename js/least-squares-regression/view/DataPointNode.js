@@ -13,11 +13,10 @@ define( function( require ) {
   // modules
   // var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
- // var DerivedProperty = require( 'AXON/DerivedProperty' );
+  // var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-
 
   // constants
   var BORDER_LINE_WIDTH = 1;
