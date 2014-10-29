@@ -1,4 +1,4 @@
-//  Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  *
@@ -9,14 +9,9 @@ define( function( require ) {
 
   // modules
 
-
   var BestFitLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineBoxNode' );
   var CompositeNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/CompositeNode' );
-  //var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
-  // var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
-
   var DataPointPlacementGraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointPlacementGraphNode' );
-//  var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineBoxNode' );
@@ -35,9 +30,8 @@ define( function( require ) {
   //constants
 
   // var LABEL_COLOR = 'brown';
-//  var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
-//  var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
-
+  // var LABEL_FONT = new PhetFont( { size: 18, weight: 'bold' } );
+  // var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
 
   /**
    * @param {LeastSquaresRegressionModel} leastSquaresRegressionModel
@@ -55,16 +49,11 @@ define( function( require ) {
       3 );
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
-
     var bestFitLineBoxNode = new BestFitLineBoxNode( model );
     this.addChild( bestFitLineBoxNode );
 
-
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
-
-    //  var graphNode = new GraphNode( model.graph, modelViewTransform );
-    //  this.addChild( graphNode );
 
     var dataPointPlacementGraphNode = new DataPointPlacementGraphNode( model.dataPointPlacementGraph );
 
@@ -72,15 +61,13 @@ define( function( require ) {
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
     this.addChild( backLayer );
-    // Create the layer where the shapes will be placed.  They are maintained in a separate layer so that they are over
-    // all of the shape placement boards in the z-order.
-    var movableDataPointsLayer = new Node( { layerSplit: true } ); // Force the moving shape into a separate layer for performance reasons.
-
+    // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
+    // all of the point placement graphs in the z-order.
+    var movableDataPointsLayer = new Node( { layerSplit: true } ); // Force the moving point into a separate layer for performance reasons.
 
     var compositeNode = new CompositeNode( model.addUserCreatedMovableDataPoint.bind( model ),
       model.movableDataPoints, model.bucket, { dataPointsLayer: movableDataPointsLayer } );
     this.addChild( compositeNode );
-
 
     // Create and add the Reset All Button in the bottom right, which resets the model
     var resetAllButton = new ResetAllButton( {
@@ -92,11 +79,13 @@ define( function( require ) {
     } );
     this.addChild( resetAllButton );
 
-    // Add the movable shapes issue.
+    // Add the movable points issue.
     this.addChild( movableDataPointsLayer );
     {
       myLineBoxNode.right = this.layoutBounds.maxX - 10;
       myLineBoxNode.top = 10;
+      bestFitLineBoxNode.left = 10;
+      bestFitLineBoxNode.top = 10;
     }
 
   }
