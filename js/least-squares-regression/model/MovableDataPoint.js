@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that defines a data point that can be moved by the user and placed on the data point placement boards.
+ * Type that defines a data point that can be moved by the user and placed on the data point placement graphs.
  *
  * @author John Blanco
  */
@@ -11,13 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
-
 
   /**
    * @param {Vector2} initialPosition
@@ -28,16 +27,16 @@ define( function( require ) {
 
     PropertySet.call( this, {
 
-      // Property that indicates where in model space the upper left corner of this data point is.  In general, this should
+      // Property that indicates where in model space the upper left corner of this data point is. In general, this should
       // not be set directly outside of this type, and should only be manipulated through the methods defined below.
       position: initialPosition,
 
-      // Flag that tracks whether the user is dragging this data point around.  Should be set externally, generally by the a
+      // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by the a
       // view node.
       userControlled: false,
 
       // Flag that indicates whether this element is animating from one location to another, should not be set externally.
-      animating: false,
+      animating: false
 
     } );
 
@@ -58,17 +57,16 @@ define( function( require ) {
     step: function( dt ) {
       if ( !this.userControlled ) {
 
-
         // perform any animation
         var distanceToDestination = this.position.distance( this.destination );
-        if ( distanceToDestination > dt * LeastSquaresRegressionSharedConstants.ANIMATION_VELOCITY ) {
+        if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
           // Move a step toward the destination.
           var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
-          var stepVector = Vector2.createPolar( LeastSquaresRegressionSharedConstants.ANIMATION_VELOCITY * dt, stepAngle );
+          var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
           this.position = this.position.plus( stepVector );
         }
         else if ( this.animating ) {
-          //  Less than one time step away, so just go to the destination.
+          // Less than one time step away, so just go to the destination.
           this.position = this.destination;
           this.animating = false;
         }

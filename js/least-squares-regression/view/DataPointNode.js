@@ -11,15 +11,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  // var LeastSquaresRegressionSharedConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionSharedConstants' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
   // var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
-
-  // constants
-  var BORDER_LINE_WIDTH = 1;
 
   /**
    * @param {MovableDataPoint} movableDataPoint
@@ -38,12 +35,16 @@ define( function( require ) {
     this.addChild( rootNode );
 
     // Create the node that the user will click upon to add a model element to the view.
-    var representation = new Circle( 10, {fill: 'orange', stroke: 'black', lineWidth: BORDER_LINE_WIDTH} );
+    var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
+      fill: LSRConstants.DATA_POINT_FILL,
+      stroke: LSRConstants.DATA_POINT_STROKE,
+      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH } );
+
     rootNode.addChild( representation );
 
     // Move this node as the model representation moves
     movableDataPoint.positionProperty.link( function( position ) {
-      self.leftTop = position;
+      self.center = position;
     } );
 
     movableDataPoint.animatingProperty.link( function( animating ) {
