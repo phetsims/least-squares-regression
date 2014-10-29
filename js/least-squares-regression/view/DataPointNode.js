@@ -19,10 +19,10 @@ define( function( require ) {
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
-   * @param {MovableDataPoint} movableDataPoint
+   * @param {DataPoint} dataPoint
    * @constructor
    */
-  function DataPointNode( movableDataPoint ) {
+  function DataPointNode( dataPoint ) {
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
 
@@ -43,11 +43,11 @@ define( function( require ) {
     rootNode.addChild( representation );
 
     // Move this node as the model representation moves
-    movableDataPoint.positionProperty.link( function( position ) {
+    dataPoint.positionProperty.link( function( position ) {
       self.center = position;
     } );
 
-    movableDataPoint.animatingProperty.link( function( animating ) {
+    dataPoint.animatingProperty.link( function( animating ) {
       // To avoid certain complications, make it so that users can't grab this when it is moving.
       self.pickable = !animating;
     } );
@@ -59,14 +59,14 @@ define( function( require ) {
 
       // Handler that moves the dataPoint in model space.
       translate: function( translationParams ) {
-        movableDataPoint.setDestination( movableDataPoint.position.plus( translationParams.delta ), false );
+        dataPoint.setDestination( dataPoint.position.plus( translationParams.delta ), false );
         return translationParams.position;
       },
       start: function( event, trail ) {
-        movableDataPoint.userControlled = true;
+        dataPoint.userControlled = true;
       },
       end: function( event, trail ) {
-        movableDataPoint.userControlled = false;
+        dataPoint.userControlled = false;
       }
     } ) );
   }

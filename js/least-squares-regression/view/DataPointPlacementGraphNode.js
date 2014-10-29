@@ -28,11 +28,6 @@ define( function( require ) {
     // Create and add the graph itself.
     var graph = Rectangle.bounds( dataPointPlacementGraph.bounds, { fill: 'white', stroke: 'gray' } );
     this.addChild( graph );
-
-    var dataPointsLayer = new Node();
-    this.addChild( dataPointsLayer );
-
-
   }
 
   return inherit( Node, DataPointPlacementGraphNode );

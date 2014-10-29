@@ -51,14 +51,14 @@ define( function( require ) {
 
     /**
      * Place the provide data point on this graph. Returns false if the data point
-     * is not partially over the graph.
+     * is not over the graph.
      * @public
-     * @param {MovableDataPoint} movableDataPoint A model data point
+     * @param {DataPoint} dataPoint A model data point
      */
-    placeDataPoint: function( movableDataPoint ) {
-      assert && assert( movableDataPoint.userControlled === false, 'Data Points can\'t be placed when still controlled by user.' );
-      if ( this.dataPointOverlapsGraph( movableDataPoint ) ) {
-        movableDataPoint.setDestination( movableDataPoint.position, false );
+    placeDataPoint: function( dataPoint ) {
+      assert && assert( dataPoint.userControlled === false, 'Data Points can\'t be placed when still controlled by user.' );
+      if ( this.dataPointOverlapsGraph( dataPoint ) ) {
+        dataPoint.setDestination( dataPoint.position, false );
         return true;
       }
       return false;

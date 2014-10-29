@@ -43,7 +43,7 @@ define( function( require ) {
       intercept: 0
     } );
 
-    this.movableDataPoints = new ObservableArray(); // @public
+    this.dataPoints = new ObservableArray(); // @public
 
 
     this.dataPointPlacementGraph = new DataPointPlacementGraph( new Dimension2( 400, 400 ), new Vector2( 200, 50 ) );
@@ -61,21 +61,21 @@ define( function( require ) {
 
     reset: function() {
       PropertySet.prototype.reset.call( this );
-      this.movableDataPoints.clear();
+      this.dataPoints.clear();
     },
 
     step: function( dt ) {
 
-      this.movableDataPoints.forEach( function( movableDataPoint ) {
-        movableDataPoint.step( dt );
+      this.dataPoints.forEach( function( dataPoint ) {
+        dataPoint.step( dt );
       } );
     },
 
-    placeDataPoint: function( movableDataPoint ) {
+    placeDataPoint: function( dataPoint ) {
       var dataPointPlaced = false;
-      dataPointPlaced = this.dataPointPlacementGraph.placeDataPoint( movableDataPoint );
+      dataPointPlaced = this.dataPointPlacementGraph.placeDataPoint( dataPoint );
       if ( !dataPointPlaced ) {
-        movableDataPoint.returnToOrigin( true );
+        dataPoint.returnToOrigin( true );
       }
     },
 
@@ -83,23 +83,23 @@ define( function( require ) {
      * Function for adding new movable dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
      * @public
-     * @param movableDataPoint
+     * @param dataPoint
      */
-    addUserCreatedMovableDataPoint: function( movableDataPoint ) {
+    addUserCreatedDataPoint: function( dataPoint ) {
       var self = this;
-      this.movableDataPoints.push( movableDataPoint );
-      movableDataPoint.userControlledProperty.link( function( userControlled ) {
+      this.dataPoints.push( dataPoint );
+      dataPoint.userControlledProperty.link( function( userControlled ) {
         if ( !userControlled ) {
-          self.placeDataPoint( movableDataPoint );
+          self.placeDataPoint( dataPoint );
         }
       } );
 
       // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
       // can be 'put back' into the bucket.
-      movableDataPoint.on( 'returnedToOrigin', function() {
-        if ( !movableDataPoint.userControlled ) {
+      dataPoint.on( 'returnedToOrigin', function() {
+        if ( !dataPoint.userControlled ) {
           // The dataPoint has been returned to the bucket.
-          self.movableDataPoints.remove( movableDataPoint );
+          self.dataPoints.remove( dataPoint );
         }
       } );
 

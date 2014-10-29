@@ -15,7 +15,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   // var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var MovableDataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/MovableDataPoint' );
+  var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var Node = require( 'SCENERY/nodes/Node' );
   // var Path = require( 'SCENERY/nodes/Path' );
   // var Property = require( 'AXON/Property' );
@@ -45,7 +45,7 @@ define( function( require ) {
     this.addInputListener( new SimpleDragHandler( {
 
       parentScreen: null, // needed for coordinate transforms
-      movableDataPoint: null,
+      dataPoint: null,
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
@@ -67,19 +67,19 @@ define( function( require ) {
         var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
 
         // Create and add the new model element.
-        this.movableDataPoint = new MovableDataPoint( initialPosition );
-        this.movableDataPoint.userControlled = true;
-        addDataPointToModel( this.movableDataPoint );
+        this.dataPoint = new DataPoint( initialPosition );
+        this.dataPoint.userControlled = true;
+        addDataPointToModel( this.dataPoint );
 
       },
 
       translate: function( translationParams ) {
-        this.movableDataPoint.setDestination( this.movableDataPoint.position.plus( translationParams.delta ) );
+        this.dataPoint.setDestination( this.dataPoint.position.plus( translationParams.delta ) );
       },
 
       end: function( event, trail ) {
-        this.movableDataPoint.userControlled = false;
-        this.movableDataPoint = null;
+        this.dataPoint.userControlled = false;
+        this.dataPoint = null;
       }
     } ) );
 

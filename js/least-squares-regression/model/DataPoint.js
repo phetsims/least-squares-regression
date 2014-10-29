@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {Vector2} initialPosition
    * @constructor
    */
-  function MovableDataPoint( initialPosition ) {
+  function DataPoint( initialPosition ) {
     var self = this;
 
     PropertySet.call( this, {
@@ -52,7 +52,7 @@ define( function( require ) {
 
   }
 
-  return inherit( PropertySet, MovableDataPoint, {
+  return inherit( PropertySet, DataPoint, {
 
     step: function( dt ) {
       if ( !this.userControlled ) {
