@@ -15,7 +15,7 @@ define( function( require ) {
   var eraserImage = require( 'image!SCENERY_PHET/eraser.png' );
 
   // constants
-  var ERASER_WIDTH = 20;  // width of eraser, used for scaling, the aspect ratio will determine height
+  var ERASER_WIDTH = 20; // width of eraser, used for scaling, the aspect ratio will determine height
 
   /**
    * @param {object} options
