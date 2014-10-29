@@ -9,6 +9,7 @@ define( function( require ) {
 
   // strings
 // var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
+  var gasolinePriceVsYearString = require( 'string!LEAST_SQUARES_REGRESSION/choice.gasolinePriceVsYear' )
   var heightVsShoeString = require( 'string!LEAST_SQUARES_REGRESSION/choice.heightVsShoe' );
   var milesVsCostString = require( 'string!LEAST_SQUARES_REGRESSION/choice.milesVsCost' );
 
@@ -38,7 +39,7 @@ define( function( require ) {
 
   // 'real world' data
 
-  DataSet.GASOLINE_YEAR = new DataSet( gasolinePriceVsYear, 'Price of Gasoline vs. Year', 'Price of Gasoline', 'Year', new Range( 0, 2 ), new Range( 1975, 2005 ),
+  DataSet.GASOLINE_YEAR = new DataSet( gasolinePriceVsYearString, 'Price of Gasoline vs. Year', 'Price of Gasoline', 'Year', new Range( 0, 2 ), new Range( 1975, 2005 ),
     [
       {x: 1976, y: 0.61},
       {x: 1977, y: 0.66},

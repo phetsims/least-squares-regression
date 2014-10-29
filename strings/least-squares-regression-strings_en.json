@@ -5,5 +5,8 @@
   "residuals": "Residuals",
   "squaredResiduals": "Squared Residuals",
   "a": "a",
-  "b": "b"
+  "b": "b",
+  "choice.gasolinePriceVsYear": "Gasoline Price vs. Year",
+  "choice.heightVsShoe": "Height vs. Shoe Size",
+  "choice.milesVsCost": "Miles vs. Cost"
 }
