@@ -12,22 +12,12 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+
 
   return {
     // Layout bounds used throughout the simulation for laying out the screens.
     LAYOUT_BOUNDS: new Bounds2( 0, 0, 768, 464 ),
-
-    // Colors used for the various dataPoints
-//    GREENISH_COLOR: '#33E16E',
-//    DARK_GREEN_COLOR: '#1A7137',
-//    PURPLISH_COLOR: '#9D87C9',
-//    DARK_PURPLE_COLOR: '#634F8C',
-//    ORANGISH_COLOR: '#FFA64D',
-//    ORANGE_BROWN_COLOR: '#A95327',
-//    PALE_BLUE_COLOR: '#5DB9E7',
-//    DARK_BLUE_COLOR: '#277DA9',
-//    PINKISH_COLOR: '#E88DC9',
-//    PURPLE_PINK_COLOR: '#AA548D',
     PERIMETER_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
 
     // Velocity at which animated elements move
@@ -35,12 +25,20 @@ define( function( require ) {
 
     // Various other constants
     BACKGROUND_COLOR: 'rgb( 225, 255, 255 )',
-    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 254, 241, 233 )',
     MY_LINE_COLOR: 'blue',
     BEST_FIT_LINE_COLOR: 'red',
     RESIDUAL_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
     RESIDUALS_SQUARE_TRANSPARENCY_FACTOR: 0.6,
 
-    UNIT_SQUARE_LENGTH: 32 // In screen coordinates, used in several places
+    DATA_POINT_RADIUS: 7,
+    DATA_POINT_FILL: 'orange',
+    DATA_POINT_STROKE: 'black',
+    DATA_POINT_LINE_WIDTH: 0.5,
+
+    TEXT_FONT: new PhetFont( {size: 12} ),
+    TEXT_FONT_BOLD: new PhetFont( {size: 12, weight: 'bold'} ),
+    CONTROL_PANEL_CORNER_RADIUS: 10,
+    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb(255,245,238)'  //seashell
+
   };
 } );
