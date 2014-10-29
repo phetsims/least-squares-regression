@@ -9,7 +9,7 @@ define( function( require ) {
 
   // strings
 // var customString = require( 'string!LEAST_SQUARES_REGRESSION/choice.custom' );
-  var gasolinePriceVsYearString = require( 'string!LEAST_SQUARES_REGRESSION/choice.gasolinePriceVsYear' )
+  var gasolinePriceVsYearString = require( 'string!LEAST_SQUARES_REGRESSION/choice.gasolinePriceVsYear' );
   var heightVsShoeString = require( 'string!LEAST_SQUARES_REGRESSION/choice.heightVsShoe' );
   var milesVsCostString = require( 'string!LEAST_SQUARES_REGRESSION/choice.milesVsCost' );
 
