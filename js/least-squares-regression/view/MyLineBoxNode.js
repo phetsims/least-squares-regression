@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- *  Combo Box
+ * Combo Box
  *
  */
 
@@ -13,8 +13,9 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
-  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Range = require( 'DOT/Range' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -30,9 +31,6 @@ define( function( require ) {
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
 
 
-  // constants
-  // var FONT = new PhetFont( 11 );
-
   var pattern_0slope_1intercept = " y = {0} x + {1} ";
 
   /**
@@ -42,29 +40,29 @@ define( function( require ) {
    */
   function MyLineBoxNode( model, options ) {
 
+    var equationText = new Text( '', { stroke: 'black' } );
+    var mainBox = new VBox();
+    mainBox = new VBox( {spacing: 5, children: [
+      new CheckBox( new Text( myLineString, LSRConstants.TEXT_FONT ), model.showMyLineProperty ),
+      new Panel( equationText, { fill: 'white', cornerRadius: 2 } ),
+      new Text( 'y= a x + b', {font: LSRConstants.TEXT_FONT, fill: 'blue'} ),
+      new HBox( {spacing: 5, children: [
+        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.slopeProperty, new Range( -20, 20 ) ),
+        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.interceptProperty, new Range( -20, 20 ) )],
+        //  centerX:mainBox.centerX+40,
+        //  centerY:mainBox.centerY
+      } ),
+      new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfMyLineProperty ),
+      new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfMyLineProperty )
+    ], align: 'left' } );
 
-    var equationText = new Text( '', { fill: 'white', stroke: 'black', cornerRadius: 2 } );
-
-    Panel.call( this, new VBox( {spacing: 5, children: [
-        new CheckBox( new Text( myLineString ), model.showMyLineProperty ),
-        new Panel( equationText ),
-        new Text( 'y= a x + b' ),
-        new HBox( {spacing: 5, children: [
-          new VerticalSlider( aString, new Dimension2( 10, 100 ), model.slopeProperty, new Range( -20, 20 ) ),
-          new VerticalSlider( bString, new Dimension2( 10, 100 ), model.interceptProperty, new Range( -20, 20 ) )]} ),
-        new CheckBox( new Text( residualsString ), model.showResidualsOfMyLineProperty ),
-        new CheckBox( new Text( squaredResidualsString ), model.showSquareResidualsOfMyLineProperty )
-      ], align: 'left' } ),
+    Panel.call( this, mainBox,
       _.extend( {
-        cornerRadius: 10,
-        fill: 'pink',
+        cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
+        fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
         align: 'left',
-
-        buttonXMargin: 10,
-        buttonYMargin: 6,
-
-        contentXMargin: 8,
-        contentYMargin: 5
+        xMargin: 8,
+        yMargin: 5
       }, options )
     );
 
@@ -85,11 +83,5 @@ define( function( require ) {
 
   }
 
-//  // click in the track to change the value, continue dragging if desired
-//  var handleEvent = function( event ) {
-//    var y = thisNode.globalToLocalPoint( event.pointer.point ).y;
-//    var value = Util.linear( 0, size.height, range.max, range.min, y );
-//    property.value = Util.toFixedNumber( Util.clamp( value, range.min, range.max ), decimalPlaces );
-//  };
   return inherit( Panel, MyLineBoxNode );
 } );
