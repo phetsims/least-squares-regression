@@ -3,7 +3,7 @@
  */
 
 /**
- * Model of a rectangular board (like a white board or bulletin board) upon which various smaller shapes can be placed.
+ * Model of a rectangular graph upon which various data points can be placed.
  *
  * @author John Blanco
  */
@@ -12,33 +12,34 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  // var Color = require( 'SCENERY/util/Color' );
-  // var Fraction = require( 'PHETCOMMON/model/Fraction' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  // var PropertySet = require( 'AXON/PropertySet' );
   // var Shape = require( 'KITE/Shape' );
 //  var Vector2 = require( 'DOT/Vector2' );
-
 
   /**
    * @param {Dimension2} size
    * @param {Vector2} position
+   * @param {Range} xRange
+   * @param {Range} yRange
    * @constructor
    */
-  function DataPointPlacementGraph( size, position ) {
+  function DataPointPlacementGraph( size, position, xRange, yRange ) {
 
-    PropertySet.call( this, {
-    } );
+    this.xRange = xRange;
+    this.yRange = yRange;
 
-    // Observable array of the shapes that have been placed on this board.
+    this.lines = new ObservableArray(); // {Line} lines that the graph is currently displaying
+
+    // Observable array of the points that have been placed on this graph.
     this.graphDataPoints = new ObservableArray();
 
     // Non-dynamic public values.
     this.bounds = new Bounds2( position.x, position.y, position.x + size.width, position.y + size.height ); // @public
   }
 
-  return inherit( PropertySet, DataPointPlacementGraph, {
+  return inherit( Object, DataPointPlacementGraph, {
 
     // @private
     dataPointOverlapsGraph: function( dataPoint ) {
@@ -46,20 +47,19 @@ define( function( require ) {
     },
 
     /**
-     * Place the provide shape on this board.  Returns false if the color does not match the handled color or if the
-     * shape is not partially over the board.
+     * Place the provide data point on this graph.  Returns false if the data point
+     * is not partially over the graph.
      * @public
-     * @param {MovableShape} movableDataPoint A model shape
+     * @param {MovableDataPoint} movableDataPoint A model data point
      */
     placeDataPoint: function( movableDataPoint ) {
-      assert && assert( movableDataPoint.userControlled === false, 'Shapes can\'t be placed when still controlled by user.' );
+      assert && assert( movableDataPoint.userControlled === false, 'Data Points can\'t be placed when still controlled by user.' );
       if ( this.dataPointOverlapsGraph( movableDataPoint ) ) {
         movableDataPoint.setDestination( movableDataPoint.position, false );
         return true;
       }
       return false;
     }
-
 
 
   } );
