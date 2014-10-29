@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-//  var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   // var Dimension2 = require( 'DOT/Dimension2' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -22,10 +21,6 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // strings
-//  var symbolXString = 'X';
-//  var symbolYString = 'Y';
-//  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   //----------------------------------------------------------------------------------------
   // constants
@@ -40,7 +35,7 @@ define( function( require ) {
 
   // axes
   // var AXIS_ARROW_SIZE = new Dimension2( 10, 10 );
-//  var AXIS_THICKNESS = 1;
+  // var AXIS_THICKNESS = 1;
   var AXIS_COLOR = 'black';
   var AXIS_EXTENT = 1.0; // how far the arrow extends past the min/max ticks, in model coordinates
   // var AXIS_LABEL_FONT = new PhetFont( 16 );
