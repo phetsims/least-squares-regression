@@ -15,7 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
-  //var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
