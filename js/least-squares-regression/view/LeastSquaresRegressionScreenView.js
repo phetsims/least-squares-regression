@@ -55,11 +55,16 @@ define( function( require ) {
 
 
     //model View transform
-    var modelViewTransform = ModelViewTransform2.createSinglePointXYScaleMapping(
-      model.graph.graphOriginPosition,
-      model.graph.viewOriginPosition,
-      model.graph.scaleXFactor,
-      model.graph.scaleYFactor );
+//    var modelViewTransform = ModelViewTransform2.createSinglePointXYScaleMapping(
+//      model.graph.graphOriginPosition,
+//      model.graph.viewOriginPosition,
+//      model.graph.scaleXFactor,
+//      model.graph.scaleYFactor );
+
+    var graphNode = new GraphNode( model.graph, modelViewTransform );
+
+    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, graphNode.viewBounds );
+
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
@@ -69,7 +74,7 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
-    var graphNode = new GraphNode( model.graph );
+    var graphNode = new GraphNode( model.graph, modelViewTransform );
     this.addChild( graphNode );
 
     // Create the nodes that will be used to layer things visually.
@@ -91,7 +96,8 @@ define( function( require ) {
     // Add the dataPoint creator nodes. These must be added after the bucket hole for proper layering.
     DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       backLayer.addChild( new DataPointCreatorNode(
-        model.addUserCreatedDataPoint.bind( model ), {
+        model.addUserCreatedDataPoint.bind( model ),
+        modelViewTransform, {
           left: bucketHole.centerX + offset.x,
           top: bucketHole.centerY + offset.y
         } ) );
@@ -108,7 +114,7 @@ define( function( require ) {
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
       // Create and add the view representation for this dataPoint.
-      var dataPointNode = new DataPointNode( addedDataPoint );
+      var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
       dataPointsLayer.addChild( dataPointNode );
 
       // Move the dataPoint to the front of this layer when grabbed by the user.

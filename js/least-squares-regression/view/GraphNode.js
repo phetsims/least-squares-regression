@@ -10,6 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var Bounds2 = require( 'DOT/Bounds2' );
   // var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
 //  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -22,11 +23,13 @@ define( function( require ) {
    * @param {Graph} graph
    * @constructor
    */
-  function GraphNode( graph ) {
+  function GraphNode( graph, modelViewTransform ) {
     Node.call( this );
 
     // Create and add the graph itself.
-    var graphNode = Rectangle.bounds( graph.bounds, { fill: 'white', stroke: 'gray' } );
+
+    this.viewBounds = new Bounds2( 200, 50, 550, 450 );
+    var graphNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
     this.addChild( graphNode );
   }
 

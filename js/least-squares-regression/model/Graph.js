@@ -33,19 +33,19 @@ define( function( require ) {
     this.xRange = xRange;
     this.yRange = yRange;
 
-    this.lines = new ObservableArray(); // {Line} lines that the graph is currently displaying
+    //   this.lines = new ObservableArray(); // {Line} lines that the graph is currently displaying
 
 
     // Observable array of the points that have been placed on this graph.
     // this.graphDataPoints = new ObservableArray();
 
     // public values.
-    this.bounds = new Bounds2( originPosition.x, originPosition.y, originPosition.x + size.width, originPosition.y + size.height ); // @public
+    this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max ); // @public
 
-    this.graphOriginPosition = new Vector2( this.xRange.min, this.yRange.min );
-    this.viewOriginPosition = new Vector2( this.bounds.minX, this.bounds.maxY );
-    this.scaleXFactor = this.bounds.width / this.xRange.getLength();
-    this.scaleYFactor = -1 * this.bounds.height / this.yRange.getLength();
+//    this.graphOriginPosition = new Vector2( this.xRange.min, this.yRange.min );
+//    this.viewOriginPosition = originPosition;
+//    this.scaleXFactor = this.size.width / this.xRange.getLength();
+//    this.scaleYFactor = -1 * this.size.height / this.yRange.getLength();
   }
 
   return inherit( Object, Graph, {

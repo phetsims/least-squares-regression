@@ -27,7 +27,7 @@ define( function( require ) {
    * @param {Object} [options]
    * @constructor
    */
-  function DataPointCreatorNode( addDataPointToModel, options ) {
+  function DataPointCreatorNode( addDataPointToModel, modelViewTransform, options ) {
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
 
@@ -67,14 +67,14 @@ define( function( require ) {
         var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
 
         // Create and add the new model element.
-        this.dataPoint = new DataPoint( initialPosition );
+        this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
         this.dataPoint.userControlled = true;
         addDataPointToModel( this.dataPoint );
 
       },
 
       translate: function( translationParams ) {
-        this.dataPoint.setDestination( this.dataPoint.position.plus( translationParams.delta ) );
+        this.dataPoint.setDestination( this.dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) ) );
       },
 
       end: function( event, trail ) {

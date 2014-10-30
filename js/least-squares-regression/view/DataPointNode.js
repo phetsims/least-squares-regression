@@ -22,7 +22,7 @@ define( function( require ) {
    * @param {DataPoint} dataPoint
    * @constructor
    */
-  function DataPointNode( dataPoint ) {
+  function DataPointNode( dataPoint, modelViewTransform ) {
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
 
@@ -44,7 +44,7 @@ define( function( require ) {
 
     // Move this node as the model representation moves
     dataPoint.positionProperty.link( function( position ) {
-      self.center = position;
+      self.center = modelViewTransform.modelToViewPosition( position );
     } );
 
     dataPoint.animatingProperty.link( function( animating ) {
@@ -59,7 +59,7 @@ define( function( require ) {
 
       // Handler that moves the dataPoint in model space.
       translate: function( translationParams ) {
-        dataPoint.setDestination( dataPoint.position.plus( translationParams.delta ), false );
+        dataPoint.setDestination( dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) ), false );
         return translationParams.position;
       },
       start: function( event, trail ) {
