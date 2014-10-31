@@ -38,9 +38,7 @@ define( function( require ) {
       showSquareResidualsOfMyLine: false,
       showBestFitLine: false,
       showResidualsOfBestFitLine: false,
-      showSquareResidualsOfBestFitLine: false,
-      slope: 0,
-      intercept: 0
+      showSquareResidualsOfBestFitLine: false
     } );
 
     this.dataPoints = new ObservableArray(); // @public

@@ -71,8 +71,8 @@ define( function( require ) {
       unmutableEquationText,
 
       new HBox( {spacing: 5, children: [
-        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.slopeProperty, new Range( -20, 20 ) ),
-        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.interceptProperty, new Range( -20, 20 ) )]
+        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.slopeProperty, new Range( -20, 20 ) ),
+        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
         //  centerX:mainBox.centerX+40,
         //  centerY:mainBox.centerY
       } ),
@@ -97,14 +97,14 @@ define( function( require ) {
 
 
     // move the slider thumb to reflect the model value
-    model.slopeProperty.link( function( slope ) {
+    model.graph.slopeProperty.link( function( slope ) {
       slopeText = Util.toFixedNumber( slope, 2 );
       eqnPartTwoText.text = Util.toFixedNumber( slope, 2 );
 //      equationText.text = StringUtils.format( pattern_0slope_1intercept, slopeText, interceptText );
     } );
 
     // move the slider thumb to reflect the model value
-    model.interceptProperty.link( function( intercept ) {
+    model.graph.interceptProperty.link( function( intercept ) {
       interceptText = Util.toFixedNumber( intercept, 2 );
       var isNegative = Math.sign( Util.toFixedNumber( intercept, 2 ) ) == -1 ? true : false;
       var signText = isNegative ? '' : '+';

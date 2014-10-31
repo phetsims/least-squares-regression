@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
 
   var BestFitLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineBoxNode' );
+  var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   // var Color = require( 'SCENERY/util/Color' );
@@ -61,9 +62,8 @@ define( function( require ) {
 //      model.graph.scaleXFactor,
 //      model.graph.scaleYFactor );
 
-    var graphNode = new GraphNode( model.graph, modelViewTransform );
-
-    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, graphNode.viewBounds );
+    var viewGrapgBounds = new Bounds2( 200, 50, 550, 450 );
+    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGrapgBounds );
 
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.

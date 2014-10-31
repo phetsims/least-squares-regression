@@ -15,7 +15,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  // var PropertySet = require( 'AXON/PropertySet' );
+  var PropertySet = require( 'AXON/PropertySet' );
   // var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -27,6 +27,14 @@ define( function( require ) {
    * @constructor
    */
   function Graph( size, originPosition, xRange, yRange ) {
+
+//    this.addProperty( slope, 0);
+//    this.addProperty( intercept, 0);
+
+    PropertySet.call( this, {
+      slope: 0,
+      intercept: 0
+    } );
 
     this.size = size;
     this.originPosition = originPosition;
@@ -48,12 +56,13 @@ define( function( require ) {
 //    this.scaleYFactor = -1 * this.size.height / this.yRange.getLength();
   }
 
-  return inherit( Object, Graph, {
+  return inherit( PropertySet, Graph, {
 
     // @private
     dataPointOverlapsGraph: function( dataPoint ) {
       return this.bounds.containsPoint( dataPoint.position );
     },
+
 
     /**
      * Place the provide data point on this graph. Returns false if the data point
@@ -68,7 +77,36 @@ define( function( require ) {
         return true;
       }
       return false;
-    }
+    },
 
+    getBoundaryPoints: function() {
+      var boundaryPoints = [];
+      var leftYIntercept = this.slope * this.xRange.min + this.intercept;
+      var rightYIntercept = this.slope * this.xRange.max + this.intercept;
+      var bottomXIntercept = (this.yRange.min - this.intercept) / this.slope;
+      var topXIntercept = (this.yRange.max - this.intercept) / this.slope;
+
+      if ( this.yRange.contains( leftYIntercept ) ) {
+        boundaryPoints.push( new Vector2( this.xRange.min, leftYIntercept ) );
+      }
+      if ( this.yRange.contains( rightYIntercept ) ) {
+        boundaryPoints.push( new Vector2( this.xRange.max, rightYIntercept ) );
+      }
+      if ( this.xRange.contains( bottomXIntercept ) ) {
+        boundaryPoints.push( new Vector2( bottomXIntercept, this.yRange.min ) );
+      }
+      if ( this.xRange.contains( topXIntercept ) ) {
+        boundaryPoints.push( new Vector2( topXIntercept, this.yRange.max ) );
+      }
+
+      if ( boundaryPoints.length === 0 ) {
+        boundaryPoints.push( new Vector2( 0, 0 ) );
+        boundaryPoints.push( new Vector2( 0, 0 ) );
+      }
+      // the line can intersect the graph bounds at either 2 points or none.
+      //   assert && assert( boundaryPoints.length === 2 || boundaryPoints.length === 0 );
+
+      return boundaryPoints;
+    }
   } );
 } );
