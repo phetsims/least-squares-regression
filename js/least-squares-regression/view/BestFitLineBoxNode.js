@@ -36,7 +36,7 @@ define( function( require ) {
   function BestFitLineBoxNode( model, options ) {
     AccordionBox.call( this, new VBox( {spacing: 5, children: [
         new CheckBox( new Text( bestFitLineString, LSRConstants.TEXT_FONT ), model.showBestFitLineProperty ),
-        new Panel( new Text( 'Equation' ), { fill: 'white', stroke: 'black', cornerRadius: 2 } ),
+        new Panel( new Text( 'Equation' ), { fill: 'white', stroke: 'black', cornerRadius: 2, resize: false } ),
         new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfBestFitLineProperty ),
         new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfBestFitLineProperty )
       ], align: 'left'} ),

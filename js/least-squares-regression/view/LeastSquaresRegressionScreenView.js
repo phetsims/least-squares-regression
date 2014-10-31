@@ -74,7 +74,7 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
-    var graphNode = new GraphNode( model.graph, modelViewTransform );
+    var graphNode = new GraphNode( model.graph, model, modelViewTransform );
     this.addChild( graphNode );
 
     // Create the nodes that will be used to layer things visually.
@@ -137,6 +137,7 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        model.graph.reset();
       },
       right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10

@@ -42,11 +42,9 @@ define( function( require ) {
     } );
 
     this.dataPoints = new ObservableArray(); // @public
-    this.dataPointsOnGraph = new ObservableArray(); // @public
+
 
     this.graph = new Graph(
-      new Dimension2( 400, 400 ),
-      new Vector2( 200, 50 ),
       new Range( 0, 20 ),
       new Range( 0, 20 )
     );
@@ -58,6 +56,7 @@ define( function( require ) {
       size: BUCKET_SIZE,
       invertY: true
     } );
+
   }
 
   return inherit( PropertySet, LeastSquaresRegressionModel, {
@@ -164,12 +163,12 @@ define( function( require ) {
     },
 
     getLinearFit: function( positionArray ) {
-      var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
-      var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+      var slopeNumerator = this.averageOfSumOfSquaresXY( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfY( positionArray );
+      var slopeDenominator = this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray );
       var slope = slopeNumerator / slopeDenominator;
-      var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
+      var intercept = this.averageOfSumOfY( positionArray ) - slope * this.averageOfSumOfX( positionArray );
       var pearsonCoefficientCorrelationNumerator = slopeNumerator;
-      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
+      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray )) * ( this.averageOfSumOfSquaresYY( positionArray ) - this.averageOfSumOfY( positionArray ) * this.averageOfSumOfY( positionArray )) );
       var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
       var fitParameters = {
         slope: slope,
@@ -180,8 +179,8 @@ define( function( require ) {
     },
 
     getPearsonCoefficientCorrelation: function( positionArray ) {
-      var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
-      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
+      var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfY( positionArray );
+      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray )) * ( this.averageOfSumOfSquaresYY( positionArray ) - this.averageOfSumOfY( positionArray ) * this.averageOfSumOfY( positionArray )) );
       var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
       return pearsonCoefficientCorrelation;
     }

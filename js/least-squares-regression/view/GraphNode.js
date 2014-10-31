@@ -17,14 +17,21 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Line = require( 'SCENERY/nodes/Line' );
   // var Path = require( 'SCENERY/nodes/Path' );
-  // var Property = require( 'AXON/Property' );
+  var Panel = require( 'SUN/Panel' );
+  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Util = require( 'DOT/Util' );
+  var Text = require( 'SCENERY/nodes/Text' );
+
+  // string
+  var pattern_0r_1value = "{0} {1}";
 
   /**
    * @param {Graph} graph
    * @constructor
    */
-  function GraphNode( graph, modelViewTransform ) {
+  function GraphNode( graph, model, modelViewTransform ) {
     Node.call( this );
 
     // Create and add the graph itself.
@@ -38,23 +45,46 @@ define( function( require ) {
       {stroke: 'blue', lineWidth: 2} );
     this.addChild( line );
 
+//    Property.multilink( [ graph.slopeProperty,graph.interceptProperty, model.showMyLine  ], function( slope, intercept, showMyLine ) {
+//      line.visible = showMyLine;
+//      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+//      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+//    } );
+
     graph.interceptProperty.link( function( intercept ) {
-      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+      if ( graph.getBoundaryPoints() ) {
+        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+      }
     } );
 
     graph.slopeProperty.link( function( intercept ) {
-      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+      if ( graph.getBoundaryPoints() ) {
+        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+      }
     } );
+
+    var equationText = new Text( '**********' );
+    var mutableEquationText = new Panel( equationText, { fill: 'white', cornerRadius: 2, resize: false } );
+    mutableEquationText.bottom = graphNode.bottom - 10;
+    mutableEquationText.right = graphNode.right - 10;
+    this.addChild( mutableEquationText );
+    // move the slider thumb to reflect the model value
+    model.graph.slopeProperty.link( function( slope ) {
+      //   var rText = Util.toFixedNumber( model.getPearsonCoefficientCorrelation(model.dataPoints.getArray()), 2 );
+      //     var rText = Util.toFixedNumber( model.sumOfX(model.dataPoints.getArray().position), 2 );
+      var rText = Util.toFixedNumber( model.getPearsonCoefficientCorrelation( [
+        {x: 2, y: 4},
+        {x: 3, y: 7},
+        {x: 6, y: 9}
+      ] ), 2 );
+      equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
+      debugger;
+    } );
+
+
   }
-
-//
-//    this.line = new Line (
-//      modelViewTransform.modelToViewPosition(graph.getBoundaryPoints()[0]),
-//      modelViewTransform.modelToViewPosition(graph.getBoundaryPoints()[1]),
-//        {stroke: 'blue', lineWidth: 2});
-
 
   return inherit( Node, GraphNode );
 } );

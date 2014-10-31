@@ -49,9 +49,9 @@ define( function( require ) {
 
 
     var eqnPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqnPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
+    var eqnPartTwoText = new Text( '-0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
     var eqnPartThreeText = new Text( ' x ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqnPartFourText = new Text( bString, {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
+    var eqnPartFourText = new Text( '+0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
     var mutableEquationText = new HBox( {spacing: 3, children: [eqnPartOneText, eqnPartTwoText, eqnPartThreeText, eqnPartFourText]} );
 
 
@@ -66,12 +66,12 @@ define( function( require ) {
     var mainBox = new VBox();
     mainBox = new VBox( {spacing: 5, children: [
       new CheckBox( new Text( myLineString, LSRConstants.TEXT_FONT ), model.showMyLineProperty ),
-      new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2 } ),
+      new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2, resize: false  } ),
       //   mutableEquationText,
       unmutableEquationText,
 
       new HBox( {spacing: 5, children: [
-        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.slopeProperty, new Range( -20, 20 ) ),
+        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleSlopeProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
         new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
         //  centerX:mainBox.centerX+40,
         //  centerY:mainBox.centerY
