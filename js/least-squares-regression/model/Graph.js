@@ -15,7 +15,7 @@ define( function( require ) {
   var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
+//  var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
   // var Shape = require( 'KITE/Shape' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -43,7 +43,7 @@ define( function( require ) {
     this.yRange = yRange;
 
 
-    this.dataPointsOnGraph = new ObservableArray(); // @public
+    this.dataPointsOnGraph = [];
 
     // Observable array of the points that have been placed on this graph.
     // this.graphDataPoints = new ObservableArray();
@@ -77,36 +77,6 @@ define( function( require ) {
       return false;
     },
 
-    getBoundaryPoints2: function() {
-      var boundaryPoints = [];
-      var leftYIntercept = this.slopeProperty.value * this.xRange.min + this.intercept;
-      var rightYIntercept = this.slopeProperty.value * this.xRange.max + this.intercept;
-      var bottomXIntercept = (this.yRange.min - this.intercept) / this.slopeProperty.value;
-      var topXIntercept = (this.yRange.max - this.intercept) / this.slopeProperty.value;
-
-      if ( this.yRange.contains( leftYIntercept ) ) {
-        boundaryPoints.push( new Vector2( this.xRange.min, leftYIntercept ) );
-      }
-      if ( this.yRange.contains( rightYIntercept ) ) {
-        boundaryPoints.push( new Vector2( this.xRange.max, rightYIntercept ) );
-      }
-      if ( boundaryPoints.length < 2 ) {
-        if ( this.xRange.contains( topXIntercept ) ) {
-          boundaryPoints.push( new Vector2( topXIntercept, this.yRange.max ) );
-        }
-      }
-      if ( boundaryPoints.length < 2 ) {
-        if ( this.xRange.contains( bottomXIntercept ) ) {
-          boundaryPoints.push( new Vector2( bottomXIntercept, this.yRange.min ) );
-        }
-      }
-
-
-      //      the line can intersect the graph bounds at either 2 points or none.
-      assert && assert( boundaryPoints.length === 2 || boundaryPoints.length === 0, 'line should intersect the closed bounds zero or twice' );
-//       console.log(this.slopeProperty.value);
-      return boundaryPoints;
-    },
 
     getBoundaryPoints: function() {
       var boundaryPoints = [];

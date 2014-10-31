@@ -45,25 +45,24 @@ define( function( require ) {
       {stroke: 'blue', lineWidth: 2} );
     this.addChild( line );
 
-//    Property.multilink( [ graph.slopeProperty,graph.interceptProperty, model.showMyLine  ], function( slope, intercept, showMyLine ) {
-//      line.visible = showMyLine;
-//      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-//      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+    Property.multilink( [ graph.slopeProperty, graph.interceptProperty], function( slope, intercept ) {
+      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+    } );
+
+//    graph.interceptProperty.link( function( intercept ) {
+//      if ( graph.getBoundaryPoints() ) {
+//        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+//        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+//      }
 //    } );
-
-    graph.interceptProperty.link( function( intercept ) {
-      if ( graph.getBoundaryPoints() ) {
-        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
-      }
-    } );
-
-    graph.slopeProperty.link( function( intercept ) {
-      if ( graph.getBoundaryPoints() ) {
-        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
-      }
-    } );
+//
+//    graph.slopeProperty.link( function( intercept ) {
+//      if ( graph.getBoundaryPoints() ) {
+//        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
+//        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+//      }
+//    } );
 
     var equationText = new Text( '**********' );
     var mutableEquationText = new Panel( equationText, { fill: 'white', cornerRadius: 2, resize: false } );
@@ -80,7 +79,7 @@ define( function( require ) {
         {x: 6, y: 9}
       ] ), 2 );
       equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
-      debugger;
+
     } );
 
 
