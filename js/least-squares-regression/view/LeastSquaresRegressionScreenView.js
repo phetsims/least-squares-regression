@@ -55,15 +55,8 @@ define( function( require ) {
     var thisView = this;
 
 
-    //model View transform
-//    var modelViewTransform = ModelViewTransform2.createSinglePointXYScaleMapping(
-//      model.graph.graphOriginPosition,
-//      model.graph.viewOriginPosition,
-//      model.graph.scaleXFactor,
-//      model.graph.scaleYFactor );
-
-    var viewGrapgBounds = new Bounds2( 200, 50, 550, 450 );
-    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGrapgBounds );
+    var viewGraphBounds = new Bounds2( 200, 50, 550, 450 );
+    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
@@ -117,6 +110,10 @@ define( function( require ) {
       var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
       dataPointsLayer.addChild( dataPointNode );
 
+
+      addedDataPoint.positionProperty.link( function() {
+        graphNode.update();
+      } );
       // Move the dataPoint to the front of this layer when grabbed by the user.
       addedDataPoint.userControlledProperty.link( function( userControlled ) {
         if ( userControlled ) {

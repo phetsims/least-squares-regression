@@ -28,10 +28,15 @@ define( function( require ) {
   var pattern_0r_1value = "{0} {1}";
 
   /**
-   * @param {Graph} graph
+   *
+   * @param graph
+   * @param model
+   * @param modelViewTransform
    * @constructor
    */
   function GraphNode( graph, model, modelViewTransform ) {
+    this.graph = graph;
+    this.modelViewTransform = modelViewTransform;
     Node.call( this );
 
     // Create and add the graph itself.
@@ -39,51 +44,66 @@ define( function( require ) {
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
     var graphNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
     this.addChild( graphNode );
+
+
+    var boundaryPoints = graph.getBoundaryPoints( graph.slopeProperty.value, graph.intercept );
     var line = new Line(
-      modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ),
-      modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ),
-      {stroke: 'blue', lineWidth: 2} );
+      modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
+      modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
+      { stroke: 'blue', lineWidth: 2 } );
     this.addChild( line );
 
+
+    var linearFitParameters = graph.getLinearFit();
+    var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+    this.bestFitLine = new Line(
+      modelViewTransform.modelToViewPosition( bestBoundaryPoints[0] ),
+      modelViewTransform.modelToViewPosition( bestBoundaryPoints[1] ),
+      {stroke: 'red', lineWidth: 2} );
+    this.addChild( this.bestFitLine );
+
     Property.multilink( [ graph.slopeProperty, graph.interceptProperty], function( slope, intercept ) {
-      line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-      line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
+      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
+      line.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
+      line.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
     } );
 
-//    graph.interceptProperty.link( function( intercept ) {
-//      if ( graph.getBoundaryPoints() ) {
-//        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-//        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
-//      }
-//    } );
-//
-//    graph.slopeProperty.link( function( intercept ) {
-//      if ( graph.getBoundaryPoints() ) {
-//        line.setPoint1( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[0] ) );
-//        line.setPoint2( modelViewTransform.modelToViewPosition( graph.getBoundaryPoints()[1] ) );
-//      }
-//    } );
-
-    var equationText = new Text( '**********' );
-    var mutableEquationText = new Panel( equationText, { fill: 'white', cornerRadius: 2, resize: false } );
+    this.equationText = new Text( '**********' );
+    var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
     mutableEquationText.bottom = graphNode.bottom - 10;
     mutableEquationText.right = graphNode.right - 10;
     this.addChild( mutableEquationText );
-    // move the slider thumb to reflect the model value
-    model.graph.slopeProperty.link( function( slope ) {
-      //   var rText = Util.toFixedNumber( model.getPearsonCoefficientCorrelation(model.dataPoints.getArray()), 2 );
-      //     var rText = Util.toFixedNumber( model.sumOfX(model.dataPoints.getArray().position), 2 );
-      var rText = Util.toFixedNumber( model.getPearsonCoefficientCorrelation( [
-        {x: 2, y: 4},
-        {x: 3, y: 7},
-        {x: 6, y: 9}
-      ] ), 2 );
-      equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
-
-    } );
-
 
   }
 
-  return inherit( Node, GraphNode );
+  return inherit( Node, GraphNode, {
+    update: function() {
+      this.updatePearsonCoefficient();
+      this.updateBestFitLine();
+    },
+
+    updatePearsonCoefficient: function() {
+      var rText = Util.toFixedNumber( this.graph.getPearsonCoefficientCorrelation(), 2 );
+      this.equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
+    },
+    updateResiduals: function() {
+
+    },
+
+    updateSquaredResiduals: function() {
+
+
+    },
+
+    updateBestFitLine: function() {
+      var linearFitParameters = this.graph.getLinearFit();
+      var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+      this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
+      this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
+    }
+
+
+
+
+  } );
 } );

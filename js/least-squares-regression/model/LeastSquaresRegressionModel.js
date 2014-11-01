@@ -43,7 +43,6 @@ define( function( require ) {
 
     this.dataPoints = new ObservableArray(); // @public
 
-
     this.graph = new Graph(
       new Range( 0, 20 ),
       new Range( 0, 20 )
@@ -72,14 +71,6 @@ define( function( require ) {
       } );
     },
 
-    placeDataPoint: function( dataPoint ) {
-      var dataPointPlaced = false;
-      dataPointPlaced = this.graph.placeDataPoint( dataPoint );
-      if ( !dataPointPlaced ) {
-        dataPoint.returnToOrigin( true );
-      }
-    },
-
     /**
      * Function for adding new  dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
@@ -89,14 +80,20 @@ define( function( require ) {
     addUserCreatedDataPoint: function( dataPoint ) {
       var self = this;
       this.dataPoints.push( dataPoint );
-      dataPoint.userControlledProperty.link( function( userControlled ) {
-        if ( !userControlled ) {
-          self.placeDataPoint( dataPoint );
+      dataPoint.positionProperty.link( function( position ) {
+        if ( !self.graph.isDataPointPositionOverlappingGraph( position ) ) {
+          self.graph.removePoint( dataPoint );
+          dataPoint.returnToOrigin( true );
+        }
+        else {
+          if ( dataPoint.userControlled ) {
+            self.graph.addPoint( dataPoint );
+          }
         }
       } );
 
-      // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
-      // can be 'put back' into the bucket.
+//      The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
+//      can be 'put back' into the bucket.
       dataPoint.on( 'returnedToOrigin', function() {
         if ( !dataPoint.userControlled ) {
           // The dataPoint has been returned to the bucket.
@@ -104,86 +101,9 @@ define( function( require ) {
         }
       } );
 
-    },
-
-    sumOfSquaresXX: function( positionArray ) {
-      var squaresXX = _.map( positionArray, function( position ) { return position.x * position.x; } );
-      var sumOfSquaresXX = _.reduce( squaresXX, function( memo, num ) { return memo + num; }, 0 );
-      return sumOfSquaresXX;
-    },
-
-    sumOfSquaresXY: function( positionArray ) {
-      var squaresXY = _.map( positionArray, function( position ) { return position.x * position.y; } );
-      var sumOfSquaresXY = _.reduce( squaresXY, function( memo, num ) { return memo + num; }, 0 );
-      return sumOfSquaresXY;
-    },
-
-    sumOfSquaresYY: function( positionArray ) {
-      var squaresYY = _.map( positionArray, function( position ) { return position.y * position.y; } );
-      var sumOfSquaresYY = _.reduce( squaresYY, function( memo, num ) { return memo + num; }, 0 );
-      return sumOfSquaresYY;
-    },
-
-    sumOfX: function( positionArray ) {
-      var positionArrayX = _.map( positionArray, function( position ) { return position.x; } );
-      var sumOfX = _.reduce( positionArrayX, function( memo, num ) { return memo + num; }, 0 );
-      return sumOfX;
-    },
-
-    sumOfY: function( positionArray ) {
-      var positionArrayY = _.map( positionArray, function( position ) { return position.y; } );
-      var sumOfY = _.reduce( positionArrayY, function( memo, num ) { return memo + num; }, 0 );
-      return sumOfY;
-    },
-
-    averageOfSumOfSquaresXX: function( positionArray ) {
-      return this.sumOfSquaresXX( positionArray ) / positionArray.length;
-    },
-
-    averageOfSumOfSquaresXY: function( positionArray ) {
-      return this.sumOfSquaresXY( positionArray ) / positionArray.length;
-    },
-
-    averageOfSumOfSquaresYY: function( positionArray ) {
-      return this.sumOfSquaresYY( positionArray ) / positionArray.length;
-    },
-
-    averageOfSumOfX: function( positionArray ) {
-      return this.sumOfX( positionArray ) / positionArray.length;
-    },
-
-    averageOfSumOfY: function( positionArray ) {
-      return this.sumOfY( positionArray ) / positionArray.length;
-    },
-
-    standardDeviationOfX: function( positionArray ) {
-    },
-
-    standardDeviationOfY: function( positionArray ) {
-    },
-
-    getLinearFit: function( positionArray ) {
-      var slopeNumerator = this.averageOfSumOfSquaresXY( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfY( positionArray );
-      var slopeDenominator = this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray );
-      var slope = slopeNumerator / slopeDenominator;
-      var intercept = this.averageOfSumOfY( positionArray ) - slope * this.averageOfSumOfX( positionArray );
-      var pearsonCoefficientCorrelationNumerator = slopeNumerator;
-      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray )) * ( this.averageOfSumOfSquaresYY( positionArray ) - this.averageOfSumOfY( positionArray ) * this.averageOfSumOfY( positionArray )) );
-      var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-      var fitParameters = {
-        slope: slope,
-        intercept: intercept,
-        pearsonCoefficientCorrelation: pearsonCoefficientCorrelation
-      };
-      return fitParameters;
-    },
-
-    getPearsonCoefficientCorrelation: function( positionArray ) {
-      var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfY( positionArray );
-      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX( positionArray ) - this.averageOfSumOfX( positionArray ) * this.averageOfSumOfX( positionArray )) * ( this.averageOfSumOfSquaresYY( positionArray ) - this.averageOfSumOfY( positionArray ) * this.averageOfSumOfY( positionArray )) );
-      var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-      return pearsonCoefficientCorrelation;
     }
+
+
   } );
 } );
 

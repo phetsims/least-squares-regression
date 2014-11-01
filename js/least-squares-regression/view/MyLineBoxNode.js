@@ -31,7 +31,7 @@ define( function( require ) {
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
 
-  var pattern_0slope_1intercept = " y = {0} x + {1} ";
+  //var pattern_0slope_1intercept = " y = {0} x + {1} ";
   var pattern_0sign_1intercept = " {0}{1} ";
 
   /**

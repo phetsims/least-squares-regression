@@ -64,6 +64,7 @@ define( function( require ) {
       },
       start: function( event, trail ) {
         dataPoint.userControlled = true;
+        dataPoint.animating = false;
       },
       end: function( event, trail ) {
         dataPoint.userControlled = false;
