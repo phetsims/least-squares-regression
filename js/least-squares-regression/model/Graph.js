@@ -17,6 +17,7 @@ define( function( require ) {
   //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
 //  var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Rectangle = require( 'DOT/Rectangle' );
   // var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -89,21 +90,49 @@ define( function( require ) {
       );
     },
 
-    findResiduals: function( slope, intercept ) {
-      var residualArray = [];
-      var residualPoints = {};
+    getResidualsPoints: function( slope, intercept ) {
+      var residualPointArray = [];
+      var self = this;
+
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
         var yValue = slope * dataPoint.position.x + intercept;
-        var yValueWithinBounds = Util.clamp( yValue, yRange.min, YRange.max );
+        var yValueWithinBounds = Util.clamp( yValue, self.yRange.min, self.yRange.max );
         var residualPoints = {
           point1: new Vector2( dataPoint.position.x, yValueWithinBounds ),
-          point2: dataPoint.position
+          point2: new Vector2( dataPoint.position.x, dataPoint.position.y )
         };
-        residualArray.push( residualPoints );
+        residualPointArray.push( residualPoints );
       } );
-      return residualArray;
+      return residualPointArray;
     },
 
+    getSquaredResidualsRectangles: function( slope, intercept ) {
+      var squaredResidualArray = [];
+      var self = this;
+      this.dataPointsOnGraph.forEach( function( dataPoint ) {
+        var yValue = slope * dataPoint.position.x + intercept;
+        var yValueWithinBounds = Util.clamp( yValue, self.yRange.min, self.yRange.max );
+        var heightCorrected = yValueWithinBounds - dataPoint.position.y;
+        //TODO xValue must be a square in the view!!
+        var height = yValue - dataPoint.position.y;
+        if ( slope > 0 ) {
+          var xValue = dataPoint.position.x + height;
+        }
+        else {
+          var xValue = dataPoint.position.x - height;
+        }
+        var xValueWithinBounds = Util.clamp( xValue, self.xRange.min, self.xRange.max );
+        var widthCorrected = xValueWithinBounds - dataPoint.position.x;
+        //    console.log(widthCorrected);
+        var minX = Math.min( dataPoint.position.x, dataPoint.position.x + widthCorrected );
+        var maxX = Math.max( dataPoint.position.x, dataPoint.position.x + widthCorrected );
+        var minY = Math.min( dataPoint.position.y, dataPoint.position.y + heightCorrected );
+        var maxY = Math.max( dataPoint.position.y, dataPoint.position.y + heightCorrected );
+        var rectangle = new Bounds2( minX, minY, maxX, maxY );
+        squaredResidualArray.push( rectangle );
+      } );
+      return squaredResidualArray;
+    },
 
     unfollowPoint: function( dataPoint ) {
     },

@@ -27,6 +27,8 @@ define( function( require ) {
   // string
   var pattern_0r_1value = "{0} {1}";
 
+  // var myLineSquaredResidualColor;
+
   /**
    *
    * @param graph
@@ -35,6 +37,7 @@ define( function( require ) {
    * @constructor
    */
   function GraphNode( graph, model, modelViewTransform ) {
+    var graphNode = this;
     this.graph = graph;
     this.modelViewTransform = modelViewTransform;
     Node.call( this );
@@ -42,17 +45,22 @@ define( function( require ) {
     // Create and add the graph itself.
 
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    var graphNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
-    this.addChild( graphNode );
+    var graphBoundsNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
+    this.addChild( graphBoundsNode );
 
 
     var boundaryPoints = graph.getBoundaryPoints( graph.slopeProperty.value, graph.intercept );
-    var line = new Line(
+    var myLine = new Line(
       modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
       modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
       { stroke: 'blue', lineWidth: 2 } );
-    this.addChild( line );
+    this.addChild( myLine );
 
+    this.residualsLines = new Node();
+    this.addChild( this.residualsLines );
+
+    this.squaredResidualsRectangles = new Node();
+    this.addChild( this.squaredResidualsRectangles );
 
     var linearFitParameters = graph.getLinearFit();
     var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
@@ -62,11 +70,6 @@ define( function( require ) {
       {stroke: 'red', lineWidth: 2} );
     this.addChild( this.bestFitLine );
 
-    Property.multilink( [ graph.slopeProperty, graph.interceptProperty], function( slope, intercept ) {
-      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      line.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
-      line.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
-    } );
 
     this.equationText = new Text( '**********' );
     var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
@@ -74,12 +77,23 @@ define( function( require ) {
     mutableEquationText.right = graphNode.right - 10;
     this.addChild( mutableEquationText );
 
+    Property.multilink( [ graph.slopeProperty, graph.interceptProperty], function( slope, intercept ) {
+      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
+      myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
+      myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
+      graphNode.updateResiduals();
+      graphNode.updateSquaredResiduals();
+    } );
+
+
   }
 
   return inherit( Node, GraphNode, {
     update: function() {
       this.updatePearsonCoefficient();
       this.updateBestFitLine();
+      this.updateResiduals();
+      this.updateSquaredResiduals();
     },
 
     updatePearsonCoefficient: function() {
@@ -87,12 +101,32 @@ define( function( require ) {
       this.equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
     },
     updateResiduals: function() {
-
+      var points = this.graph.getResidualsPoints( this.graph.slopeProperty.value, this.graph.intercept );
+      this.residualsLines.removeAllChildren();
+      var self = this;
+      points.forEach( function( point ) {
+        var residualsLine = new Line(
+          self.modelViewTransform.modelToViewPosition( point.point1 ),
+          self.modelViewTransform.modelToViewPosition( point.point2 ),
+          {stroke: 'rgba(0,0,255,0.9)', lineWidth: 1} );
+        self.residualsLines.addChild( residualsLine );
+      } );
     },
 
     updateSquaredResiduals: function() {
-
-
+      var rectangles = this.graph.getSquaredResidualsRectangles( this.graph.slopeProperty.value, this.graph.intercept );
+      this.squaredResidualsRectangles.removeAllChildren();
+      var self = this;
+      rectangles.forEach( function( rectangle ) {
+        var minXBound = self.modelViewTransform.modelToViewX( rectangle.minX );
+        var maxXBound = self.modelViewTransform.modelToViewX( rectangle.maxX );
+        //TODO: find a better way: y is inverted so what is min in the model is max in the view;
+        var maxYBound = self.modelViewTransform.modelToViewY( rectangle.minY );
+        var minYBound = self.modelViewTransform.modelToViewY( rectangle.maxY );
+        var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+        var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: 'rgba(0,0,255,0.5)', stroke: 'gray' } );
+        self.squaredResidualsRectangles.addChild( squaredResidualsRectangle );
+      } );
     },
 
     updateBestFitLine: function() {
