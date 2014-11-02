@@ -33,7 +33,6 @@ define( function( require ) {
   // var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
-
   // constants
   var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
   var DATA_POINT_CREATOR_OFFSET_POSITIONS = [
@@ -44,7 +43,6 @@ define( function( require ) {
     new Vector2( 13, -2 ),
     new Vector2( -2, 0 )];
 
-
   /**
    * @param {LeastSquaresRegressionModel} leastSquaresRegressionModel
    * @constructor
@@ -54,10 +52,8 @@ define( function( require ) {
     ScreenView.call( this, { renderer: 'svg' } );
     var thisView = this;
 
-
     var viewGraphBounds = new Bounds2( 200, 50, 550, 450 );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
-
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
@@ -109,7 +105,6 @@ define( function( require ) {
       // Create and add the view representation for this dataPoint.
       var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
       dataPointsLayer.addChild( dataPointNode );
-
 
       addedDataPoint.positionProperty.link( function() {
         graphNode.update();

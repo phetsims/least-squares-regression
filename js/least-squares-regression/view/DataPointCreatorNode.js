@@ -31,7 +31,6 @@ define( function( require ) {
     Node.call( this, { cursor: 'pointer' } );
     var self = this;
 
-
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
       fill: LSRConstants.DATA_POINT_FILL,
@@ -39,7 +38,6 @@ define( function( require ) {
       lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH } );
 
     this.addChild( representation );
-
 
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {
