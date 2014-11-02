@@ -30,15 +30,15 @@ define( function( require ) {
   function Graph( xRange, yRange ) {
 
     PropertySet.call( this, {
-      angleSlope: 0, // in radians
+      angle: 0, // in radians
       intercept: 0
     } );
 
-    this.slopeProperty = new DerivedProperty( [this.angleSlopeProperty],
-      function( angle ) {
-        var slope = 2 * Math.tan( angle );
-        return slope;
-      } );
+//    this.slopeProperty = new DerivedProperty( [this.angleSlopeProperty],
+//      function( angle ) {
+//        var slope = 2 * Math.tan( angle );
+//        return slope;
+//      } );
 
     this.xRange = xRange;
     this.yRange = yRange;
@@ -52,10 +52,13 @@ define( function( require ) {
 
   return inherit( PropertySet, Graph, {
 
-
     reset: function() {
       PropertySet.prototype.reset.call( this );
       this.dataPointsOnGraph = [];
+    },
+
+    slope: function( angle ) {
+      return  2 * Math.tan( angle );
     },
 
     isDataPointPositionOverlappingGraph: function( position ) {
@@ -65,7 +68,6 @@ define( function( require ) {
     removePoint: function( dataPoint ) {
       if ( this.isDataPointOnList( dataPoint ) ) {
         var index = this.dataPointsOnGraph.indexOf( dataPoint );
-        this.unfollowPoint( dataPoint );
         this.dataPointsOnGraph.splice( index, 1 );
       }
     },
@@ -73,7 +75,6 @@ define( function( require ) {
     addPoint: function( dataPoint ) {
       if ( !this.isDataPointOnList( dataPoint ) ) {
         this.dataPointsOnGraph.push( dataPoint );
-        //    this.followPoint( dataPoint );
       }
     },
 
@@ -90,7 +91,7 @@ define( function( require ) {
       );
     },
 
-    getResidualsPoints: function( slope, intercept ) {
+    residualsPoints: function( slope, intercept ) {
       var residualPointArray = [];
       var self = this;
 
@@ -106,7 +107,7 @@ define( function( require ) {
       return residualPointArray;
     },
 
-    getSquaredResidualsRectangles: function( slope, intercept ) {
+    squaredResidualsRectangles: function( slope, intercept ) {
       var squaredResidualArray = [];
       var self = this;
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
@@ -134,11 +135,43 @@ define( function( require ) {
       return squaredResidualArray;
     },
 
-    unfollowPoint: function( dataPoint ) {
+    sumOfSquaredResiduals: function( slope, intercept ) {
+      var sumOfSquareResiduals = 0;
+      this.dataPointsOnGraph.forEach( function( dataPoint ) {
+        var yResidual = (slope * dataPoint.position.x + intercept) - dataPoint.position.y;
+        sumOfSquareResiduals += yResidual * yResidual;
+      } );
+      return sumOfSquareResiduals;
     },
 
-    update: function() {
+    getMyLineSumOfSquaredResiduals: function() {
+      return this.sumOfSquaredResiduals( this.slope( this.angle ), this.intercept );
+    },
 
+    getBestFitLineSumOfSquaredResiduals: function() {
+      var linearFitParameters = this.getLinearFit();
+      return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept );
+    },
+
+    getMyLineSquaredResidualsRectangles: function() {
+      return this.squaredResidualsRectangles( this.slope( this.angle ), this.intercept );
+    },
+
+    getBestFitLineSquaredResidualsRectangles: function() {
+      var linearFitParameters = this.getLinearFit();
+      return this.squaredResidualsRectangles( linearFitParameters.slope, linearFitParameters.intercept );
+    },
+
+    getMyLineResidualsPoints: function() {
+      return this.residualsPoints( this.slope( this.angle ), this.intercept );
+    },
+
+    getBestFitLineResidualsPoints: function() {
+      var linearFitParameters = this.getLinearFit();
+//      if ( linearFitParameters===null){
+//        return null;
+//      }
+      return this.residualsPoints( linearFitParameters.slope, linearFitParameters.intercept );
     },
 
     getBoundaryPoints: function( slope, intercept ) {
@@ -223,6 +256,9 @@ define( function( require ) {
     },
 
     getLinearFit: function() {
+//      if ( this.dataPointsOnGraph.length<2){
+//        return null;
+//      }
       this.getStatistics();
 
       var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
@@ -231,14 +267,9 @@ define( function( require ) {
 
       var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-//      var pearsonCoefficientCorrelationNumerator = slopeNumerator;
-//      var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
-//      var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-
       var fitParameters = {
         slope: slope,
         intercept: intercept
-//        pearsonCoefficientCorrelation: pearsonCoefficientCorrelation
       };
       return fitParameters;
     },

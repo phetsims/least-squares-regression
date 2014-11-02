@@ -48,19 +48,24 @@ define( function( require ) {
     var graphBoundsNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
     this.addChild( graphBoundsNode );
 
-
-    var boundaryPoints = graph.getBoundaryPoints( graph.slopeProperty.value, graph.intercept );
+    var boundaryPoints = graph.getBoundaryPoints( graph.slope, graph.intercept );
     var myLine = new Line(
       modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
       modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
       { stroke: 'blue', lineWidth: 2 } );
     this.addChild( myLine );
 
-    this.residualsLines = new Node();
-    this.addChild( this.residualsLines );
+    this.myLineSquaredResidualsRectangles = new Node();
+    this.addChild( this.myLineSquaredResidualsRectangles );
 
-    this.squaredResidualsRectangles = new Node();
-    this.addChild( this.squaredResidualsRectangles );
+    this.bestFitLineSquaredResidualsRectangles = new Node();
+    this.addChild( this.bestFitLineSquaredResidualsRectangles );
+
+    this.myLineResidualsLines = new Node();
+    this.addChild( this.myLineResidualsLines );
+
+    this.bestFitLineResidualsLines = new Node();
+    this.addChild( this.bestFitLineResidualsLines );
 
     var linearFitParameters = graph.getLinearFit();
     var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
@@ -70,6 +75,18 @@ define( function( require ) {
       {stroke: 'red', lineWidth: 2} );
     this.addChild( this.bestFitLine );
 
+    model.showMyLineProperty.linkAttribute( myLine, 'visible' );
+    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
+    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
+
+    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
+    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
+    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
+
+    model.showMyLineProperty.link( function( visible ) {
+    } );
+    model.showBestFitLineProperty.link( function( visible ) {
+    } );
 
     this.equationText = new Text( '**********' );
     var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
@@ -77,45 +94,61 @@ define( function( require ) {
     mutableEquationText.right = graphNode.right - 10;
     this.addChild( mutableEquationText );
 
-    Property.multilink( [ graph.slopeProperty, graph.interceptProperty], function( slope, intercept ) {
+    Property.multilink( [ graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
+      var slope = graph.slope( angle );
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
       myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
       myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
-      graphNode.updateResiduals();
-      graphNode.updateSquaredResiduals();
+      graphNode.updateMyLineResiduals();
+      graphNode.updateMyLineSquaredResiduals();
     } );
-
-
   }
 
   return inherit( Node, GraphNode, {
     update: function() {
       this.updatePearsonCoefficient();
       this.updateBestFitLine();
-      this.updateResiduals();
-      this.updateSquaredResiduals();
+      this.updateMyLineResiduals();
+      this.updateMyLineSquaredResiduals();
+      if ( this.graph.dataPointsOnGraph.length > 1 ) {
+        this.updateBestFitLineResiduals();
+        this.updateBestFitLineSquaredResiduals();
+      }
     },
 
     updatePearsonCoefficient: function() {
       var rText = Util.toFixedNumber( this.graph.getPearsonCoefficientCorrelation(), 2 );
       this.equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
     },
-    updateResiduals: function() {
-      var points = this.graph.getResidualsPoints( this.graph.slopeProperty.value, this.graph.intercept );
-      this.residualsLines.removeAllChildren();
+    updateMyLineResiduals: function() {
+      var points = this.graph.getMyLineResidualsPoints();
+      this.myLineResidualsLines.removeAllChildren();
       var self = this;
       points.forEach( function( point ) {
         var residualsLine = new Line(
           self.modelViewTransform.modelToViewPosition( point.point1 ),
           self.modelViewTransform.modelToViewPosition( point.point2 ),
-          {stroke: 'rgba(0,0,255,0.9)', lineWidth: 1} );
-        self.residualsLines.addChild( residualsLine );
+          {stroke: 'rgba(0,255,255,1)', lineWidth: 4} );
+        self.myLineResidualsLines.addChild( residualsLine );
       } );
     },
 
-    updateSquaredResiduals: function() {
-      var rectangles = this.graph.getSquaredResidualsRectangles( this.graph.slopeProperty.value, this.graph.intercept );
-      this.squaredResidualsRectangles.removeAllChildren();
+    updateBestFitLineResiduals: function() {
+      var points = this.graph.getBestFitLineResidualsPoints();
+      this.bestFitLineResidualsLines.removeAllChildren();
+      var self = this;
+      points.forEach( function( point ) {
+        var residualsLine = new Line(
+          self.modelViewTransform.modelToViewPosition( point.point1 ),
+          self.modelViewTransform.modelToViewPosition( point.point2 ),
+          {stroke: 'rgba(255,0,0,1)', lineWidth: 4} );
+        self.bestFitLineResidualsLines.addChild( residualsLine );
+      } );
+    },
+
+    updateMyLineSquaredResiduals: function() {
+      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
+      this.myLineSquaredResidualsRectangles.removeAllChildren();
       var self = this;
       rectangles.forEach( function( rectangle ) {
         var minXBound = self.modelViewTransform.modelToViewX( rectangle.minX );
@@ -125,7 +158,27 @@ define( function( require ) {
         var minYBound = self.modelViewTransform.modelToViewY( rectangle.maxY );
         var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
         var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: 'rgba(0,0,255,0.5)', stroke: 'gray' } );
-        self.squaredResidualsRectangles.addChild( squaredResidualsRectangle );
+        self.myLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
+      } );
+    },
+
+    updateBestFitLineSquaredResiduals: function() {
+      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
+      if ( rectangles === null ) {
+        return null;
+      }
+      this.bestFitLineSquaredResidualsRectangles.removeAllChildren();
+      var self = this;
+      rectangles.forEach( function( rectangle ) {
+        var minXBound = self.modelViewTransform.modelToViewX( rectangle.minX );
+        var maxXBound = self.modelViewTransform.modelToViewX( rectangle.maxX );
+        //TODO: find a better way: y is inverted so what is min in the model is max in the view;
+        var maxYBound = self.modelViewTransform.modelToViewY( rectangle.minY );
+        var minYBound = self.modelViewTransform.modelToViewY( rectangle.maxY );
+        var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+
+        var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: 'rgba(255,0,0,0.5)', stroke: 'gray' } );
+        self.bestFitLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
       } );
     },
 
@@ -135,7 +188,6 @@ define( function( require ) {
       this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
       this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
     }
-
 
 
 
