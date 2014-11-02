@@ -12,12 +12,12 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var DerivedProperty = require( 'AXON/DerivedProperty' );
+//  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
 //  var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Rectangle = require( 'DOT/Rectangle' );
+  // var Rectangle = require( 'DOT/Rectangle' );
   // var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
@@ -80,16 +80,16 @@ define( function( require ) {
 
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
-      return index === -1 ? false : true;
+      return index === -1;
     },
 
-    followPoint: function( dataPoint ) {
-      var self = this;
-      dataPoint.positionProperty.link( function() {
-          self.update();
-        }
-      );
-    },
+//    followPoint: function( dataPoint ) {
+//      var self = this;
+//      dataPoint.positionProperty.link( function() {
+//          self.update();
+//        }
+//      );
+//    },
 
     residualsPoints: function( slope, intercept ) {
       var residualPointArray = [];
@@ -116,12 +116,10 @@ define( function( require ) {
         var heightCorrected = yValueWithinBounds - dataPoint.position.y;
         //TODO xValue must be a square in the view!!
         var height = yValue - dataPoint.position.y;
-        if ( slope > 0 ) {
-          var xValue = dataPoint.position.x + height;
+        if ( slope < 0 ) {
+          height = -height;
         }
-        else {
-          var xValue = dataPoint.position.x - height;
-        }
+        var xValue = dataPoint.position.x + height;
         var xValueWithinBounds = Util.clamp( xValue, self.xRange.min, self.xRange.max );
         var widthCorrected = xValueWithinBounds - dataPoint.position.x;
         //    console.log(widthCorrected);

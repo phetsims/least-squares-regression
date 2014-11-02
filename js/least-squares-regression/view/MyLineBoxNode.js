@@ -14,7 +14,7 @@ define( function( require ) {
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Node = require( 'SCENERY/nodes/Node' );
+//  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Range = require( 'DOT/Range' );
@@ -64,9 +64,9 @@ define( function( require ) {
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
 
 
-    var equationText = new Text( '', { stroke: 'black' } );
-    var mainBox = new VBox();
-    mainBox = new VBox( {spacing: 5, children: [
+    // var equationText = new Text( '', { stroke: 'black' } );
+
+    var mainBox = new VBox( {spacing: 5, children: [
       new CheckBox( new Text( myLineString, LSRConstants.TEXT_FONT ), model.showMyLineProperty ),
       new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2, resize: false  } ),
       //   mutableEquationText,
@@ -114,7 +114,7 @@ define( function( require ) {
 
     model.graph.interceptProperty.link( function( intercept ) {
       interceptText = Util.toFixedNumber( intercept, 2 );
-      var isNegative = Math.sign( Util.toFixedNumber( intercept, 2 ) ) == -1 ? true : false;
+      var isNegative = Math.sign( Util.toFixedNumber( intercept, 2 ) ) === -1;
       var signText = isNegative ? '' : '+';
       eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
       // eqnPartFourText.text = Util.toFixedNumber( intercept, 2 );
