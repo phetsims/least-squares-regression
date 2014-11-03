@@ -71,7 +71,7 @@ define( function( require ) {
 
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
-      return index === -1;
+      return (index !== -1);
     },
 
     residualsPoints: function( slope, intercept ) {
@@ -243,6 +243,7 @@ define( function( require ) {
     },
 
     getLinearFit: function() {
+//      assert && assert(this.dataPointsOnGraph.length>=2, 'need at least two data points to do a linear fit');
 //      if ( this.dataPointsOnGraph.length<2){
 //        return null;
 //      }
