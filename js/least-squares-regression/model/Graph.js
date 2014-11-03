@@ -12,13 +12,10 @@ define( function( require ) {
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-//  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
 //  var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
-  // var Rectangle = require( 'DOT/Rectangle' );
-  // var Shape = require( 'KITE/Shape' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -33,12 +30,6 @@ define( function( require ) {
       angle: 0, // in radians
       intercept: 0
     } );
-
-//    this.slopeProperty = new DerivedProperty( [this.angleSlopeProperty],
-//      function( angle ) {
-//        var slope = 2 * Math.tan( angle );
-//        return slope;
-//      } );
 
     this.xRange = xRange;
     this.yRange = yRange;
@@ -83,18 +74,9 @@ define( function( require ) {
       return index === -1;
     },
 
-//    followPoint: function( dataPoint ) {
-//      var self = this;
-//      dataPoint.positionProperty.link( function() {
-//          self.update();
-//        }
-//      );
-//    },
-
     residualsPoints: function( slope, intercept ) {
       var residualPointArray = [];
       var self = this;
-
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
         var yValue = slope * dataPoint.position.x + intercept;
         var yValueWithinBounds = Util.clamp( yValue, self.yRange.min, self.yRange.max );
@@ -122,7 +104,6 @@ define( function( require ) {
         var xValue = dataPoint.position.x + height;
         var xValueWithinBounds = Util.clamp( xValue, self.xRange.min, self.xRange.max );
         var widthCorrected = xValueWithinBounds - dataPoint.position.x;
-        //    console.log(widthCorrected);
         var minX = Math.min( dataPoint.position.x, dataPoint.position.x + widthCorrected );
         var maxX = Math.max( dataPoint.position.x, dataPoint.position.x + widthCorrected );
         var minY = Math.min( dataPoint.position.y, dataPoint.position.y + heightCorrected );
@@ -166,14 +147,20 @@ define( function( require ) {
 
     getBestFitLineResidualsPoints: function() {
       var linearFitParameters = this.getLinearFit();
-//      if ( linearFitParameters===null){
-//        return null;
-//      }
       return this.residualsPoints( linearFitParameters.slope, linearFitParameters.intercept );
     },
 
+    /**
+     * Returns an array of two points that crosses the rectangular bounds of the graph
+     *
+     * @param {number} slope
+     * @param {number} intercept
+     * @returns {Array}
+     */
     getBoundaryPoints: function( slope, intercept ) {
       var boundaryPoints = [];
+      // check the four corner points
+
       var valueBottomLeft = slope * this.xRange.min + intercept - this.yRange.min;
       var valueTopLeft = slope * this.xRange.min + intercept - this.yRange.max;
       var valueBottomRight = slope * this.xRange.max + intercept - this.yRange.min;
@@ -191,6 +178,8 @@ define( function( require ) {
       if ( valueTopRight === 0 ) {
         boundaryPoints.push( new Vector2( this.xRange.max, this.yRange.max ) );
       }
+
+      // Check along the boundaries. The sign of the function must change
 
       if ( valueBottomLeft * valueBottomRight < 0 ) {
         var bottomXIntercept = (this.yRange.min - intercept) / slope;
