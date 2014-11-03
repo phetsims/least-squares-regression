@@ -41,7 +41,7 @@ define( function( require ) {
   // var AXIS_LABEL_SPACING = 2; // space between end of axis and label
 
   // ticks
-  var MAJOR_TICK_SPACING = 50; // model units
+  var MAJOR_TICK_SPACING = 5; // model units
   var MINOR_TICK_LENGTH = 0; // how far a minor tick extends from the axis
   var MINOR_TICK_LINE_WIDTH = 0.5;
   var MINOR_TICK_COLOR = 'black';
@@ -234,7 +234,7 @@ define( function( require ) {
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function GraphNode( graph, modelViewTransform ) {
+  function GraphAxesNode( graph, modelViewTransform ) {
     assert && assert( graph.contains( new Vector2( 0, 0 ) ) && graph.contains( new Vector2( 1, 1 ) ) ); // (0,0) and quadrant 1 is visible
     Node.call( this, {
         children: [
@@ -245,5 +245,5 @@ define( function( require ) {
     );
   }
 
-  return inherit( Node, GraphNode );
+  return inherit( Node, GraphAxesNode );
 } );

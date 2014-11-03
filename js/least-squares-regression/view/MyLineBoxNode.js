@@ -63,9 +63,6 @@ define( function( require ) {
     model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
 
-
-    // var equationText = new Text( '', { stroke: 'black' } );
-
     var mainBox = new VBox( {spacing: 5, children: [
       new CheckBox( new Text( myLineString, LSRConstants.TEXT_FONT ), model.showMyLineProperty ),
       new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2, resize: false  } ),
@@ -75,8 +72,6 @@ define( function( require ) {
       new HBox( {spacing: 5, children: [
         new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
         new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
-        //  centerX:mainBox.centerX+40,
-        //  centerY:mainBox.centerY
       } ),
       residualsCheckBox,
       squaredResidualsCheckBox,
@@ -109,7 +104,6 @@ define( function( require ) {
       var slope = model.graph.slope( angle );
       slopeText = Util.toFixedNumber( slope, 2 );
       eqnPartTwoText.text = Util.toFixedNumber( slope, 2 );
-//      equationText.text = StringUtils.format( pattern_0slope_1intercept, slopeText, interceptText );
     } );
 
     model.graph.interceptProperty.link( function( intercept ) {
@@ -117,7 +111,7 @@ define( function( require ) {
       var isNegative = Math.sign( Util.toFixedNumber( intercept, 2 ) ) === -1;
       var signText = isNegative ? '' : '+';
       eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
-      // eqnPartFourText.text = Util.toFixedNumber( intercept, 2 );
+
     } );
 
   }
