@@ -49,30 +49,32 @@ define( function( require ) {
         self.trigger( 'returnedToOrigin' );
       }
     } );
-
   }
 
   return inherit( PropertySet, DataPoint, {
 
     step: function( dt ) {
       if ( !this.userControlled ) {
-
-        // perform any animation
-        var distanceToDestination = this.position.distance( this.destination );
-        if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
-          // Move a step toward the destination.
-          var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
-          var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
-          this.position = this.position.plus( stepVector );
-        }
-        else if ( this.animating ) {
-          // Less than one time step away, so just go to the destination.
-          this.position = this.destination;
-          this.animating = false;
-        }
+        this.animationStep( dt );
       }
-
     },
+
+    animationStep: function( dt ) {
+      // perform any animation
+      var distanceToDestination = this.position.distance( this.destination );
+      if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
+        // Move a step toward the destination.
+        var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
+        var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
+        this.position = this.position.plus( stepVector );
+      }
+      else if ( this.animating ) {
+        // Less than one time step away, so just go to the destination.
+        this.position = this.destination;
+        this.animating = false;
+      }
+    },
+
 
     /**
      * Set the destination for this data point.
