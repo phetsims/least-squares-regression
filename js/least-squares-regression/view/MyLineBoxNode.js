@@ -108,7 +108,7 @@ define( function( require ) {
 
     model.graph.interceptProperty.link( function( intercept ) {
       interceptText = Util.toFixedNumber( intercept, 2 );
-      var isNegative = Math.sign( Util.toFixedNumber( intercept, 2 ) ) === -1;
+      var isNegative = (Util.toFixedNumber( intercept, 2 ) < 0);
       var signText = isNegative ? '' : '+';
       eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
 
