@@ -59,8 +59,7 @@ define( function( require ) {
 
       // Handler that moves the dataPoint in model space.
       translate: function( translationParams ) {
-        dataPoint.setDestination( dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) ), false );
-        return translationParams.position;
+        dataPoint.position = dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
       },
       start: function( event, trail ) {
         dataPoint.userControlled = true;

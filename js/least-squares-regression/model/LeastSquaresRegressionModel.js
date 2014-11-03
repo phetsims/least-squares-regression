@@ -80,16 +80,21 @@ define( function( require ) {
       var self = this;
       this.dataPoints.push( dataPoint );
       dataPoint.positionProperty.link( function( position ) {
-        if ( !self.graph.isDataPointPositionOverlappingGraph( position ) ) {
-          self.graph.removePoint( dataPoint );
-          dataPoint.returnToOrigin( true );
+        if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
+          self.graph.addPoint( dataPoint );
         }
         else {
-          if ( dataPoint.userControlled ) {
-            self.graph.addPoint( dataPoint );
-          }
+          self.graph.removePoint( dataPoint );
         }
       } );
+
+      dataPoint.userControlledProperty.link( function( userControlled ) {
+        var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
+        if ( !isOnGraph && !userControlled ) {
+          dataPoint.animating = true;
+        }
+      } );
+
 
 //      The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
 //      can be 'put back' into the bucket.
@@ -103,7 +108,9 @@ define( function( require ) {
     }
 
   } );
+
 } );
+
 
 
 

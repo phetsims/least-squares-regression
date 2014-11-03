@@ -40,8 +40,7 @@ define( function( require ) {
 
     } );
 
-    // Destination is used for animation, and should be set through accessor methods only.
-    this.destination = initialPosition.copy(); // @private
+    this.initialPosition = initialPosition;
 
     // Trigger an event whenever this data point returns to its original position.
     this.positionProperty.lazyLink( function( position ) {
@@ -54,49 +53,28 @@ define( function( require ) {
   return inherit( PropertySet, DataPoint, {
 
     step: function( dt ) {
-      if ( !this.userControlled ) {
+      if ( this.animating ) {
         this.animationStep( dt );
       }
     },
 
     animationStep: function( dt ) {
       // perform any animation
-      var distanceToDestination = this.position.distance( this.destination );
+      var distanceToDestination = this.position.distance( this.initialPosition );
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
-        // Move a step toward the destination.
-        var stepAngle = Math.atan2( this.destination.y - this.position.y, this.destination.x - this.position.x );
+        // Move a step toward the position.
+        var stepAngle = Math.atan2( this.initialPosition.y - this.position.y, this.initialPosition.x - this.position.x );
         var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
         this.position = this.position.plus( stepVector );
       }
-      else if ( this.animating ) {
-        // Less than one time step away, so just go to the destination.
-        this.position = this.destination;
+      else {
+        // Less than one time step away, so just go to the position.
+        this.position = this.initialPosition;
         this.animating = false;
       }
     },
 
-
-    /**
-     * Set the destination for this data point.
-     * @param {Vector2} destination
-     * @param {boolean} animate
-     */
-    setDestination: function( destination, animate ) {
-      this.destination = destination;
-      if ( animate ) {
-        this.animating = true;
-      }
-      else {
-        this.position = destination;
-      }
-    },
-
-    /**
-     * Return the data point to the place where it was originally created.
-     * @param {boolean} animate
-     */
-    returnToOrigin: function( animate ) {
-      this.setDestination( this.positionProperty.initialValue, animate );
+    returnToOrigin: function() {
     }
 
   } );

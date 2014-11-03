@@ -72,7 +72,7 @@ define( function( require ) {
       },
 
       translate: function( translationParams ) {
-        this.dataPoint.setDestination( this.dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) ) );
+        this.dataPoint.position = this.dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
       },
 
       end: function( event, trail ) {
