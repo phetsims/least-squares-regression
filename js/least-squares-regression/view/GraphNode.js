@@ -49,6 +49,7 @@ define( function( require ) {
     this.addChild( graphBoundsNode );
 
     var boundaryPoints = graph.getBoundaryPoints( graph.slope, graph.intercept );
+
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
       modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
@@ -75,18 +76,26 @@ define( function( require ) {
     this.bestFitLineResidualsLines = new Node();
     this.addChild( this.bestFitLineResidualsLines );
 
-//    model.showMyLineProperty.linkAttribute( myLine, 'visible' );
-//    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
-//    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
-//
-//    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
-//    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
-//    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
+    model.showMyLineProperty.linkAttribute( this.myLine, 'visible' );
+    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
+    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
 
-//    model.showMyLineProperty.link( function( visible ) {
-//    } );
-//    model.showBestFitLineProperty.link( function( visible ) {
-//    } );
+    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
+    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
+    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
+
+    model.showMyLineProperty.link( function( visible ) {
+      if ( visible === false ) {
+        model.showResidualsOfMyLine = false;
+        model.showSquareResidualsOfMyLine = false;
+      }
+    } );
+    model.showBestFitLineProperty.link( function( visible ) {
+      if ( visible === false ) {
+        model.showResidualsOfBestFitLine = false;
+        model.showSquareResidualsOfBestFitLine = false;
+      }
+    } );
 
     this.equationText = new Text( '**********' );
     var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
