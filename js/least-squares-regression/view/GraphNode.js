@@ -49,11 +49,19 @@ define( function( require ) {
     this.addChild( graphBoundsNode );
 
     var boundaryPoints = graph.getBoundaryPoints( graph.slope, graph.intercept );
-    var myLine = new Line(
+    this.myLine = new Line(
       modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
       modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
       { stroke: 'blue', lineWidth: 2 } );
-    this.addChild( myLine );
+    this.addChild( this.myLine );
+
+    var linearFitParameters = graph.getLinearFit();
+    var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+    this.bestFitLine = new Line(
+      modelViewTransform.modelToViewPosition( bestBoundaryPoints[0] ),
+      modelViewTransform.modelToViewPosition( bestBoundaryPoints[1] ),
+      {stroke: 'red', lineWidth: 2} );
+    this.addChild( this.bestFitLine );
 
     this.myLineSquaredResidualsRectangles = new Node();
     this.addChild( this.myLineSquaredResidualsRectangles );
@@ -67,26 +75,18 @@ define( function( require ) {
     this.bestFitLineResidualsLines = new Node();
     this.addChild( this.bestFitLineResidualsLines );
 
-    var linearFitParameters = graph.getLinearFit();
-    var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
-    this.bestFitLine = new Line(
-      modelViewTransform.modelToViewPosition( bestBoundaryPoints[0] ),
-      modelViewTransform.modelToViewPosition( bestBoundaryPoints[1] ),
-      {stroke: 'red', lineWidth: 2} );
-    this.addChild( this.bestFitLine );
+//    model.showMyLineProperty.linkAttribute( myLine, 'visible' );
+//    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
+//    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
+//
+//    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
+//    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
+//    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
 
-    model.showMyLineProperty.linkAttribute( myLine, 'visible' );
-    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
-    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
-
-    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
-    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
-    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
-
-    model.showMyLineProperty.link( function( visible ) {
-    } );
-    model.showBestFitLineProperty.link( function( visible ) {
-    } );
+//    model.showMyLineProperty.link( function( visible ) {
+//    } );
+//    model.showBestFitLineProperty.link( function( visible ) {
+//    } );
 
     this.equationText = new Text( '**********' );
     var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
@@ -97,14 +97,18 @@ define( function( require ) {
     Property.multilink( [ graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
-      myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
+      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
+      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
       graphNode.updateMyLineResiduals();
       graphNode.updateMyLineSquaredResiduals();
     } );
   }
 
   return inherit( Node, GraphNode, {
+    reset: function() {
+
+    },
+
     update: function() {
       this.updatePearsonCoefficient();
       this.updateBestFitLine();
@@ -113,6 +117,7 @@ define( function( require ) {
       if ( this.graph.dataPointsOnGraph.length > 1 ) {
         this.updateBestFitLineResiduals();
         this.updateBestFitLineSquaredResiduals();
+
       }
     },
 
