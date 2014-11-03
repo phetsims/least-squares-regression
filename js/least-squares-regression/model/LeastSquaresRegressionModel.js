@@ -14,7 +14,6 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  // var Property = require( 'AXON/Property' );
   var Range = require( 'DOT/Range' );
 
   // var Util = require( 'DOT/Util' );
