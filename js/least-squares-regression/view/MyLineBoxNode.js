@@ -49,7 +49,7 @@ define( function( require ) {
     var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
 
     var eqnPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqnPartTwoText = new Text( '-0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
+    var eqnPartTwoText = new Text( '?', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
     var eqnPartThreeText = new Text( ' x ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     var eqnPartFourText = new Text( '+0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
     var mutableEquationText = new HBox( {spacing: 3, children: [eqnPartOneText, eqnPartTwoText, eqnPartThreeText, eqnPartFourText]} );
@@ -102,13 +102,13 @@ define( function( require ) {
 
     model.graph.angleProperty.link( function( angle ) {
       var slope = model.graph.slope( angle );
-      slopeText = Util.toFixedNumber( slope, 2 );
-      eqnPartTwoText.text = Util.toFixedNumber( slope, 2 );
+      slopeText = Util.toFixed( slope, 2 );
+      eqnPartTwoText.text = Util.toFixed( slope, 2 );
     } );
 
     model.graph.interceptProperty.link( function( intercept ) {
-      interceptText = Util.toFixedNumber( intercept, 2 );
-      var isNegative = (Util.toFixedNumber( intercept, 2 ) < 0);
+      interceptText = Util.toFixed( intercept, 2 );
+      var isNegative = (Util.toFixed( intercept, 2 ) < 0);
       var signText = isNegative ? '' : '+';
       eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
 

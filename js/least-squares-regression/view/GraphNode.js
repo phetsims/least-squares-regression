@@ -13,7 +13,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   // var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
-//  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Line = require( 'SCENERY/nodes/Line' );
   // var Path = require( 'SCENERY/nodes/Path' );
@@ -27,7 +27,10 @@ define( function( require ) {
   // string
   var pattern_0r_1value = "{0} {1}";
 
-  // var myLineSquaredResidualColor;
+  // constants
+
+  var LINE_WIDTH = 2;
+  var RESIDUAL_LINE_WIDTH = 2;
 
   /**
    *
@@ -45,23 +48,28 @@ define( function( require ) {
     // Create and add the graph itself.
 
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    var graphBoundsNode = Rectangle.bounds( this.viewBounds, { fill: 'white', stroke: 'gray' } );
+    var graphBoundsNode = Rectangle.bounds( this.viewBounds, { fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray' } );
     this.addChild( graphBoundsNode );
 
-    var boundaryPoints = graph.getBoundaryPoints( graph.slope, graph.intercept );
-
+    var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
+    console.log( myLineBoundaryPoints );
     this.myLine = new Line(
-      modelViewTransform.modelToViewPosition( boundaryPoints[0] ),
-      modelViewTransform.modelToViewPosition( boundaryPoints[1] ),
-      { stroke: 'blue', lineWidth: 2 } );
+      modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
+      modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
+      { stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH } );
     this.addChild( this.myLine );
 
+
+    // set bestFitLine to zero length and then update it
+    this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
     var linearFitParameters = graph.getLinearFit();
-    var bestBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
-    this.bestFitLine = new Line(
-      modelViewTransform.modelToViewPosition( bestBoundaryPoints[0] ),
-      modelViewTransform.modelToViewPosition( bestBoundaryPoints[1] ),
-      {stroke: 'red', lineWidth: 2} );
+    if ( linearFitParameters !== null ) {
+      var bestFitLineBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+      this.bestFitLine = new Line(
+        modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point1 ),
+        modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point2 ),
+        {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
+    }
     this.addChild( this.bestFitLine );
 
     this.myLineSquaredResidualsRectangles = new Node();
@@ -97,8 +105,8 @@ define( function( require ) {
       }
     } );
 
-    this.equationText = new Text( '**********' );
-    var mutableEquationText = new Panel( this.equationText, { fill: 'white', cornerRadius: 2, resize: false } );
+    this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
+    var mutableEquationText = new Panel( this.equationText, { fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false } );
     mutableEquationText.bottom = graphNode.bottom - 10;
     mutableEquationText.right = graphNode.right - 10;
     this.addChild( mutableEquationText );
@@ -106,8 +114,15 @@ define( function( require ) {
     Property.multilink( [ graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
-      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
+      if ( boundaryPoints !== null ) {
+        graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+        graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+      }
+      else {
+        graphNode.myLine.setPoint1( 0, 0 ); // set line in a corner
+        graphNode.myLine.setPoint2( 0, 0 ); //
+      }
+
       graphNode.updateMyLineResiduals();
       graphNode.updateMyLineSquaredResiduals();
     } );
@@ -115,15 +130,16 @@ define( function( require ) {
 
   return inherit( Node, GraphNode, {
     reset: function() {
-
     },
 
     update: function() {
-      this.updatePearsonCoefficient();
-      this.updateBestFitLine();
-      this.updateMyLineResiduals();
-      this.updateMyLineSquaredResiduals();
-      if ( this.graph.dataPointsOnGraph.length > 1 ) {
+      if ( this.graph.dataPointsOnGraph.length >= 1 ) {
+        this.updateMyLineResiduals();
+        // this.updateMyLineSquaredResiduals();
+      }
+      if ( this.graph.dataPointsOnGraph.length >= 2 ) {
+        this.updatePearsonCoefficient();
+        this.updateBestFitLine();
         this.updateBestFitLineResiduals();
         this.updateBestFitLineSquaredResiduals();
 
@@ -131,79 +147,140 @@ define( function( require ) {
     },
 
     updatePearsonCoefficient: function() {
-      var rText = Util.toFixedNumber( this.graph.getPearsonCoefficientCorrelation(), 2 );
-      this.equationText.text = StringUtils.format( pattern_0r_1value, 'r =', rText );
+      var rText = Util.toFixed( this.graph.getPearsonCoefficientCorrelation(), 2 );
+      this.equationText.text = StringUtils.format( pattern_0r_1value, 'r = ', rText );
     },
+
     updateMyLineResiduals: function() {
       var points = this.graph.getMyLineResidualsPoints();
       this.myLineResidualsLines.removeAllChildren();
-      var self = this;
-      points.forEach( function( point ) {
-        var residualsLine = new Line(
-          self.modelViewTransform.modelToViewPosition( point.point1 ),
-          self.modelViewTransform.modelToViewPosition( point.point2 ),
-          {stroke: 'rgba(0,255,255,1)', lineWidth: 4} );
-        self.myLineResidualsLines.addChild( residualsLine );
-      } );
+      if ( points !== null ) {
+        var self = this;
+        points.forEach( function( point ) {
+          var residualsLine = new Line(
+            self.modelViewTransform.modelToViewPosition( point.point1 ),
+            self.modelViewTransform.modelToViewPosition( point.point2 ),
+            {stroke: LSRConstants.MY_LINE_RESIDUAL_COLOR, lineWidth: RESIDUAL_LINE_WIDTH} );
+          self.myLineResidualsLines.addChild( residualsLine );
+        } );
+      }
     },
 
     updateBestFitLineResiduals: function() {
-      var points = this.graph.getBestFitLineResidualsPoints();
       this.bestFitLineResidualsLines.removeAllChildren();
-      var self = this;
-      points.forEach( function( point ) {
-        var residualsLine = new Line(
-          self.modelViewTransform.modelToViewPosition( point.point1 ),
-          self.modelViewTransform.modelToViewPosition( point.point2 ),
-          {stroke: 'rgba(255,0,0,1)', lineWidth: 4} );
-        self.bestFitLineResidualsLines.addChild( residualsLine );
-      } );
+      var points = this.graph.getBestFitLineResidualsPoints();
+      if ( points !== null ) {
+        var self = this;
+        points.forEach( function( point ) {
+          var residualsLine = new Line(
+            self.modelViewTransform.modelToViewPosition( point.point1 ),
+            self.modelViewTransform.modelToViewPosition( point.point2 ),
+            {stroke: LSRConstants.BEST_FIT_LINE_RESIDUAL_COLOR, lineWidth: RESIDUAL_LINE_WIDTH} );
+          self.bestFitLineResidualsLines.addChild( residualsLine );
+        } );
+      }
     },
 
     updateMyLineSquaredResiduals: function() {
-      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
       this.myLineSquaredResidualsRectangles.removeAllChildren();
-      var self = this;
-      rectangles.forEach( function( rectangle ) {
-        var minXBound = self.modelViewTransform.modelToViewX( rectangle.minX );
-        var maxXBound = self.modelViewTransform.modelToViewX( rectangle.maxX );
-        //TODO: find a better way: y is inverted so what is min in the model is max in the view;
-        var maxYBound = self.modelViewTransform.modelToViewY( rectangle.minY );
-        var minYBound = self.modelViewTransform.modelToViewY( rectangle.maxY );
-        var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
-        var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: 'rgba(0,0,255,0.5)', stroke: 'gray' } );
-        self.myLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
-      } );
+      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
+      if ( rectangles !== null ) {
+        var self = this;
+        rectangles.forEach( function( rectangle ) {
+          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
+          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
+          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
+          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
+
+          // since the modelViewTransform might flip the axis, let's recalculate the min and max
+          var minXBound = Math.min( x1, x2 );
+          var maxXBound = Math.max( x1, x2 );
+          var minYBound = Math.min( y1, y2 );
+          var maxYBound = Math.max( y1, y2 );
+          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray' } );
+          self.myLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
+        } );
+      }
+
     },
 
     updateBestFitLineSquaredResiduals: function() {
-      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
-      if ( rectangles === null ) {
-        return null;
-      }
       this.bestFitLineSquaredResidualsRectangles.removeAllChildren();
-      var self = this;
-      rectangles.forEach( function( rectangle ) {
-        var minXBound = self.modelViewTransform.modelToViewX( rectangle.minX );
-        var maxXBound = self.modelViewTransform.modelToViewX( rectangle.maxX );
-        //TODO: find a better way: y is inverted so what is min in the model is max in the view;
-        var maxYBound = self.modelViewTransform.modelToViewY( rectangle.minY );
-        var minYBound = self.modelViewTransform.modelToViewY( rectangle.maxY );
-        var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
+      if ( rectangles !== null ) {
+        var self = this;
+        rectangles.forEach( function( rectangle ) {
+          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
+          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
+          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
+          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
 
-        var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: 'rgba(255,0,0,0.5)', stroke: 'gray' } );
-        self.bestFitLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
-      } );
+          // since the modelViewTransform might flip the axis, let's recalculate the min and max
+          var minXBound = Math.min( x1, x2 );
+          var maxXBound = Math.max( x1, x2 );
+          var minYBound = Math.min( y1, y2 );
+          var maxYBound = Math.max( y1, y2 );
+          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+
+          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray' } );
+          self.bestFitLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
+        } );
+      }
     },
+//    updateMyLineSquaredResiduals: function() {
+//      var node = this.myLineSquaredResidualsRectangles;
+//      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
+//      var fillColor = this.myLineSquaredResidualsRectangles;
+//      this.updateSquaredResiduals( node, rectangles, fillColor );
+//    },
+//
+//    updateBestFitLineSquaredResiduals: function() {
+//      var node = this.bestFitLineSquaredResidualsRectangles;
+//      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
+//      var fillColor = this.bestFitLineSquaredResidualsRectangles;
+//      this.updateSquaredResiduals( node, rectangles, fillColor );
+//    },
+//
+//    updateSquaredResiduals: function( node, rectangles, fillColor ) {
+//      node.removeAllChildren();
+//      var self = this;
+//      if ( rectangles !== null ) {
+//        rectangles.forEach( function( rectangle ) {
+//          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
+//          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
+//          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
+//          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
+//
+//          // since the modelViewTransform might flip the axis, let's recalculate the min and max
+//          var minXBound = Math.min( x1, x2 );
+//          var maxXBound = Math.max( x1, x2 );
+//          var minYBound = Math.min( y1, y2 );
+//          var maxYBound = Math.max( y1, y2 );
+//          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
+//
+//          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: fillColor, stroke: 'gray' } );
+//          node.addChild(squaredResidualsRectangle );
+//        } );
+//      }
+//
+//    },
 
     updateBestFitLine: function() {
       var linearFitParameters = this.graph.getLinearFit();
-      var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
-      this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints[0] ) );
-      this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints[1] ) );
+      if ( linearFitParameters !== null ) {
+        var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+        if ( boundaryPoints !== null ) {
+          this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+          this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+        }
+        else {
+          this.bestFitLine.myLine.setPoint1( 0, 0 ); // set line in a corner
+          this.bestFitLine.myLine.setPoint2( 0, 0 ); //
+        }
+      }
     }
-
-
-
-  } );
-} );
+  } )
+    ;
+} )
+;

@@ -23,8 +23,15 @@ define( function( require ) {
 
     // Various other constants
     BACKGROUND_COLOR: 'rgb( 225, 255, 255 )',
-    MY_LINE_COLOR: 'blue',
-    BEST_FIT_LINE_COLOR: 'red',
+
+    GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',
+    MY_LINE_COLOR: 'rgba(0,0,200,1)',
+    MY_LINE_RESIDUAL_COLOR: 'rgba(0,0,255,1)',
+    MY_LINE_SQUARED_RESIDUAL_COLOR: 'rgba(0,0,255,0.5)',
+    BEST_FIT_LINE_COLOR: 'rgba(200,0,0,1)',
+    BEST_FIT_LINE_RESIDUAL_COLOR: 'rgba(255,0,0,1)',
+    BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR: 'rgba(255,0,0,0.5)',
+
     RESIDUAL_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
     RESIDUALS_SQUARE_TRANSPARENCY_FACTOR: 0.6,
 

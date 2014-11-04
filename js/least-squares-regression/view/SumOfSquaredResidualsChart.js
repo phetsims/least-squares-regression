@@ -28,11 +28,12 @@ define( function( require ) {
   var pattern_0sign_1intercept = " {0}{1} ";
 
   /**
-   * {Model} model of the main simulation
-   * {Object} options
+   *
+   * @param {number} sumOfSquaredResiduals
+   * @param {Property Boolean} visibleProperty
    * @constructor
    */
-  function SumOfSquaredResidualsChart( model, options ) {
+  function SumOfSquaredResidualsChart( sumOfSquaredResiduals, visibleProperty ) {
 
     var eqPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
 
@@ -41,8 +42,7 @@ define( function( require ) {
 
     var sumOfSquaredResiduals = new Rectangle( 0, 0, 10, 10, { fill: 'red' } );
 
-    //TODO fixed such that the text can be disabled
-    model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
+
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
 
 
