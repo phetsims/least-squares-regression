@@ -16,7 +16,6 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
-  // constants
 
   /**
    * @param {Vector2} initialPosition
@@ -41,13 +40,6 @@ define( function( require ) {
     } );
 
     this.initialPosition = initialPosition;
-
-    // Trigger an event whenever this data point returns to its original position.
-    this.positionProperty.lazyLink( function( position ) {
-      if ( position.equals( initialPosition ) ) {
-        self.trigger( 'returnedToOrigin' );
-      }
-    } );
   }
 
   return inherit( PropertySet, DataPoint, {
@@ -61,6 +53,8 @@ define( function( require ) {
     animationStep: function( dt ) {
       // perform any animation
       var distanceToDestination = this.position.distance( this.initialPosition );
+
+      // TODO: ANIMATION_VELOCITY is set in the model: not the view... adapt for scaling factor
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
         // Move a step toward the position.
         var stepAngle = Math.atan2( this.initialPosition.y - this.position.y, this.initialPosition.x - this.position.x );
@@ -68,13 +62,11 @@ define( function( require ) {
         this.position = this.position.plus( stepVector );
       }
       else {
-        // Less than one time step away, so just go to the position.
+        // Less than one time step away, so just go to the initial position.
         this.position = this.initialPosition;
         this.animating = false;
+        this.trigger( 'returnedToOrigin' );
       }
-    },
-
-    returnToOrigin: function() {
     }
 
   } );

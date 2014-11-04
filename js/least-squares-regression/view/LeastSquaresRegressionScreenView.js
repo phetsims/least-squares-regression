@@ -114,6 +114,7 @@ define( function( require ) {
         if ( userControlled ) {
           dataPointNode.moveToFront();
         }
+        graphNode.update();
       } );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.

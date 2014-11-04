@@ -99,12 +99,8 @@ define( function( require ) {
 //      The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
 //      can be 'put back' into the bucket.
       dataPoint.on( 'returnedToOrigin', function() {
-        if ( !dataPoint.userControlled ) {
-          // The dataPoint has been returned to the bucket.
-          self.dataPoints.remove( dataPoint );
-        }
+        self.dataPoints.remove( dataPoint );
       } );
-
     }
 
   } );

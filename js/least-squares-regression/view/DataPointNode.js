@@ -47,10 +47,10 @@ define( function( require ) {
       self.center = modelViewTransform.modelToViewPosition( position );
     } );
 
-    dataPoint.animatingProperty.link( function( animating ) {
-      // To avoid certain complications, make it so that users can't grab this when it is moving.
-      self.pickable = !animating;
-    } );
+//    dataPoint.animatingProperty.link( function( animating ) {
+//      // To avoid certain complications, make it so that users can't grab this when it is moving.
+//      self.pickable = !animating;
+//    } );
 
     // Add the listener that will allow the user to drag the dataPoint around.
     this.addInputListener( new SimpleDragHandler( {
@@ -63,6 +63,7 @@ define( function( require ) {
       },
       start: function( event, trail ) {
         dataPoint.userControlled = true;
+        dataPoint.animating = false; // can stop point animation by catching the moving point in flight.
       },
       end: function( event, trail ) {
         dataPoint.userControlled = false;
