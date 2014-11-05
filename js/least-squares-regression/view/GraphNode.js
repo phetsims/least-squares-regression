@@ -135,7 +135,7 @@ define( function( require ) {
     update: function() {
       if ( this.graph.dataPointsOnGraph.length >= 1 ) {
         this.updateMyLineResiduals();
-        // this.updateMyLineSquaredResiduals();
+        this.updateMyLineSquaredResiduals();
       }
       if ( this.graph.dataPointsOnGraph.length >= 2 ) {
         this.updatePearsonCoefficient();

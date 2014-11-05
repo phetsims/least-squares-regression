@@ -17,6 +17,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
@@ -34,11 +35,17 @@ define( function( require ) {
    * @constructor
    */
   function BestFitLineBoxNode( model, options ) {
+
+
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), 'red', model.showSquareResidualsOfBestFitLineProperty );
+
+
     AccordionBox.call( this, new VBox( {spacing: 5, children: [
         new CheckBox( new Text( bestFitLineString, LSRConstants.TEXT_FONT ), model.showBestFitLineProperty ),
         new Panel( new Text( 'Equation' ), { fill: 'white', stroke: 'black', cornerRadius: 2, resize: false } ),
         new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfBestFitLineProperty ),
-        new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfBestFitLineProperty )
+        new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfBestFitLineProperty ),
+        sumOfSquaredResiduals
       ], align: 'left'} ),
 
       _.extend( {
@@ -47,6 +54,8 @@ define( function( require ) {
 
         buttonXMargin: 10,
         buttonYMargin: 6,
+
+        resize: false,
 
         titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
         titleXMargin: 0,

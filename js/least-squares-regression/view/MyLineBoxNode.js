@@ -19,6 +19,7 @@ define( function( require ) {
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Range = require( 'DOT/Range' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
@@ -57,8 +58,9 @@ define( function( require ) {
     var residualsCheckBox = new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfMyLineProperty );
     var squaredResidualsCheckBox = new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfMyLineProperty );
 
-    var sumOfSquaredResiduals = new Rectangle( 0, 0, 10, 10, { fill: 'red' } );
+    // var sumOfSquaredResiduals = new Rectangle( 0, 0, 10, 10, { fill: 'red' } );
 
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), 'red', model.showSquareResidualsOfMyLineProperty );
     //TODO fixed such that the text can be disabled
     model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
@@ -80,6 +82,7 @@ define( function( require ) {
 
     Panel.call( this, mainBox,
       _.extend( {
+        resize: false,
         cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
         fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
         align: 'left',
@@ -91,14 +94,12 @@ define( function( require ) {
     var interceptText;
     var slopeText;
 
-    // Handle the comings and goings of  dataPoints.
-    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      addedDataPoint.positionProperty.link( function() {
-        sumOfSquaredResiduals.rectWidth = model.graph.getMyLineSumOfSquaredResiduals();
-      } );
-    } );
-
-    sumOfSquaredResiduals.rectWidth = 30;
+//    // Handle the comings and goings of  dataPoints.
+//    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
+//      addedDataPoint.positionProperty.link( function() {
+//        sumOfSquaredResiduals.rectWidth = model.graph.getMyLineSumOfSquaredResiduals();
+//      } );
+//    } );
 
     model.graph.angleProperty.link( function( angle ) {
       var slope = model.graph.slope( angle );
