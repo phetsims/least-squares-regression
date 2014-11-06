@@ -235,7 +235,6 @@ define( function( require ) {
    * @constructor
    */
   function GraphAxesNode( graph, modelViewTransform ) {
-    assert && assert( graph.contains( new Vector2( 0, 0 ) ) && graph.contains( new Vector2( 1, 1 ) ) ); // (0,0) and quadrant 1 is visible
     Node.call( this, {
         children: [
           new GridNode( graph, modelViewTransform ),
