@@ -55,26 +55,33 @@ define( function( require ) {
     var eqnPartFourText = new Text( '+0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
     var mutableEquationText = new HBox( {spacing: 3, children: [eqnPartOneText, eqnPartTwoText, eqnPartThreeText, eqnPartFourText]} );
 
-    var residualsCheckBox = new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfMyLineProperty );
-    var squaredResidualsCheckBox = new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfMyLineProperty );
+
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, model.showMyLineProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfMyLineProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.showSquareResidualsOfMyLineProperty );
+
+    var slidersBox = new HBox( {
+      spacing: 5, children: [
+        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
+        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
+    } );
 
     // var sumOfSquaredResiduals = new Rectangle( 0, 0, 10, 10, { fill: 'red' } );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), 'red', model.showSquareResidualsOfMyLineProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfMyLineProperty );
     //TODO fixed such that the text can be disabled
     model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
+    model.showMyLineProperty.link( function( enabled ) {
+      slidersBox.opacity = enabled ? 1 : 0.3;
+    } );
 
     var mainBox = new VBox( {spacing: 5, children: [
-      new CheckBox( new Text( myLineString, LSRConstants.TEXT_FONT ), model.showMyLineProperty ),
+      lineCheckBox,
       new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2, resize: false  } ),
       //   mutableEquationText,
       immutableEquationText,
-
-      new HBox( {spacing: 5, children: [
-        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
-        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
-      } ),
+      slidersBox,
       residualsCheckBox,
       squaredResidualsCheckBox,
       sumOfSquaredResiduals
@@ -94,13 +101,6 @@ define( function( require ) {
     var interceptText;
     var slopeText;
 
-//    // Handle the comings and goings of  dataPoints.
-//    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
-//      addedDataPoint.positionProperty.link( function() {
-//        sumOfSquaredResiduals.rectWidth = model.graph.getMyLineSumOfSquaredResiduals();
-//      } );
-//    } );
-
     model.graph.angleProperty.link( function( angle ) {
       var slope = model.graph.slope( angle );
       slopeText = Util.toFixed( slope, 2 );
@@ -110,10 +110,11 @@ define( function( require ) {
     model.graph.interceptProperty.link( function( intercept ) {
       interceptText = Util.toFixed( intercept, 2 );
       var isNegative = (Util.toFixed( intercept, 2 ) < 0);
-      var signText = isNegative ? '' : '+';
+      var signText = isNegative ? '\u2212' : '\u002B';
       eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
 
     } );
+
 
   }
 

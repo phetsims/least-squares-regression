@@ -11,10 +11,12 @@ define( function( require ) {
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
   var CheckBox = require( 'SUN/CheckBox' );
+  var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
   // var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
+  var Property = require( 'AXON/Property' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
@@ -37,14 +39,34 @@ define( function( require ) {
   function BestFitLineBoxNode( model, options ) {
 
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), 'red', model.showSquareResidualsOfBestFitLineProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfBestFitLineProperty );
+
+    var equationText = new Text( 'stuff' );
+    var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
+    var linearFitParameters = model.graph.getLinearFit();
+    if ( linearFitParameters !== null ) {
+      this.equationNode = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
+    }
+    else {
+    }
+
+    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, model.showBestFitLineProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfBestFitLineProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.showSquareResidualsOfBestFitLineProperty );
+
+
+    model.showBestFitLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
+    model.showBestFitLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
+    model.showBestFitLineProperty.link( function( enabled ) {
+      equationPanel.opacity = enabled ? 1 : 0.3;
+    } );
 
 
     AccordionBox.call( this, new VBox( {spacing: 5, children: [
-        new CheckBox( new Text( bestFitLineString, LSRConstants.TEXT_FONT ), model.showBestFitLineProperty ),
-        new Panel( new Text( 'Equation' ), { fill: 'white', stroke: 'black', cornerRadius: 2, resize: false } ),
-        new CheckBox( new Text( residualsString, LSRConstants.TEXT_FONT ), model.showResidualsOfBestFitLineProperty ),
-        new CheckBox( new Text( squaredResidualsString, LSRConstants.TEXT_FONT ), model.showSquareResidualsOfBestFitLineProperty ),
+        lineCheckBox,
+        equationPanel,
+        residualsCheckBox,
+        squaredResidualsCheckBox,
         sumOfSquaredResiduals
       ], align: 'left'} ),
 
@@ -55,6 +77,7 @@ define( function( require ) {
         buttonXMargin: 10,
         buttonYMargin: 6,
 
+        expandedProperty: new Property( false ),
         resize: false,
 
         titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
@@ -63,7 +86,28 @@ define( function( require ) {
         contentXMargin: 8,
         contentYMargin: 5
       }, options ) );
+
+
+    // Handle the comings and goings of  dataPoints.
+    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
+      addedDataPoint.positionProperty.link( function() {
+        var linearFitParameters = model.graph.getLinearFit();
+        if ( linearFitParameters !== null ) {
+          //TODO fix equation Text
+          //      equationText = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
+        }
+        else {
+          //    equationText = null;
+        }
+
+      } );
+    } );
   }
 
-  return inherit( AccordionBox, BestFitLineBoxNode );
+  return inherit( AccordionBox, BestFitLineBoxNode,
+    {
+      update: function() {
+
+      }
+    } );
 } );
