@@ -48,7 +48,7 @@ define( function( require ) {
     // Create and add the graph itself.
 
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    var graphBoundsNode = Rectangle.bounds( this.viewBounds, { fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray' } );
+    var graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
     this.addChild( graphBoundsNode );
 
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
@@ -56,7 +56,7 @@ define( function( require ) {
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
-      { stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH } );
+      {stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH} );
     this.addChild( this.myLine );
 
 
@@ -106,12 +106,12 @@ define( function( require ) {
     } );
 
     this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
-    var mutableEquationText = new Panel( this.equationText, { fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false } );
+    var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false} );
     mutableEquationText.bottom = graphNode.bottom - 10;
     mutableEquationText.right = graphNode.right - 10;
     this.addChild( mutableEquationText );
 
-    Property.multilink( [ graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
+    Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
       if ( boundaryPoints !== null ) {
@@ -130,24 +130,34 @@ define( function( require ) {
 
   return inherit( Node, GraphNode, {
     reset: function() {
+      //TODO should reset the pearson coefficient
+      this.myLineSquaredResidualsRectangles.removeAllChildren();
+      this.bestFitLineSquaredResidualsRectangles.removeAllChildren();
+      this.myLineResidualsLines.removeAllChildren();
+      this.bestFitLineResidualsLines.removeAllChildren();
+      this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
+      this.bestFitLine.setPoint2( 0, 0 )
+
     },
 
     update: function() {
-      if ( this.graph.dataPointsOnGraph.length >= 1 ) {
-        this.updateMyLineResiduals();
-        this.updateMyLineSquaredResiduals();
-      }
-      if ( this.graph.dataPointsOnGraph.length >= 2 ) {
-        this.updatePearsonCoefficient();
-        this.updateBestFitLine();
-        this.updateBestFitLineResiduals();
-        this.updateBestFitLineSquaredResiduals();
-
-      }
+      this.updateMyLineResiduals();
+      this.updateMyLineSquaredResiduals();
+      this.updatePearsonCoefficient();
+      this.updateBestFitLine();
+      this.updateBestFitLineResiduals();
+      this.updateBestFitLineSquaredResiduals();
     },
 
     updatePearsonCoefficient: function() {
-      var rText = Util.toFixed( this.graph.getPearsonCoefficientCorrelation(), 2 );
+      var rText
+      if ( this.graph.dataPointsOnGraph.length >= 2 ) {
+        rText = Util.toFixed( this.graph.getPearsonCoefficientCorrelation(), 2 );
+      }
+      else {
+        rText = '   ';
+      }
+
       this.equationText.text = StringUtils.format( pattern_0r_1value, 'r = ', rText );
     },
 
@@ -198,7 +208,7 @@ define( function( require ) {
           var minYBound = Math.min( y1, y2 );
           var maxYBound = Math.max( y1, y2 );
           var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
-          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray' } );
+          var squaredResidualsRectangle = Rectangle.bounds( bound, {fill: LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray'} );
           self.myLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
         } );
       }
@@ -223,7 +233,7 @@ define( function( require ) {
           var maxYBound = Math.max( y1, y2 );
           var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
 
-          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray' } );
+          var squaredResidualsRectangle = Rectangle.bounds( bound, {fill: LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray'} );
           self.bestFitLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
         } );
       }
@@ -275,12 +285,15 @@ define( function( require ) {
           this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
         }
         else {
-          this.bestFitLine.myLine.setPoint1( 0, 0 ); // set line in a corner
-          this.bestFitLine.myLine.setPoint2( 0, 0 ); //
+          this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
+          this.bestFitLine.setPoint2( 0, 0 ); //
         }
       }
+      else {
+        this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
+        this.bestFitLine.setPoint2( 0, 0 ); //
+      }
     }
-  } )
-    ;
+  } );
 } )
 ;
