@@ -22,7 +22,7 @@ define( function( require ) {
    * @constructor
    */
   function DataPoint( initialPosition ) {
-    var self = this;
+    //  var self = this;
 
     PropertySet.call( this, {
 

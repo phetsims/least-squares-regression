@@ -49,11 +49,11 @@ define( function( require ) {
     },
 
     getWidth: function() {
-      return this.bounds.width
+      return this.bounds.width;
     },
 
     getHeight: function() {
-      return this.bounds.height
+      return this.bounds.height;
     },
 
     slope: function( angle ) {
@@ -146,7 +146,7 @@ define( function( require ) {
     getBestFitLineSumOfSquaredResiduals: function() {
       if ( this.dataPointsOnGraph.length >= 2 ) {
         var linearFitParameters = this.getLinearFit();
-        return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept )
+        return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept );
       }
       else {
         return 0;

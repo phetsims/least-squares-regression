@@ -52,7 +52,6 @@ define( function( require ) {
     this.addChild( graphBoundsNode );
 
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
-    console.log( myLineBoundaryPoints );
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
@@ -136,7 +135,7 @@ define( function( require ) {
       this.myLineResidualsLines.removeAllChildren();
       this.bestFitLineResidualsLines.removeAllChildren();
       this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
-      this.bestFitLine.setPoint2( 0, 0 )
+      this.bestFitLine.setPoint2( 0, 0 );
 
     },
 
@@ -150,7 +149,7 @@ define( function( require ) {
     },
 
     updatePearsonCoefficient: function() {
-      var rText
+      var rText;
       if ( this.graph.dataPointsOnGraph.length >= 2 ) {
         rText = Util.toFixed( this.graph.getPearsonCoefficientCorrelation(), 2 );
       }

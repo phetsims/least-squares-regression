@@ -15,6 +15,7 @@ define( function( require ) {
   // var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+//  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -41,7 +42,8 @@ define( function( require ) {
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfBestFitLineProperty );
 
-    var equationText = new Text( 'stuff' );
+    //  debugger;
+    var equationText = new Text( 'y = 1000x + 1000' );
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
     var linearFitParameters = model.graph.getLinearFit();
     if ( linearFitParameters !== null ) {
@@ -62,13 +64,15 @@ define( function( require ) {
     } );
 
 
-    AccordionBox.call( this, new VBox( {spacing: 5, children: [
-        lineCheckBox,
-        equationPanel,
-        residualsCheckBox,
-        squaredResidualsCheckBox,
-        sumOfSquaredResiduals
-      ], align: 'left'} ),
+    AccordionBox.call( this, new VBox( {
+        spacing: 5, children: [
+          lineCheckBox,
+          equationPanel,
+          residualsCheckBox,
+          squaredResidualsCheckBox,
+          sumOfSquaredResiduals
+        ], align: 'left'
+      } ),
 
       _.extend( {
         cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
@@ -93,11 +97,12 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         var linearFitParameters = model.graph.getLinearFit();
         if ( linearFitParameters !== null ) {
-          //TODO fix equation Text
-          //      equationText = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
+          equationPanel.removeChild( equationText );
+          equationText = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
+          equationPanel.addChild( equationText );
         }
         else {
-          //    equationText = null;
+          //   equationText = null;
         }
 
       } );

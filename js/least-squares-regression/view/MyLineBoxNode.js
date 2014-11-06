@@ -18,7 +18,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var Range = require( 'DOT/Range' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+//  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
