@@ -48,6 +48,14 @@ define( function( require ) {
       this.dataPointsOnGraph = [];
     },
 
+    getWidth: function() {
+      return this.bounds.width
+    },
+
+    getHeight: function() {
+      return this.bounds.height
+    },
+
     slope: function( angle ) {
       //TODO find a more robust way
       return  2 * Math.tan( angle );

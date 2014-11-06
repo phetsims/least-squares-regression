@@ -16,6 +16,7 @@ define( function( require ) {
   // var Color = require( 'SCENERY/util/Color' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
+  var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var EraserButton = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -49,7 +50,7 @@ define( function( require ) {
    */
   function LeastSquaresRegressionScreenView( model ) {
 
-    ScreenView.call( this, { renderer: 'svg' } );
+    ScreenView.call( this, {renderer: 'svg'} );
     var thisView = this;
 
     var viewGraphBounds = new Bounds2( 200, 50, 550, 450 );
@@ -63,15 +64,20 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
+
+    var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+    this.addChild( graphAxesNode );
+
     var graphNode = new GraphNode( model.graph, model, modelViewTransform );
     this.addChild( graphNode );
+
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
     this.addChild( backLayer );
 //    Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
 //     all of the point placement graphs in the z-order.
-    var dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
+    var dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
 
     var bucketFrontLayer = new Node();
     this.addChild( bucketFrontLayer );
@@ -96,7 +102,16 @@ define( function( require ) {
     this.addChild( new EraserButton( {
       right: bucketFront.right - 3,
       top: bucketFront.bottom + 5,
-      listener: function() { model.dataPoints.clear(); }
+      listener: function() {
+        //    model.graph.reset();
+        model.dataPoints.forEach( function( dataPoint ) {
+          dataPoint.animating = true;
+        } );
+        graphNode.update();
+
+        //       graphNode.reset();
+//        model.graph.reset()
+      }
     } ) );
 
     // Handle the comings and goings of  dataPoints.
