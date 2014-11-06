@@ -43,7 +43,8 @@ define( function( require ) {
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfBestFitLineProperty );
 
     //  debugger;
-    var equationText = new Text( 'y = 1000x + 1000' );
+    var equationText = new EquationNode( 0, 0 );
+    //  var equationText = new Text( 'y = 1000x + 1000' );
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
     var linearFitParameters = model.graph.getLinearFit();
     if ( linearFitParameters !== null ) {
@@ -60,7 +61,7 @@ define( function( require ) {
     model.showBestFitLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showBestFitLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
     model.showBestFitLineProperty.link( function( enabled ) {
-      equationPanel.opacity = enabled ? 1 : 0.3;
+      equationPanel.visible = enabled;
     } );
 
 
@@ -97,9 +98,10 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         var linearFitParameters = model.graph.getLinearFit();
         if ( linearFitParameters !== null ) {
-          equationPanel.removeChild( equationText );
-          equationText = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
-          equationPanel.addChild( equationText );
+          //     equationPanel.removeChild( equationText );
+          equationText.setSlopeText( linearFitParameters.slope );
+          equationText.setInterceptText( linearFitParameters.intercept );
+          //   equationPanel.addChild( equationText );
         }
         else {
           //   equationText = null;

@@ -11,6 +11,7 @@ define( function( require ) {
   // modules
   var CheckBox = require( 'SUN/CheckBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
   var HBox = require( 'SCENERY/nodes/HBox' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -44,17 +45,13 @@ define( function( require ) {
   function MyLineBoxNode( model, options ) {
 
     var eqPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
+    var eqPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     var eqPartThreeText = new Text( ' x + ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqPartFourText = new Text( bString, {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
+    var eqPartFourText = new Text( bString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
 
-    var eqnPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqnPartTwoText = new Text( '?', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
-    var eqnPartThreeText = new Text( ' x ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
-    var eqnPartFourText = new Text( '+0.00', {font: LSRConstants.TEXT_FONT, fill: 'blue'} );
-    var mutableEquationText = new HBox( {spacing: 3, children: [eqnPartOneText, eqnPartTwoText, eqnPartThreeText, eqnPartFourText]} );
-
+    var equationText = new EquationNode( model.graph.slope( model.graph.angle ), model.graph.intercept );
+    var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 2, resize: false} );
 
     var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, model.showMyLineProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfMyLineProperty );
@@ -66,26 +63,30 @@ define( function( require ) {
         new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
     } );
 
-    // var sumOfSquaredResiduals = new Rectangle( 0, 0, 10, 10, { fill: 'red' } );
-
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfMyLineProperty );
-    //TODO fixed such that the text can be disabled
+
+    model.showMyLineProperty.linkAttribute( equationText, 'visible' );
     model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
+
     model.showMyLineProperty.link( function( enabled ) {
       slidersBox.opacity = enabled ? 1 : 0.3;
+      equationPanel.opacity = enabled ? 1 : 0.3;
+      immutableEquationText.opacity = enabled ? 1 : 0.3;
     } );
 
-    var mainBox = new VBox( {spacing: 5, children: [
-      lineCheckBox,
-      new Panel( mutableEquationText, { fill: 'white', cornerRadius: 2, resize: false  } ),
-      //   mutableEquationText,
-      immutableEquationText,
-      slidersBox,
-      residualsCheckBox,
-      squaredResidualsCheckBox,
-      sumOfSquaredResiduals
-    ], align: 'left' } );
+
+    var mainBox = new VBox( {
+      spacing: 5, children: [
+        lineCheckBox,
+        equationPanel,
+        immutableEquationText,
+        slidersBox,
+        residualsCheckBox,
+        squaredResidualsCheckBox,
+        sumOfSquaredResiduals
+      ], align: 'left'
+    } );
 
     Panel.call( this, mainBox,
       _.extend( {
@@ -98,20 +99,14 @@ define( function( require ) {
       }, options )
     );
 
-    var interceptText;
-    var slopeText;
 
     model.graph.angleProperty.link( function( angle ) {
       var slope = model.graph.slope( angle );
-      slopeText = Util.toFixed( slope, 2 );
-      eqnPartTwoText.text = Util.toFixed( slope, 2 );
+      equationText.setSlopeText( slope );
     } );
 
     model.graph.interceptProperty.link( function( intercept ) {
-      interceptText = Util.toFixed( intercept, 2 );
-      var isNegative = (Util.toFixed( intercept, 2 ) < 0);
-      var signText = isNegative ? '\u2212' : '\u002B';
-      eqnPartFourText.text = StringUtils.format( pattern_0sign_1intercept, signText, interceptText );
+      equationText.setInterceptText( intercept );
 
     } );
 

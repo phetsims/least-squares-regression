@@ -63,13 +63,12 @@ define( function( require ) {
 
 
     Property.multilink( [model.graph.angleProperty, model.graph.interceptProperty], function( angle, intercept ) {
-      rectangleBarometer.rectWidth = getSumOfSquaredResiduals();
+      rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
     } );
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
-        //TODO : check if OK to use ecmas 6
         rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
       } );
     } );
@@ -84,7 +83,6 @@ define( function( require ) {
       else {
         value = (Math.exp( x ) - Math.exp( -x )) / (Math.exp( x ) + Math.exp( -x ));
       }
-
       return value;
     }
 
