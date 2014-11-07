@@ -103,14 +103,11 @@ define( function( require ) {
       right: bucketFront.right - 3,
       top: bucketFront.bottom + 5,
       listener: function() {
-        //    model.graph.reset();
         model.dataPoints.forEach( function( dataPoint ) {
           dataPoint.animating = true;
         } );
         graphNode.update();
 
-        //       graphNode.reset();
-//        model.graph.reset()
       }
     } ) );
 

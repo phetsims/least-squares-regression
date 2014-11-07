@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that defines a data point that can be moved by the user and placed on the data point placement graphs.
+ * Type that defines a data point that can be moved by the user and placed on the graph.
  *
  * @author John Blanco
  */
@@ -22,11 +22,10 @@ define( function( require ) {
    * @constructor
    */
   function DataPoint( initialPosition ) {
-    //  var self = this;
 
     PropertySet.call( this, {
 
-      // Property that indicates where in model space the upper left corner of this data point is. In general, this should
+      // Property that indicates where in model space the center of this data point is. In general, this should
       // not be set directly outside of this type, and should only be manipulated through the methods defined below.
       position: initialPosition,
 
@@ -34,12 +33,11 @@ define( function( require ) {
       // view node.
       userControlled: false,
 
-      // Flag that indicates whether this element is animating from one location to another, should not be set externally.
+      // Flag that indicates whether this element is animating from one location to the bucket.
       animating: false
 
     } );
 
-    this.initialPosition = initialPosition;
   }
 
   return inherit( PropertySet, DataPoint, {
@@ -52,18 +50,17 @@ define( function( require ) {
 
     animationStep: function( dt ) {
       // perform any animation
-      var distanceToDestination = this.position.distance( this.initialPosition );
-
+      var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
       // TODO: ANIMATION_VELOCITY is set in the model: not the view... adapt for scaling factor
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
         // Move a step toward the position.
-        var stepAngle = Math.atan2( this.initialPosition.y - this.position.y, this.initialPosition.x - this.position.x );
+        var stepAngle = Math.atan2( this.positionProperty.initialValue.y - this.position.y, this.positionProperty.initialValue.x - this.position.x );
         var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
         this.position = this.position.plus( stepVector );
       }
       else {
         // Less than one time step away, so just go to the initial position.
-        this.position = this.initialPosition;
+        this.position = this.positionProperty.initialValue;
         this.animating = false;
         this.trigger( 'returnedToOrigin' );
       }

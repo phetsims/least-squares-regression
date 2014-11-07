@@ -242,16 +242,6 @@ define( function( require ) {
         boundaryPointArray.push( new Vector2( this.xRange.min, leftYIntercept ) );
       }
 
-//      // no points cross the bounds
-//      //TODO find a way not to pass anything.
-//      if ( boundaryPointArray.length === 0 ) {
-//        boundaryPointArray.push( new Vector2( this.xRange.min, this.yRange.min ) );
-//        boundaryPointArray.push( new Vector2( this.xRange.min, this.yRange.min ) );
-//      }
-//      // the line crosses the bounds at one corner
-//      if ( boundaryPointArray.length < 1 ) {
-//        boundaryPointArray.push( boundaryPointArray[0] );
-//      }
       var arrayLength = boundaryPointArray.length;
 
       assert && assert( arrayLength <= 2, 'A straight line cannot cross the rectangular bounds at more than two places' );

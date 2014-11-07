@@ -44,7 +44,6 @@ define( function( require ) {
 
     //  debugger;
     var equationText = new EquationNode( 0, 0 );
-    //  var equationText = new Text( 'y = 1000x + 1000' );
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
     var linearFitParameters = model.graph.getLinearFit();
     if ( linearFitParameters !== null ) {
@@ -98,10 +97,8 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         var linearFitParameters = model.graph.getLinearFit();
         if ( linearFitParameters !== null ) {
-          //     equationPanel.removeChild( equationText );
           equationText.setSlopeText( linearFitParameters.slope );
           equationText.setInterceptText( linearFitParameters.intercept );
-          //   equationPanel.addChild( equationText );
         }
         else {
           //   equationText = null;
