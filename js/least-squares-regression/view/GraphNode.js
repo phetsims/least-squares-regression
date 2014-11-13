@@ -23,8 +23,8 @@ define( function( require ) {
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
 
   // string
   var pattern_0r_1value = "{0} {1}";
@@ -32,7 +32,6 @@ define( function( require ) {
   // constants
 
   var LINE_WIDTH = 2;
-  var RESIDUAL_LINE_WIDTH = 2;
 
   /**
    *

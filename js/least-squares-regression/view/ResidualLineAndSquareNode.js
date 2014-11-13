@@ -11,21 +11,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
+  // var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+
   var Color = require( 'SCENERY/util/Color' );
   // var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Line = require( 'SCENERY/nodes/Line' );
   // var Path = require( 'SCENERY/nodes/Path' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Util = require( 'DOT/Util' );
-  var Text = require( 'SCENERY/nodes/Text' );
 
   // constants
 

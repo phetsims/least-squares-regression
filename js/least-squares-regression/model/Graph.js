@@ -17,7 +17,6 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Residual = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Residual' );
-  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -149,7 +148,7 @@ define( function( require ) {
       // if there are exactly two data points on the graph we need to add two residuals
       if ( this.dataPointsOnGraph.length === 2 ) {
         this.dataPointsOnGraph.forEach( function( dataPoint ) {
-          self.addBestFitLineResidual( dataPoint )
+          self.addBestFitLineResidual( dataPoint );
         } );
       }
       // for two dataPoints or more there is one residual for every datapoint addded
@@ -171,7 +170,7 @@ define( function( require ) {
       this.removeMyLineResidual( dataPoint );
 
 
-      if ( this.dataPointsOnGraph.length == 2 ) {
+      if ( this.dataPointsOnGraph.length === 2 ) {
         this.removeBestFitLineResiduals();
       }
       else {

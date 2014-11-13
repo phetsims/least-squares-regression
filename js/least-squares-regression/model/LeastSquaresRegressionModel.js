@@ -84,7 +84,7 @@ define( function( require ) {
       dataPoint.positionProperty.link( function( position ) {
         if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
           if ( !self.graph.isDataPointOnList( dataPoint ) ) {
-            self.graph.addPointAndResiduals( dataPoint )
+            self.graph.addPointAndResiduals( dataPoint );
           }
         }
         else {

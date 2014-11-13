@@ -21,9 +21,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
 //  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
   var VBox = require( 'SCENERY/nodes/VBox' );
   var VerticalSlider = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/VerticalSlider' );
 
@@ -34,8 +32,6 @@ define( function( require ) {
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
 
-  //var pattern_0slope_1intercept = " y = {0} x + {1} ";
-  var pattern_0sign_1intercept = " {0}{1} ";
 
   /**
    * {Model} model of the main simulation
