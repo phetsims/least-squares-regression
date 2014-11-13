@@ -169,7 +169,6 @@ define( function( require ) {
 
       this.removeMyLineResidual( dataPoint );
 
-
       if ( this.dataPointsOnGraph.length === 2 ) {
         this.removeBestFitLineResiduals();
       }
@@ -262,7 +261,6 @@ define( function( require ) {
     },
 
     getLinearFit: function() {
-//      assert && assert(this.dataPointsOnGraph.length>=2, 'need at least two data points to do a linear fit');
       if ( this.dataPointsOnGraph.length < 2 ) {
         return null;
       }
@@ -271,8 +269,6 @@ define( function( require ) {
 
         var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
         var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
-
-        assert && assert( slopeDenominator !== 0, 'variance must be non zero' );
 
         var slope = slopeNumerator / slopeDenominator;
         var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
@@ -293,7 +289,6 @@ define( function( require ) {
         this.getStatistics();
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
         var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
-        assert && assert( pearsonCoefficientCorrelationDenominator !== 0, ' pearsonCoefficientCorrelationDenominator must be non zero' );
         var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
         return pearsonCoefficientCorrelation;
       }
