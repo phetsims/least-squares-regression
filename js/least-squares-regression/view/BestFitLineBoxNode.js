@@ -47,6 +47,7 @@ define( function( require ) {
 
     //  debugger;
     var equationText = new EquationNode( 0, 0 );
+    equationText.visible = false;
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
     var linearFitParameters = model.graph.getLinearFit();
     if ( linearFitParameters !== null ) {
@@ -100,9 +101,10 @@ define( function( require ) {
         if ( linearFitParameters !== null ) {
           equationText.setSlopeText( linearFitParameters.slope );
           equationText.setInterceptText( linearFitParameters.intercept );
+          equationText.visible = true;
         }
         else {
-          //   equationText = null;
+          equationText.visible = false;
         }
 
       } );
