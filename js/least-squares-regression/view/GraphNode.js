@@ -19,7 +19,7 @@ define( function( require ) {
   // var Path = require( 'SCENERY/nodes/Path' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -49,8 +49,8 @@ define( function( require ) {
     // Create and add the graph itself.
 
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    this.graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
-    this.addChild( this.graphBoundsNode );
+    //  this.graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
+    //  this.addChild( this.graphBoundsNode );
 
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
     this.myLine = new Line(

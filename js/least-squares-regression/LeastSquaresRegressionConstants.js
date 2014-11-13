@@ -19,7 +19,7 @@ define( function( require ) {
     PERIMETER_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
 
     // Velocity at which animated elements move
-    ANIMATION_VELOCITY: 5,
+    ANIMATION_VELOCITY: 25,
 
     // Various other constants
     BACKGROUND_COLOR: 'rgb( 225, 255, 255 )',

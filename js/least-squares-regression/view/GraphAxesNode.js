@@ -42,7 +42,7 @@ define( function( require ) {
 
   // ticks
   var MAJOR_TICK_SPACING = 5; // model units
-  var MINOR_TICK_LENGTH = 0; // how far a minor tick extends from the axis
+  var MINOR_TICK_LENGTH = 3; // how far a minor tick extends from the axis
   var MINOR_TICK_LINE_WIDTH = 0.5;
   var MINOR_TICK_COLOR = 'black';
   var MAJOR_TICK_LENGTH = 6; // how far a major tick extends from the axis
@@ -225,10 +225,38 @@ define( function( require ) {
       {fill: GRID_BACKGROUND} );
     this.addChild( backgroundNode );
 
+    // horizontal grid lines, one line for each unit of grid spacing
+    var horizontalGridLinesNode = new Node();
+    this.addChild( horizontalGridLinesNode );
+    var numberOfHorizontalGridLines = graph.getHeight() + 1;
+    var minX = modelViewTransform.modelToViewX( graph.xRange.min );
+    var maxX = modelViewTransform.modelToViewX( graph.xRange.max );
+    for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
+      var modelY = graph.yRange.min + i;
+      if ( modelY !== 0 ) { // skip origin, x axis will live here
+        var yOffset = modelViewTransform.modelToViewY( modelY );
+        var isMajorX = Math.abs( modelY ) % MAJOR_TICK_SPACING === 0;
+        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
+      }
+    }
+
+    // vertical grid lines, one line for each unit of grid spacing
+    var verticalGridLinesNode = new Node();
+    this.addChild( verticalGridLinesNode );
+    var numberOfVerticalGridLines = graph.getWidth() + 1;
+    var minY = modelViewTransform.modelToViewY( graph.yRange.max ); // yes, swap min and max
+    var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
+    for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
+      var modelX = graph.xRange.min + j;
+      if ( modelX !== 0 ) { // skip origin, y axis will live here
+        var xOffset = modelViewTransform.modelToViewX( modelX );
+        var isMajorY = Math.abs( modelX ) % MAJOR_TICK_SPACING === 0;
+        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
+      }
+    }
   }
 
   inherit( Node, GridNode );
-
   //----------------------------------------------------------------------------------------
 
   /**
