@@ -49,7 +49,7 @@ define( function( require ) {
   function Track( size, property, range ) {
 
     var thisNode = this;
-    Rectangle.call( thisNode, 0, 0, size.width, size.height, { fill: 'black', cursor: 'pointer' } );
+    Rectangle.call( thisNode, 0, 0, size.width, size.height, {fill: 'black', cursor: 'pointer'} );
 
     // click in the track to change the value, continue dragging if desired
     var handleEvent = function( event ) {
@@ -86,9 +86,9 @@ define( function( require ) {
 
     // nodes
     var bodyNode = new Rectangle( -size.width / 2, -size.height / 2, size.width, size.height, 2, 2,
-      { fill: THUMB_NORMAL_COLOR, stroke: THUMB_STROKE_COLOR, lineWidth: 1 } );
+      {fill: THUMB_NORMAL_COLOR, stroke: THUMB_STROKE_COLOR, lineWidth: 1} );
     var centerLineNode = new Path( Shape.lineSegment( -( size.width / 2 ) + 3, 0, ( size.width / 2 ) - 3, 0 ),
-      { stroke: THUMB_CENTER_LINE_COLOR } );
+      {stroke: THUMB_CENTER_LINE_COLOR} );
 
     // rendering order
     thisNode.addChild( bodyNode );
@@ -98,7 +98,7 @@ define( function( require ) {
     var touchXMargin = 0 * bodyNode.width; // thumb seems wide enough, so zero for now
     var touchYMargin = 1 * bodyNode.height; // expand height since thumb is not very tall and drag direction is vertical
     bodyNode.touchArea = Shape.rectangle( bodyNode.left - touchXMargin, bodyNode.top - touchYMargin,
-        bodyNode.width + ( 2 * touchXMargin ), bodyNode.height + ( 2 * touchYMargin ) );
+      bodyNode.width + ( 2 * touchXMargin ), bodyNode.height + ( 2 * touchYMargin ) );
 
     // interactivity
     thisNode.cursor = 'pointer';
@@ -150,7 +150,7 @@ define( function( require ) {
     var trackNode = new Track( trackSize, property, range );
     var xMargin = 5, yMargin = 10, cornerRadius = 10;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
-      { fill: new Color( 200, 200, 200, 140 ) } );
+      {fill: new Color( 200, 200, 200, 140 )} );
     var thumbNode = new Thumb( THUMB_SIZE, property, range, new Range( 0, trackSize.height ) );
 
     // rendering order

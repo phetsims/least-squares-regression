@@ -36,7 +36,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new LeastSquaresRegressionScreen() ], simOptions );
+    var sim = new Sim( simTitle, [new LeastSquaresRegressionScreen()], simOptions );
     sim.start();
   } );
 } );

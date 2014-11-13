@@ -24,7 +24,7 @@ define( function( require ) {
   function EraserButton( options ) {
     var eraserImageNode = new Image( eraserImage );
     eraserImageNode.scale( ERASER_WIDTH / eraserImageNode.width );
-    options = _.extend( { content: eraserImageNode, baseColor: '#F2E916' }, options );
+    options = _.extend( {content: eraserImageNode, baseColor: '#F2E916'}, options );
     RectangularPushButton.call( this, options );
   }
 

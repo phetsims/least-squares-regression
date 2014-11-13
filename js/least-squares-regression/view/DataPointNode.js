@@ -23,7 +23,7 @@ define( function( require ) {
    * @constructor
    */
   function DataPointNode( dataPoint, modelViewTransform ) {
-    Node.call( this, { cursor: 'pointer' } );
+    Node.call( this, {cursor: 'pointer'} );
     var self = this;
 
     // Set up the mouse and touch areas for this node so that this can still be grabbed when invisible.
@@ -38,7 +38,8 @@ define( function( require ) {
     var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
       fill: LSRConstants.DATA_POINT_FILL,
       stroke: LSRConstants.DATA_POINT_STROKE,
-      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH } );
+      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
+    } );
 
     rootNode.addChild( representation );
 
@@ -47,16 +48,17 @@ define( function( require ) {
       self.center = modelViewTransform.modelToViewPosition( position );
     } );
 
-
     // Add the listener that will allow the user to drag the dataPoint around.
     this.addInputListener( new SimpleDragHandler( {
       // Allow moving a finger (touch) across a node to pick it up.
       allowTouchSnag: true,
 
       // Handler that moves the dataPoint in model space.
-      translate: function( translationParams ) {
-        dataPoint.position = dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
+
+      translate: function( args ) {
+        dataPoint.position = modelViewTransform.viewToModelPosition( args.position );
       },
+
       start: function( event, trail ) {
         dataPoint.userControlled = true;
         dataPoint.animating = false; // can stop point animation by catching the moving point in flight.

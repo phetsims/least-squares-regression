@@ -64,13 +64,11 @@ define( function( require ) {
     var myLineBoxNode = new MyLineBoxNode( model );
     this.addChild( myLineBoxNode );
 
-
     var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
     this.addChild( graphAxesNode );
 
     var graphNode = new GraphNode( model.graph, model, modelViewTransform );
     this.addChild( graphNode );
-
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -106,7 +104,6 @@ define( function( require ) {
         model.dataPoints.forEach( function( dataPoint ) {
           dataPoint.animating = true;
         } );
-        graphNode.update();
 
       }
     } ) );
@@ -142,7 +139,7 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
-        model.graph.reset();
+        bestFitLineBoxNode.reset();
       },
       right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10

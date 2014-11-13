@@ -1,6 +1,5 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
-
 define( function( require ) {
   'use strict';
 
@@ -61,7 +60,6 @@ define( function( require ) {
     this.addChild( zeroLabel );
     this.addChild( label );
 
-
     Property.multilink( [model.graph.angleProperty, model.graph.interceptProperty], function( angle, intercept ) {
       rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
     } );
@@ -72,7 +70,6 @@ define( function( require ) {
         rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
       } );
     } );
-
 
     function tanh( x ) {
       var value;

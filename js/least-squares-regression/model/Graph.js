@@ -13,9 +13,10 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  //var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-//  var ObservableArray = require( 'AXON/ObservableArray' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
+  var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
+  var Residual = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Residual' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -34,9 +35,11 @@ define( function( require ) {
     this.xRange = xRange;
     this.yRange = yRange;
 
+    this.myLineResiduals = new ObservableArray(); // @public
+    this.bestFitLineResiduals = new ObservableArray(); // @public
     this.dataPointsOnGraph = [];
 
-    // public values.
+    // bounds for the graph in model coordinates
     this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max );
 
   }
@@ -46,6 +49,8 @@ define( function( require ) {
     reset: function() {
       PropertySet.prototype.reset.call( this );
       this.dataPointsOnGraph = [];
+      this.myLineResiduals.clear();
+      this.bestFitLineResiduals.clear();
     },
 
     getWidth: function() {
@@ -56,26 +61,72 @@ define( function( require ) {
       return this.bounds.height;
     },
 
+    update: function() {
+      this.updateMyLineResiduals();
+      if ( this.dataPointsOnGraph.length > 1 ) {
+        this.updateBestFitLineResiduals();
+      }
+    },
+
     slope: function( angle ) {
       //TODO find a more robust way
-      return  2 * Math.tan( angle );
+      return 2 * Math.tan( angle );
     },
 
-    isDataPointPositionOverlappingGraph: function( position ) {
-      return this.bounds.containsPoint( position );
+    addMyLineResidual: function( dataPoint ) {
+      var myLineResidual = new Residual( dataPoint, this.slope( this.angle ), this.intercept );
+      this.myLineResiduals.push( new Property( myLineResidual ) );
     },
 
-    removePoint: function( dataPoint ) {
-      if ( this.isDataPointOnList( dataPoint ) ) {
-        var index = this.dataPointsOnGraph.indexOf( dataPoint );
-        this.dataPointsOnGraph.splice( index, 1 );
-      }
+    addBestFitLineResidual: function( dataPoint ) {
+      var linearFitParameters = this.getLinearFit();
+      var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+      this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
     },
 
-    addPoint: function( dataPoint ) {
-      if ( !this.isDataPointOnList( dataPoint ) ) {
-        this.dataPointsOnGraph.push( dataPoint );
-      }
+    removeMyLineResidual: function( dataPoint ) {
+      var graph = this;
+      var myLineResidualsCopy = this.myLineResiduals.getArray();
+      myLineResidualsCopy.forEach( function( myLineResidualProperty ) {
+        if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
+          graph.myLineResiduals.remove( myLineResidualProperty );
+        }
+      } );
+    },
+
+    removeBestFitLineResidual: function( dataPoint ) {
+      var graph = this;
+      var bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
+      bestFitLineResidualsCopy.forEach( function( bestFitLineResidualProperty ) {
+        if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
+          graph.bestFitLineResiduals.remove( bestFitLineResidualProperty );
+        }
+      } );
+    },
+
+    updateMyLineResidual: function( dataPoint ) {
+      var graph = this;
+      this.myLineResiduals.forEach( function( myLineResidualProperty ) {
+        if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
+          myLineResidualProperty.value = new Residual( dataPoint, graph.slope( graph.angle ), graph.intercept );
+        }
+      } );
+    },
+
+    updateMyLineResiduals: function() {
+      var graph = this;
+      this.myLineResiduals.forEach( function( residualProperty ) {
+        var dataPoint = residualProperty.value.dataPoint;
+        residualProperty.value = new Residual( dataPoint, graph.slope( graph.angle ), graph.intercept );
+      } );
+    },
+
+    updateBestFitLineResiduals: function() {
+      var linearFitParameters = this.getLinearFit();
+      this.bestFitLineResiduals.forEach( function( residualProperty ) {
+        var dataPoint = residualProperty.value.dataPoint;
+        residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+      } );
     },
 
     isDataPointOnList: function( dataPoint ) {
@@ -83,47 +134,59 @@ define( function( require ) {
       return (index !== -1);
     },
 
-    residualsPoints: function( slope, intercept ) {
-      var residualPointArray = [];
-      var self = this;
-      assert && assert( this.dataPointsOnGraph !== null, 'dataPointsOnGraph must contain data' );
-      this.dataPointsOnGraph.forEach( function( dataPoint ) {
-        var yValue = slope * dataPoint.position.x + intercept;
-        var yValueWithinBounds = Util.clamp( yValue, self.yRange.min, self.yRange.max );
-        var residualPoints = {
-          point1: new Vector2( dataPoint.position.x, yValueWithinBounds ),
-          point2: new Vector2( dataPoint.position.x, dataPoint.position.y )
-        };
-        residualPointArray.push( residualPoints );
-      } );
-      return residualPointArray;
+    isDataPointPositionOverlappingGraph: function( position ) {
+      return this.bounds.containsPoint( position );
     },
 
-    squaredResidualsRectangles: function( slope, intercept ) {
-      var squaredResidualArray = [];
+    addPointAndResiduals: function( dataPoint ) {
       var self = this;
-      assert && assert( this.dataPointsOnGraph !== null, 'dataPointsOnGraph must contain data' );
-      this.dataPointsOnGraph.forEach( function( dataPoint ) {
-        var yValue = slope * dataPoint.position.x + intercept;
-        var yValueWithinBounds = Util.clamp( yValue, self.yRange.min, self.yRange.max );
-        var heightCorrected = yValueWithinBounds - dataPoint.position.y;
-        //TODO xValue must be a square in the view!!
-        var height = yValue - dataPoint.position.y;
-        if ( slope < 0 ) {
-          height = -height;
-        }
-        var xValue = dataPoint.position.x + height;
-        var xValueWithinBounds = Util.clamp( xValue, self.xRange.min, self.xRange.max );
-        var widthCorrected = xValueWithinBounds - dataPoint.position.x;
-        var minX = Math.min( dataPoint.position.x, dataPoint.position.x + widthCorrected );
-        var maxX = Math.max( dataPoint.position.x, dataPoint.position.x + widthCorrected );
-        var minY = Math.min( dataPoint.position.y, dataPoint.position.y + heightCorrected );
-        var maxY = Math.max( dataPoint.position.y, dataPoint.position.y + heightCorrected );
-        var rectangle = new Bounds2( minX, minY, maxX, maxY );
-        squaredResidualArray.push( rectangle );
-      } );
-      return squaredResidualArray;
+
+      this.dataPointsOnGraph.push( dataPoint );
+      this.addMyLineResidual( dataPoint );
+
+      // a BestFit line exists if there are two datapoints or more.
+      // if there is only one dataPoint on the graph, we dont add my bestFitLine residual
+      // if there are exactly two data points on the graph we need to add two residuals
+      if ( this.dataPointsOnGraph.length === 2 ) {
+        this.dataPointsOnGraph.forEach( function( dataPoint ) {
+          self.addBestFitLineResidual( dataPoint )
+        } );
+      }
+      // for two dataPoints or more there is one residual for every datapoint addded
+      if ( this.dataPointsOnGraph.length > 2 ) {
+        this.addBestFitLineResidual( dataPoint );
+      }
+
+      var positionListener = function() { self.update();};
+      dataPoint.positionProperty.link( positionListener );
+      dataPoint.positionListener = positionListener;
+
     },
+
+    removePointAndResiduals: function( dataPoint ) {
+      assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
+      var index = this.dataPointsOnGraph.indexOf( dataPoint );
+      this.dataPointsOnGraph.splice( index, 1 );
+
+      this.removeMyLineResidual( dataPoint );
+
+
+      if ( this.dataPointsOnGraph.length == 2 ) {
+        this.removeBestFitLineResiduals();
+      }
+      else {
+        this.removeBestFitLineResidual( dataPoint );
+      }
+      this.update();
+      dataPoint.positionProperty.unlink( dataPoint.positionListener );
+
+
+    },
+
+    removeBestFitLineResiduals: function() {
+      this.bestFitLineResiduals.clear();
+    },
+
 
     sumOfSquaredResiduals: function( slope, intercept ) {
       var sumOfSquareResiduals = 0;
@@ -153,45 +216,6 @@ define( function( require ) {
       }
     },
 
-    getMyLineSquaredResidualsRectangles: function() {
-      if ( this.dataPointsOnGraph.length >= 1 ) {
-        return this.squaredResidualsRectangles( this.slope( this.angle ), this.intercept );
-      }
-      else {
-        return null;
-      }
-    },
-
-    getBestFitLineSquaredResidualsRectangles: function() {
-      if ( this.dataPointsOnGraph.length >= 2 ) {
-        var linearFitParameters = this.getLinearFit();
-        return this.squaredResidualsRectangles( linearFitParameters.slope, linearFitParameters.intercept );
-      }
-      else {
-        return null;
-      }
-    },
-
-    getMyLineResidualsPoints: function() {
-      if ( this.dataPointsOnGraph.length >= 1 ) {
-        return this.residualsPoints( this.slope( this.angle ), this.intercept );
-      }
-      else {
-        return null;
-      }
-
-    },
-
-    getBestFitLineResidualsPoints: function() {
-      if ( this.dataPointsOnGraph.length >= 2 ) {
-        var linearFitParameters = this.getLinearFit();
-        return this.residualsPoints( linearFitParameters.slope, linearFitParameters.intercept );
-      }
-      else {
-        return null;
-      }
-    },
-
     /**
      * Returns an array of two points that crosses the rectangular bounds of the graph
      *
@@ -199,67 +223,13 @@ define( function( require ) {
      * @param {number} intercept
      */
     getBoundaryPoints: function( slope, intercept ) {
-      var boundaryPointArray = [];
-      // check the four corner points
 
-      var valueBottomLeft = slope * this.xRange.min + intercept - this.yRange.min;
-      var valueTopLeft = slope * this.xRange.min + intercept - this.yRange.max;
-      var valueBottomRight = slope * this.xRange.max + intercept - this.yRange.min;
-      var valueTopRight = slope * this.xRange.max + intercept - this.yRange.max;
-
-      if ( valueBottomLeft === 0 ) {
-        boundaryPointArray.push( new Vector2( this.xRange.min, this.yRange.min ) );
-      }
-      if ( valueTopLeft === 0 ) {
-        boundaryPointArray.push( new Vector2( this.xRange.min, this.yRange.max ) );
-      }
-      if ( valueBottomRight === 0 ) {
-        boundaryPointArray.push( new Vector2( this.xRange.max, this.yRange.min ) );
-      }
-      if ( valueTopRight === 0 ) {
-        boundaryPointArray.push( new Vector2( this.xRange.max, this.yRange.max ) );
-      }
-
-      // Check along the boundaries. The sign of the function must change
-
-      if ( valueBottomLeft * valueBottomRight < 0 ) {
-        var bottomXIntercept = (this.yRange.min - intercept) / slope;
-        boundaryPointArray.push( new Vector2( bottomXIntercept, this.yRange.min ) );
-      }
-
-      if ( valueTopLeft * valueTopRight < 0 ) {
-        var topXIntercept = (this.yRange.max - intercept) / slope;
-        boundaryPointArray.push( new Vector2( topXIntercept, this.yRange.max ) );
-      }
-
-      if ( valueBottomRight * valueTopRight < 0 ) {
-        var rightYIntercept = slope * this.xRange.max + intercept;
-        boundaryPointArray.push( new Vector2( this.xRange.max, rightYIntercept ) );
-      }
-
-      if ( valueBottomLeft * valueTopLeft < 0 ) {
-        var leftYIntercept = slope * this.xRange.min + intercept;
-        boundaryPointArray.push( new Vector2( this.xRange.min, leftYIntercept ) );
-      }
-
-      var arrayLength = boundaryPointArray.length;
-
-      assert && assert( arrayLength <= 2, 'A straight line cannot cross the rectangular bounds at more than two places' );
-
-      var boundaryPoints = {};
-      if ( arrayLength === 0 ) {
-        boundaryPoints = null;
-      }
-      else if ( arrayLength === 1 ) {
-        boundaryPoints.point1 = boundaryPointArray[0];
-        boundaryPoints.point2 = boundaryPointArray[0];  // this is a corner point
-      }
-      else {
-        boundaryPoints.point1 = boundaryPointArray[0];
-        boundaryPoints.point2 = boundaryPointArray[1];
-        assert && assert( boundaryPoints.point1 !== boundaryPoints.point2, ' The two points must be different in order to form a line' );
-      }
-
+      var yValueLeft = slope * this.xRange.min + intercept;
+      var yValueRight = slope * this.xRange.max + intercept;
+      var boundaryPoints = {
+        point1: new Vector2( this.xRange.min, yValueLeft ),
+        point2: new Vector2( this.xRange.max, yValueRight )
+      };
 
       return boundaryPoints;
     },

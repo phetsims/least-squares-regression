@@ -50,7 +50,7 @@ define( function( require ) {
   var MAJOR_TICK_COLOR = 'black';
   var MAJOR_TICK_FONT = new PhetFont( 16 );
   var TICK_LABEL_SPACING = 2;
-  var MINUS_SIGN_WIDTH = new Text( '-', { font: MAJOR_TICK_FONT } ).width;
+  var MINUS_SIGN_WIDTH = new Text( '-', {font: MAJOR_TICK_FONT} ).width;
 
   //----------------------------------------------------------------------------------------
   // A major or minor line in the grid
@@ -85,7 +85,7 @@ define( function( require ) {
     this.addChild( tickLineNode );
 
     // tick label
-    var tickLabelNode = new Text( value, { font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR } );
+    var tickLabelNode = new Text( value, {font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR} );
     this.addChild( tickLabelNode );
 
     // label position
@@ -138,7 +138,8 @@ define( function( require ) {
     var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( 0 ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
-      stroke: 'black' } );
+      stroke: 'black'
+    } );
     this.addChild( lineNode );
 
     // ticks
@@ -180,7 +181,8 @@ define( function( require ) {
     var tipLocation = new Vector2( modelViewTransform.modelToViewX( 0 ), modelViewTransform.modelToViewY( graph.yRange.max + AXIS_EXTENT ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
-      stroke: 'black' } );
+      stroke: 'black'
+    } );
     this.addChild( lineNode );
 
     // ticks
@@ -220,7 +222,7 @@ define( function( require ) {
     var backgroundNode = new Rectangle(
       modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max ),
       modelViewTransform.modelToViewDeltaX( graph.getWidth() ), modelViewTransform.modelToViewDeltaY( -graph.getHeight() ),
-      { fill: GRID_BACKGROUND } );
+      {fill: GRID_BACKGROUND} );
     this.addChild( backgroundNode );
 
   }
@@ -240,7 +242,8 @@ define( function( require ) {
           new GridNode( graph, modelViewTransform ),
           new XAxisNode( graph, modelViewTransform ),
           new YAxisNode( graph, modelViewTransform )
-        ] }
+        ]
+      }
     );
   }
 

@@ -28,14 +28,15 @@ define( function( require ) {
    * @constructor
    */
   function DataPointCreatorNode( addDataPointToModel, modelViewTransform, options ) {
-    Node.call( this, { cursor: 'pointer' } );
+    Node.call( this, {cursor: 'pointer'} );
     var self = this;
 
     // Create the node that the user will click upon to add a model element to the view.
     var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
       fill: LSRConstants.DATA_POINT_FILL,
       stroke: LSRConstants.DATA_POINT_STROKE,
-      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH } );
+      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
+    } );
 
     this.addChild( representation );
 

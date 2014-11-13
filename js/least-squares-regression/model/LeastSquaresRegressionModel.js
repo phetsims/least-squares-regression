@@ -62,6 +62,7 @@ define( function( require ) {
     reset: function() {
       PropertySet.prototype.reset.call( this );
       this.dataPoints.clear();
+      this.graph.reset();
     },
 
     step: function( dt ) {
@@ -79,12 +80,17 @@ define( function( require ) {
     addUserCreatedDataPoint: function( dataPoint ) {
       var self = this;
       this.dataPoints.push( dataPoint );
+
       dataPoint.positionProperty.link( function( position ) {
         if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
-          self.graph.addPoint( dataPoint );
+          if ( !self.graph.isDataPointOnList( dataPoint ) ) {
+            self.graph.addPointAndResiduals( dataPoint )
+          }
         }
         else {
-          self.graph.removePoint( dataPoint );
+          if ( self.graph.isDataPointOnList( dataPoint ) ) {
+            self.graph.removePointAndResiduals( dataPoint );
+          }
         }
       } );
 
@@ -94,7 +100,6 @@ define( function( require ) {
           dataPoint.animating = true;
         }
       } );
-
 
 //      The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
 //      can be 'put back' into the bucket.
@@ -106,7 +111,5 @@ define( function( require ) {
   } );
 
 } );
-
-
 
 

@@ -75,7 +75,6 @@ define( function( require ) {
       immutableEquationText.opacity = enabled ? 1 : 0.3;
     } );
 
-
     var mainBox = new VBox( {
       spacing: 5, children: [
         lineCheckBox,
@@ -99,7 +98,6 @@ define( function( require ) {
       }, options )
     );
 
-
     model.graph.angleProperty.link( function( angle ) {
       var slope = model.graph.slope( angle );
       equationText.setSlopeText( slope );
@@ -109,7 +107,6 @@ define( function( require ) {
       equationText.setInterceptText( intercept );
 
     } );
-
 
   }
 

@@ -16,7 +16,6 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
 
-
   /**
    * @param {Vector2} initialPosition
    * @constructor

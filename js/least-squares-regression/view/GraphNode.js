@@ -20,6 +20,8 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+  var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
+  var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Util = require( 'DOT/Util' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -48,8 +50,8 @@ define( function( require ) {
     // Create and add the graph itself.
 
     this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    var graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
-    this.addChild( graphBoundsNode );
+    this.graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
+    this.addChild( this.graphBoundsNode );
 
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
     this.myLine = new Line(
@@ -57,7 +59,6 @@ define( function( require ) {
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
       {stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH} );
     this.addChild( this.myLine );
-
 
     // set bestFitLine to zero length and then update it
     this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
@@ -71,25 +72,13 @@ define( function( require ) {
     }
     this.addChild( this.bestFitLine );
 
-    this.myLineSquaredResidualsRectangles = new Node();
-    this.addChild( this.myLineSquaredResidualsRectangles );
-
-    this.bestFitLineSquaredResidualsRectangles = new Node();
-    this.addChild( this.bestFitLineSquaredResidualsRectangles );
-
-    this.myLineResidualsLines = new Node();
-    this.addChild( this.myLineResidualsLines );
-
-    this.bestFitLineResidualsLines = new Node();
-    this.addChild( this.bestFitLineResidualsLines );
+    var myLineResidualsLayer = new Node();
+    var bestFitLineResidualsLayer = new Node();
+    this.addChild( myLineResidualsLayer );
+    this.addChild( bestFitLineResidualsLayer );
 
     model.showMyLineProperty.linkAttribute( this.myLine, 'visible' );
-    model.showResidualsOfMyLineProperty.linkAttribute( this.myLineResidualsLines, 'visible' );
-    model.showSquareResidualsOfMyLineProperty.linkAttribute( this.myLineSquaredResidualsRectangles, 'visible' );
-
     model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
-    model.showResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineResidualsLines, 'visible' );
-    model.showSquareResidualsOfBestFitLineProperty.linkAttribute( this.bestFitLineSquaredResidualsRectangles, 'visible' );
 
     model.showMyLineProperty.link( function( visible ) {
       if ( visible === false ) {
@@ -97,6 +86,7 @@ define( function( require ) {
         model.showSquareResidualsOfMyLine = false;
       }
     } );
+
     model.showBestFitLineProperty.link( function( visible ) {
       if ( visible === false ) {
         model.showResidualsOfBestFitLine = false;
@@ -113,39 +103,66 @@ define( function( require ) {
     Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      if ( boundaryPoints !== null ) {
-        graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
-        graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
-      }
-      else {
-        graphNode.myLine.setPoint1( 0, 0 ); // set line in a corner
-        graphNode.myLine.setPoint2( 0, 0 ); //
-      }
-
-      graphNode.updateMyLineResiduals();
-      graphNode.updateMyLineSquaredResiduals();
+      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+      graphNode.myLine.clipArea = Shape.bounds( graphNode.viewBounds );
+      graph.updateMyLineResiduals();
     } );
+
+    // Handle the comings and goings of  dataPoints.
+    model.graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
+
+      // Create and add the view representation for this dataPoint.
+      var residualNode = new ResidualLineAndSquareNode(
+        addedResidual,
+        LSRConstants.MY_LINE_COLOR,
+        graphNode.viewBounds,
+        modelViewTransform,
+        model.showResidualsOfMyLineProperty,
+        model.showSquareResidualsOfMyLineProperty );
+      myLineResidualsLayer.addChild( residualNode );
+
+      // Add the removal listener for if and when this dataPoint is removed from the model.
+      model.graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
+        if ( removedResidual === addedResidual ) {
+          myLineResidualsLayer.removeChild( residualNode );
+          model.graph.myLineResiduals.removeItemRemovedListener( removalListener );
+        }
+      } );
+    } );
+
+    // Handle the comings and goings of  dataPoints.
+    model.graph.bestFitLineResiduals.addItemAddedListener( function( addedResidual ) {
+
+      // Create and add the view representation for this dataPoint.
+      var residualNode = new ResidualLineAndSquareNode(
+        addedResidual,
+        LSRConstants.BEST_FIT_LINE_COLOR,
+        graphNode.viewBounds,
+        modelViewTransform,
+        model.showResidualsOfBestFitLineProperty,
+        model.showSquareResidualsOfBestFitLineProperty );
+      bestFitLineResidualsLayer.addChild( residualNode );
+
+      // Add the removal listener for if and when this dataPoint is removed from the model.
+      model.graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
+        if ( removedResidual === addedResidual ) {
+          bestFitLineResidualsLayer.removeChild( residualNode );
+          model.graph.bestFitLineResiduals.removeItemRemovedListener( removalListener );
+        }
+      } );
+    } );
+
   }
 
   return inherit( Node, GraphNode, {
     reset: function() {
-      //TODO should reset the pearson coefficient
-      this.myLineSquaredResidualsRectangles.removeAllChildren();
-      this.bestFitLineSquaredResidualsRectangles.removeAllChildren();
-      this.myLineResidualsLines.removeAllChildren();
-      this.bestFitLineResidualsLines.removeAllChildren();
-      this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
-      this.bestFitLine.setPoint2( 0, 0 );
 
     },
 
     update: function() {
-      this.updateMyLineResiduals();
-      this.updateMyLineSquaredResiduals();
       this.updatePearsonCoefficient();
       this.updateBestFitLine();
-      this.updateBestFitLineResiduals();
-      this.updateBestFitLineSquaredResiduals();
     },
 
     updatePearsonCoefficient: function() {
@@ -156,143 +173,23 @@ define( function( require ) {
       else {
         rText = '   ';
       }
-
       this.equationText.text = StringUtils.format( pattern_0r_1value, 'r = ', rText );
     },
-
-    updateMyLineResiduals: function() {
-      var points = this.graph.getMyLineResidualsPoints();
-      this.myLineResidualsLines.removeAllChildren();
-      if ( points !== null ) {
-        var self = this;
-        points.forEach( function( point ) {
-          var residualsLine = new Line(
-            self.modelViewTransform.modelToViewPosition( point.point1 ),
-            self.modelViewTransform.modelToViewPosition( point.point2 ),
-            {stroke: LSRConstants.MY_LINE_RESIDUAL_COLOR, lineWidth: RESIDUAL_LINE_WIDTH} );
-          self.myLineResidualsLines.addChild( residualsLine );
-        } );
-      }
-    },
-
-    updateBestFitLineResiduals: function() {
-      this.bestFitLineResidualsLines.removeAllChildren();
-      var points = this.graph.getBestFitLineResidualsPoints();
-      if ( points !== null ) {
-        var self = this;
-        points.forEach( function( point ) {
-          var residualsLine = new Line(
-            self.modelViewTransform.modelToViewPosition( point.point1 ),
-            self.modelViewTransform.modelToViewPosition( point.point2 ),
-            {stroke: LSRConstants.BEST_FIT_LINE_RESIDUAL_COLOR, lineWidth: RESIDUAL_LINE_WIDTH} );
-          self.bestFitLineResidualsLines.addChild( residualsLine );
-        } );
-      }
-    },
-
-    updateMyLineSquaredResiduals: function() {
-      this.myLineSquaredResidualsRectangles.removeAllChildren();
-      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
-      if ( rectangles !== null ) {
-        var self = this;
-        rectangles.forEach( function( rectangle ) {
-          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
-          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
-          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
-          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
-
-          // since the modelViewTransform might flip the axis, let's recalculate the min and max
-          var minXBound = Math.min( x1, x2 );
-          var maxXBound = Math.max( x1, x2 );
-          var minYBound = Math.min( y1, y2 );
-          var maxYBound = Math.max( y1, y2 );
-          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
-          var squaredResidualsRectangle = Rectangle.bounds( bound, {fill: LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray'} );
-          self.myLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
-        } );
-      }
-
-    },
-
-    updateBestFitLineSquaredResiduals: function() {
-      this.bestFitLineSquaredResidualsRectangles.removeAllChildren();
-      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
-      if ( rectangles !== null ) {
-        var self = this;
-        rectangles.forEach( function( rectangle ) {
-          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
-          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
-          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
-          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
-
-          // since the modelViewTransform might flip the axis, let's recalculate the min and max
-          var minXBound = Math.min( x1, x2 );
-          var maxXBound = Math.max( x1, x2 );
-          var minYBound = Math.min( y1, y2 );
-          var maxYBound = Math.max( y1, y2 );
-          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
-
-          var squaredResidualsRectangle = Rectangle.bounds( bound, {fill: LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, stroke: 'gray'} );
-          self.bestFitLineSquaredResidualsRectangles.addChild( squaredResidualsRectangle );
-        } );
-      }
-    },
-//    updateMyLineSquaredResiduals: function() {
-//      var node = this.myLineSquaredResidualsRectangles;
-//      var rectangles = this.graph.getMyLineSquaredResidualsRectangles();
-//      var fillColor = this.myLineSquaredResidualsRectangles;
-//      this.updateSquaredResiduals( node, rectangles, fillColor );
-//    },
-//
-//    updateBestFitLineSquaredResiduals: function() {
-//      var node = this.bestFitLineSquaredResidualsRectangles;
-//      var rectangles = this.graph.getBestFitLineSquaredResidualsRectangles();
-//      var fillColor = this.bestFitLineSquaredResidualsRectangles;
-//      this.updateSquaredResiduals( node, rectangles, fillColor );
-//    },
-//
-//    updateSquaredResiduals: function( node, rectangles, fillColor ) {
-//      node.removeAllChildren();
-//      var self = this;
-//      if ( rectangles !== null ) {
-//        rectangles.forEach( function( rectangle ) {
-//          var x1 = self.modelViewTransform.modelToViewX( rectangle.minX );
-//          var x2 = self.modelViewTransform.modelToViewX( rectangle.maxX );
-//          var y1 = self.modelViewTransform.modelToViewY( rectangle.minY );
-//          var y2 = self.modelViewTransform.modelToViewY( rectangle.maxY );
-//
-//          // since the modelViewTransform might flip the axis, let's recalculate the min and max
-//          var minXBound = Math.min( x1, x2 );
-//          var maxXBound = Math.max( x1, x2 );
-//          var minYBound = Math.min( y1, y2 );
-//          var maxYBound = Math.max( y1, y2 );
-//          var bound = new Bounds2( minXBound, minYBound, maxXBound, maxYBound );
-//
-//          var squaredResidualsRectangle = Rectangle.bounds( bound, { fill: fillColor, stroke: 'gray' } );
-//          node.addChild(squaredResidualsRectangle );
-//        } );
-//      }
-//
-//    },
 
     updateBestFitLine: function() {
       var linearFitParameters = this.graph.getLinearFit();
       if ( linearFitParameters !== null ) {
         var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
-        if ( boundaryPoints !== null ) {
-          this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
-          this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
-        }
-        else {
-          this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
-          this.bestFitLine.setPoint2( 0, 0 ); //
-        }
+        this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+        this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+        this.bestFitLine.clipArea = Shape.bounds( this.viewBounds );
       }
       else {
         this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
         this.bestFitLine.setPoint2( 0, 0 ); //
       }
     }
+
   } );
 } )
 ;

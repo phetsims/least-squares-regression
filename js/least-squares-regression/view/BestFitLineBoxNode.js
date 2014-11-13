@@ -12,12 +12,14 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
-  // var HBox = require( 'SCENERY/nodes/HBox' );
+  var HBox = require( 'SCENERY/nodes/HBox' );
+  var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
 //  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
+  var PropertySet = require( 'AXON/PropertySet' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
@@ -39,6 +41,7 @@ define( function( require ) {
    */
   function BestFitLineBoxNode( model, options ) {
 
+    this.expandedProperty = new Property( false );
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfBestFitLineProperty );
 
@@ -56,18 +59,17 @@ define( function( require ) {
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfBestFitLineProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.showSquareResidualsOfBestFitLineProperty );
 
-
     model.showBestFitLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
     model.showBestFitLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
     model.showBestFitLineProperty.link( function( enabled ) {
       equationPanel.visible = enabled;
     } );
 
-
     AccordionBox.call( this, new VBox( {
         spacing: 5, children: [
           lineCheckBox,
-          equationPanel,
+          //    equationPanel,
+          new HBox( {children: [new HStrut( 20 ), equationPanel]} ),
           residualsCheckBox,
           squaredResidualsCheckBox,
           sumOfSquaredResiduals
@@ -81,7 +83,7 @@ define( function( require ) {
         buttonXMargin: 10,
         buttonYMargin: 6,
 
-        expandedProperty: new Property( false ),
+        expandedProperty: this.expandedProperty,
         resize: false,
 
         titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
@@ -90,7 +92,6 @@ define( function( require ) {
         contentXMargin: 8,
         contentYMargin: 5
       }, options ) );
-
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
@@ -108,10 +109,15 @@ define( function( require ) {
     } );
   }
 
-  return inherit( AccordionBox, BestFitLineBoxNode,
-    {
+  return inherit( AccordionBox, BestFitLineBoxNode, {
+      reset: function() {
+        this.expandedProperty.reset();
+      },
+
       update: function() {
 
       }
-    } );
+    }
+  )
+    ;
 } );
