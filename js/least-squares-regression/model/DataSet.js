@@ -33,11 +33,10 @@ define( function( require ) {
     this.xRange = xRange;
     this.yRange = yRange;
     this.dataXY = dataXY;
+
   }
 
   inherit( Object, DataSet );
-
-  // 'real world' data
 
   DataSet.GASOLINE_YEAR = new DataSet( gasolinePriceVsYearString, 'Price of Gasoline vs. Year', 'Price of Gasoline', 'Year', new Range( 0, 2 ), new Range( 1975, 2005 ),
     [
@@ -98,5 +97,6 @@ define( function( require ) {
   );
 
   return DataSet;
-} )
-;
+
+} );
+

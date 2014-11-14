@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
+  var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -30,10 +31,18 @@ define( function( require ) {
 
     var thisModel = this;
     PropertySet.call( thisModel, {
-      showBucket: true // currently unused
+      showBucket: true,  // currently unused
+      selectedDataSet: DataSet.HEIGHT_SHOE
     } );
 
     this.dataPoints = new ObservableArray(); // @public
+
+    this.dataSets = [
+      DataSet.MILES_COST,
+      DataSet.HEIGHT_SHOE,
+      DataSet.GASOLINE_YEAR
+    ];
+
 
     this.graph = new Graph(
       new Range( 0, 20 ),

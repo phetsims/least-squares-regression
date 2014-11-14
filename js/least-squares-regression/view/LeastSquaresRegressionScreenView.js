@@ -16,6 +16,7 @@ define( function( require ) {
   // var Color = require( 'SCENERY/util/Color' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
+  var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var EraserButton = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EraserButton' );
@@ -42,7 +43,16 @@ define( function( require ) {
     new Vector2( -15, -3 ),
     new Vector2( 4, -4 ),
     new Vector2( 13, -2 ),
-    new Vector2( -2, 0 )];
+    new Vector2( -2, 0 ),
+    new Vector2( -25, -14 ),
+    new Vector2( -18, -12 ),
+    new Vector2( -2, -7 ),
+    new Vector2( 0, -16 ),
+    new Vector2( 9, -12 ),
+    new Vector2( 13, -9 ),
+    new Vector2( -5, -12 ),
+
+  ];
 
   /**
    * @param {LeastSquaresRegressionModel} leastSquaresRegressionModel
@@ -107,6 +117,14 @@ define( function( require ) {
 
       }
     } ) );
+
+    // dataSet combo box
+    var dataSetListParent = new Node();
+    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
+    dataSetComboBox.left = 20;
+    dataSetComboBox.bottom = 300;
+    this.addChild( dataSetComboBox );
+    this.addChild( dataSetListParent ); // last, so that dataSer box list is on top
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
