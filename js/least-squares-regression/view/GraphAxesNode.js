@@ -36,7 +36,7 @@ define( function( require ) {
   // var AXIS_ARROW_SIZE = new Dimension2( 10, 10 );
   // var AXIS_THICKNESS = 1;
   var AXIS_COLOR = 'black';
-  var AXIS_EXTENT = 1.0; // how far the arrow extends past the min/max ticks, in model coordinates
+  var AXIS_EXTENT = 0.0; // how far the arrow extends past the min/max ticks, in model coordinates
   // var AXIS_LABEL_FONT = new PhetFont( 16 );
   // var AXIS_LABEL_SPACING = 2; // space between end of axis and label
 
@@ -146,7 +146,8 @@ define( function( require ) {
     var numberOfTicks = graph.getWidth() + 1;
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelX = graph.xRange.min + i;
-      if ( modelX !== 0 ) { // skip the origin
+      //  if ( modelX !== 0 )
+      { // skip the origin
         var x = modelViewTransform.modelToViewX( modelX );
         var y = modelViewTransform.modelToViewY( 0 );
         if ( Math.abs( modelX ) % MAJOR_TICK_SPACING === 0 ) {
@@ -189,7 +190,8 @@ define( function( require ) {
     var numberOfTicks = graph.getHeight() + 1;
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelY = graph.yRange.min + i;
-      if ( modelY !== 0 ) { // skip the origin
+      // if ( modelY !== 0 )
+      { // skip the origin
         var x = modelViewTransform.modelToViewX( 0 );
         var y = modelViewTransform.modelToViewY( modelY );
         if ( Math.abs( modelY ) % MAJOR_TICK_SPACING === 0 ) {
