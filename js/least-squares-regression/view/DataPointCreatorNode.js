@@ -40,6 +40,11 @@ define( function( require ) {
 
     this.addChild( representation );
 
+    // Set up the mouse and touch areas for this node so that this can still be grabbed when invisible.
+    this.touchArea = this.localBounds.dilatedXY( 15, 15 );
+//    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
+
+
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {
 

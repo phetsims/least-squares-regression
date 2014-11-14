@@ -26,10 +26,6 @@ define( function( require ) {
     Node.call( this, {cursor: 'pointer'} );
     var self = this;
 
-    // Set up the mouse and touch areas for this node so that this can still be grabbed when invisible.
-    this.touchArea = this.localBounds.dilatedXY( 10, 10 );
-    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
-
     // Set up a root node whose visibility and opacity will be manipulated below.
     var rootNode = new Node();
     this.addChild( rootNode );
@@ -42,6 +38,9 @@ define( function( require ) {
     } );
 
     rootNode.addChild( representation );
+
+    this.touchArea = this.localBounds.dilatedXY( 15, 15 );
+    // this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
 
     // Move this node as the model representation moves
     dataPoint.positionProperty.link( function( position ) {
