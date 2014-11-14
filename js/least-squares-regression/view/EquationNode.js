@@ -60,6 +60,14 @@ define( function( require ) {
       this.eqnPartSixText.text = this.numberToString( intercept ).absoluteNumber;
     },
 
+    setToInvisible: function() {
+      this.visible = false;
+    },
+
+    setToVisible: function() {
+      this.visible = true;
+    },
+
     numberToString: function( number ) {
       var isNegative = (this.roundNumber( number ) < 0);
       var signString = isNegative ? minusString : plusString;

@@ -84,8 +84,8 @@ define( function( require ) {
 
     this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
     var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false} );
-    mutableEquationText.bottom = graphNode.bottom - 10;
-    mutableEquationText.right = graphNode.right - 10;
+    mutableEquationText.top = this.viewBounds.minY + 10;
+    mutableEquationText.right = this.viewBounds.maxX - 10;
     this.addChild( mutableEquationText );
 
     Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
