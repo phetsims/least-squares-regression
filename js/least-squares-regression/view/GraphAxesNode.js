@@ -27,8 +27,8 @@ define( function( require ) {
 
   // grid
   var GRID_BACKGROUND = 'white';
-  var MINOR_GRID_LINE_WIDTH = 1.0;
-  var MINOR_GRID_LINE_COLOR = 'rgb( 230, 230, 230 )';
+  var MINOR_GRID_LINE_WIDTH = 0.5;
+  var MINOR_GRID_LINE_COLOR = 'rgb( 240, 240, 240 )';
   var MAJOR_GRID_LINE_WIDTH = 1.0;
   var MAJOR_GRID_LINE_COLOR = 'rgb( 192, 192, 192 )';
 

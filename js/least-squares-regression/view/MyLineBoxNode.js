@@ -32,7 +32,6 @@ define( function( require ) {
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
 
-
   /**
    * {Model} model of the main simulation
    * {Object} options
@@ -49,9 +48,9 @@ define( function( require ) {
     var equationText = new EquationNode( model.graph.slope( model.graph.angle ), model.graph.intercept );
     var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 2, resize: false} );
 
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, model.showMyLineProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfMyLineProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.showSquareResidualsOfMyLineProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, model.graph.myLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.graph.myLineShowSquaredResidualsProperty );
 
     var slidersBox = new HBox( {
       spacing: 5, children: [
@@ -59,16 +58,15 @@ define( function( require ) {
         new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
     } );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfMyLineProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, model.graph.myLineSquaredResidualsVisibleProperty );
 
-    model.showMyLineProperty.linkAttribute( equationText, 'visible' );
-    model.showMyLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
-    model.showMyLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
-
-    model.showMyLineProperty.link( function( enabled ) {
+    model.graph.myLineVisibleProperty.link( function( enabled ) {
+      equationText.visible = enabled;
       slidersBox.opacity = enabled ? 1 : 0.3;
       equationPanel.opacity = enabled ? 1 : 0.3;
       immutableEquationText.opacity = enabled ? 1 : 0.3;
+      residualsCheckBox.enabled = enabled;
+      squaredResidualsCheckBox.enabled = enabled;
     } );
 
     var mainBox = new VBox( {

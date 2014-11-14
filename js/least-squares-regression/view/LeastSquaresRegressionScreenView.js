@@ -139,6 +139,7 @@ define( function( require ) {
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
+        graphNode.reset();
         bestFitLineBoxNode.reset();
       },
       right: this.layoutBounds.maxX - 10,

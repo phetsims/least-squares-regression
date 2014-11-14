@@ -29,15 +29,8 @@ define( function( require ) {
   function LeastSquaresRegressionModel() {
 
     var thisModel = this;
-
     PropertySet.call( thisModel, {
-      showBucket: true,
-      showMyLine: true,
-      showResidualsOfMyLine: false,
-      showSquareResidualsOfMyLine: false,
-      showBestFitLine: false,
-      showResidualsOfBestFitLine: false,
-      showSquareResidualsOfBestFitLine: false
+      showBucket: true // currently unused
     } );
 
     this.dataPoints = new ObservableArray(); // @public
@@ -111,5 +104,4 @@ define( function( require ) {
   } );
 
 } );
-
 

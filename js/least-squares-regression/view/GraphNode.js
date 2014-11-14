@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   // var Circle = require( 'SCENERY/nodes/Circle' );
+
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -76,22 +77,10 @@ define( function( require ) {
     this.addChild( myLineResidualsLayer );
     this.addChild( bestFitLineResidualsLayer );
 
-    model.showMyLineProperty.linkAttribute( this.myLine, 'visible' );
-    model.showBestFitLineProperty.linkAttribute( this.bestFitLine, 'visible' );
+    model.graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
+    model.graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
-    model.showMyLineProperty.link( function( visible ) {
-      if ( visible === false ) {
-        model.showResidualsOfMyLine = false;
-        model.showSquareResidualsOfMyLine = false;
-      }
-    } );
 
-    model.showBestFitLineProperty.link( function( visible ) {
-      if ( visible === false ) {
-        model.showResidualsOfBestFitLine = false;
-        model.showSquareResidualsOfBestFitLine = false;
-      }
-    } );
 
     this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
     var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false} );
@@ -117,8 +106,8 @@ define( function( require ) {
         LSRConstants.MY_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
-        model.showResidualsOfMyLineProperty,
-        model.showSquareResidualsOfMyLineProperty );
+        graph.myLineResidualsVisibleProperty,
+        graph.myLineSquaredResidualsVisibleProperty );
       myLineResidualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.
@@ -139,8 +128,8 @@ define( function( require ) {
         LSRConstants.BEST_FIT_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
-        model.showResidualsOfBestFitLineProperty,
-        model.showSquareResidualsOfBestFitLineProperty );
+        graph.bestFitLineResidualsVisibleProperty,
+        graph.bestFitLineSquaredResidualsVisibleProperty );
       bestFitLineResidualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.
@@ -156,7 +145,8 @@ define( function( require ) {
 
   return inherit( Node, GraphNode, {
     reset: function() {
-
+      this.updatePearsonCoefficient();
+      this.updateBestFitLine();
     },
 
     update: function() {

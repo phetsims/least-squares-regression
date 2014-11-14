@@ -27,19 +27,54 @@ define( function( require ) {
   function Graph( xRange, yRange ) {
 
     PropertySet.call( this, {
-      angle: 0, // in radians
-      intercept: 0
+      angle: 0, // in radians,
+      intercept: 0, //
+      myLineVisible: true, //associated Property of My Line CheckBox AND visibility of My Line on the graph
+      bestFitLineVisible: false, ///associated Property of Best Fit Line CheckBox AND visibility of Best Fit Line on the graph
+      myLineShowResiduals: false, //associated Property with Residuals of My Line
+      myLineShowSquaredResiduals: false, //associated Property with Squared Residuals of My Line
+      bestFitLineShowResiduals: false, //associated Property with Residuals of Best Fit Line
+      bestFitLineShowSquaredResiduals: false //associated Property with Squared Residuals of Best Fit Line
     } );
 
+    // property that controls the visibility of the Residuals on the graph for My Line
+    this.addDerivedProperty( 'myLineResidualsVisible', ['myLineVisible', 'myLineShowResiduals'],
+      function( myLineVisible, myLineShowResiduals ) {
+        return myLineVisible && myLineShowResiduals;
+      } );
+
+    // property that controls the visibility of the Square Residuals on the graph for My Line
+    this.addDerivedProperty( 'myLineSquaredResidualsVisible', ['myLineVisible', 'myLineShowSquaredResiduals'],
+      function( myLineVisible, myLineShowSquaredResiduals ) {
+        return myLineVisible && myLineShowSquaredResiduals;
+      } );
+
+    // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+    this.addDerivedProperty( 'bestFitLineResidualsVisible', ['bestFitLineVisible', 'bestFitLineShowResiduals'],
+      function( bestFitLineVisible, bestFitLineShowResiduals ) {
+        return bestFitLineVisible && bestFitLineShowResiduals;
+      } );
+
+    // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+    this.addDerivedProperty( 'bestFitLineSquaredResidualsVisible', ['bestFitLineVisible', 'bestFitLineShowSquaredResiduals'],
+      function( bestFitLineVisible, bestFitLineShowSquaredResiduals ) {
+        return bestFitLineVisible && bestFitLineShowSquaredResiduals;
+      } );
+
+    // range of the x and y axis graph (in the model)
     this.xRange = xRange;
     this.yRange = yRange;
 
-    this.myLineResiduals = new ObservableArray(); // @public
-    this.bestFitLineResiduals = new ObservableArray(); // @public
-    this.dataPointsOnGraph = [];
-
     // bounds for the graph in model coordinates
     this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max );
+
+    // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
+    this.myLineResiduals = new ObservableArray(); // @public
+    this.bestFitLineResiduals = new ObservableArray(); // @public
+
+    // array of the dataPoints that are overlapping the graph.
+    this.dataPointsOnGraph = [];
+
 
   }
 
@@ -178,13 +213,11 @@ define( function( require ) {
       this.update();
       dataPoint.positionProperty.unlink( dataPoint.positionListener );
 
-
     },
 
     removeBestFitLineResiduals: function() {
       this.bestFitLineResiduals.clear();
     },
-
 
     sumOfSquaredResiduals: function( slope, intercept ) {
       var sumOfSquareResiduals = 0;

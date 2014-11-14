@@ -43,7 +43,12 @@ define( function( require ) {
 
     this.expandedProperty = new Property( false );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR, model.showSquareResidualsOfBestFitLineProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
+      model,
+      model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ),
+      LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR,
+      model.graph.bestFitLineSquaredResidualsVisibleProperty
+    );
 
     //  debugger;
     var equationText = new EquationNode( 0, 0 );
@@ -56,14 +61,14 @@ define( function( require ) {
     else {
     }
 
-    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, model.showBestFitLineProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.showResidualsOfBestFitLineProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.showSquareResidualsOfBestFitLineProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, model.graph.bestFitLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.graph.bestFitLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.graph.bestFitLineShowSquaredResidualsProperty );
 
-    model.showBestFitLineProperty.linkAttribute( residualsCheckBox, 'enabled' );
-    model.showBestFitLineProperty.linkAttribute( squaredResidualsCheckBox, 'enabled' );
-    model.showBestFitLineProperty.link( function( enabled ) {
+    model.graph.bestFitLineVisibleProperty.link( function( enabled ) {
       equationPanel.visible = enabled;
+      residualsCheckBox.enabled = enabled;
+      squaredResidualsCheckBox.enabled = enabled;
     } );
 
     AccordionBox.call( this, new VBox( {
