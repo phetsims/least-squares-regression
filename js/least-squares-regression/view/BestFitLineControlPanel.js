@@ -39,7 +39,7 @@ define( function( require ) {
    * {Object} options
    * @constructor
    */
-  function BestFitLineBoxNode( model, options ) {
+  function BestFitLineControlPanel( model, options ) {
 
     this.expandedProperty = new Property( false );
 
@@ -66,7 +66,11 @@ define( function( require ) {
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.graph.bestFitLineShowSquaredResidualsProperty );
 
     model.graph.bestFitLineVisibleProperty.link( function( enabled ) {
-      equationPanel.visible = enabled;
+      // TODO find less hacky way to toogle equationText visibility (using derived property perhaps)
+      if ( model.graph.dataPointsOnGraph.length > 1 ) {
+        equationText.visible = enabled;
+      }
+      equationPanel.opacity = enabled ? 1 : 0.3;
       residualsCheckBox.enabled = enabled;
       squaredResidualsCheckBox.enabled = enabled;
     } );
@@ -106,17 +110,19 @@ define( function( require ) {
         if ( linearFitParameters !== null ) {
           equationText.setSlopeText( linearFitParameters.slope );
           equationText.setInterceptText( linearFitParameters.intercept );
-          equationText.visible = true;
+          if ( model.graph.bestFitLineVisibleProperty.value ) {
+            equationText.setToVisible();
+          }
         }
         else {
-          equationText.visible = false;
+          equationText.setToInvisible();
         }
 
       } );
     } );
   }
 
-  return inherit( AccordionBox, BestFitLineBoxNode, {
+  return inherit( AccordionBox, BestFitLineControlPanel, {
       reset: function() {
         this.expandedProperty.reset();
       },

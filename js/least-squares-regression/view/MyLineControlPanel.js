@@ -37,7 +37,7 @@ define( function( require ) {
    * {Object} options
    * @constructor
    */
-  function MyLineBoxNode( model, options ) {
+  function MyLineControlPanel( model, options ) {
 
     var eqPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     var eqPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
@@ -54,6 +54,7 @@ define( function( require ) {
 
     var slidersBox = new HBox( {
       spacing: 5, children: [
+        //TODO get rid of magic numbers
         new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
         new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
     } );
@@ -99,10 +100,9 @@ define( function( require ) {
 
     model.graph.interceptProperty.link( function( intercept ) {
       equationText.setInterceptText( intercept );
-
     } );
 
   }
 
-  return inherit( Panel, MyLineBoxNode );
+  return inherit( Panel, MyLineControlPanel );
 } );

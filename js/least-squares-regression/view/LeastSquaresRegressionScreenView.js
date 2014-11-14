@@ -9,7 +9,7 @@ define( function( require ) {
 
   // modules
 
-  var BestFitLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineBoxNode' );
+  var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
@@ -21,7 +21,7 @@ define( function( require ) {
   var EraserButton = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var MyLineBoxNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineBoxNode' );
+  var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
   // var Path = require( 'SCENERY/nodes/Path' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -58,11 +58,11 @@ define( function( require ) {
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
-    var bestFitLineBoxNode = new BestFitLineBoxNode( model );
-    this.addChild( bestFitLineBoxNode );
+    var bestFitLineControlPanel = new BestFitLineControlPanel( model );
+    this.addChild( bestFitLineControlPanel );
 
-    var myLineBoxNode = new MyLineBoxNode( model );
-    this.addChild( myLineBoxNode );
+    var myLineControlPanel = new MyLineControlPanel( model );
+    this.addChild( myLineControlPanel );
 
     var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
     this.addChild( graphAxesNode );
@@ -140,7 +140,7 @@ define( function( require ) {
       listener: function() {
         model.reset();
         graphNode.reset();
-        bestFitLineBoxNode.reset();
+        bestFitLineControlPanel.reset();
       },
       right: this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10
@@ -151,10 +151,10 @@ define( function( require ) {
     this.addChild( dataPointsLayer );
 
     {
-      myLineBoxNode.right = this.layoutBounds.maxX - 10;
-      myLineBoxNode.top = 10;
-      bestFitLineBoxNode.left = 10;
-      bestFitLineBoxNode.top = 10;
+      myLineControlPanel.right = this.layoutBounds.maxX - 10;
+      myLineControlPanel.top = 10;
+      bestFitLineControlPanel.left = 10;
+      bestFitLineControlPanel.top = 10;
     }
 
   }
