@@ -32,22 +32,24 @@ define( function( require ) {
     var thisModel = this;
     PropertySet.call( thisModel, {
       showBucket: true,  // currently unused
-      selectedDataSet: DataSet.HEIGHT_SHOE
+//      selectedDataSet: DataSet.CUSTOM
+      selectedDataSet: DataSet.MILES_COST
     } );
 
     this.dataPoints = new ObservableArray(); // @public
 
     this.dataSets = [
+      DataSet.CUSTOM,
       DataSet.MILES_COST,
       DataSet.HEIGHT_SHOE,
       DataSet.GASOLINE_YEAR
     ];
 
-
     this.graph = new Graph(
-      new Range( 0, 20 ),
-      new Range( 0, 20 )
+      this.selectedDataSet.xRange,
+      this.selectedDataSet.yRange
     );
+
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -65,6 +67,13 @@ define( function( require ) {
       PropertySet.prototype.reset.call( this );
       this.dataPoints.clear();
       this.graph.reset();
+    },
+
+    setGraphBounds: function() {
+      this.graph = new Graph(
+        this.selectedDataSet.xRange,
+        this.selectedDataSet.yRange
+      );
     },
 
     step: function( dt ) {

@@ -38,6 +38,10 @@ define( function( require ) {
 
   inherit( Object, DataSet );
 
+  DataSet.CUSTOM = new DataSet( 'Custom', 'Title', 'Y', 'X', new Range( 0, 20 ), new Range( 0, 20 ),
+    []
+  );
+
   DataSet.GASOLINE_YEAR = new DataSet( gasolinePriceVsYearString, 'Price of Gasoline vs. Year', 'Price of Gasoline', 'Year', new Range( 0, 2 ), new Range( 1975, 2005 ),
     [
       {x: 1976, y: 0.61},
@@ -72,7 +76,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', 'Height', 'Shoe', new Range( 0, 20 ), new Range( 0, 20 ),
+  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', 'Height', 'Shoe', new Range( 0, 10 ), new Range( 0, 10 ),
     [
       {x: 1, y: 1},
       {x: 2, y: 2},

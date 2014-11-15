@@ -41,7 +41,7 @@ define( function( require ) {
    * @param modelViewTransform
    * @constructor
    */
-  function GraphNode( graph, model, modelViewTransform ) {
+  function GraphNode( graph, viewBounds, modelViewTransform ) {
     var graphNode = this;
     this.graph = graph;
     this.modelViewTransform = modelViewTransform;
@@ -49,9 +49,8 @@ define( function( require ) {
 
     // Create and add the graph itself.
 
-    this.viewBounds = new Bounds2( 200, 50, 550, 450 );
-    //  this.graphBoundsNode = Rectangle.bounds( this.viewBounds, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, stroke: 'gray'} );
-    //  this.addChild( this.graphBoundsNode );
+    this.viewBounds = viewBounds;
+
 
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
     this.myLine = new Line(
@@ -77,8 +76,8 @@ define( function( require ) {
     this.addChild( myLineResidualsLayer );
     this.addChild( bestFitLineResidualsLayer );
 
-    model.graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
-    model.graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
+    graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
+    graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
 
 
@@ -98,7 +97,7 @@ define( function( require ) {
     } );
 
     // Handle the comings and goings of  dataPoints.
-    model.graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
+    graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
 
       // Create and add the view representation for this dataPoint.
       var residualNode = new ResidualLineAndSquareNode(
@@ -111,16 +110,16 @@ define( function( require ) {
       myLineResidualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.
-      model.graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
+      graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
           myLineResidualsLayer.removeChild( residualNode );
-          model.graph.myLineResiduals.removeItemRemovedListener( removalListener );
+          graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );
 
     // Handle the comings and goings of  dataPoints.
-    model.graph.bestFitLineResiduals.addItemAddedListener( function( addedResidual ) {
+    graph.bestFitLineResiduals.addItemAddedListener( function( addedResidual ) {
 
       // Create and add the view representation for this dataPoint.
       var residualNode = new ResidualLineAndSquareNode(
@@ -133,10 +132,10 @@ define( function( require ) {
       bestFitLineResidualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.
-      model.graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
+      graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
           bestFitLineResidualsLayer.removeChild( residualNode );
-          model.graph.bestFitLineResiduals.removeItemRemovedListener( removalListener );
+          graph.bestFitLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );

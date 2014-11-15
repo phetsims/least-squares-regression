@@ -50,7 +50,7 @@ define( function( require ) {
     new Vector2( 0, -16 ),
     new Vector2( 9, -12 ),
     new Vector2( 13, -9 ),
-    new Vector2( -5, -12 ),
+    new Vector2( -5, -12 )
 
   ];
 
@@ -63,7 +63,8 @@ define( function( require ) {
     ScreenView.call( this, {renderer: 'svg'} );
     var thisView = this;
 
-    var viewGraphBounds = new Bounds2( 200, 50, 550, 450 );
+
+    var viewGraphBounds = new Bounds2( 200, 10, 600, 410 );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
@@ -75,9 +76,10 @@ define( function( require ) {
     this.addChild( myLineControlPanel );
 
     var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-    this.addChild( graphAxesNode );
+    //   this.addChild( graphAxesNode );
+    //  this.removeChild( graphAxesNode );
 
-    var graphNode = new GraphNode( model.graph, model, modelViewTransform );
+    var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
     this.addChild( graphNode );
 
     // Create the nodes that will be used to layer things visually.
@@ -85,6 +87,7 @@ define( function( require ) {
     this.addChild( backLayer );
 //    Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
 //     all of the point placement graphs in the z-order.
+
     var dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
 
     var bucketFrontLayer = new Node();
@@ -125,6 +128,21 @@ define( function( require ) {
     dataSetComboBox.bottom = 300;
     this.addChild( dataSetComboBox );
     this.addChild( dataSetListParent ); // last, so that dataSer box list is on top
+
+
+    model.selectedDataSetProperty.link( function( selectedDataSet ) {
+      model.graph.reset();
+      model.setGraphBounds();
+      graphNode.update();
+      graphNode.reset();
+      model.dataPoints.clear();
+      if ( thisView.graphAxesNode ) {
+        thisView.removeChild( thisView.graphAxesNode );
+      }
+      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+      thisView.addChild( thisView.graphAxesNode );
+
+    } );
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {

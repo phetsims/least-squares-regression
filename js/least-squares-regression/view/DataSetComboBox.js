@@ -13,11 +13,11 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+//  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+//  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
+//  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
+//  var Util = require( 'DOT/Util' );
 
   // strings
 //  var LSRConstants = require( 'string!LEAST_SQUARES_REGRESSION/pattern.0name.1pH' );
@@ -30,7 +30,6 @@ define( function( require ) {
    * @constructor
    */
 
-//  var soluteComboBox = new SoluteComboBox( model.solutes, model.dropper.soluteProperty, soluteListParent );
   function DataSetComboBox( dataSets, selectedDataSetProperty, dataSetListParent ) {
 
     // items
@@ -42,10 +41,10 @@ define( function( require ) {
 
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
-      itemYMargin: 12,
+      itemYMargin: 4,
       itemHighlightFill: 'rgb(218,255,255)',
-      buttonLineWidth: 3,
-      buttonCornerRadius: 10
+      buttonLineWidth: 1,
+      buttonCornerRadius: 8
     } );
   }
 
