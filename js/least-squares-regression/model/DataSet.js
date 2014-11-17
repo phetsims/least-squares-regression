@@ -42,6 +42,30 @@ define( function( require ) {
     []
   );
 
+  DataSet.FAKE_FAKE = new DataSet( 'fake Data', 'Y vs. X', 'Y', 'X', new Range( 0, 1 ), new Range( 0, 1 ),
+    [
+      {x: 0.12, y: 0.61},
+      {x: 0.56, y: 0.66},
+      {x: 0.88, y: 0.67},
+      {x: 0.20, y: 0.90},
+      {x: 0.98, y: 0.25},
+      {x: 0.34, y: 0.38},
+      {x: 0.56, y: 0.30}
+    ]
+  );
+
+  DataSet.FAKE_FAKE2 = new DataSet( 'fake2 Data', 'Y vs. X', 'Y', 'X', new Range( 0, 0.5 ), new Range( 0, 0.25 ),
+    [
+      {x: 0.42, y: 0.11},
+      {x: 0.16, y: 0.16},
+      {x: 0.48, y: 0.17},
+      {x: 0.20, y: 0.10},
+      {x: 0.18, y: 0.15},
+      {x: 0.34, y: 0.24},
+      {x: 0.06, y: 0.20}
+    ]
+  );
+
   DataSet.GASOLINE_YEAR = new DataSet( gasolinePriceVsYearString, 'Price of Gasoline vs. Year', 'Price of Gasoline', 'Year', new Range( 0, 2 ), new Range( 1975, 2005 ),
     [
       {x: 1976, y: 0.61},

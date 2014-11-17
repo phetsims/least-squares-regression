@@ -52,11 +52,13 @@ define( function( require ) {
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.myLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.myLineShowSquaredResidualsProperty );
 
+    //   var sliderInterceptRange = new Range( 1.5 * graph.yRange.min - 0.5 * graph.yRange.max, 1.5 * graph.yRange.max - 0.5 * graph.yRange.min );
+    var sliderInterceptRange = new Range( -graph.yRange.max, graph.yRange.max );
     var slidersBox = new HBox( {
       spacing: 5, children: [
         //TODO get rid of magic numbers
-        new VerticalSlider( aString, new Dimension2( 3, 100 ), graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
-        new VerticalSlider( bString, new Dimension2( 3, 100 ), graph.interceptProperty, new Range( -20, 20 ) )]
+        new VerticalSlider( aString, new Dimension2( 1, 100 ), graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
+        new VerticalSlider( bString, new Dimension2( 1, 100 ), graph.interceptProperty, sliderInterceptRange )]
     } );
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( graph, dataPoints, graph.getMyLineSumOfSquaredResiduals.bind( graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, graph.myLineSquaredResidualsVisibleProperty );

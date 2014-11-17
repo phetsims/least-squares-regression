@@ -16,6 +16,8 @@ define( function( require ) {
   // var Color = require( 'SCENERY/util/Color' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
+
+  var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
@@ -55,8 +57,7 @@ define( function( require ) {
   ];
 
   /**
-   * @param {LeastSquaresRegressionModel} leastSquaresRegressionModel
-   * @constructor
+   * @param {LeastSquaresRegrethis
    */
   function LeastSquaresRegressionScreenView( model ) {
 
@@ -70,28 +71,35 @@ define( function( require ) {
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints );
-    this.addChild( bestFitLineControlPanel );
-
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints );
-    this.addChild( myLineControlPanel );
-
-    var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-    this.addChild( graphAxesNode );
-    //  this.removeChild( graphAxesNode );
-
+    thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
-    this.addChild( graphNode );
+
+
+    thisView.addChild( bestFitLineControlPanel );
+    thisView.addChild( myLineControlPanel );
+    thisView.addChild( thisView.graphAxesNode );
+    thisView.addChild( graphNode );
+
+
+    // dataSet combo box
+    var dataSetListParent = new Node();
+    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
+    dataSetComboBox.left = 20;
+    dataSetComboBox.bottom = 300;
+    thisView.addChild( dataSetComboBox );
+    thisView.addChild( dataSetListParent ); // last, so that dataSer box list is on top
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
-    this.addChild( backLayer );
+    thisView.addChild( backLayer );
 //    Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
 //     all of the point placement graphs in the z-order.
 
-    var dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
+    thisView.dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
 
     var bucketFrontLayer = new Node();
-    this.addChild( bucketFrontLayer );
+    thisView.addChild( bucketFrontLayer );
 
     // Add the bucket view elements
     var bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
@@ -105,50 +113,57 @@ define( function( require ) {
         model.addUserCreatedDataPoint.bind( model ),
         modelViewTransform, {
           left: bucketHole.centerX + offset.x,
-          top: bucketHole.centerY + offset.y
+          top:  bucketHole.centerY + offset.y
         } ) );
     } );
 
     // Add the button that allows the graph to be cleared of all dataPoints.
-    this.addChild( new EraserButton( {
+    var eraserButton = new EraserButton( {
       right: bucketFront.right - 3,
-      top: bucketFront.bottom + 5,
+      top:   bucketFront.bottom + 5,
       listener: function() {
         model.dataPoints.forEach( function( dataPoint ) {
           dataPoint.animating = true;
         } );
 
       }
-    } ) );
+    } );
 
-    // dataSet combo box
-    var dataSetListParent = new Node();
-    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
-    dataSetComboBox.left = 20;
-    dataSetComboBox.bottom = 300;
-    this.addChild( dataSetComboBox );
-    this.addChild( dataSetListParent ); // last, so that dataSer box list is on top
+    thisView.addChild( eraserButton );
 
 
-//    model.selectedDataSetProperty.link( function( selectedDataSet ) {
-//      model.graph.reset();
-//      model.setGraphBounds();
-//// //     graphNode.reset();
-//      model.dataPoints.clear();
-//      if ( thisView.graphAxesNode ) {
-//        thisView.removeChild( thisView.graphAxesNode );
-//      }
-//      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-//  //    thisView.addChild( thisView.graphAxesNode );
-//
-//    } );
+    model.selectedDataSetProperty.link( function( selectedDataSet ) {
+
+      //    model.setGraphBounds();
+// //     graphNode.reset();
+
+      if ( thisView.graphAxesNode ) {
+        //       thisView.removeChild( thisView.graphAxesNode );
+      }
+
+      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+      //    thisView.addChild( thisView.graphAxesNode );
+
+      if ( selectedDataSet == DataSet.CUSTOM ) {
+        bucketHole.visible = true;
+        bucketFront.visible = true;
+        eraserButton.visible = true;
+      }
+      else {
+        bucketHole.visible = false;
+        bucketFront.visible = false;
+        eraserButton.visible = false;
+        //  backLayer.removeAllChildren();
+      }
+
+    } );
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
       // Create and add the view representation for this dataPoint.
       var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
-      dataPointsLayer.addChild( dataPointNode );
+      thisView.dataPointsLayer.addChild( dataPointNode );
 
       addedDataPoint.positionProperty.link( function() {
         graphNode.update();
@@ -164,7 +179,7 @@ define( function( require ) {
       // Add the removal listener for if and when this dataPoint is removed from the model.
       model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
         if ( removedDataPoint === addedDataPoint ) {
-          dataPointsLayer.removeChild( dataPointNode );
+          thisView.dataPointsLayer.removeChild( dataPointNode );
           model.dataPoints.removeItemRemovedListener( removalListener );
         }
       } );
@@ -177,16 +192,16 @@ define( function( require ) {
         graphNode.reset();
         bestFitLineControlPanel.reset();
       },
-      right: this.layoutBounds.maxX - 10,
-      bottom: this.layoutBounds.maxY - 10
+      right:  thisView.layoutBounds.maxX - 10,
+      bottom: thisView.layoutBounds.maxY - 10
     } );
-    this.addChild( resetAllButton );
+    thisView.addChild( resetAllButton );
 
     // Add the dataPoints layer last .
-    this.addChild( dataPointsLayer );
+    thisView.addChild( thisView.dataPointsLayer );
 
     {
-      myLineControlPanel.right = this.layoutBounds.maxX - 10;
+      myLineControlPanel.right = thisView.layoutBounds.maxX - 10;
       myLineControlPanel.top = 10;
       bestFitLineControlPanel.left = 10;
       bestFitLineControlPanel.top = 10;
@@ -194,11 +209,5 @@ define( function( require ) {
 
   }
 
-  return inherit( ScreenView, LeastSquaresRegressionScreenView, {
-
-    // Called by the animation loop. Optional, so if your view has no animation, you can omit this.
-    step: function( dt ) {
-      // Handle view animation here.
-    }
-  } );
+  return inherit( ScreenView, LeastSquaresRegressionScreenView );
 } );

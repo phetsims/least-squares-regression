@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
+  var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var ObservableArray = require( 'AXON/ObservableArray' );
@@ -32,24 +33,30 @@ define( function( require ) {
     var thisModel = this;
     PropertySet.call( thisModel, {
       showBucket: true,  // currently unused
-//      selectedDataSet: DataSet.CUSTOM
-      selectedDataSet: DataSet.MILES_COST
+      selectedDataSet: DataSet.CUSTOM
+//      selectedDataSet: DataSet.MILES_COST
     } );
 
     this.dataPoints = new ObservableArray(); // @public
 
     this.dataSets = [
       DataSet.CUSTOM,
+      DataSet.FAKE_FAKE,
+      DataSet.FAKE_FAKE2,
       DataSet.MILES_COST,
       DataSet.HEIGHT_SHOE,
       DataSet.GASOLINE_YEAR
     ];
 
-    this.graph = new Graph(
-      this.selectedDataSet.xRange,
-      this.selectedDataSet.yRange
-    );
+    //this.graph = new Graph(
+    //  this.selectedDataSet.xRange,
+    //  this.selectedDataSet.yRange
+    //);
 
+    this.graph = new Graph(
+      new Range( 0, 1 ),
+      new Range( 0, 1 )
+    );
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -59,6 +66,13 @@ define( function( require ) {
       invertY: true
     } );
 
+    this.selectedDataSetProperty.link( function( selectedDataSet ) {
+      thisModel.graph.reset();
+      thisModel.dataPoints.clear();
+      selectedDataSet.dataXY.forEach( function( position ) {
+        thisModel.addUserCreatedDataPoint( new DataPoint( position ) );
+      } );
+    } );
   }
 
   return inherit( PropertySet, LeastSquaresRegressionModel, {

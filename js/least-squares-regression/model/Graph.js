@@ -81,7 +81,7 @@ define( function( require ) {
   return inherit( PropertySet, Graph, {
 
     reset: function() {
-      PropertySet.prototype.reset.call( this );
+      // PropertySet.prototype.reset.call( this );
       this.dataPointsOnGraph = [];
       this.myLineResiduals.clear();
       this.bestFitLineResiduals.clear();
@@ -270,6 +270,7 @@ define( function( require ) {
       var dataPointArray = this.dataPointsOnGraph;
       assert && assert( dataPointArray !== null, 'dataPointsOnGraph must contain data' );
       var arrayLength = dataPointArray.length;
+
       var squaresXX = _.map( dataPointArray, function( dataPoint ) { return dataPoint.position.x * dataPoint.position.x; } );
       var squaresXY = _.map( dataPointArray, function( dataPoint ) { return dataPoint.position.x * dataPoint.position.y; } );
       var squaresYY = _.map( dataPointArray, function( dataPoint ) { return dataPoint.position.y * dataPoint.position.y; } );

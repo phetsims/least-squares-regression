@@ -61,13 +61,13 @@ define( function( require ) {
     this.addChild( label );
 
     Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
-      rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
+      rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 4 * getSumOfSquaredResiduals() );
     } );
 
     // Handle the comings and goings of  dataPoints.
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
-        rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
+        rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 4 * getSumOfSquaredResiduals() );
       } );
     } );
 
