@@ -76,7 +76,7 @@ define( function( require ) {
     this.addChild( myLineControlPanel );
 
     var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-    //   this.addChild( graphAxesNode );
+    this.addChild( graphAxesNode );
     //  this.removeChild( graphAxesNode );
 
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
