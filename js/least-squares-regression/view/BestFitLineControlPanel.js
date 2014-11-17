@@ -39,35 +39,36 @@ define( function( require ) {
    * {Object} options
    * @constructor
    */
-  function BestFitLineControlPanel( model, options ) {
+  function BestFitLineControlPanel( graph, dataPoints, options ) {
 
     this.expandedProperty = new Property( false );
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
-      model,
-      model.graph.getBestFitLineSumOfSquaredResiduals.bind( model.graph ),
+      graph,
+      dataPoints,
+      graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
       LSRConstants.BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR,
-      model.graph.bestFitLineSquaredResidualsVisibleProperty
+      graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
     //  debugger;
     var equationText = new EquationNode( 0, 0 );
     equationText.visible = false;
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
-    var linearFitParameters = model.graph.getLinearFit();
+    var linearFitParameters = graph.getLinearFit();
     if ( linearFitParameters !== null ) {
       this.equationNode = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
     }
     else {
     }
 
-    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, model.graph.bestFitLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.graph.bestFitLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.graph.bestFitLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, graph.bestFitLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowSquaredResidualsProperty );
 
-    model.graph.bestFitLineVisibleProperty.link( function( enabled ) {
+    graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // TODO find less hacky way to toogle equationText visibility (using derived property perhaps)
-      if ( model.graph.dataPointsOnGraph.length > 1 ) {
+      if ( graph.dataPointsOnGraph.length > 1 ) {
         equationText.visible = enabled;
       }
       equationPanel.opacity = enabled ? 1 : 0.3;
@@ -104,13 +105,13 @@ define( function( require ) {
       }, options ) );
 
     // Handle the comings and goings of  dataPoints.
-    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
+    dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
-        var linearFitParameters = model.graph.getLinearFit();
+        var linearFitParameters = graph.getLinearFit();
         if ( linearFitParameters !== null ) {
           equationText.setSlopeText( linearFitParameters.slope );
           equationText.setInterceptText( linearFitParameters.intercept );
-          if ( model.graph.bestFitLineVisibleProperty.value ) {
+          if ( graph.bestFitLineVisibleProperty.value ) {
             equationText.setToVisible();
           }
         }

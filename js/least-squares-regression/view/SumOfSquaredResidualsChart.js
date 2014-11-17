@@ -37,7 +37,7 @@ define( function( require ) {
    * @param {Property Boolean} visibleProperty
    * @constructor
    */
-  function SumOfSquaredResidualsChart( model, getSumOfSquaredResiduals, fillColor, visibleProperty ) {
+  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, fillColor, visibleProperty ) {
 
     Node.call( this );
     // var self = this;
@@ -60,12 +60,12 @@ define( function( require ) {
     this.addChild( zeroLabel );
     this.addChild( label );
 
-    Property.multilink( [model.graph.angleProperty, model.graph.interceptProperty], function( angle, intercept ) {
+    Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
     } );
 
     // Handle the comings and goings of  dataPoints.
-    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
+    dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
         rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 0.01 * getSumOfSquaredResiduals() );
       } );

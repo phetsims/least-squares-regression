@@ -69,10 +69,10 @@ define( function( require ) {
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
-    var bestFitLineControlPanel = new BestFitLineControlPanel( model );
+    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints );
     this.addChild( bestFitLineControlPanel );
 
-    var myLineControlPanel = new MyLineControlPanel( model );
+    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints );
     this.addChild( myLineControlPanel );
 
     var graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
@@ -130,19 +130,18 @@ define( function( require ) {
     this.addChild( dataSetListParent ); // last, so that dataSer box list is on top
 
 
-    model.selectedDataSetProperty.link( function( selectedDataSet ) {
-      model.graph.reset();
-      model.setGraphBounds();
-      graphNode.update();
-      graphNode.reset();
-      model.dataPoints.clear();
-      if ( thisView.graphAxesNode ) {
-        thisView.removeChild( thisView.graphAxesNode );
-      }
-      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-      thisView.addChild( thisView.graphAxesNode );
-
-    } );
+//    model.selectedDataSetProperty.link( function( selectedDataSet ) {
+//      model.graph.reset();
+//      model.setGraphBounds();
+//// //     graphNode.reset();
+//      model.dataPoints.clear();
+//      if ( thisView.graphAxesNode ) {
+//        thisView.removeChild( thisView.graphAxesNode );
+//      }
+//      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+//  //    thisView.addChild( thisView.graphAxesNode );
+//
+//    } );
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {

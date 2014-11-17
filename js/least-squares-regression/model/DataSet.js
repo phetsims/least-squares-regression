@@ -88,7 +88,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.MILES_COST = new DataSet( milesVsCostString, 'Miles vs. Cost', 'Miles', 'Cost', new Range( 0, 20 ), new Range( 0, 20 ),
+  DataSet.MILES_COST = new DataSet( milesVsCostString, 'Miles vs. Cost', 'Miles', 'Cost', new Range( 0, 15 ), new Range( 0, 10 ),
     [
       {x: 1, y: 1},
       {x: 2, y: 2},

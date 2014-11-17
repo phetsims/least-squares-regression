@@ -37,7 +37,7 @@ define( function( require ) {
    * {Object} options
    * @constructor
    */
-  function MyLineControlPanel( model, options ) {
+  function MyLineControlPanel( graph, dataPoints, options ) {
 
     var eqPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     var eqPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
@@ -45,23 +45,23 @@ define( function( require ) {
     var eqPartFourText = new Text( bString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
 
-    var equationText = new EquationNode( model.graph.slope( model.graph.angle ), model.graph.intercept );
+    var equationText = new EquationNode( graph.slope( graph.angle ), graph.intercept );
     var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 2, resize: false} );
 
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, model.graph.myLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, model.graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, model.graph.myLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, graph.myLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.myLineShowSquaredResidualsProperty );
 
     var slidersBox = new HBox( {
       spacing: 5, children: [
         //TODO get rid of magic numbers
-        new VerticalSlider( aString, new Dimension2( 3, 100 ), model.graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
-        new VerticalSlider( bString, new Dimension2( 3, 100 ), model.graph.interceptProperty, new Range( -20, 20 ) )]
+        new VerticalSlider( aString, new Dimension2( 3, 100 ), graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
+        new VerticalSlider( bString, new Dimension2( 3, 100 ), graph.interceptProperty, new Range( -20, 20 ) )]
     } );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( model, model.graph.getMyLineSumOfSquaredResiduals.bind( model.graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, model.graph.myLineSquaredResidualsVisibleProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( graph, dataPoints, graph.getMyLineSumOfSquaredResiduals.bind( graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, graph.myLineSquaredResidualsVisibleProperty );
 
-    model.graph.myLineVisibleProperty.link( function( enabled ) {
+    graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
       slidersBox.opacity = enabled ? 1 : 0.3;
       equationPanel.opacity = enabled ? 1 : 0.3;
@@ -93,12 +93,12 @@ define( function( require ) {
       }, options )
     );
 
-    model.graph.angleProperty.link( function( angle ) {
-      var slope = model.graph.slope( angle );
+    graph.angleProperty.link( function( angle ) {
+      var slope = graph.slope( angle );
       equationText.setSlopeText( slope );
     } );
 
-    model.graph.interceptProperty.link( function( intercept ) {
+    graph.interceptProperty.link( function( intercept ) {
       equationText.setInterceptText( intercept );
     } );
 
