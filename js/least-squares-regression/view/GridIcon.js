@@ -1,17 +1,15 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * A Scenery node that depicts a grid with squares on it.  This is used in several places in the simulation to create
- * icons that look like the things that the user might create when using the simulation.
+ * A Scenery node that depicts a grid icon.
  *
- * @author John Blanco
  */
 define( function( require ) {
   'use strict';
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  var Color = require( 'SCENERY/util/Color' );
+  // var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
@@ -24,7 +22,6 @@ define( function( require ) {
   function GridIcon( options ) {
 
     Node.call( this );
-    var self = this;
 
     options = _.extend( {
       // defaults

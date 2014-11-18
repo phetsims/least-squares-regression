@@ -40,7 +40,6 @@ define( function( require ) {
   // var AXIS_LABEL_SPACING = 2; // space between end of axis and label
 
   // ticks
-  var MAJOR_TICK_SPACING = 5; // model units
   var MINOR_TICK_LENGTH = 3; // how far a minor tick extends from the axis
   var MINOR_TICK_LINE_WIDTH = 0.5;
   var MINOR_TICK_COLOR = 'black';
@@ -124,23 +123,21 @@ define( function( require ) {
   // Tick Spacing for major and minor ticks
   //--------------
 
-  function TickSeparation( range ) {
+  function tickSpacing( range ) {
     var width = range.max - range.min;
     var mantissa = Math.log10( width );
     var floorMantissa = Math.floor( mantissa );
-    var remainder = mantissa - floorMantissa + 0.62; //empirically detemined number
+    var remainder = mantissa - floorMantissa + 0.62; //empirically determined number
     // debugger;
     var majorBaseMultiple;
     var minorTicksPerMajor;
     if ( remainder >= Math.log10( 10 ) ) {
       majorBaseMultiple = 10;
       minorTicksPerMajor = 5;
-      console.log()
     }
     else if ( remainder >= Math.log10( 5 ) ) {
       majorBaseMultiple = 5;
       minorTicksPerMajor = 5;
-      console.log()
     }
     else if ( remainder >= Math.log10( 2 ) ) {
       majorBaseMultiple = 2;
@@ -150,7 +147,6 @@ define( function( require ) {
       majorBaseMultiple = 1;
       minorTicksPerMajor = 5;
     }
-    console.log( majorBaseMultiple );
 
     var majorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 );
     var minorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 ) / minorTicksPerMajor;
@@ -159,8 +155,7 @@ define( function( require ) {
     var numberOfTicks = (stopPositionTick - startPositionTick) / minorTickSpacing + 1;
     var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log10( majorTickSpacing ) + 1;
 
-    console.log( tickSpacing );
-    var tickSpacing = {
+    var tickSeparation = {
       majorTickSpacing: majorTickSpacing,
       minorTickSpacing: minorTickSpacing,
       minorTicksPerMajor: minorTicksPerMajor,
@@ -169,8 +164,7 @@ define( function( require ) {
       numberOfTicks: numberOfTicks,
       decimalPlaces: decimalPlaces
     };
-    console.log( tickSpacing );
-    return tickSpacing;
+    return tickSeparation;
   }
 
   // return inherit( Object, TickSeparation );
@@ -198,7 +192,7 @@ define( function( require ) {
     this.addChild( lineNode );
 
     // ticks
-    var tickSeparation = TickSeparation( graph.xRange );
+    var tickSeparation = tickSpacing( graph.xRange );
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
@@ -244,7 +238,7 @@ define( function( require ) {
 
     // ticks
 
-    var tickSeparation = TickSeparation( graph.yRange );
+    var tickSeparation = tickSpacing( graph.yRange );
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
@@ -288,34 +282,34 @@ define( function( require ) {
     // horizontal grid lines, one line for each unit of grid spacing
     var horizontalGridLinesNode = new Node();
     this.addChild( horizontalGridLinesNode );
-    var tickSeparation = TickSeparation( graph.yRange );
-    var numberOfHorizontalGridLines = tickSeparation.numberOfTicks;
+    var tickYSeparation = tickSpacing( graph.yRange );
+    var numberOfHorizontalGridLines = tickYSeparation.numberOfTicks;
 
     var minX = modelViewTransform.modelToViewX( graph.xRange.min );
     var maxX = modelViewTransform.modelToViewX( graph.xRange.max );
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
-      var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+      var modelY = tickYSeparation.startPositionTick + tickYSeparation.minorTickSpacing * i;
       // TODO find a better way to handle origin
       if ( modelY !== 0 ) { // skip origin, x axis will live here
         var yOffset = modelViewTransform.modelToViewY( modelY );
-        var isMajorY = Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001;
-        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorY ) );
+        var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < 0.001;
+        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
       }
     }
 
     // vertical grid lines, one line for each unit of grid spacing
     var verticalGridLinesNode = new Node();
     this.addChild( verticalGridLinesNode );
-    var tickSeparation = TickSeparation( graph.xRange );
-    var numberOfVerticalGridLines = tickSeparation.numberOfTicks;
+    var tickXSeparation = tickSpacing( graph.xRange );
+    var numberOfVerticalGridLines = tickXSeparation.numberOfTicks;
     var minY = modelViewTransform.modelToViewY( graph.yRange.max ); // yes, swap min and max
     var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
-      var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * j;
+      var modelX = tickXSeparation.startPositionTick + tickXSeparation.minorTickSpacing * j;
       if ( modelX !== 0 ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
-        var isMajorX = Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001;
-        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorX ) );
+        var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < 0.001;
+        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
       }
     }
   }

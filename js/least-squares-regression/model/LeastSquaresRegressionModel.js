@@ -33,7 +33,7 @@ define( function( require ) {
     var thisModel = this;
     PropertySet.call( thisModel, {
       showGrid: false,
-      showBucket: true,  // currently unused
+      //     showBucket: true,  // currently unused
       selectedDataSet: DataSet.CUSTOM
 //      selectedDataSet: DataSet.MILES_COST
     } );
@@ -44,20 +44,17 @@ define( function( require ) {
       DataSet.CUSTOM,
       DataSet.FAKE_FAKE,
       DataSet.FAKE_FAKE2,
+      DataSet.FAKE_FAKE3,
       DataSet.MILES_COST,
       DataSet.HEIGHT_SHOE,
       DataSet.GASOLINE_YEAR
     ];
 
-    //this.graph = new Graph(
-    //  this.selectedDataSet.xRange,
-    //  this.selectedDataSet.yRange
-    //);
-
     this.graph = new Graph(
-      new Range( 0, 1 ),
-      new Range( 0, 1 )
+      this.selectedDataSet.xRange,
+      this.selectedDataSet.yRange
     );
+
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -67,12 +64,20 @@ define( function( require ) {
       invertY: true
     } );
 
+    //this.graph = new Graph(
+    //  new Range( 0, 20 ),
+    //  new Range( 0, 20 )
+    //);
+
+
+
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
       thisModel.graph.reset();
       thisModel.dataPoints.clear();
       selectedDataSet.dataXY.forEach( function( position ) {
         var positionVector = new Vector2( position.x, position.y );
         thisModel.addUserCreatedDataPoint( new DataPoint( positionVector ) );
+        thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
       } );
     } );
   }
@@ -85,12 +90,12 @@ define( function( require ) {
       this.graph.reset();
     },
 
-    setGraphBounds: function() {
-      this.graph = new Graph(
-        this.selectedDataSet.xRange,
-        this.selectedDataSet.yRange
-      );
-    },
+    //setGraphBounds: function() {
+    //  this.graph = new Graph(
+    //    this.selectedDataSet.xRange,
+    //    this.selectedDataSet.yRange
+    //  );
+    //},
 
     step: function( dt ) {
       this.dataPoints.forEach( function( dataPoint ) {

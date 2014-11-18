@@ -29,7 +29,7 @@ define( function( require ) {
   // var pattern_0value_1units = "{1}{0}";
 
   // constants
-
+//TODO replace with new VSlider
   var RANGE_FONT = new PhetFont( {size: 12, weight: 'bold'} );
   var RANGE_COLOR = 'blue';
   // var VALUE_FONT = new PhetFont( 20 );

@@ -141,11 +141,16 @@ define( function( require ) {
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       if ( thisView.graphAxesNode ) {
-        //       thisView.removeChild( thisView.graphAxesNode );
+        thisView.removeChild( thisView.graphAxesNode );
       }
 
-      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+      thisView.graphbounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
+      thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
 
+      var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( thisView.graphbounds, viewGraphBounds );
+      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransformAxes );
+      thisView.addChild( thisView.graphAxesNode );
+      thisView.graphAxesNode.moveToBack();
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketHole.visible = true;

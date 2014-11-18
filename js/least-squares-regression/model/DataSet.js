@@ -39,7 +39,8 @@ define( function( require ) {
   inherit( Object, DataSet );
 
   DataSet.CUSTOM = new DataSet( 'Custom', 'Title', 'Y', 'X', new Range( 0, 20 ), new Range( 0, 20 ),
-    []
+    [{x: 0.12, y: 0.61},
+      {x: 0.56, y: 0.66}]
   );
 
   DataSet.FAKE_FAKE = new DataSet( 'fake Data', 'Y vs. X', 'Y', 'X', new Range( 0, 1 ), new Range( 0, 1 ),
@@ -63,6 +64,14 @@ define( function( require ) {
       {x: 0.18, y: 0.15},
       {x: 0.34, y: 0.24},
       {x: 0.06, y: 0.20}
+    ]
+  );
+
+  DataSet.FAKE_FAKE3 = new DataSet( 'fake3 Data', 'Y vs. X', 'Y', 'X', new Range( 0, 11 ), new Range( 0, 11 ),
+    [
+      {x: 1, y: 1},
+      {x: 5, y: 5},
+      {x: 8, y: 9}
     ]
   );
 
@@ -114,7 +123,7 @@ define( function( require ) {
 
   DataSet.MILES_COST = new DataSet( milesVsCostString, 'Miles vs. Cost', 'Miles', 'Cost', new Range( 0, 15 ), new Range( 0, 10 ),
     [
-      {x: 1, y: 1},
+      {x: 0.5, y: 0.4},
       {x: 2, y: 2},
       {x: 3, y: 5},
       {x: 4, y: 7},

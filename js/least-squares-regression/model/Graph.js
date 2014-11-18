@@ -64,9 +64,13 @@ define( function( require ) {
     // range of the x and y axis graph (in the model)
     this.xRange = xRange;
     this.yRange = yRange;
-
+    this.slopeFactor = (this.yRange.max - this.yRange.min) / (this.xRange.max - this.xRange.min);
+    this.interceptFactor = (this.yRange.max - this.yRange.min);
     // bounds for the graph in model coordinates
-    this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max );
+    //   this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max );
+
+    this.bounds = new Bounds2( 0, 0, 1, 1 );
+
 
     // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
     this.myLineResiduals = new ObservableArray(); // @public
@@ -87,12 +91,26 @@ define( function( require ) {
       this.bestFitLineResiduals.clear();
     },
 
+    setGraphDomain: function( xRange, yRange ) {
+      this.xRange = xRange;
+      this.yRange = yRange;
+      this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min);
+      this.interceptFactor = (yRange.max - yRange.min);
+    },
+    setSlopeFactor: function() {
+
+    },
+
+    setInterceptFactor: function() {
+
+    },
+
     getWidth: function() {
-      return this.bounds.width;
+      return this.xRange.getLength();
     },
 
     getHeight: function() {
-      return this.bounds.height;
+      return this.yRange.getLength();
     },
 
     update: function() {
@@ -104,7 +122,7 @@ define( function( require ) {
 
     slope: function( angle ) {
       //TODO find a more robust way
-      return 2 * Math.tan( angle );
+      return Math.tan( angle );
     },
 
     addMyLineResidual: function( dataPoint ) {
@@ -255,11 +273,11 @@ define( function( require ) {
      */
     getBoundaryPoints: function( slope, intercept ) {
 
-      var yValueLeft = slope * this.xRange.min + intercept;
-      var yValueRight = slope * this.xRange.max + intercept;
+      var yValueLeft = slope * this.bounds.minX + intercept;
+      var yValueRight = slope * this.bounds.maxX + intercept;
       var boundaryPoints = {
-        point1: new Vector2( this.xRange.min, yValueLeft ),
-        point2: new Vector2( this.xRange.max, yValueRight )
+        point1: new Vector2( this.bounds.minX, yValueLeft ),
+        point2: new Vector2( this.bounds.maxX, yValueRight )
       };
 
       return boundaryPoints;

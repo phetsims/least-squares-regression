@@ -97,11 +97,11 @@ define( function( require ) {
 
     graph.angleProperty.link( function( angle ) {
       var slope = graph.slope( angle );
-      equationText.setSlopeText( slope );
+      equationText.setSlopeText( slope * graph.slopeFactor );
     } );
 
     graph.interceptProperty.link( function( intercept ) {
-      equationText.setInterceptText( intercept );
+      equationText.setInterceptText( intercept * graph.interceptFactor );
     } );
 
   }
