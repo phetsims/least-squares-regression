@@ -2,7 +2,6 @@
 
 /**
  * Base type for graphs, displays a 2D grid and axes.
- * The node's origin is at model coordinate (0,0).
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
@@ -19,6 +18,7 @@ define( function( require ) {
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   //----------------------------------------------------------------------------------------
@@ -33,8 +33,7 @@ define( function( require ) {
   var MAJOR_GRID_LINE_COLOR = 'rgb( 192, 192, 192 )';
 
   // axes
-  // var AXIS_ARROW_SIZE = new Dimension2( 10, 10 );
-  // var AXIS_THICKNESS = 1;
+
   var AXIS_COLOR = 'black';
   var AXIS_EXTENT = 0.0; // how far the arrow extends past the min/max ticks, in model coordinates
   // var AXIS_LABEL_FONT = new PhetFont( 16 );
@@ -120,6 +119,62 @@ define( function( require ) {
 
   inherit( Path, MinorTickNode );
 
+
+  //--------------
+  // Tick Spacing for major and minor ticks
+  //--------------
+
+  function TickSeparation( range ) {
+    var width = range.max - range.min;
+    var mantissa = Math.log10( width );
+    var floorMantissa = Math.floor( mantissa );
+    var remainder = mantissa - floorMantissa + 0.62; //empirically detemined number
+    // debugger;
+    var majorBaseMultiple;
+    var minorTicksPerMajor;
+    if ( remainder >= Math.log10( 10 ) ) {
+      majorBaseMultiple = 10;
+      minorTicksPerMajor = 5;
+      console.log()
+    }
+    else if ( remainder >= Math.log10( 5 ) ) {
+      majorBaseMultiple = 5;
+      minorTicksPerMajor = 5;
+      console.log()
+    }
+    else if ( remainder >= Math.log10( 2 ) ) {
+      majorBaseMultiple = 2;
+      minorTicksPerMajor = 4;
+    }
+    else {
+      majorBaseMultiple = 1;
+      minorTicksPerMajor = 5;
+    }
+    console.log( majorBaseMultiple );
+
+    var majorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 );
+    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 ) / minorTicksPerMajor;
+    var startPositionTick = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing;
+    var stopPositionTick = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing;
+    var numberOfTicks = (stopPositionTick - startPositionTick) / minorTickSpacing + 1;
+    var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log10( majorTickSpacing ) + 1;
+
+    console.log( tickSpacing );
+    var tickSpacing = {
+      majorTickSpacing: majorTickSpacing,
+      minorTickSpacing: minorTickSpacing,
+      minorTicksPerMajor: minorTicksPerMajor,
+      startPositionTick: startPositionTick,
+      stopPositionTick: stopPositionTick,
+      numberOfTicks: numberOfTicks,
+      decimalPlaces: decimalPlaces
+    };
+    console.log( tickSpacing );
+    return tickSpacing;
+  }
+
+  // return inherit( Object, TickSeparation );
+
   //----------------------------------------------------------------------------------------
   // x-axis (horizontal)
   //----------------------------------------------------------------------------------------
@@ -143,22 +198,23 @@ define( function( require ) {
     this.addChild( lineNode );
 
     // ticks
-    var numberOfTicks = graph.getWidth() + 1;
+    var tickSeparation = TickSeparation( graph.xRange );
+    var numberOfTicks = tickSeparation.numberOfTicks;
+
     for ( var i = 0; i < numberOfTicks; i++ ) {
-      var modelX = graph.xRange.min + i;
-      //  if ( modelX !== 0 )
-      { // skip the origin
-        var x = modelViewTransform.modelToViewX( modelX );
-        var y = modelViewTransform.modelToViewY( 0 );
-        if ( Math.abs( modelX ) % MAJOR_TICK_SPACING === 0 ) {
-          // major tick
-          this.addChild( new MajorTickNode( x, y, modelX, true ) );
-        }
-        else {
-          // minor tick
-          this.addChild( new MinorTickNode( x, y, true ) );
-        }
+      var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+      var x = modelViewTransform.modelToViewX( modelX );
+      var y = modelViewTransform.modelToViewY( 0 );
+
+      if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001 ) {
+        // major tick
+        this.addChild( new MajorTickNode( x, y, Util.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
       }
+      else {
+        // minor tick
+        this.addChild( new MinorTickNode( x, y, true ) );
+      }
+
     }
   }
 
@@ -187,30 +243,32 @@ define( function( require ) {
     this.addChild( lineNode );
 
     // ticks
-    var numberOfTicks = graph.getHeight() + 1;
+
+    var tickSeparation = TickSeparation( graph.yRange );
+    var numberOfTicks = tickSeparation.numberOfTicks;
+
     for ( var i = 0; i < numberOfTicks; i++ ) {
-      var modelY = graph.yRange.min + i;
-      // if ( modelY !== 0 )
-      { // skip the origin
-        var x = modelViewTransform.modelToViewX( 0 );
-        var y = modelViewTransform.modelToViewY( modelY );
-        if ( Math.abs( modelY ) % MAJOR_TICK_SPACING === 0 ) {
-          // major tick
-          this.addChild( new MajorTickNode( x, y, modelY, false ) );
-        }
-        else {
-          // minor tick
-          this.addChild( new MinorTickNode( x, y, false ) );
-        }
+      var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+
+      var x = modelViewTransform.modelToViewX( 0 );
+      var y = modelViewTransform.modelToViewY( modelY );
+      if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001 ) {
+        // major tick
+        this.addChild( new MajorTickNode( x, y, Util.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
+      }
+      else {
+        // minor tick
+        this.addChild( new MinorTickNode( x, y, false ) );
       }
     }
+
   }
 
   inherit( Node, YAxisNode );
 
-  //----------------------------------------------------------------------------------------
-  // 2D grid
-  //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+// 2D grid
+//----------------------------------------------------------------------------------------
 
   /**
    * @param {Graph} graph
@@ -223,43 +281,47 @@ define( function( require ) {
     // background
     var backgroundNode = new Rectangle(
       modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max ),
-      modelViewTransform.modelToViewDeltaX( graph.getWidth() ), modelViewTransform.modelToViewDeltaY( -graph.getHeight() ),
+      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ), modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
       {fill: GRID_BACKGROUND} );
     this.addChild( backgroundNode );
 
     // horizontal grid lines, one line for each unit of grid spacing
     var horizontalGridLinesNode = new Node();
     this.addChild( horizontalGridLinesNode );
-    var numberOfHorizontalGridLines = graph.getHeight() + 1;
+    var tickSeparation = TickSeparation( graph.yRange );
+    var numberOfHorizontalGridLines = tickSeparation.numberOfTicks;
+
     var minX = modelViewTransform.modelToViewX( graph.xRange.min );
     var maxX = modelViewTransform.modelToViewX( graph.xRange.max );
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
-      var modelY = graph.yRange.min + i;
+      var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+      // TODO find a better way to handle origin
       if ( modelY !== 0 ) { // skip origin, x axis will live here
         var yOffset = modelViewTransform.modelToViewY( modelY );
-        var isMajorX = Math.abs( modelY ) % MAJOR_TICK_SPACING === 0;
-        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
+        var isMajorY = Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001;
+        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorY ) );
       }
     }
 
     // vertical grid lines, one line for each unit of grid spacing
     var verticalGridLinesNode = new Node();
     this.addChild( verticalGridLinesNode );
-    var numberOfVerticalGridLines = graph.getWidth() + 1;
+    var tickSeparation = TickSeparation( graph.xRange );
+    var numberOfVerticalGridLines = tickSeparation.numberOfTicks;
     var minY = modelViewTransform.modelToViewY( graph.yRange.max ); // yes, swap min and max
     var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
-      var modelX = graph.xRange.min + j;
+      var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * j;
       if ( modelX !== 0 ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
-        var isMajorY = Math.abs( modelX ) % MAJOR_TICK_SPACING === 0;
-        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
+        var isMajorX = Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001;
+        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorX ) );
       }
     }
   }
 
   inherit( Node, GridNode );
-  //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 
   /**
    * @param {Graph} graph
@@ -278,4 +340,5 @@ define( function( require ) {
   }
 
   return inherit( Node, GraphAxesNode );
-} );
+} )
+;
