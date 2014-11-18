@@ -14,6 +14,7 @@ define( function( require ) {
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
   // var Color = require( 'SCENERY/util/Color' );
+  var CheckBox = require( 'SUN/CheckBox' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
 
@@ -21,6 +22,7 @@ define( function( require ) {
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
+  var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
   var EraserButton = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
@@ -85,10 +87,11 @@ define( function( require ) {
     // dataSet combo box
     var dataSetListParent = new Node();
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
-    dataSetComboBox.left = 20;
-    dataSetComboBox.bottom = 300;
+    dataSetComboBox.left = 10;
+    dataSetComboBox.top = bestFitLineControlPanel.bottom + 30;
     thisView.addChild( dataSetComboBox );
-    thisView.addChild( dataSetListParent ); // last, so that dataSer box list is on top
+    thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
+
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -129,31 +132,34 @@ define( function( require ) {
       }
     } );
 
-    thisView.addChild( eraserButton );
+    // gridIcon
+    var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );
+
+    this.addChild( gridCheckBox );
 
 
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
-
-      //    model.setGraphBounds();
-// //     graphNode.reset();
 
       if ( thisView.graphAxesNode ) {
         //       thisView.removeChild( thisView.graphAxesNode );
       }
 
       thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
-      //    thisView.addChild( thisView.graphAxesNode );
 
-      if ( selectedDataSet == DataSet.CUSTOM ) {
+
+      if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketHole.visible = true;
         bucketFront.visible = true;
         eraserButton.visible = true;
+        backLayer.visible = true;
+        thisView.dataPointsLayer.pickable = true;
       }
       else {
         bucketHole.visible = false;
         bucketFront.visible = false;
         eraserButton.visible = false;
-        //  backLayer.removeAllChildren();
+        backLayer.visible = false;
+        thisView.dataPointsLayer.pickable = false;
       }
 
     } );
@@ -195,6 +201,9 @@ define( function( require ) {
       right:  thisView.layoutBounds.maxX - 10,
       bottom: thisView.layoutBounds.maxY - 10
     } );
+
+
+    thisView.addChild( eraserButton );
     thisView.addChild( resetAllButton );
 
     // Add the dataPoints layer last .
@@ -205,6 +214,8 @@ define( function( require ) {
       myLineControlPanel.top = 10;
       bestFitLineControlPanel.left = 10;
       bestFitLineControlPanel.top = 10;
+      gridCheckBox.left = myLineControlPanel.left;
+      gridCheckBox.top = myLineControlPanel.bottom + 20;
     }
 
   }

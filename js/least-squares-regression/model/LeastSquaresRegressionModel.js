@@ -32,6 +32,7 @@ define( function( require ) {
 
     var thisModel = this;
     PropertySet.call( thisModel, {
+      showGrid: false,
       showBucket: true,  // currently unused
       selectedDataSet: DataSet.CUSTOM
 //      selectedDataSet: DataSet.MILES_COST
@@ -70,7 +71,8 @@ define( function( require ) {
       thisModel.graph.reset();
       thisModel.dataPoints.clear();
       selectedDataSet.dataXY.forEach( function( position ) {
-        thisModel.addUserCreatedDataPoint( new DataPoint( position ) );
+        var positionVector = new Vector2( position.x, position.y );
+        thisModel.addUserCreatedDataPoint( new DataPoint( positionVector ) );
       } );
     } );
   }
