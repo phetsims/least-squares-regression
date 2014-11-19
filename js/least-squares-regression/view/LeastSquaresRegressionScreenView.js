@@ -59,7 +59,7 @@ define( function( require ) {
   ];
 
   /**
-   * @param {LeastSquaresRegrethis
+   * @param {LeastSquaresRegression}
    */
   function LeastSquaresRegressionScreenView( model ) {
 
@@ -74,7 +74,7 @@ define( function( require ) {
 
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints );
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints );
-    thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransform );
+    thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform );
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
 
@@ -148,7 +148,7 @@ define( function( require ) {
       thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
 
       var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( thisView.graphbounds, viewGraphBounds );
-      thisView.graphAxesNode = new GraphAxesNode( model.graph, modelViewTransformAxes );
+      thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransformAxes );
       thisView.addChild( thisView.graphAxesNode );
       thisView.graphAxesNode.moveToBack();
 
@@ -167,6 +167,10 @@ define( function( require ) {
         thisView.dataPointsLayer.pickable = false;
       }
 
+    } );
+
+    model.showGridProperty.link( function( visible ) {
+      thisView.graphAxesNode.gridNode.visible = visible;
     } );
 
     // Handle the comings and goings of  dataPoints.

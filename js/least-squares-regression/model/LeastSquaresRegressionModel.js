@@ -78,6 +78,7 @@ define( function( require ) {
         var positionVector = new Vector2( position.x, position.y );
         thisModel.addUserCreatedDataPoint( new DataPoint( positionVector ) );
         thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
+
       } );
     } );
   }

@@ -25,8 +25,14 @@ define( function( require ) {
   // constants
   //----------------------------------------------------------------------------------------
 
+  // background
+
+  var GRID_BACKGROUND_FILL = 'white';
+  var GRID_BACKGROUND_LINE_WIDTH = '0.5';
+  var GRID_BACKGROUND_STROKE = 'gray';
+
   // grid
-  var GRID_BACKGROUND = 'white';
+
   var MINOR_GRID_LINE_WIDTH = 0.5;
   var MINOR_GRID_LINE_COLOR = 'rgb( 240, 240, 240 )';
   var MAJOR_GRID_LINE_WIDTH = 1.0;
@@ -35,9 +41,11 @@ define( function( require ) {
   // axes
 
   var AXIS_COLOR = 'black';
-  var AXIS_EXTENT = 0.0; // how far the arrow extends past the min/max ticks, in model coordinates
-  // var AXIS_LABEL_FONT = new PhetFont( 16 );
-  // var AXIS_LABEL_SPACING = 2; // space between end of axis and label
+  var AXIS_EXTENT = 0.0; // how far the line extends past the min/max ticks, in model coordinates
+
+  // labels
+  var AXIS_LABEL_FONT = new PhetFont( 18 );
+  var AXIS_LABEL_COLOR = 'black'; // space between end of axis and label
 
   // ticks
   var MINOR_TICK_LENGTH = 3; // how far a minor tick extends from the axis
@@ -48,8 +56,10 @@ define( function( require ) {
   var MAJOR_TICK_COLOR = 'black';
   var MAJOR_TICK_FONT = new PhetFont( 16 );
   var TICK_LABEL_SPACING = 2;
-  var MINUS_SIGN_WIDTH = new Text( '-', {font: MAJOR_TICK_FONT} ).width;
+  var MINUS_SIGN_WIDTH = new Text( '\u2212', {font: MAJOR_TICK_FONT} ).width;
 
+
+  var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
   //----------------------------------------------------------------------------------------
   // A major or minor line in the grid
   //----------------------------------------------------------------------------------------
@@ -125,31 +135,34 @@ define( function( require ) {
 
   function tickSpacing( range ) {
     var width = range.max - range.min;
-    var mantissa = Math.log10( width );
-    var floorMantissa = Math.floor( mantissa );
-    var remainder = mantissa - floorMantissa + 0.62; //empirically determined number
-    // debugger;
+    var logOfWidth = Math.log10( width );
+    var exponent = Math.floor( logOfWidth ); // width = mantissa*10^exponent
+    var mantissa = Math.pow( 10, logOfWidth - exponent );// mantissa  ranges from 1 to 10;
+
     var majorBaseMultiple;
     var minorTicksPerMajor;
-    if ( remainder >= Math.log10( 10 ) ) {
-      majorBaseMultiple = 10;
-      minorTicksPerMajor = 5;
-    }
-    else if ( remainder >= Math.log10( 5 ) ) {
-      majorBaseMultiple = 5;
-      minorTicksPerMajor = 5;
-    }
-    else if ( remainder >= Math.log10( 2 ) ) {
+
+
+    // on a graph there should be minimum of 4 major ticks mark and a maximum of 8.
+    if ( mantissa >= 6.5 ) {
       majorBaseMultiple = 2;
       minorTicksPerMajor = 4;
     }
-    else {
+    else if ( mantissa >= 3.2 ) {
       majorBaseMultiple = 1;
       minorTicksPerMajor = 5;
     }
+    else if ( mantissa >= 1.55 ) {
+      majorBaseMultiple = 0.5;
+      minorTicksPerMajor = 5;
+    }
+    else {
+      majorBaseMultiple = 0.2;
+      minorTicksPerMajor = 5;
+    }
 
-    var majorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 );
-    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, floorMantissa - 1 ) / minorTicksPerMajor;
+    var majorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent );
+    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ) / minorTicksPerMajor;
     var startPositionTick = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing;
     var stopPositionTick = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing;
     var numberOfTicks = (stopPositionTick - startPositionTick) / minorTickSpacing + 1;
@@ -167,8 +180,6 @@ define( function( require ) {
     return tickSeparation;
   }
 
-  // return inherit( Object, TickSeparation );
-
   //----------------------------------------------------------------------------------------
   // x-axis (horizontal)
   //----------------------------------------------------------------------------------------
@@ -183,8 +194,8 @@ define( function( require ) {
     Node.call( this );
 
     // horizontal line
-    var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( 0 ) );
-    var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( 0 ) );
+    var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( graph.yRange.min ) );
+    var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( graph.yRange.min ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
       stroke: 'black'
@@ -198,9 +209,9 @@ define( function( require ) {
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
       var x = modelViewTransform.modelToViewX( modelX );
-      var y = modelViewTransform.modelToViewY( 0 );
+      var y = modelViewTransform.modelToViewY( graph.yRange.min );
 
-      if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001 ) {
+      if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
         this.addChild( new MajorTickNode( x, y, Util.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
       }
@@ -228,8 +239,8 @@ define( function( require ) {
     Node.call( this );
 
     // vertical line
-    var tailLocation = new Vector2( modelViewTransform.modelToViewX( 0 ), modelViewTransform.modelToViewY( graph.yRange.min - AXIS_EXTENT ) );
-    var tipLocation = new Vector2( modelViewTransform.modelToViewX( 0 ), modelViewTransform.modelToViewY( graph.yRange.max + AXIS_EXTENT ) );
+    var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.min - AXIS_EXTENT ) );
+    var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max + AXIS_EXTENT ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
       stroke: 'black'
@@ -244,9 +255,9 @@ define( function( require ) {
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
 
-      var x = modelViewTransform.modelToViewX( 0 );
+      var x = modelViewTransform.modelToViewX( graph.xRange.min );
       var y = modelViewTransform.modelToViewY( modelY );
-      if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < 0.001 ) {
+      if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
         this.addChild( new MajorTickNode( x, y, Util.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
       }
@@ -260,6 +271,78 @@ define( function( require ) {
 
   inherit( Node, YAxisNode );
 
+  //----------------------------------------------------------------------------------------
+//  X label
+//----------------------------------------------------------------------------------------
+
+  /**
+   * @param {Graph} graph
+   * @param {ModelViewTransform2} modelViewTransform
+   * @constructor
+   */
+  function XLabelNode( graph, modelViewTransform ) {
+
+    Node.call( this );
+
+    var centerX = modelViewTransform.modelToViewX( (graph.xRange.min + graph.xRange.max) / 2 );
+    var bottom = modelViewTransform.modelToViewY( graph.yRange.min );
+    var xLabelNode = new Text( graph.xAxisTitle, {font: AXIS_LABEL_FONT, fill: AXIS_LABEL_COLOR, centerX: centerX, bottom: bottom + 50} );
+    this.addChild( xLabelNode );
+  }
+
+
+  inherit( Node, XLabelNode );
+
+  //----------------------------------------------------------------------------------------
+//  X label
+//----------------------------------------------------------------------------------------
+
+  /**
+   * @param {Graph} graph
+   * @param {ModelViewTransform2} modelViewTransform
+   * @constructor
+   */
+  function YLabelNode( graph, modelViewTransform ) {
+
+    Node.call( this );
+
+    var centerY = modelViewTransform.modelToViewY( (graph.yRange.min + graph.yRange.max) / 2 );
+    var left = modelViewTransform.modelToViewX( graph.xRange.min );
+    var yLabelNode = new Text( graph.yAxisTitle, {
+      font: AXIS_LABEL_FONT,
+      fill: AXIS_LABEL_COLOR,
+      centerY: centerY,
+      left: left - 50,
+      rotation: -Math.PI / 2
+    } );
+    this.addChild( yLabelNode );
+  }
+
+  inherit( Node, YLabelNode );
+
+  //----------------------------------------------------------------------------------------
+// 2D Background
+//----------------------------------------------------------------------------------------
+
+  /**
+   * @param {Graph} graph
+   * @param {ModelViewTransform2} modelViewTransform
+   * @constructor
+   */
+  function BackgroundNode( graph, modelViewTransform ) {
+    Node.call( this );
+
+
+    var backgroundNode = new Rectangle(
+      modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max ),
+      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ), modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
+      {fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE} );
+    this.addChild( backgroundNode );
+
+  }
+
+  inherit( Node, BackgroundNode );
+
 //----------------------------------------------------------------------------------------
 // 2D grid
 //----------------------------------------------------------------------------------------
@@ -272,13 +355,6 @@ define( function( require ) {
   function GridNode( graph, modelViewTransform ) {
     Node.call( this );
 
-    // background
-    var backgroundNode = new Rectangle(
-      modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max ),
-      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ), modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
-      {fill: GRID_BACKGROUND} );
-    this.addChild( backgroundNode );
-
     // horizontal grid lines, one line for each unit of grid spacing
     var horizontalGridLinesNode = new Node();
     this.addChild( horizontalGridLinesNode );
@@ -289,10 +365,9 @@ define( function( require ) {
     var maxX = modelViewTransform.modelToViewX( graph.xRange.max );
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
       var modelY = tickYSeparation.startPositionTick + tickYSeparation.minorTickSpacing * i;
-      // TODO find a better way to handle origin
-      if ( modelY !== 0 ) { // skip origin, x axis will live here
+      if ( modelY !== graph.yRange.min ) { // skip origin, x axis will live here
         var yOffset = modelViewTransform.modelToViewY( modelY );
-        var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < 0.001;
+        var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < SMALL_EPSILON;
         horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
       }
     }
@@ -306,9 +381,10 @@ define( function( require ) {
     var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
       var modelX = tickXSeparation.startPositionTick + tickXSeparation.minorTickSpacing * j;
-      if ( modelX !== 0 ) { // skip origin, y axis will live here
+      //TODO decide if we want to skip origin or implement a more roust version using small epsilon
+      if ( modelX !== graph.xRange.min ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
-        var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < 0.001;
+        var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < SMALL_EPSILON;
         verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
       }
     }
@@ -323,11 +399,18 @@ define( function( require ) {
    * @constructor
    */
   function GraphAxesNode( graph, modelViewTransform ) {
+
+    //making its visibility available to the parent node.
+    this.gridNode = new GridNode( graph, modelViewTransform );
+
     Node.call( this, {
         children: [
-          new GridNode( graph, modelViewTransform ),
+          new BackgroundNode( graph, modelViewTransform ),
+          this.gridNode,
           new XAxisNode( graph, modelViewTransform ),
-          new YAxisNode( graph, modelViewTransform )
+          new YAxisNode( graph, modelViewTransform ),
+          new XLabelNode( graph, modelViewTransform ),
+          new YLabelNode( graph, modelViewTransform )
         ]
       }
     );

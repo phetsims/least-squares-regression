@@ -67,7 +67,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.FAKE_FAKE3 = new DataSet( 'fake3 Data', 'Y vs. X', 'Y', 'X', new Range( 0, 11 ), new Range( 0, 11 ),
+  DataSet.FAKE_FAKE3 = new DataSet( 'fake3 Data', 'Y vs. X', 'Y', 'X', new Range( -4.2, 11 ), new Range( -7, 11 ),
     [
       {x: 1, y: 1},
       {x: 5, y: 5},
