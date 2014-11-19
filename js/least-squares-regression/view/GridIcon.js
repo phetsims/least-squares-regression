@@ -33,7 +33,6 @@ define( function( require ) {
       gridFill: null
     }, options );
 
-
     var bounds = new Bounds2( 0, 0, options.columns * options.cellLength, options.rows * options.cellLength );
     var gridShape = new Shape();
 
@@ -56,7 +55,6 @@ define( function( require ) {
     } );
 
     this.addChild( gridPath );
-
 
     // Pass options through to the parent class.
     this.mutate( options );

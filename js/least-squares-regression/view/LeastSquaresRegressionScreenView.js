@@ -66,8 +66,7 @@ define( function( require ) {
     ScreenView.call( this, {renderer: 'svg'} );
     var thisView = this;
 
-
-    var viewGraphBounds = new Bounds2( 200, 10, 600, 410 );
+    var viewGraphBounds = new Bounds2( 250, 10, 600, 360 );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
@@ -77,12 +76,10 @@ define( function( require ) {
     thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform );
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
-
     thisView.addChild( bestFitLineControlPanel );
     thisView.addChild( myLineControlPanel );
     thisView.addChild( thisView.graphAxesNode );
     thisView.addChild( graphNode );
-
 
     // dataSet combo box
     var dataSetListParent = new Node();
@@ -91,7 +88,6 @@ define( function( require ) {
     dataSetComboBox.top = bestFitLineControlPanel.bottom + 30;
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
-
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -137,7 +133,6 @@ define( function( require ) {
 
     this.addChild( gridCheckBox );
 
-
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       if ( thisView.graphAxesNode ) {
@@ -164,7 +159,7 @@ define( function( require ) {
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
-        thisView.dataPointsLayer.pickable = false;
+        //  thisView.dataPointsLayer.pickable = false;
       }
 
     } );
@@ -175,7 +170,7 @@ define( function( require ) {
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
-
+      graphNode.update();
       // Create and add the view representation for this dataPoint.
       var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
       thisView.dataPointsLayer.addChild( dataPointNode );
@@ -186,9 +181,11 @@ define( function( require ) {
       // Move the dataPoint to the front of this layer when grabbed by the user.
       addedDataPoint.userControlledProperty.link( function( userControlled ) {
         if ( userControlled ) {
+          graphNode.update();
           dataPointNode.moveToFront();
+
         }
-        graphNode.update();
+
       } );
 
       // Add the removal listener for if and when this dataPoint is removed from the model.
@@ -211,7 +208,6 @@ define( function( require ) {
       bottom: thisView.layoutBounds.maxY - 10
     } );
 
-
     thisView.addChild( eraserButton );
     thisView.addChild( resetAllButton );
 
@@ -223,8 +219,8 @@ define( function( require ) {
       myLineControlPanel.top = 10;
       bestFitLineControlPanel.left = 10;
       bestFitLineControlPanel.top = 10;
-      gridCheckBox.left = myLineControlPanel.left;
-      gridCheckBox.top = myLineControlPanel.bottom + 20;
+      gridCheckBox.centerX = myLineControlPanel.centerX;
+      gridCheckBox.top = myLineControlPanel.bottom + 10;
     }
 
   }

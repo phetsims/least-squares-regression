@@ -71,14 +71,12 @@ define( function( require ) {
 
     this.bounds = new Bounds2( 0, 0, 1, 1 );
 
-
     // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
     this.myLineResiduals = new ObservableArray(); // @public
     this.bestFitLineResiduals = new ObservableArray(); // @public
 
     // array of the dataPoints that are overlapping the graph.
     this.dataPointsOnGraph = [];
-
 
   }
 
@@ -97,21 +95,14 @@ define( function( require ) {
       this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min);
       this.interceptFactor = (yRange.max - yRange.min);
     },
-    setSlopeFactor: function() {
 
-    },
-
-    setInterceptFactor: function() {
-
-    },
-
-    getWidth: function() {
-      return this.xRange.getLength();
-    },
-
-    getHeight: function() {
-      return this.yRange.getLength();
-    },
+    //getWidth: function() {
+    //  return this.xRange.getLength();
+    //},
+    //
+    //getHeight: function() {
+    //  return this.yRange.getLength();
+    //},
 
     update: function() {
       this.updateMyLineResiduals();

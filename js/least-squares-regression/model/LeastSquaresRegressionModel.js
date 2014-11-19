@@ -18,7 +18,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Range = require( 'DOT/Range' );
 
-  // var Util = require( 'DOT/Util' );
+  var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -47,14 +47,14 @@ define( function( require ) {
       DataSet.FAKE_FAKE3,
       DataSet.MILES_COST,
       DataSet.HEIGHT_SHOE,
-      DataSet.GASOLINE_YEAR
+      DataSet.GASOLINE_YEAR,
+      DataSet.LATITUDE_TEMPERATURE
     ];
 
     this.graph = new Graph(
       this.selectedDataSet.xRange,
       this.selectedDataSet.yRange
     );
-
 
     this.bucket = new Bucket( {
       position: new Vector2( 100, 400 ),
@@ -70,16 +70,18 @@ define( function( require ) {
     //);
 
 
-
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
       thisModel.graph.reset();
       thisModel.dataPoints.clear();
+      thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
       selectedDataSet.dataXY.forEach( function( position ) {
-        var positionVector = new Vector2( position.x, position.y );
+        var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, 0, 1, position.x );
+        var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, 0, 1, position.y );
+        var positionVector = new Vector2( XNormalized, YNormalized );
         thisModel.addUserCreatedDataPoint( new DataPoint( positionVector ) );
-        thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
       } );
+
     } );
   }
 

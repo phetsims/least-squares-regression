@@ -57,7 +57,7 @@ define( function( require ) {
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
     var linearFitParameters = graph.getLinearFit();
     if ( linearFitParameters !== null ) {
-      this.equationNode = new EquationNode( linearFitParameters.slope, linearFitParameters.intercept );
+      this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
     }
     else {
     }
@@ -109,8 +109,8 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         var linearFitParameters = graph.getLinearFit();
         if ( linearFitParameters !== null ) {
-          equationText.setSlopeText( linearFitParameters.slope );
-          equationText.setInterceptText( linearFitParameters.intercept );
+          equationText.setSlopeText( linearFitParameters.slope * graph.slopeFactor );
+          equationText.setInterceptText( linearFitParameters.intercept * graph.interceptFactor );
           if ( graph.bestFitLineVisibleProperty.value ) {
             equationText.setToVisible();
           }
@@ -126,11 +126,8 @@ define( function( require ) {
   return inherit( AccordionBox, BestFitLineControlPanel, {
       reset: function() {
         this.expandedProperty.reset();
-      },
-
-      update: function() {
-
       }
+
     }
   )
     ;

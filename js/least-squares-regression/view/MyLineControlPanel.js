@@ -53,11 +53,13 @@ define( function( require ) {
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.myLineShowSquaredResidualsProperty );
 
     //   var sliderInterceptRange = new Range( 1.5 * graph.yRange.min - 0.5 * graph.yRange.max, 1.5 * graph.yRange.max - 0.5 * graph.yRange.min );
-    var sliderInterceptRange = new Range( -graph.yRange.max, graph.yRange.max );
+    // TODO this is not robust, talk to A
+    var sliderInterceptRange = new Range( -1 * graph.bounds.maxY, graph.bounds.maxY );
+    var maxSlope = 10;
     var slidersBox = new HBox( {
       spacing: 5, children: [
         //TODO get rid of magic numbers
-        new VerticalSlider( aString, new Dimension2( 1, 100 ), graph.angleProperty, new Range( -0.936 * Math.PI / 2, Math.PI * 0.936 / 2 ) ),
+        new VerticalSlider( aString, new Dimension2( 1, 100 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) ),
         new VerticalSlider( bString, new Dimension2( 1, 100 ), graph.interceptProperty, sliderInterceptRange )]
     } );
 

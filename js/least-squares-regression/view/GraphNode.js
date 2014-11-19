@@ -51,7 +51,6 @@ define( function( require ) {
 
     this.viewBounds = viewBounds;
 
-
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
@@ -78,7 +77,6 @@ define( function( require ) {
 
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
-
 
 
     this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing

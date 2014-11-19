@@ -58,7 +58,6 @@ define( function( require ) {
   var TICK_LABEL_SPACING = 2;
   var MINUS_SIGN_WIDTH = new Text( '\u2212', {font: MAJOR_TICK_FONT} ).width;
 
-
   var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
   //----------------------------------------------------------------------------------------
   // A major or minor line in the grid
@@ -128,7 +127,6 @@ define( function( require ) {
 
   inherit( Path, MinorTickNode );
 
-
   //--------------
   // Tick Spacing for major and minor ticks
   //--------------
@@ -141,7 +139,6 @@ define( function( require ) {
 
     var majorBaseMultiple;
     var minorTicksPerMajor;
-
 
     // on a graph there should be minimum of 4 major ticks mark and a maximum of 8.
     if ( mantissa >= 6.5 ) {
@@ -290,7 +287,6 @@ define( function( require ) {
     this.addChild( xLabelNode );
   }
 
-
   inherit( Node, XLabelNode );
 
   //----------------------------------------------------------------------------------------
@@ -332,10 +328,11 @@ define( function( require ) {
   function BackgroundNode( graph, modelViewTransform ) {
     Node.call( this );
 
-
     var backgroundNode = new Rectangle(
-      modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max ),
-      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ), modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
+      modelViewTransform.modelToViewX( graph.xRange.min ),
+      modelViewTransform.modelToViewY( graph.yRange.max ),
+      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ),
+      modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
       {fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE} );
     this.addChild( backgroundNode );
 
