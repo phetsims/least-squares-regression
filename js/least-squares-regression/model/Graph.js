@@ -83,7 +83,7 @@ define( function( require ) {
   return inherit( PropertySet, Graph, {
 
     reset: function() {
-      // PropertySet.prototype.reset.call( this );
+      PropertySet.prototype.reset.call( this );
       this.dataPointsOnGraph = [];
       this.myLineResiduals.clear();
       this.bestFitLineResiduals.clear();

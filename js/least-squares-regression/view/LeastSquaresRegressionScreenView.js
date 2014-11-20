@@ -140,12 +140,16 @@ define( function( require ) {
       }
 
       thisView.graphbounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
-      thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
+      //  thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
 
       var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( thisView.graphbounds, viewGraphBounds );
-      thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransformAxes );
+      thisView.graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes );
       thisView.addChild( thisView.graphAxesNode );
       thisView.graphAxesNode.moveToBack();
+// TODO; another hack
+      model.showGridProperty.link( function( visible ) {
+        thisView.graphAxesNode.gridNode.visible = visible;
+      } );
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketHole.visible = true;
@@ -153,6 +157,7 @@ define( function( require ) {
         eraserButton.visible = true;
         backLayer.visible = true;
         thisView.dataPointsLayer.pickable = true;
+
       }
       else {
         bucketHole.visible = false;
@@ -162,18 +167,17 @@ define( function( require ) {
         //  thisView.dataPointsLayer.pickable = false;
       }
 
+      graphNode.update();
     } );
 
-    model.showGridProperty.link( function( visible ) {
-      thisView.graphAxesNode.gridNode.visible = visible;
-    } );
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      graphNode.update();
+
       // Create and add the view representation for this dataPoint.
       var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
       thisView.dataPointsLayer.addChild( dataPointNode );
+
 
       addedDataPoint.positionProperty.link( function() {
         graphNode.update();
@@ -183,7 +187,6 @@ define( function( require ) {
         if ( userControlled ) {
           graphNode.update();
           dataPointNode.moveToFront();
-
         }
 
       } );
@@ -223,7 +226,9 @@ define( function( require ) {
       gridCheckBox.top = myLineControlPanel.bottom + 10;
     }
 
+
   }
+
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView );
 } );
