@@ -16,13 +16,14 @@ define( function( require ) {
   var ObservableArray = require( 'AXON/ObservableArray' );
   var inherit = require( 'PHET_CORE/inherit' );
   var PropertySet = require( 'AXON/PropertySet' );
-  var Range = require( 'DOT/Range' );
+//  var Range = require( 'DOT/Range' );
 
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var BUCKET_SIZE = new Dimension2( 90, 45 );
+  var BUCKET_POSITION = new Vector2( 100, 400 );
 
   /**
    * Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
@@ -32,42 +33,40 @@ define( function( require ) {
 
     var thisModel = this;
     PropertySet.call( thisModel, {
-      showGrid: false,
-      //     showBucket: true,  // currently unused
-      selectedDataSet: DataSet.CUSTOM
-//      selectedDataSet: DataSet.MILES_COST
+      showGrid: false, // controls the visibility of the graph grid
+      selectedDataSet: DataSet.CUSTOM  // dataSet selected by the Combo Box: initially value set on Custom
     } );
 
+    // dataPoints in the view (may not be necessarily on the graph)
     this.dataPoints = new ObservableArray(); // @public
 
+    // the various data Sets available in the Combo Box
     this.dataSets = [
       DataSet.CUSTOM,
       DataSet.FAKE_FAKE,
       DataSet.FAKE_FAKE2,
-      DataSet.FAKE_FAKE3,
+      DataSet.PRESSURE_PULSE,
+      DataSet.LATITUDE_TEMPERATURE,
       DataSet.MILES_COST,
       DataSet.HEIGHT_SHOE,
-      DataSet.GASOLINE_YEAR,
-      DataSet.LATITUDE_TEMPERATURE
+      DataSet.GPA_HOURS,
+      DataSet.GASOLINE_YEAR
     ];
 
+    // Contains all information regarding the composition of the graph
     this.graph = new Graph(
       this.selectedDataSet.xRange,
       this.selectedDataSet.yRange
     );
 
+    // bucket to draw particle
     this.bucket = new Bucket( {
-      position: new Vector2( 100, 400 ),
+      position: BUCKET_POSITION,
       baseColor: '#000080',
       caption: '',
       size: BUCKET_SIZE,
       invertY: true
     } );
-
-    //this.graph = new Graph(
-    //  new Range( 0, 20 ),
-    //  new Range( 0, 20 )
-    //);
 
 
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
@@ -93,12 +92,6 @@ define( function( require ) {
       this.graph.reset();
     },
 
-    //setGraphBounds: function() {
-    //  this.graph = new Graph(
-    //    this.selectedDataSet.xRange,
-    //    this.selectedDataSet.yRange
-    //  );
-    //},
 
     step: function( dt ) {
       this.dataPoints.forEach( function( dataPoint ) {

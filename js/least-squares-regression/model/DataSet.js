@@ -80,7 +80,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.PRESSURE_PULSE = new DataSet( 'fake3 Data', 'Y vs. X', 'Blood Pressure', 'Pulse', new Range( 0, 150 ), new Range( 0, 150 ),
+  DataSet.PRESSURE_PULSE = new DataSet( 'Pressure Vs. Pulse', 'Presssure vs. Pulse', 'Blood Pressure', 'Pulse', new Range( 0, 150 ), new Range( 0, 150 ),
     [
       {x: 42, y: 92},
       {x: 60, y: 120},

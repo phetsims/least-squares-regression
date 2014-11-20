@@ -146,6 +146,9 @@ define( function( require ) {
       thisView.graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes );
       thisView.addChild( thisView.graphAxesNode );
       thisView.graphAxesNode.moveToBack();
+      graphNode.update();
+
+
 // TODO; another hack
       model.showGridProperty.link( function( visible ) {
         thisView.graphAxesNode.gridNode.visible = visible;
@@ -167,7 +170,7 @@ define( function( require ) {
         //  thisView.dataPointsLayer.pickable = false;
       }
 
-      graphNode.update();
+
     } );
 
 
