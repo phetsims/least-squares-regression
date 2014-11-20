@@ -96,13 +96,6 @@ define( function( require ) {
       this.interceptFactor = (yRange.max - yRange.min);
     },
 
-    //getWidth: function() {
-    //  return this.xRange.getLength();
-    //},
-    //
-    //getHeight: function() {
-    //  return this.yRange.getLength();
-    //},
 
     update: function() {
       this.updateMyLineResiduals();

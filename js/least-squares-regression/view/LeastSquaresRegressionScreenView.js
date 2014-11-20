@@ -149,7 +149,7 @@ define( function( require ) {
       graphNode.update();
 
 
-// TODO; another hack
+      // TODO; another hack
       model.showGridProperty.link( function( visible ) {
         thisView.graphAxesNode.gridNode.visible = visible;
       } );

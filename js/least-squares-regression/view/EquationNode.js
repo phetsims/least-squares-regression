@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Equation Node
+ * Equation Node that renders a text node of a linear equation y= mx +b
  *
  */
 
@@ -17,9 +17,17 @@ define( function( require ) {
 
   // strings
 
-  var plusString = '\u002B';
+  var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
 
+  // constants
+
+  /**
+   *
+   * @param {number} slope
+   * @param {number} intercept
+   * @constructor
+   */
   function EquationNode( slope, intercept ) {
     Node.call( this );
 
@@ -40,6 +48,7 @@ define( function( require ) {
         this.eqnPartSixText
       ]
     } );
+
     this.eqnPartTwoText.left = 20;
     this.eqnPartThreeText.left = 30;
     this.eqnPartFourText.left = 55;

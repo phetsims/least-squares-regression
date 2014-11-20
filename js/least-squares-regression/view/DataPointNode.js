@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that represents a  dataPoint in the view.
+ * Type that represents a dataPoint in the view.
  *
  * @author John Blanco
  */
@@ -13,31 +13,27 @@ define( function( require ) {
   // modules
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  // var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @param {DataPoint} dataPoint
+   * @param {ModelViewTransform} modelViewTransform
    * @constructor
    */
   function DataPointNode( dataPoint, modelViewTransform ) {
     Node.call( this, {cursor: 'pointer'} );
     var self = this;
 
-    // Set up a root node whose visibility and opacity will be manipulated below.
-    var rootNode = new Node();
-    this.addChild( rootNode );
-
-    // Create the node that the user will click upon to add a model element to the view.
+    // Create the node that the user may click upon to add a model element to the view.
     var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
       fill: LSRConstants.DATA_POINT_FILL,
       stroke: LSRConstants.DATA_POINT_STROKE,
       lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
     } );
 
-    rootNode.addChild( representation );
+    this.addChild( representation );
 
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
     // this.mouseArea = this.localBounds.dilatedXY( 10, 10 );

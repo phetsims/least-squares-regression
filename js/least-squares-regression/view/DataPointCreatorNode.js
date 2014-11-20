@@ -13,17 +13,15 @@ define( function( require ) {
   // modules
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  // var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var Node = require( 'SCENERY/nodes/Node' );
-  // var Path = require( 'SCENERY/nodes/Path' );
-  // var Property = require( 'AXON/Property' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
    * @param {Function} addDataPointToModel - A function for adding the created dataPoint to the model
+   * @param {ModelViewTransform} modelViewTransform
    * @param {Object} [options]
    * @constructor
    */

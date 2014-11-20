@@ -1,5 +1,11 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
+/**
+ * Model that defines data sets
+ *
+ * @author Martin Veillette
+ */
+
 define( function( require ) {
   'use strict';
 
@@ -15,18 +21,18 @@ define( function( require ) {
 
   /**
    *
-   * @param name
-   * @param graphTitle
-   * @param yAxisTitle
-   * @param xAxisTitle
-   * @param yRange
-   * @param xRange
-   * @param dataXY
+   * @param {string} name
+   * @param {string} graphTitle
+   * @param {string} yAxisTitle
+   * @param {string} xAxisTitle
+   * @param {Range} yRange
+   * @param {Range} xRange
+   * @param {Array} dataXY, array of object of the form {x: x_1, y: y_1}
    * @constructor
    */
   function DataSet( name, graphTitle, yAxisTitle, xAxisTitle, yRange, xRange, dataXY ) {
 
-    this.name = name;
+    this.name = name; // appears in the combo box
     this.graphTitle = graphTitle;
     this.xAxisTitle = xAxisTitle;
     this.yAxisTitle = yAxisTitle;

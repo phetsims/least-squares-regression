@@ -25,8 +25,17 @@ define( function( require ) {
   // constants
 
   var RESIDUAL_LINE_WIDTH = 2;
+  var SQUARE_TRANSPARENCY = 0.4;  //between 0 and 1
+  var SQUARE_STROKE_COLOR = 'gray';
 
   /**
+   *
+   * @param {Property-<Residual>}residualProperty
+   * @param {Color} baseColor
+   * @param {Bounds} viewBounds
+   * @param {ModelViewTransform} modelViewTransform
+   * @param {Property-<boolean>} lineVisibilityProperty
+   * @param {Property-<boolean>} squareVisibilityProperty
    * @constructor
    */
   function ResidualLineAndSquareNode( residualProperty, baseColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
@@ -39,20 +48,25 @@ define( function( require ) {
 
     var mainColor = Color.toColor( baseColor ); // @public
 
+    // point 1 is the position of the datapoint
     var point1 = this.modelViewTransform.modelToViewPosition( residualProperty.value.point1 );
+    // point 2 is at the position of intersect of the vertical line and the y= m x + b line
     var point2 = this.modelViewTransform.modelToViewPosition( residualProperty.value.point2 );
 
-    var y1 = point1.y;
-    var y2 = point2.y;
+    // position of the top of the square
+    var top = Math.min( point1.y, point2.y );
+    // height of the square
+    var height = Math.abs( point1.y - point2.y );
 
-    var top = Math.min( y1, y2 );
-    var height = Math.abs( y1 - y2 );
+    // we want a square shape
     var width = height;
 
-    var x1 = point1.x;
-    var left = (residualProperty.value.isSquaredResidualToTheLeft) ? x1 - width : x1;
+    // position of the left side of the square
+    // the square residual can be on the left or on the right of point1 (the dataPoint position)
+    // however the square residual should not overlap with the y = m x + b line:
+    var left = (residualProperty.value.isSquaredResidualToTheLeft) ? point1.x - width : point1.x;
 
-    this.squareResidual = new Rectangle( left, top, width, height, {fill: mainColor.withAlpha( 0.4 ), stroke: 'gray'} );
+    this.squareResidual = new Rectangle( left, top, width, height, {fill: mainColor.withAlpha( SQUARE_TRANSPARENCY ), stroke: SQUARE_STROKE_COLOR} );
     this.lineResidual = new Line( point1, point2, {stroke: mainColor.brighterColor( 0.5 ), lineWidth: RESIDUAL_LINE_WIDTH} );
     this.squareResidual.clipArea = Shape.bounds( viewBounds );
     this.lineResidual.clipArea = Shape.bounds( viewBounds );
@@ -61,6 +75,7 @@ define( function( require ) {
     this.addChild( this.lineResidual );
     lineVisibilityProperty.linkAttribute( this.lineResidual, 'visible' );
     squareVisibilityProperty.linkAttribute( this.squareResidual, 'visible' );
+
     residualProperty.link( function() {
         residualLineAndSquareNode.updateLineAndSquare();
       }
@@ -71,11 +86,19 @@ define( function( require ) {
   return inherit( Node, ResidualLineAndSquareNode, {
 
     updateLineAndSquare: function() {
+
       var point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
       var point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
+
+      // update line residual
+
       this.lineResidual.setPoint1( point1 );
       this.lineResidual.setPoint2( point2 );
+      // the line residual should not show outside the graph.
       this.lineResidual.clipArea = Shape.bounds( this.viewBounds );
+
+
+      // update square residual
 
       var top = Math.min( point1.y, point2.y );
       var height = Math.abs( point1.y - point2.y );
@@ -83,8 +106,12 @@ define( function( require ) {
       // we want a square
       var width = height;
 
+      // the square residual can be on the left or on the right of point1 (the dataPoint position)
+      // however the square residual should not overlap with the y = m x + b line:
       var left = (this.residualProperty.value.isSquaredResidualToTheLeft) ? point1.x - width : point1.x;
+
       this.squareResidual.setRect( left, top, width, height );
+      // the squareResidual should not show outside the graph.
       this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
 
     }

@@ -9,7 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  // var Dimension2 = require( 'DOT/Dimension2' );
+
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -155,7 +155,7 @@ define( function( require ) {
     }
     else {
       majorBaseMultiple = 0.2;
-      minorTicksPerMajor = 5;
+      minorTicksPerMajor = 4;
     }
 
     var majorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent );

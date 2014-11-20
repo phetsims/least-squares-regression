@@ -16,12 +16,9 @@ define( function( require ) {
   var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-//  var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
-  //var PropertySet = require( 'AXON/PropertySet' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
@@ -35,15 +32,18 @@ define( function( require ) {
 //  var FONT = new PhetFont( 11 );
 
   /**
-   * {Model} model of the main simulation
+   * {Graph} model of the graph
+   * {DataPoints} model of DataPoint
    * {Object} options
    * @constructor
    */
   function BestFitLineControlPanel( graph, dataPoints, options ) {
 
+    // property of the accordion Box that control the expanded
     this.expandedProperty = new Property( false );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
+
+    var sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
@@ -51,7 +51,6 @@ define( function( require ) {
       graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
-    //  debugger;
     var equationText = new EquationNode( 0, 0 );
     equationText.visible = false;
     var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
@@ -59,15 +58,13 @@ define( function( require ) {
     if ( linearFitParameters !== null ) {
       this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
     }
-    else {
-    }
 
     var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, graph.bestFitLineVisibleProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowSquaredResidualsProperty );
 
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
-      // TODO find less hacky way to toogle equationText visibility (using derived property perhaps)
+      // TODO find less hacky way to toggle equationText visibility (using derived property perhaps)
       if ( graph.dataPointsOnGraph.length > 1 ) {
         equationText.visible = enabled;
       }
@@ -79,11 +76,10 @@ define( function( require ) {
     AccordionBox.call( this, new VBox( {
         spacing: 5, children: [
           lineCheckBox,
-          //    equationPanel,
           new HBox( {children: [new HStrut( 20 ), equationPanel]} ),
           residualsCheckBox,
           squaredResidualsCheckBox,
-          sumOfSquaredResiduals
+          sumOfSquaredResidualsChart
         ], align: 'left'
       } ),
 
@@ -127,7 +123,6 @@ define( function( require ) {
       reset: function() {
         this.expandedProperty.reset();
       }
-
     }
   )
     ;

@@ -14,14 +14,11 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 //  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-//  var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-//  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-//  var Util = require( 'DOT/Util' );
 
   // strings
 //  var LSRConstants = require( 'string!LEAST_SQUARES_REGRESSION/pattern.0name.1pH' );
-//  var pattern_0name_1pH = require( 'string!PH_SCALE/pattern.0name.1pH' );
+
 
   /**
    * @param {DataSet[]} dataSets

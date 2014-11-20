@@ -11,7 +11,6 @@ define( function( require ) {
 
   // modules
 //  var Bounds2 = require( 'DOT/Bounds2' );
-  // var Circle = require( 'SCENERY/nodes/Circle' );
 
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -20,7 +19,6 @@ define( function( require ) {
   // var Path = require( 'SCENERY/nodes/Path' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
@@ -37,26 +35,28 @@ define( function( require ) {
   /**
    *
    * @param graph
-   * @param model
+   * @param biewBounds
    * @param modelViewTransform
    * @constructor
    */
   function GraphNode( graph, viewBounds, modelViewTransform ) {
     var graphNode = this;
+
     this.graph = graph;
+    this.viewBounds = viewBounds;
     this.modelViewTransform = modelViewTransform;
+
     Node.call( this );
 
-    // Create and add the graph itself.
-
-    this.viewBounds = viewBounds;
-
+    // get the two points form by the intersection of the line and the boundary of the graph
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
+
+
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
       {stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH} );
-    this.addChild( this.myLine );
+
 
     // set bestFitLine to zero length and then update it
     this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
@@ -68,15 +68,11 @@ define( function( require ) {
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point2 ),
         {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
     }
-    this.addChild( this.bestFitLine );
 
+    // set the residuals  on a separate layer in order to toggle visibility
+    // TODO: check if it is still necessary
     var myLineResidualsLayer = new Node();
     var bestFitLineResidualsLayer = new Node();
-    this.addChild( myLineResidualsLayer );
-    this.addChild( bestFitLineResidualsLayer );
-
-    graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
-    graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
 
     this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
@@ -138,6 +134,14 @@ define( function( require ) {
       } );
     } );
 
+    graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
+    graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
+
+    this.addChild( this.myLine );
+    this.addChild( this.bestFitLine );
+    this.addChild( myLineResidualsLayer );
+    this.addChild( bestFitLineResidualsLayer );
+
   }
 
   return inherit( Node, GraphNode, {
@@ -171,8 +175,8 @@ define( function( require ) {
         this.bestFitLine.clipArea = Shape.bounds( this.viewBounds );
       }
       else {
-        this.bestFitLine.setPoint1( 0, 0 ); // set line in a corner
-        this.bestFitLine.setPoint2( 0, 0 ); //
+        this.bestFitLine.setPoint1( 0, 0 ); // set line in the upper left corner
+        this.bestFitLine.setPoint2( 0, 0 ); // of length zero
       }
     }
 
