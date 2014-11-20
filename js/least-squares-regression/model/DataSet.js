@@ -68,6 +68,34 @@ define( function( require ) {
     ]
   );
 
+  DataSet.FAKE_FAKE3 = new DataSet( 'fake3 Data', 'Y vs. X', 'Y', 'X', new Range( -0.25, 0.25 ), new Range( -10, 20 ),
+    [
+      {x: 0.42, y: 0.11},
+      {x: 0.16, y: 0.16},
+      {x: 0.48, y: -7},
+      {x: -0.20, y: 10},
+      {x: 0.18, y: 15},
+      {x: -0.34, y: 14},
+      {x: 0.06, y: 20}
+    ]
+  );
+
+  DataSet.PRESSURE_PULSE = new DataSet( 'fake3 Data', 'Y vs. X', 'Blood Pressure', 'Pulse', new Range( 0, 150 ), new Range( 0, 150 ),
+    [
+      {x: 42, y: 92},
+      {x: 60, y: 120},
+      {x: 72, y: 112},
+      {x: 80, y: 92},
+      {x: 90, y: 87},
+      {x: 95, y: 76},
+      {x: 72, y: 112},
+      {x: 80, y: 92},
+      {x: 90, y: 87},
+      {x: 95, y: 76},
+      {x: 100, y: 87}
+    ]
+  );
+
   DataSet.LATITUDE_TEMPERATURE = new DataSet( 'Latitude Vs. Temperature', 'Latitude vs. Temperature', 'Temperature', 'Latitude', new Range( 0, 70 ), new Range( 0, 60 ),
     [{x: 31.2, y: 44},
       {x: 32.9, y: 38},
@@ -127,11 +155,14 @@ define( function( require ) {
       {x: 41.2, y: 14}
     ] );
 
-  DataSet.FAKE_FAKE3 = new DataSet( 'fake3 Data', 'Y vs. X', 'Y', 'X', new Range( -4.2, 11 ), new Range( -7, 11 ),
+  DataSet.GPA_HOURS = new DataSet( 'GPA vs. Study Hours', 'GPA vs. Hours', 'GPA', 'Hours', new Range( 0, 5 ), new Range( 0, 6 ),
     [
-      {x: 1, y: 1},
-      {x: 5, y: 5},
-      {x: 8, y: 9}
+      {x: 0, y: 0},
+      {x: 1, y: 0.25},
+      {x: 2, y: 0.5},
+      {x: 3, y: 1.0},
+      {x: 4, y: 2.0},
+      {x: 5, y: 4.0}
     ]
   );
 
@@ -169,7 +200,7 @@ define( function( require ) {
     ]
   );
 
-  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', 'Height', 'Shoe', new Range( 0, 10 ), new Range( 0, 10 ),
+  DataSet.HEIGHT_SHOE = new DataSet( heightVsShoeString, 'Height vs. Shoe', 'Height', 'Shoe Size', new Range( 0, 10 ), new Range( 0, 10 ),
     [
       {x: 1, y: 1},
       {x: 2, y: 2},
