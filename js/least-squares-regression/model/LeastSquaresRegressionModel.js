@@ -46,6 +46,7 @@ define( function( require ) {
       DataSet.CUSTOM,
       DataSet.FAKE_FAKE,
       DataSet.FAKE_FAKE2,
+      DataSet.FAKE_FAKE3,
       DataSet.PRESSURE_PULSE,
       DataSet.LATITUDE_TEMPERATURE,
       DataSet.MILES_COST,
