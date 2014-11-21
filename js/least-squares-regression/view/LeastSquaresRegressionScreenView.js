@@ -66,7 +66,7 @@ define( function( require ) {
     ScreenView.call( this, {renderer: 'svg'} );
     var thisView = this;
 
-    var viewGraphBounds = new Bounds2( 250, 10, 600, 360 );
+    var viewGraphBounds = new Bounds2( 250, 60, 600, 410 );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
@@ -83,9 +83,10 @@ define( function( require ) {
 
     // dataSet combo box
     var dataSetListParent = new Node();
+
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
-    dataSetComboBox.left = 10;
-    dataSetComboBox.top = bestFitLineControlPanel.bottom + 30;
+    dataSetComboBox.centerX = viewGraphBounds.centerX;
+    dataSetComboBox.top = 10;
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
@@ -219,6 +220,7 @@ define( function( require ) {
 
     // Add the dataPoints layer last .
     thisView.addChild( thisView.dataPointsLayer );
+    dataSetListParent.moveToFront();
 
     {
       myLineControlPanel.right = thisView.layoutBounds.maxX - 10;
