@@ -81,7 +81,7 @@ define( function( require ) {
         var positionVector = new Vector2( XNormalized, YNormalized );
         thisModel.dataPoints.push( new DataPoint( positionVector ) );
       } );
-      thisModel.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+      thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
     } );
   }
 
@@ -100,20 +100,7 @@ define( function( require ) {
       } );
     },
 
-    addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
-      var thisModel = this;
-      // for performance reason one should add all the dataPoints on the graph
-      // and then add all the Residuals.
-      dataPoints.forEach( function( dataPoint ) {
-        thisModel.graph.dataPointsOnGraph.push( dataPoint );
-      } );
 
-      dataPoints.forEach( function( dataPoint ) {
-        thisModel.graph.addMyLineResidual( dataPoint );
-        thisModel.graph.addBestFitLineResidual( dataPoint );
-      } );
-
-    },
     /**
      * Function for adding new  dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.

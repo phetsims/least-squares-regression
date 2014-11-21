@@ -166,6 +166,28 @@ define( function( require ) {
       } );
     },
 
+    addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
+      var thisGraph = this;
+      // for performance reason one should add all the dataPoints on the graph
+      // then we can calculate the best Fit Line (only once)
+      // and then add all the Residuals.
+      dataPoints.forEach( function( dataPoint ) {
+        thisGraph.dataPointsOnGraph.push( dataPoint );
+      } );
+
+      var linearFitParameters = this.getLinearFit();
+      var mySlope = this.slope( this.angle );
+      var myIntercept = this.intercept;
+
+      dataPoints.forEach( function( dataPoint ) {
+        var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+        var myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
+        thisGraph.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
+        thisGraph.myLineResiduals.push( new Property( myLineResidual ) );
+      } );
+
+    },
+
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
       return (index !== -1);
