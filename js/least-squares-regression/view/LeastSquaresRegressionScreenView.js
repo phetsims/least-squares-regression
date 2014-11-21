@@ -148,6 +148,7 @@ define( function( require ) {
       thisView.addChild( thisView.graphAxesNode );
       thisView.graphAxesNode.moveToBack();
       graphNode.update();
+      bestFitLineControlPanel.updateBestFitLineEquation();
 
 
       // TODO; another hack

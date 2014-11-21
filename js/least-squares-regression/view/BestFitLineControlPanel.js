@@ -39,6 +39,9 @@ define( function( require ) {
    */
   function BestFitLineControlPanel( graph, dataPoints, options ) {
 
+    this.graph = graph;
+    var thisControlPanel = this;
+
     // property of the accordion Box that control the expanded
     this.expandedProperty = new Property( false );
 
@@ -102,26 +105,44 @@ define( function( require ) {
 
     // Handle the comings and goings of  dataPoints.
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      addedDataPoint.positionProperty.link( function() {
-        var linearFitParameters = graph.getLinearFit();
-        if ( linearFitParameters !== null ) {
-          equationText.setSlopeText( linearFitParameters.slope * graph.slopeFactor );
-          equationText.setInterceptText( linearFitParameters.intercept * graph.interceptFactor );
-          if ( graph.bestFitLineVisibleProperty.value ) {
-            equationText.setToVisible();
-          }
-        }
-        else {
-          equationText.setToInvisible();
-        }
 
+      addedDataPoint.positionProperty.link( function() {
+        //var linearFitParameters = graph.getLinearFit();
+        //if ( linearFitParameters !== null ) {
+        //  equationText.setSlopeText( linearFitParameters.slope * graph.slopeFactor );
+        //  equationText.setInterceptText( linearFitParameters.intercept * graph.interceptFactor );
+        //  if ( graph.bestFitLineVisibleProperty.value ) {
+        //    equationText.setToVisible();
+        //  }
+        //}
+        //else {
+        //  equationText.setToInvisible();
+        //}
+
+        thisControlPanel.updateBestFitLineEquation();
       } );
     } );
+
+    this.equationText = equationText;
   }
 
   return inherit( AccordionBox, BestFitLineControlPanel, {
       reset: function() {
         this.expandedProperty.reset();
+      },
+
+      updateBestFitLineEquation: function() {
+        var linearFitParameters = this.graph.getLinearFit();
+        if ( linearFitParameters !== null ) {
+          this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
+          this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor );
+          if ( this.graph.bestFitLineVisibleProperty.value ) {
+            this.equationText.setToVisible();
+          }
+        }
+        else {
+          this.equationText.setToInvisible();
+        }
       }
     }
   )

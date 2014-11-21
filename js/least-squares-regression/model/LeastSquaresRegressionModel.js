@@ -75,12 +75,14 @@ define( function( require ) {
       thisModel.graph.reset();
       thisModel.dataPoints.clear();
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
+
       selectedDataSet.dataXY.forEach( function( position ) {
-        var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, 0, 1, position.x );
-        var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, 0, 1, position.y );
+        var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
+        var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
         var positionVector = new Vector2( XNormalized, YNormalized );
         thisModel.dataPoints.push( new DataPoint( positionVector ) );
       } );
+
       thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
     } );
   }
