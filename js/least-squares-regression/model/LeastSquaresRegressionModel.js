@@ -84,6 +84,12 @@ define( function( require ) {
       } );
 
       thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+
+      // TODO : terrible hack here
+      // oh terrible hack here
+      // forces an update for the leastsquareschart
+      thisModel.dataPoints.push( new DataPoint( new Vector2( 0, 0 ) ) );
+      thisModel.dataPoints.remove( new DataPoint( new Vector2( 0, 0 ) ) );
     } );
   }
 
