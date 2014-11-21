@@ -19,6 +19,9 @@ define( function( require ) {
   // strings
 //  var LSRConstants = require( 'string!LEAST_SQUARES_REGRESSION/pattern.0name.1pH' );
 
+  // constants
+  var TEXT_FONT = new PhetFont( {size: 16, weight: 'bold'} );
+  var ITEM_HIGHLIGHT_FILL = 'rgb(218,255,255)';
 
   /**
    * @param {DataSet[]} dataSets
@@ -39,7 +42,7 @@ define( function( require ) {
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
       itemYMargin: 4,
-      itemHighlightFill: 'rgb(218,255,255)',
+      itemHighlightFill: ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
       buttonCornerRadius: 8
     } );
@@ -53,7 +56,7 @@ define( function( require ) {
   var createItem = function( dataSet ) {
     var node = new Node();
     // label
-    var textNode = new Text( dataSet.name, {font: new PhetFont( 10 )} );
+    var textNode = new Text( dataSet.name, {font: TEXT_FONT} );
     node.addChild( textNode );
     return ComboBox.createItem( node, dataSet );
   };
