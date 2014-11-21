@@ -115,6 +115,7 @@ define( function( require ) {
     },
 
     addBestFitLineResidual: function( dataPoint ) {
+      //TODO : optimize linearFit Parameter so that it only loads on change
       var linearFitParameters = this.getLinearFit();
       var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );

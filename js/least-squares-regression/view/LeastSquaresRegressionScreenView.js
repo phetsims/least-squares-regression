@@ -167,7 +167,7 @@ define( function( require ) {
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
-        //  thisView.dataPointsLayer.pickable = false;
+        thisView.dataPointsLayer.pickable = false;
       }
 
 
