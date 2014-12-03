@@ -75,11 +75,11 @@ define( function( require ) {
     var bestFitLineResidualsLayer = new Node();
 
 
-    this.equationText = new Text( 'r =           ' ); /// 12 blank spaces for spacing
+    this.equationText = new Text( 'r =           ', {font: LSRConstants.TEXT_FONT_BOLD} ); /// 12 blank spaces for spacing
     var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false} );
     mutableEquationText.top = this.viewBounds.minY + 10;
     mutableEquationText.right = this.viewBounds.maxX - 10;
-    this.addChild( mutableEquationText );
+    //this.addChild( mutableEquationText );
 
     Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
@@ -141,6 +141,7 @@ define( function( require ) {
     this.addChild( this.bestFitLine );
     this.addChild( myLineResidualsLayer );
     this.addChild( bestFitLineResidualsLayer );
+    this.addChild( mutableEquationText );
 
   }
 

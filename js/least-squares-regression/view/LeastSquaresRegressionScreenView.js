@@ -134,6 +134,7 @@ define( function( require ) {
 
     this.addChild( gridCheckBox );
 
+
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       if ( thisView.graphAxesNode ) {
@@ -228,7 +229,7 @@ define( function( require ) {
       myLineControlPanel.top = 10;
       bestFitLineControlPanel.left = 10;
       bestFitLineControlPanel.top = 10;
-      gridCheckBox.centerX = myLineControlPanel.centerX;
+      gridCheckBox.left = myLineControlPanel.left + 10;
       gridCheckBox.top = myLineControlPanel.bottom + 10;
     }
 
