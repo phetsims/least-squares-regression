@@ -148,14 +148,17 @@ define( function( require ) {
     // nodes
     var minNode = new Text( minLabel, {font: RANGE_FONT, fill: RANGE_COLOR} );
     var trackNode = new Track( trackSize, property, range );
-    var xMargin = 5, yMargin = 10, cornerRadius = 10;
+    var xMargin = 10, yMargin = 10, cornerRadius = 10;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
-      {fill: new Color( 200, 200, 200, 140 )} );
+      {fill: new Color( 200, 200, 200, 0 )} );
+    var tickNode = new Path( Shape.lineSegment( 5, 0, -5, 0 ),
+      {stroke: THUMB_STROKE_COLOR, lineWidth: 1} );
     var thumbNode = new Thumb( THUMB_SIZE, property, range, new Range( 0, trackSize.height ) );
 
     // rendering order
     this.addChild( minNode );
     this.addChild( backgroundNode );
+    this.addChild( tickNode );
     this.addChild( trackNode );
     this.addChild( thumbNode );
 
@@ -163,6 +166,8 @@ define( function( require ) {
     var centerX = backgroundNode.centerX;
     minNode.centerX = centerX;
     minNode.top = backgroundNode.bottom + ( thumbNode.height / 2 );
+    tickNode.centerX = backgroundNode.centerX;
+    tickNode.centerY = trackNode.centerY;
     thumbNode.centerX = trackNode.centerX;
     thumbNode.centerY = trackNode.centerY;
 
