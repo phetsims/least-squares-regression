@@ -74,6 +74,20 @@ define( function( require ) {
     ]
   );
 
+  DataSet.YEAR_DAY = new DataSet( 'Length of Day vs Length of Year', 'Day vs. Year', 'Day', 'Year', new Range( 0, 2 ), new Range( 0, 170 ),
+    [
+//      {x: 0.23, y: 58.7}, //mercury
+//      {x: 0.61, y: 243}, //venus
+      {x: 1, y: 1}, // Earth
+      {x: 1.87, y: 1.05}, // mars
+      {x: 11.8, y: 0.413}, //jupiter
+      {x: 29.7, y: 0.444}, // saturn
+      {x: 84.3, y: 0.7}, //  uranus
+      {x: 165, y: 0.669}, // neptune
+      //    {x: 247, y: 6.38} // pluto
+    ]
+  );
+
   DataSet.FAKE_FAKE3 = new DataSet( 'Lots Of Data', 'Y vs. X', 'Y', 'X', new Range( 0, 1 ), new Range( 0, 1 ),
     [
       // for testing purpose
