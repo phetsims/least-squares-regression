@@ -65,8 +65,8 @@ define( function( require ) {
 
     ScreenView.call( this, {renderer: 'svg'} );
     var thisView = this;
-
-    var viewGraphBounds = new Bounds2( 250, 60, 600, 410 );
+    var SIZE = 190;
+    var viewGraphBounds = new Bounds2( this.layoutBounds.centerX - SIZE, this.layoutBounds.centerY - SIZE, this.layoutBounds.centerX + SIZE, this.layoutBounds.centerY + SIZE );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
