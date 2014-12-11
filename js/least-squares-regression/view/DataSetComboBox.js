@@ -20,7 +20,7 @@ define( function( require ) {
 //  var LSRConstants = require( 'string!LEAST_SQUARES_REGRESSION/pattern.0name.1pH' );
 
   // constants
-  var TEXT_FONT = new PhetFont( {size: 16, weight: 'bold'} );
+  var TEXT_FONT = new PhetFont( {size: 14} );
   var ITEM_HIGHLIGHT_FILL = 'rgb(218,255,255)';
 
   /**
@@ -44,7 +44,7 @@ define( function( require ) {
       itemYMargin: 4,
       itemHighlightFill: ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
-      buttonCornerRadius: 8
+      buttonCornerRadius: 5
     } );
   }
 

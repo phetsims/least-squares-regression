@@ -40,8 +40,8 @@ define( function( require ) {
     DATA_POINT_STROKE: 'black',
     DATA_POINT_LINE_WIDTH: 0.5,
 
-    TEXT_FONT: new PhetFont( {size: 12} ),
-    TEXT_FONT_BOLD: new PhetFont( {size: 12, weight: 'bold'} ),
+    TEXT_FONT: new PhetFont( {size: 14} ),
+    TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ),
     CONTROL_PANEL_CORNER_RADIUS: 10,
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb(255,245,238)'  //seashell
 

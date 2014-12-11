@@ -47,7 +47,7 @@ define( function( require ) {
     var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
 
     var equationText = new EquationNode( graph.slope( graph.angle ), graph.intercept );
-    var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 2, resize: false} );
+    var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 5, resize: false} );
 
     var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, graph.myLineVisibleProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.myLineShowResidualsProperty );

@@ -35,7 +35,7 @@ define( function( require ) {
   /**
    *
    * @param graph
-   * @param biewBounds
+   * @param viewBounds
    * @param modelViewTransform
    * @constructor
    */
@@ -74,9 +74,9 @@ define( function( require ) {
     var myLineResidualsLayer = new Node();
     var bestFitLineResidualsLayer = new Node();
 
-
+    //TODO
     this.equationText = new Text( 'r =           ', {font: LSRConstants.TEXT_FONT_BOLD} ); /// 12 blank spaces for spacing
-    var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 2, resize: false} );
+    var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 5, resize: false} );
     mutableEquationText.top = this.viewBounds.minY + 10;
     mutableEquationText.right = this.viewBounds.maxX - 10;
     //this.addChild( mutableEquationText );

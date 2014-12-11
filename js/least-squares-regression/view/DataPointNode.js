@@ -27,9 +27,10 @@ define( function( require ) {
     var self = this;
 
     // Create the node that the user may click upon to add a model element to the view.
-    var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
+    var representation = new Circle( LSRConstants.DATA_POINT_RADIUS * 0.8, {
       fill: LSRConstants.DATA_POINT_FILL,
-      stroke: LSRConstants.DATA_POINT_STROKE,
+      //stroke: LSRConstants.DATA_POINT_STROKE,
+      stroke: 'white',
       lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
     } );
 

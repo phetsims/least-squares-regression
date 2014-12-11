@@ -56,7 +56,7 @@ define( function( require ) {
 
     var equationText = new EquationNode( 0, 0 );
     equationText.visible = false;
-    var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 2, resize: false} );
+    var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 5, resize: false} );
     var linearFitParameters = graph.getLinearFit();
     if ( linearFitParameters !== null ) {
       this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
