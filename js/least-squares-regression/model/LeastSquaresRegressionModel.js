@@ -42,19 +42,26 @@ define( function( require ) {
     this.dataPoints = new ObservableArray(); // @public
 
     // the various data Sets available in the Combo Box
-    this.dataSets = [
-      DataSet.CUSTOM,
-      DataSet.FAKE_FAKE,
-      DataSet.FAKE_FAKE2,
-      DataSet.FAKE_FAKE3,
-      DataSet.YEAR_DAY,
-      DataSet.PRESSURE_PULSE,
-      DataSet.LATITUDE_TEMPERATURE,
-      DataSet.MILES_COST,
-      DataSet.HEIGHT_SHOE,
-      DataSet.GPA_HOURS,
-      DataSet.GASOLINE_YEAR
-    ];
+    this.dataSets = [];
+    //for ( var dataSet in DataSet ){
+    //  if ( DataSet.hasOwnProperty( dataSet ) ){
+    //    this.dataSets.push( dataSet );
+    //  }
+    //}
+    this.dataSets.push( DataSet.CUSTOM );
+    this.dataSets.push( DataSet.TEMPERATURE_LONGITUDE );
+    this.dataSets.push( DataSet.TEMPERATURE_LATITUDE );
+    this.dataSets.push( DataSet.SPENDING_SALARY );
+    this.dataSets.push( DataSet.WAGE_YEAR );
+    this.dataSets.push( DataSet.MORTALITY_YEAR );
+    this.dataSets.push( DataSet.USER_YEAR );
+    this.dataSets.push( DataSet.GASOLINE_YEAR );
+    this.dataSets.push( DataSet.LIFE_TV );
+    this.dataSets.push( DataSet.SPEED_DISTANCE );
+    this.dataSets.push( DataSet.TEMPERATURE_CHIRP );
+    this.dataSets.push( DataSet.HEIGHT_SHOE );
+    this.dataSets.push( DataSet.LEG_STRIDE );
+
 
     // Contains all information regarding the composition of the graph
     this.graph = new Graph(
