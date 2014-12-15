@@ -183,8 +183,8 @@ define( function( require ) {
 
       if ( model.selectedDataSet === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
-        var dataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
-        thisView.dataPointsLayer.addChild( dataPointNode );
+        var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
+        thisView.dataPointsLayer.addChild( dynamicDataPointNode );
 
 
         addedDataPoint.positionProperty.link( function() {
@@ -194,7 +194,7 @@ define( function( require ) {
         addedDataPoint.userControlledProperty.link( function( userControlled ) {
           if ( userControlled ) {
             graphNode.update();
-            dataPointNode.moveToFront();
+            dynamicDataPointNode.moveToFront();
           }
 
         } );
@@ -202,7 +202,7 @@ define( function( require ) {
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
-            thisView.dataPointsLayer.removeChild( dataPointNode );
+            thisView.dataPointsLayer.removeChild( dynamicDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
@@ -210,13 +210,13 @@ define( function( require ) {
 
       else {
         // Create and add the view representation for this dataPoint.
-        var dataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
-        thisView.dataPointsLayer.addChild( dataPointNode );
+        var staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
+        thisView.dataPointsLayer.addChild( staticDataPointNode );
 
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
-            thisView.dataPointsLayer.removeChild( dataPointNode );
+            thisView.dataPointsLayer.removeChild( staticDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
