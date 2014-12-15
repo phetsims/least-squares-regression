@@ -28,7 +28,7 @@ define( function( require ) {
       columns: 4,
       rows: 4,
       cellLength: 10,
-      gridStroke: 'black',
+      gridStroke: '#808080',
       gridLineWidth: 1,
       gridFill: null
     }, options );
