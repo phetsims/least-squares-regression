@@ -16,8 +16,7 @@ define( function( require ) {
   // var Color = require( 'SCENERY/util/Color' );
   var CheckBox = require( 'SUN/CheckBox' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
-  var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
-
+  var DynamicDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DynamicDataPointNode' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
@@ -34,6 +33,7 @@ define( function( require ) {
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
   // var Shape = require( 'KITE/Shape' );
   // var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   // var Text = require( 'SCENERY/nodes/Text' );
@@ -181,30 +181,47 @@ define( function( require ) {
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
-      // Create and add the view representation for this dataPoint.
-      var dataPointNode = new DataPointNode( addedDataPoint, modelViewTransform );
-      thisView.dataPointsLayer.addChild( dataPointNode );
+      if ( model.selectedDataSet === DataSet.CUSTOM ) {
+        // Create and add the view representation for this dataPoint.
+        var dataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
+        thisView.dataPointsLayer.addChild( dataPointNode );
 
 
-      addedDataPoint.positionProperty.link( function() {
-        graphNode.update();
-      } );
-      // Move the dataPoint to the front of this layer when grabbed by the user.
-      addedDataPoint.userControlledProperty.link( function( userControlled ) {
-        if ( userControlled ) {
+        addedDataPoint.positionProperty.link( function() {
           graphNode.update();
-          dataPointNode.moveToFront();
-        }
+        } );
+        // Move the dataPoint to the front of this layer when grabbed by the user.
+        addedDataPoint.userControlledProperty.link( function( userControlled ) {
+          if ( userControlled ) {
+            graphNode.update();
+            dataPointNode.moveToFront();
+          }
 
-      } );
+        } );
 
-      // Add the removal listener for if and when this dataPoint is removed from the model.
-      model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
-        if ( removedDataPoint === addedDataPoint ) {
-          thisView.dataPointsLayer.removeChild( dataPointNode );
-          model.dataPoints.removeItemRemovedListener( removalListener );
-        }
-      } );
+        // Add the removal listener for if and when this dataPoint is removed from the model.
+        model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
+          if ( removedDataPoint === addedDataPoint ) {
+            thisView.dataPointsLayer.removeChild( dataPointNode );
+            model.dataPoints.removeItemRemovedListener( removalListener );
+          }
+        } );
+      }
+
+      else {
+        // Create and add the view representation for this dataPoint.
+        var dataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
+        thisView.dataPointsLayer.addChild( dataPointNode );
+
+        // Add the removal listener for if and when this dataPoint is removed from the model.
+        model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
+          if ( removedDataPoint === addedDataPoint ) {
+            thisView.dataPointsLayer.removeChild( dataPointNode );
+            model.dataPoints.removeItemRemovedListener( removalListener );
+          }
+        } );
+
+      }
     } );
 
     // Create and add the Reset All Button in the bottom right, which resets the model
