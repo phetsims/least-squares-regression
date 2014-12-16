@@ -6,6 +6,7 @@
  * Type that represents a residual Square in the view.
  *
  * @author John Blanco
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
@@ -25,15 +26,14 @@ define( function( require ) {
   // constants
 
   var RESIDUAL_LINE_WIDTH = 2;
-  var SQUARE_TRANSPARENCY = 0.4;  //between 0 and 1
-  var SQUARE_STROKE_COLOR = 'gray';
+  var SQUARE_TRANSPARENCY = 0.6;  //between 0 and 1
 
   /**
    *
    * @param {Property-<Residual>}residualProperty
    * @param {Color} baseColor
-   * @param {Bounds} viewBounds
-   * @param {ModelViewTransform} modelViewTransform
+   * @param {Bounds2} viewBounds
+   * @param {ModelViewTransform2} modelViewTransform
    * @param {Property-<boolean>} lineVisibilityProperty
    * @param {Property-<boolean>} squareVisibilityProperty
    * @constructor
@@ -66,7 +66,7 @@ define( function( require ) {
     // however the square residual should not overlap with the y = m x + b line:
     var left = (residualProperty.value.isSquaredResidualToTheLeft) ? point1.x - width : point1.x;
 
-    this.squareResidual = new Rectangle( left, top, width, height, {fill: mainColor.withAlpha( SQUARE_TRANSPARENCY ), stroke: SQUARE_STROKE_COLOR} );
+    this.squareResidual = new Rectangle( left, top, width, height, {fill: mainColor.withAlpha( SQUARE_TRANSPARENCY )} );
     this.lineResidual = new Line( point1, point2, {stroke: mainColor.brighterColor( 0.5 ), lineWidth: RESIDUAL_LINE_WIDTH} );
     this.squareResidual.clipArea = Shape.bounds( viewBounds );
     this.lineResidual.clipArea = Shape.bounds( viewBounds );

@@ -26,10 +26,10 @@ define( function( require ) {
     DataPointNode.call( this, dataPoint, modelViewTransform );
 
     // Create the node that the user may click upon to add a model element to the view.
-    var representation = new Circle( LSRConstants.DATA_POINT_RADIUS, {
-      fill: LSRConstants.DATA_POINT_FILL,
-      stroke: LSRConstants.DATA_POINT_STROKE,
-      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
+    var representation = new Circle( LSRConstants.DYNAMIC_DATA_POINT_RADIUS, {
+      fill: LSRConstants.DYNAMIC_DATA_POINT_FILL,
+      stroke: LSRConstants.DYNAMIC_DATA_POINT_STROKE,
+      lineWidth: LSRConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
     } );
 
     this.addChild( representation );

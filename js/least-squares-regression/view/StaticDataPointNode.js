@@ -24,11 +24,10 @@ define( function( require ) {
   function StaticDataPointNode( dataPoint, modelViewTransform ) {
     DataPointNode.call( this, dataPoint, modelViewTransform );
 
-    var representation = new Circle( LSRConstants.DATA_POINT_RADIUS * 0.8, {
-      fill: LSRConstants.DATA_POINT_FILL,
-      //stroke: LSRConstants.DATA_POINT_STROKE,
-      stroke: 'white',
-      lineWidth: LSRConstants.DATA_POINT_LINE_WIDTH
+    var representation = new Circle( LSRConstants.STATIC_DATA_POINT_RADIUS, {
+      fill: LSRConstants.STATIC_DATA_POINT_FILL,
+      stroke: LSRConstants.STATIC_DATA_POINT_STROKE,
+      lineWidth: LSRConstants.STATIC_DATA_POINT_LINE_WIDTH
     } );
 
     this.addChild( representation );
