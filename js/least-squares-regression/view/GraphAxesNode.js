@@ -21,6 +21,10 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 
+  // strings
+
+  var minusString = '\u2212';
+
   //----------------------------------------------------------------------------------------
   // constants
   //----------------------------------------------------------------------------------------
@@ -57,7 +61,7 @@ define( function( require ) {
   var MAJOR_TICK_COLOR = 'black';
   var MAJOR_TICK_FONT = LSRConstants.MAJOR_TICK_FONT;
   var TICK_LABEL_SPACING = 2;
-  var MINUS_SIGN_WIDTH = new Text( '\u2212', {font: MAJOR_TICK_FONT} ).width;
+  var MINUS_SIGN_WIDTH = new Text( minusString, {font: MAJOR_TICK_FONT} ).width;
 
   var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
   //----------------------------------------------------------------------------------------
