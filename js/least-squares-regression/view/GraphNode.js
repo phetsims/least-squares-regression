@@ -16,17 +16,10 @@ define( function( require ) {
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Line = require( 'SCENERY/nodes/Line' );
-  // var Path = require( 'SCENERY/nodes/Path' );
-  var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
 
-  // string
-  var pattern_0r_1value = "{0} {1}";
 
   // constants
 
@@ -73,17 +66,6 @@ define( function( require ) {
     // TODO: check if it is still necessary
     var myLineResidualsLayer = new Node();
     var bestFitLineResidualsLayer = new Node();
-
-    //TODO
-    this.equationText = new Text( 'r =           ', {font: LSRConstants.TEXT_FONT_BOLD} ); /// 12 blank spaces for spacing
-    var mutableEquationText = new Panel( this.equationText, {
-      fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
-      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
-      resize: false
-    } );
-    mutableEquationText.top = this.viewBounds.maxY / 2;
-    mutableEquationText.left = this.viewBounds.minX - 150;
-    //this.addChild( mutableEquationText );
 
     Property.multilink( [graph.angleProperty, graph.interceptProperty], function( angle, intercept ) {
       var slope = graph.slope( angle );
@@ -145,31 +127,18 @@ define( function( require ) {
     this.addChild( this.bestFitLine );
     this.addChild( myLineResidualsLayer );
     this.addChild( bestFitLineResidualsLayer );
-    this.addChild( mutableEquationText );
 
   }
 
   return inherit( Node, GraphNode, {
     reset: function() {
-      this.updatePearsonCoefficient();
       this.updateBestFitLine();
     },
 
     update: function() {
-      this.updatePearsonCoefficient();
       this.updateBestFitLine();
     },
 
-    updatePearsonCoefficient: function() {
-      var rText;
-      if ( this.graph.dataPointsOnGraph.length >= 2 ) {
-        rText = Util.toFixed( this.graph.getPearsonCoefficientCorrelation(), 2 );
-      }
-      else {
-        rText = '   ';
-      }
-      this.equationText.text = StringUtils.format( pattern_0r_1value, 'r = ', rText );
-    },
 
     updateBestFitLine: function() {
       var linearFitParameters = this.graph.getLinearFit();

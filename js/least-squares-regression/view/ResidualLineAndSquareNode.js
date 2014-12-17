@@ -26,7 +26,7 @@ define( function( require ) {
   // constants
 
   var RESIDUAL_LINE_WIDTH = 2;
-  var SQUARE_TRANSPARENCY = 0.6;  //between 0 and 1
+  var SQUARE_TRANSPARENCY = 0.4;  //between 0 and 1
 
   /**
    *

@@ -27,6 +27,7 @@ define( function( require ) {
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
   // var Path = require( 'SCENERY/nodes/Path' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   // var Range = require( 'DOT/Range' );
@@ -34,8 +35,6 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
-  // var Shape = require( 'KITE/Shape' );
-  // var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   // var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
@@ -129,6 +128,11 @@ define( function( require ) {
       }
     } );
 
+
+    // pearson Correlation coefficient panel
+    var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph );
+    this.addChild( pearsonCorrelationCoefficientNode );
+
     // gridIcon
     var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );
 
@@ -149,6 +153,7 @@ define( function( require ) {
       thisView.addChild( thisView.graphAxesNode );
       thisView.graphAxesNode.moveToBack();
       graphNode.update();
+      pearsonCorrelationCoefficientNode.update();
       bestFitLineControlPanel.updateBestFitLineEquation();
 
 
@@ -188,11 +193,13 @@ define( function( require ) {
 
         addedDataPoint.positionProperty.link( function() {
           graphNode.update();
+          pearsonCorrelationCoefficientNode.update();
         } );
         // Move the dataPoint to the front of this layer when grabbed by the user.
         addedDataPoint.userControlledProperty.link( function( userControlled ) {
           if ( userControlled ) {
             graphNode.update();
+            pearsonCorrelationCoefficientNode.update();
             dynamicDataPointNode.moveToFront();
           }
 
@@ -228,6 +235,7 @@ define( function( require ) {
       listener: function() {
         model.reset();
         graphNode.reset();
+        pearsonCorrelationCoefficientNode.reset();
         bestFitLineControlPanel.reset();
       },
       right:  thisView.layoutBounds.maxX - 10,
@@ -248,6 +256,8 @@ define( function( require ) {
       bestFitLineControlPanel.top = 10;
       gridCheckBox.left = myLineControlPanel.left + 10;
       gridCheckBox.top = myLineControlPanel.bottom + 10;
+      pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
+      pearsonCorrelationCoefficientNode.top = bestFitLineControlPanel.bottom + 40;
     }
 
 
