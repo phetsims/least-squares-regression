@@ -13,8 +13,6 @@ define( function( require ) {
 
   // modules
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-
-  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Line = require( 'SCENERY/nodes/Line' );
@@ -23,12 +21,12 @@ define( function( require ) {
 
   /**
    *
-   * @param {Property-<Residual>}residualProperty
+   * @param {Property.<Residual>}residualProperty
    * @param {Color} lineColor
    * @param {Bounds2} viewBounds
    * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property-<boolean>} lineVisibilityProperty
-   * @param {Property-<boolean>} squareVisibilityProperty
+   * @param {Property.<boolean>} lineVisibilityProperty
+   * @param {Property.<boolean>} squareVisibilityProperty
    * @constructor
    */
   function ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {

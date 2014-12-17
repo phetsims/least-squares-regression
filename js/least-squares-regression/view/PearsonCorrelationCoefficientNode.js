@@ -9,6 +9,7 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -18,6 +19,8 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // string
+
+  var rEqualsString = require( 'string!LEAST_SQUARES_REGRESSION/rEquals' );
   var pattern_0r_1value = "{0} {1}";
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
@@ -30,15 +33,29 @@ define( function( require ) {
   function PearsonCorrelationCoefficientNode( graph ) {
 
     Node.call( this );
-
     this.graph = graph;
 
-    this.equationText = new Text( 'r = -0.000', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
+    var leftHandSideText = new Text( rEqualsString, {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
+    this.rightHandSideText = new Text( '', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
+    var rightHandSideMaxWidth = new Text( plusString + '0.00', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} ).width;
+    var hStrut = new HStrut( rightHandSideMaxWidth );
 
-    var mutableEquationText = new Panel( this.equationText, {
+    hStrut.left = leftHandSideText.right + 5;
+    this.rightHandSideText.left = leftHandSideText.right + 5;
+
+    var equation = new Node( {
+      children: [
+        leftHandSideText,
+        hStrut,
+        this.rightHandSideText
+      ]
+    } );
+
+    var mutableEquationText = new Panel( equation, {
       fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
-      resize: false
+      resize: false,
+      xMargin: 10
     } );
 
     this.addChild( mutableEquationText );
@@ -60,7 +77,7 @@ define( function( require ) {
       else {
         rText = '';
       }
-      this.equationText.text = StringUtils.format( pattern_0r_1value, 'r = ', rText );
+      this.rightHandSideText.text = rText;
     }
   } );
 } )
