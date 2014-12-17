@@ -56,15 +56,20 @@ define( function( require ) {
 
     var equationText = new EquationNode( 0, 0 );
     equationText.visible = false;
-    var equationPanel = new Panel( equationText, {fill: 'white', stroke: 'black', cornerRadius: 5, resize: false} );
+    var equationPanel = new Panel( equationText, {
+      fill: 'white',
+      stroke: 'black',
+      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
+      resize: false
+    } );
     var linearFitParameters = graph.getLinearFit();
     if ( linearFitParameters !== null ) {
       this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
     }
 
-    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, LSRConstants.TEXT_FONT, graph.bestFitLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.bestFitLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.bestFitLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.bestFitLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.bestFitLineShowSquaredResidualsProperty );
 
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // TODO find less hacky way to toggle equationText visibility (using derived property perhaps)

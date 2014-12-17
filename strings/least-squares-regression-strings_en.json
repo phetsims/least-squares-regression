@@ -23,7 +23,7 @@
   "temperatureLongitude.reference": "Average January temperature in fifty major US compared to their longitudes.",
   "temperatureLongitude.source": "Hand, D.J., et al. (1994) A Handbook of Small Data Sets, London: Chapman & Hall, 208-210",
   "spendingSalary.graphTitle": "Spending vs. Salaries",
-  "spendingSalary.xAxisTitle": "Average Teacher Salaries (USD)",
+  "spendingSalary.xAxisTitle": "Average Teacher Salaries (USD) in thousands",
   "spendingSalary.yAxisTitle": "Average Spending Per Pupil (USD) in thousands",
   "spendingSalary.reference": "Average per pupil spending is compared to average teacher salaries in fifty US states in 1986.",
   "spendingSalary.source": "National Education Association",

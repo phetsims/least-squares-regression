@@ -14,6 +14,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var FillHighlightListener = require( 'SCENERY_PHET/input/FillHighlightListener' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -30,9 +31,8 @@ define( function( require ) {
 
   // constants
 //TODO replace with new VSlider
-  var RANGE_FONT = new PhetFont( {size: 12, weight: 'bold'} );
+  var RANGE_FONT = LSRConstants.TEXT_FONT_BOLD;
   var RANGE_COLOR = 'blue';
-  // var VALUE_FONT = new PhetFont( 20 );
   var THUMB_SIZE = new Dimension2( 30, 15 );
   var THUMB_NORMAL_COLOR = new Color( 89, 156, 212 );
   var THUMB_HIGHLIGHT_COLOR = THUMB_NORMAL_COLOR.brighterColor();

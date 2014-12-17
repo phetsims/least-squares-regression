@@ -3,14 +3,15 @@
 /**
  * A Scenery node that depicts a grid icon.
  *
+ *  MArtin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
 
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
-  // var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
@@ -28,7 +29,7 @@ define( function( require ) {
       columns: 4,
       rows: 4,
       cellLength: 10,
-      gridStroke: 'rgb(128,128,128)', // grey
+      gridStroke: LSRConstants.MAJOR_GRID_STROKE_COLOR,
       gridLineWidth: 1,
       gridFill: null
     }, options );

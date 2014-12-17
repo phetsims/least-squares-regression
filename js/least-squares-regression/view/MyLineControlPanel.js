@@ -47,20 +47,20 @@ define( function( require ) {
     var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
 
     var equationText = new EquationNode( graph.slope( graph.angle ), graph.intercept );
-    var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: 5, resize: false} );
+    var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS, resize: false} );
 
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, LSRConstants.TEXT_FONT, graph.myLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, LSRConstants.TEXT_FONT, graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, LSRConstants.TEXT_FONT, graph.myLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.myLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.myLineShowSquaredResidualsProperty );
 
     //   var sliderInterceptRange = new Range( 1.5 * graph.yRange.min - 0.5 * graph.yRange.max, 1.5 * graph.yRange.max - 0.5 * graph.yRange.min );
     // TODO this is not robust, talk to AM
-    var sliderInterceptRange = new Range( -1 * graph.bounds.maxY, graph.bounds.maxY );
+    var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10;
     var slidersBox = new HBox( {
       spacing: 5, children: [
-        new VerticalSlider( aString, new Dimension2( 1, 100 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) ),
-        new VerticalSlider( bString, new Dimension2( 1, 100 ), graph.interceptProperty, sliderInterceptRange )]
+        new VerticalSlider( aString, new Dimension2( 1, 120 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) ),
+        new VerticalSlider( bString, new Dimension2( 1, 120 ), graph.interceptProperty, sliderInterceptRange )]
     } );
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( graph, dataPoints, graph.getMyLineSumOfSquaredResiduals.bind( graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, graph.myLineSquaredResidualsVisibleProperty );

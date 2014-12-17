@@ -10,6 +10,7 @@ define( function( require ) {
   // modules
   var LeastSquaresRegressionModel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/LeastSquaresRegressionModel' );
   var LeastSquaresRegressionScreenView = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/LeastSquaresRegressionScreenView' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
 
@@ -28,7 +29,7 @@ define( function( require ) {
     Screen.call( this, leastSquaresRegressionSimString, icon,
       function() { return new LeastSquaresRegressionModel(); },
       function( model ) { return new LeastSquaresRegressionScreenView( model ); },
-      {backgroundColor: '#ECFFF5'}
+      {backgroundColor: LSRConstants.BACKGROUND_COLOR}
     );
   }
 

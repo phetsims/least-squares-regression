@@ -31,10 +31,10 @@ define( function( require ) {
   function EquationNode( slope, intercept ) {
     Node.call( this );
 
-    this.eqnPartOneText = new Text( ' y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
+    this.eqnPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     this.eqnPartTwoText = new Text( this.numberToString( slope ).optionalSign, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     this.eqnPartThreeText = new Text( this.numberToString( slope ).absoluteNumber, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
-    this.eqnPartFourText = new Text( ' x ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
+    this.eqnPartFourText = new Text( 'x', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     this.eqnPartFiveText = new Text( this.numberToString( intercept ).sign, {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     this.eqnPartSixText = new Text( this.numberToString( intercept ).absoluteNumber, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     var mutableEquationText = new Node( {
@@ -50,8 +50,8 @@ define( function( require ) {
     } );
 
     this.eqnPartTwoText.left = 20;
-    this.eqnPartThreeText.left = 30;
-    this.eqnPartFourText.left = 55;
+    this.eqnPartThreeText.left = 29;
+    this.eqnPartFourText.left = 60;
     this.eqnPartFiveText.left = 70;
     this.eqnPartSixText.left = 80;
 

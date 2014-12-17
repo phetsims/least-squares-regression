@@ -76,7 +76,11 @@ define( function( require ) {
 
     //TODO
     this.equationText = new Text( 'r =           ', {font: LSRConstants.TEXT_FONT_BOLD} ); /// 12 blank spaces for spacing
-    var mutableEquationText = new Panel( this.equationText, {fill: LSRConstants.GRAPH_BACKGROUND_COLOR, cornerRadius: 5, resize: false} );
+    var mutableEquationText = new Panel( this.equationText, {
+      fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
+      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
+      resize: false
+    } );
     mutableEquationText.top = this.viewBounds.maxY / 2;
     mutableEquationText.left = this.viewBounds.minX - 150;
     //this.addChild( mutableEquationText );

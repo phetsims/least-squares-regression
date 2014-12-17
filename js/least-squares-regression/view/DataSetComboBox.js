@@ -13,15 +13,10 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-//  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-  // strings
-//  var LSRConstants = require( 'string!LEAST_SQUARES_REGRESSION/pattern.0name.1pH' );
 
-  // constants
-  var TEXT_FONT = new PhetFont( {size: 14} );
-  var ITEM_HIGHLIGHT_FILL = 'rgb(218,255,255)';
 
   /**
    * @param {DataSet[]} dataSets
@@ -42,9 +37,9 @@ define( function( require ) {
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
       itemYMargin: 4,
-      itemHighlightFill: ITEM_HIGHLIGHT_FILL,
+      itemHighlightFill: LSRConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
-      buttonCornerRadius: 5
+      buttoncornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS
     } );
   }
 
@@ -56,7 +51,7 @@ define( function( require ) {
   var createItem = function( dataSet ) {
     var node = new Node();
     // label
-    var textNode = new Text( dataSet.name, {font: TEXT_FONT} );
+    var textNode = new Text( dataSet.name, {font: LSRConstants.TEXT_FONT} );
     node.addChild( textNode );
     return ComboBox.createItem( node, dataSet );
   };

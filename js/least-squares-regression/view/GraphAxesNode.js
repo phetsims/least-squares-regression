@@ -10,8 +10,10 @@ define( function( require ) {
 
   // modules
 
+  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
@@ -33,10 +35,11 @@ define( function( require ) {
 
   // grid
 
-  var MINOR_GRID_LINE_WIDTH = 0.5;
-  var MINOR_GRID_LINE_COLOR = 'rgb( 240, 240, 240 )';
-  var MAJOR_GRID_LINE_WIDTH = 1.0;
-  var MAJOR_GRID_LINE_COLOR = 'rgb( 192, 192, 192 )';
+  var MAJOR_GRID_LINE_WIDTH = 0.75;
+  var MAJOR_GRID_LINE_COLOR = LSRConstants.MAJOR_GRID_STROKE_COLOR;
+  var MINOR_GRID_LINE_WIDTH = 0.35;
+  var MINOR_GRID_LINE_COLOR = LSRConstants.MINOR_GRID_STROKE_COLOR;
+
 
   // axes
 
