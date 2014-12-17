@@ -20,16 +20,11 @@ define( function( require ) {
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
 
-
-  // constants
-
-  var LINE_WIDTH = 2;
-
   /**
    *
-   * @param graph
-   * @param viewBounds
-   * @param modelViewTransform
+   * @param {Graph} graph
+   * @param {Bounds2} viewBounds
+   * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
   function GraphNode( graph, viewBounds, modelViewTransform ) {
@@ -48,18 +43,18 @@ define( function( require ) {
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
-      {stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LINE_WIDTH} );
+      {stroke: LSRConstants.MY_LINE_COLOR, lineWidth: LSRConstants.LINE_WIDTH} );
 
 
     // set bestFitLine to zero length and then update it
-    this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
+    this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LSRConstants.LINE_WIDTH} );
     var linearFitParameters = graph.getLinearFit();
     if ( linearFitParameters !== null ) {
       var bestFitLineBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLine = new Line(
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point1 ),
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point2 ),
-        {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LINE_WIDTH} );
+        {stroke: LSRConstants.BEST_FIT_LINE_COLOR, lineWidth: LSRConstants.LINE_WIDTH} );
     }
 
     // set the residuals  on a separate layer in order to toggle visibility
