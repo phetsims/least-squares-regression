@@ -51,7 +51,6 @@ define( function( require ) {
     animationStep: function( dt ) {
       // perform any animation
       var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
-      // TODO: ANIMATION_VELOCITY is set in the model: not the view... adapt for scaling factor
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
         // Move a step toward the position.
         var stepAngle = Math.atan2( this.positionProperty.initialValue.y - this.position.y, this.positionProperty.initialValue.x - this.position.x );
