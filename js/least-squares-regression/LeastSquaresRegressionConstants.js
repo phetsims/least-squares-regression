@@ -35,9 +35,6 @@ define( function( require ) {
     BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4)',
     BEST_FIT_LINE_SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59)',
 
-//    RESIDUAL_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
-    //   RESIDUALS_SQUARE_TRANSPARENCY_FACTOR: 0.6,
-
     // movable data points (and points in bucket)
     DYNAMIC_DATA_POINT_RADIUS: 7,
     DYNAMIC_DATA_POINT_FILL: 'orange',
@@ -56,6 +53,7 @@ define( function( require ) {
 
     TEXT_FONT: new PhetFont( {size: 14} ),
     CHECK_BOX_TEXT_FONT: new PhetFont( {size: 12} ),
+    MAJOR_TICK_FONT: new PhetFont( {size: 12} ),
     TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ),
 
     CONTROL_PANEL_CORNER_RADIUS: 10,

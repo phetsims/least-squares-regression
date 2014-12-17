@@ -10,7 +10,6 @@ define( function( require ) {
 
   // modules
 
-  var Color = require( 'SCENERY/util/Color' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -30,7 +29,7 @@ define( function( require ) {
   // background
 
   var GRID_BACKGROUND_FILL = 'white';
-  var GRID_BACKGROUND_LINE_WIDTH = '0.5';
+  var GRID_BACKGROUND_LINE_WIDTH = '0.5'; // for the border of graph
   var GRID_BACKGROUND_STROKE = 'gray';
 
   // grid
@@ -47,7 +46,7 @@ define( function( require ) {
   var AXIS_EXTENT = 0.0; // how far the line extends past the min/max ticks, in model coordinates
 
   // labels
-  var AXIS_LABEL_FONT = new PhetFont( {size: 14, weight: 'bold'} );
+  var AXIS_LABEL_FONT = LSRConstants.TEXT_FONT_BOLD;
   var AXIS_LABEL_COLOR = 'black'; // space between end of axis and label
 
   // ticks
@@ -57,7 +56,7 @@ define( function( require ) {
   var MAJOR_TICK_LENGTH = 6; // how far a major tick extends from the axis
   var MAJOR_TICK_LINE_WIDTH = 1;
   var MAJOR_TICK_COLOR = 'black';
-  var MAJOR_TICK_FONT = new PhetFont( 12 );
+  var MAJOR_TICK_FONT = LSRConstants.MAJOR_TICK_FONT;
   var TICK_LABEL_SPACING = 2;
   var MINUS_SIGN_WIDTH = new Text( '\u2212', {font: MAJOR_TICK_FONT} ).width;
 
