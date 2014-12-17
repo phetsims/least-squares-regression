@@ -3,34 +3,29 @@
  */
 
 /**
- * Constants that are shared between the various portions of the Area Builder simulation.
+ * Constants that are used in the Least Squares Regression simulation.
  *
- * @author John Blanco
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
 
   // modules
-  // var Bounds2 = require( 'DOT/Bounds2' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
-  var MY_LINE_COLOR = {};
-  var BEST_FIT_LINE_COLOR = {};
-
   return {
-    // Layout bounds used throughout the simulation for laying out the screens.
-    PERIMETER_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
 
-    // Velocity at which animated elements move
-    ANIMATION_VELOCITY: 2,
+    // Velocity at which animated dataPoints move
+    ANIMATION_VELOCITY: 2, // in the view reference frame
 
+    // background color for sim and graph
     BACKGROUND_COLOR: 'rgb( 236,255,245 )',
     GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',
 
     LINE_WIDTH: 2,
     RESIDUAL_LINE_WIDTH: 2,
 
-
+    // my Line color
     MY_LINE_COLOR: {
       BASE_COLOR: 'rgb( 0, 0, 255)',
       RESIDUAL_COLOR: 'rgb( 110, 92, 231)',
@@ -38,6 +33,7 @@ define( function( require ) {
       SUM_OF_SQUARES_COLOR: 'rgb( 154, 150, 255)'
     },
 
+    // best Fit Line Color
     BEST_FIT_LINE_COLOR: {
       BASE_COLOR: 'rgb( 255, 0 ,0)',
       RESIDUAL_COLOR: 'rgb( 178, 21, 27)',
@@ -61,13 +57,15 @@ define( function( require ) {
     MAJOR_GRID_STROKE_COLOR: 'rgb(128,128,128)',
     MINOR_GRID_STROKE_COLOR: 'rgb(218,218,218)',
 
-    TEXT_FONT: new PhetFont( {size: 14} ),
+    // font sizes and weight
+    TEXT_FONT: new PhetFont( {size: 14} ), // default font for text
+    TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ), // default font for bold font
     PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 16, weight: 'bold'} ),
     CHECK_BOX_TEXT_FONT: new PhetFont( {size: 12} ),
     MAJOR_TICK_FONT: new PhetFont( {size: 12} ),
     SUM_RESIDUALS_FONT: new PhetFont( {size: 12} ),
-    TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ),
 
+    // panels
     CONTROL_PANEL_CORNER_RADIUS: 10,
     SMALL_PANEL_CORNER_RADIUS: 5,
     CONTROL_PANEL_BACKGROUND_COLOR: 'rgb(255, 245, 238)', //seashell
