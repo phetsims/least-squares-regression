@@ -43,18 +43,17 @@ define( function( require ) {
   var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
   var DATA_POINT_CREATOR_OFFSET_POSITIONS = [
     // Offsets used for initial position of point, relative to bucket hole center. Empirically determined.
-    new Vector2( -28, -5 ),
-    new Vector2( -15, -3 ),
-    new Vector2( 4, -4 ),
-    new Vector2( 13, -2 ),
-    new Vector2( -2, 0 ),
-    new Vector2( -25, -14 ),
-    new Vector2( -18, -12 ),
-    new Vector2( -2, -7 ),
-    new Vector2( 0, -16 ),
-    new Vector2( 9, -12 ),
-    new Vector2( 13, -9 ),
-    new Vector2( -5, -12 )
+    new Vector2( -35, -5 ),
+    new Vector2( -25, -9 ),
+    new Vector2( -20, -4 ),
+    new Vector2( -15, -14 ),
+    new Vector2( -10, -4 ),
+    new Vector2( -5, -17 ),
+    new Vector2( -0, -5 ),
+    new Vector2( 5, -14 ),
+    new Vector2( 10, -3 ),
+    new Vector2( 15, -7 ),
+    new Vector2( 25, -4 )
 
   ];
 
