@@ -39,7 +39,7 @@ define( function( require ) {
     },
 
     BEST_FIT_LINE_COLOR: {
-      BASE_COLOR: 'rgb( 0, 0, 255)',
+      BASE_COLOR: 'rgb( 255, 0 ,0)',
       RESIDUAL_COLOR: 'rgb( 178, 21, 27)',
       SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4)',
       SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59)'
@@ -62,6 +62,7 @@ define( function( require ) {
     MINOR_GRID_STROKE_COLOR: 'rgb(218,218,218)',
 
     TEXT_FONT: new PhetFont( {size: 14} ),
+    PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 16, weight: 'bold'} ),
     CHECK_BOX_TEXT_FONT: new PhetFont( {size: 12} ),
     MAJOR_TICK_FONT: new PhetFont( {size: 12} ),
     SUM_RESIDUALS_FONT: new PhetFont( {size: 12} ),

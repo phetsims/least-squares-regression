@@ -33,7 +33,7 @@ define( function( require ) {
 
     this.graph = graph;
 
-    this.equationText = new Text( 'r = -0.000', {font: LSRConstants.TEXT_FONT_BOLD} );
+    this.equationText = new Text( 'r = -0.000', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
 
     var mutableEquationText = new Panel( this.equationText, {
       fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
