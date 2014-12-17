@@ -14,6 +14,9 @@ define( function( require ) {
   // var Bounds2 = require( 'DOT/Bounds2' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
+  var MY_LINE_COLOR = {};
+  var BEST_FIT_LINE_COLOR = {};
+
   return {
     // Layout bounds used throughout the simulation for laying out the screens.
     PERIMETER_DARKEN_FACTOR: 0.6, // The amount that the perimeter colors are darkened from the main dataPoint color
@@ -21,21 +24,26 @@ define( function( require ) {
     // Velocity at which animated elements move
     ANIMATION_VELOCITY: 2,
 
-    // Various other constants
     BACKGROUND_COLOR: 'rgb( 236,255,245 )',
     GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',
 
     LINE_WIDTH: 2,
+    RESIDUAL_LINE_WIDTH: 2,
 
-    MY_LINE_COLOR: 'rgb( 0, 0, 255)',
-    MY_LINE_RESIDUAL_COLOR: 'rgb( 110, 92, 231)',
-    MY_LINE_SQUARED_RESIDUAL_COLOR: 'rgba( 154, 150, 255, 0.4)',
-    MY_LINE_SUM_OF_SQUARES_COLOR: 'rgb( 154, 150, 255)',
 
-    BEST_FIT_LINE_COLOR: 'rgb( 178, 21, 27)',
-    BEST_FIT_LINE_RESIDUAL_COLOR: 'rgb( 178, 21, 27)',
-    BEST_FIT_LINE_SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4)',
-    BEST_FIT_LINE_SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59)',
+    MY_LINE_COLOR: {
+      BASE_COLOR: 'rgb( 0, 0, 255)',
+      RESIDUAL_COLOR: 'rgb( 110, 92, 231)',
+      SQUARED_RESIDUAL_COLOR: 'rgba( 154, 150, 255, 0.4)',
+      SUM_OF_SQUARES_COLOR: 'rgb( 154, 150, 255)'
+    },
+
+    BEST_FIT_LINE_COLOR: {
+      BASE_COLOR: 'rgb( 0, 0, 255)',
+      RESIDUAL_COLOR: 'rgb( 178, 21, 27)',
+      SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4)',
+      SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59)'
+    },
 
     // movable data points (and points in bucket)
     DYNAMIC_DATA_POINT_RADIUS: 7,

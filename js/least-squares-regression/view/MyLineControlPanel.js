@@ -63,7 +63,12 @@ define( function( require ) {
         new VerticalSlider( bString, new Dimension2( 1, 120 ), graph.interceptProperty, sliderInterceptRange )]
     } );
 
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart( graph, dataPoints, graph.getMyLineSumOfSquaredResiduals.bind( graph ), LSRConstants.MY_LINE_SQUARED_RESIDUAL_COLOR, graph.myLineSquaredResidualsVisibleProperty );
+    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
+      graph,
+      dataPoints,
+      graph.getMyLineSumOfSquaredResiduals.bind( graph ),
+      LSRConstants.MY_LINE_COLOR.SQUARED_RESIDUAL_COLOR,
+      graph.myLineSquaredResidualsVisibleProperty );
 
     graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
