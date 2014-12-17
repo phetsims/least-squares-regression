@@ -6,23 +6,15 @@ define( function( require ) {
   // modules
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
-  // var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var Range = require( 'DOT/Range' );
-
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
-  //var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
-  // var Util = require( 'DOT/Util' );
-  // var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
   var sumString = require( 'string!LEAST_SQUARES_REGRESSION/sum' );
-
-  // var pattern_0sign_1intercept = " {0}{1} ";
 
   // constants
   var ARROW_LENGTH = 120;
@@ -31,7 +23,7 @@ define( function( require ) {
   var RECTANGLE_BAROMETER_HEIGHT = 10;
   var LINE_WIDTH = 1;
   var LINE_COLOR = 'black';
-  var FONT = new PhetFont( 12 );
+  var FONT = LSRConstants.SUM_RESIDUALS_FONT;
 
   /**
    * @param {Graph} model of graph
@@ -45,7 +37,7 @@ define( function( require ) {
 
     Node.call( this );
 
-    // the barometer is on its side
+    // the barometer chart is on its side
     var width = getSumOfSquaredResiduals();
 
     var rectangleBarometer = new Rectangle( 0, 0, width, RECTANGLE_BAROMETER_HEIGHT, {
@@ -54,11 +46,11 @@ define( function( require ) {
       left: LINE_WIDTH / 2
     } );
 
-    //
+    // create the chart
     var horizontalArrow = new ArrowNode( 0, 0, ARROW_LENGTH, 0, {tailWidth: LINE_WIDTH, headWidth: ARROW_HEAD_WIDTH, headHeight: ARROW_HEAD_HEIGHT} );
     var verticalLine = new Line( 0, 0, 0, -2 * RECTANGLE_BAROMETER_HEIGHT, {lineWidth: LINE_WIDTH, stroke: LINE_COLOR} );
 
-    // text for the
+    // text for the chart
     var label = new Text( sumString, {font: FONT, centerX: horizontalArrow.centerX, top: horizontalArrow.bottom + 5} );
     var zeroLabel = new Text( '0', {font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5} );
 

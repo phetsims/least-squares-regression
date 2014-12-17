@@ -25,6 +25,8 @@ define( function( require ) {
     BACKGROUND_COLOR: 'rgb( 236,255,245 )',
     GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',
 
+    LINE_WIDTH: 2,
+
     MY_LINE_COLOR: 'rgb( 0, 0, 255)',
     MY_LINE_RESIDUAL_COLOR: 'rgb( 110, 92, 231)',
     MY_LINE_SQUARED_RESIDUAL_COLOR: 'rgba( 154, 150, 255, 0.4)',
@@ -54,6 +56,7 @@ define( function( require ) {
     TEXT_FONT: new PhetFont( {size: 14} ),
     CHECK_BOX_TEXT_FONT: new PhetFont( {size: 12} ),
     MAJOR_TICK_FONT: new PhetFont( {size: 12} ),
+    SUM_RESIDUALS_FONT: new PhetFont( {size: 12} ),
     TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ),
 
     CONTROL_PANEL_CORNER_RADIUS: 10,
