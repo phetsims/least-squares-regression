@@ -172,7 +172,6 @@ define( function( require ) {
         bucketFront.visible = true;
         eraserButton.visible = true;
         backLayer.visible = true;
-        thisView.dataPointsLayer.pickable = true;
 
       }
       else {
@@ -180,7 +179,6 @@ define( function( require ) {
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
-        thisView.dataPointsLayer.pickable = false;
       }
 
 
