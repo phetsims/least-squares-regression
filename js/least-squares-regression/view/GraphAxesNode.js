@@ -397,17 +397,23 @@ define( function( require ) {
   /**
    * @param {Graph} graph
    * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<boolean>} showGridProperty
    * @constructor
    */
-  function GraphAxesNode( graph, modelViewTransform ) {
+  function GraphAxesNode( graph, modelViewTransform, showGridProperty ) {
 
-    //making its visibility available to the parent node.
-    this.gridNode = new GridNode( graph, modelViewTransform );
+    var gridNode = new GridNode( graph, modelViewTransform );
+    this.showGridPropertyObserver = function( visible ) {
+      gridNode.visible = visible;
+    };
+    this.showGridProperty = showGridProperty;
+
+    showGridProperty.link( this.showGridPropertyObserver );
 
     Node.call( this, {
         children: [
           new BackgroundNode( graph, modelViewTransform ),
-          this.gridNode,
+          gridNode,
           new XAxisNode( graph, modelViewTransform ),
           new YAxisNode( graph, modelViewTransform ),
           new XLabelNode( graph, modelViewTransform ),
@@ -417,6 +423,9 @@ define( function( require ) {
     );
   }
 
-  return inherit( Node, GraphAxesNode );
-} )
-;
+  return inherit( Node, GraphAxesNode, {
+    dispose: function() {
+      this.showGridProperty.unlink( this.showGridPropertyObserver );
+    }
+  } );
+} );

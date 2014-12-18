@@ -81,12 +81,12 @@ define( function( require ) {
     };
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
-    thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform );
+    var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
     thisView.addChild( bestFitLineControlPanel );
     thisView.addChild( myLineControlPanel );
-    thisView.addChild( thisView.graphAxesNode );
+    thisView.addChild( graphAxesNode );
     thisView.addChild( graphNode );
 
     // dataSet combo box
@@ -150,26 +150,22 @@ define( function( require ) {
 
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
-      if ( thisView.graphAxesNode ) {
-        thisView.removeChild( thisView.graphAxesNode );
+      if ( graphAxesNode ) {
+        thisView.removeChild( graphAxesNode );
       }
 
       thisView.graphbounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
       //  thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
 
       var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( thisView.graphbounds, viewGraphBounds );
-      thisView.graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes );
-      thisView.addChild( thisView.graphAxesNode );
-      thisView.graphAxesNode.moveToBack();
+      graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
+      thisView.addChild( graphAxesNode );
+      graphAxesNode.moveToBack();
+
       graphNode.update();
       pearsonCorrelationCoefficientNode.update();
       bestFitLineControlPanel.updateBestFitLineEquation();
 
-
-      // TODO; another hack
-      model.showGridProperty.link( function( visible ) {
-        thisView.graphAxesNode.gridNode.visible = visible;
-      } );
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketHole.visible = true;
