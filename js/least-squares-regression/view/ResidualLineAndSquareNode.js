@@ -61,6 +61,8 @@ define( function( require ) {
     this.lineResidual.clipArea = Shape.bounds( viewBounds );
     this.addChild( this.squareResidual );
     this.addChild( this.lineResidual );
+
+    //TODO: MEMORY LEAK ISSUE?
     lineVisibilityProperty.linkAttribute( this.lineResidual, 'visible' );
     squareVisibilityProperty.linkAttribute( this.squareResidual, 'visible' );
 
