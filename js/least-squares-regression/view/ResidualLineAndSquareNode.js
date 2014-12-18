@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that represents a residual Square in the view.
+ * Type that represents a residual Line and Square in the view.
  *
  * @author John Blanco
  * @author Martin Veillette (Berea College)
@@ -55,11 +55,10 @@ define( function( require ) {
     // however the square residual should not overlap with the y = m x + b line:
     var left = (residualProperty.value.isSquaredResidualToTheLeft) ? point1.x - width : point1.x;
 
-    this.squareResidual = new Rectangle( left, top, width, height, {fill: lineColor.SQUARED_RESIDUAL_COLOR} );
-    this.lineResidual = new Line( point1, point2, {stroke: lineColor.RESIDUAL_COLOR, lineWidth: LSRConstants.RESIDUAL_LINE_WIDTH} );
+    this.squareResidual = new Rectangle( left, top, width, height, {fill: lineColor.SQUARED_RESIDUAL_COLOR} ); //@private
+    this.lineResidual = new Line( point1, point2, {stroke: lineColor.RESIDUAL_COLOR, lineWidth: LSRConstants.RESIDUAL_LINE_WIDTH} ); //@private
     this.squareResidual.clipArea = Shape.bounds( viewBounds );
     this.lineResidual.clipArea = Shape.bounds( viewBounds );
-
     this.addChild( this.squareResidual );
     this.addChild( this.lineResidual );
     lineVisibilityProperty.linkAttribute( this.lineResidual, 'visible' );

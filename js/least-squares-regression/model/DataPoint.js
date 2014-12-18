@@ -3,7 +3,7 @@
  */
 
 /**
- * Type that defines a data point that can be moved by the user and placed on the graph.
+ * Type that defines a data point.
  *
  * @author John Blanco
  * @author Martin Veillette
