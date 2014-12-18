@@ -383,7 +383,6 @@ define( function( require ) {
     var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
       var modelX = tickXSeparation.startPositionTick + tickXSeparation.minorTickSpacing * j;
-      //TODO decide if we want to skip origin or implement a more roust version using small epsilon
       if ( modelX !== graph.xRange.min ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
         var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < SMALL_EPSILON;
