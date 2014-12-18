@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Model that defines data sets
+ * Model that defines data sets that are used to populate the comboBox
  *
  * @author Martin Veillette
  */
@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-  //var inherit = require( 'PHET_CORE/inherit' );
   var Range = require( 'DOT/Range' );
 
   /**
@@ -18,7 +17,7 @@ define( function( require ) {
    * @param {string} name
    * @param {Range} yRange
    * @param {Range} xRange
-   * @param {Array} dataXY - array of object of the form {x: x_1, y: y_1}
+   * @param {Array.<Object>} dataXY - array of object of the form {x: 2, y: 5}
    * @return {Object} dataSet
    */
   function createDataSet( name, yRange, xRange, dataXY ) {
