@@ -24,6 +24,7 @@ define( function( require ) {
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -70,8 +71,16 @@ define( function( require ) {
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
-    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints );
-    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints );
+    var panelOptions = {
+      resize: false,
+      cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
+      fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
+      align: 'left',
+      xMargin: 8,
+      yMargin: 5
+    };
+    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
+    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
     thisView.graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform );
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 

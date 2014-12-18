@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * A Scenery node that shows the Pearson correlation coefficient
+ * A Scenery node that shows the Pearson correlation coefficient in an equation form
  *
  *  Martin Veillette (Berea College)
  */
@@ -27,7 +27,7 @@ define( function( require ) {
 
   /**
    *
-   * @param graph
+   * @param {Graph} graph
    * @constructor
    */
   function PearsonCorrelationCoefficientNode( graph ) {
@@ -35,8 +35,11 @@ define( function( require ) {
     Node.call( this );
     this.graph = graph;
 
+
     var leftHandSideText = new Text( rEqualsString, {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
     this.rightHandSideText = new Text( '', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
+
+
     var rightHandSideMaxWidth = new Text( plusString + '0.00', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} ).width;
     var hStrut = new HStrut( rightHandSideMaxWidth );
 
@@ -67,17 +70,20 @@ define( function( require ) {
     },
 
     update: function() {
-      var rText;
+      var rValueString;
+      // check the existence of the rValue
       if ( this.graph.dataPointsOnGraph.length >= 2 ) {
         var rValue = this.graph.getPearsonCoefficientCorrelation();
         var isNegative = (rValue < 0);
         var signString = isNegative ? minusString : plusString;
-        rText = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
+        rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
       }
       else {
-        rText = '';
+        // set to null if the Pearson Coefficient does not exist
+        rValueString = '';
       }
-      this.rightHandSideText.text = rText;
+      // update the text on the right Hand side of the equation
+      this.rightHandSideText.text = rValueString;
     }
   } );
 } )

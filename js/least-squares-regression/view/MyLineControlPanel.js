@@ -34,8 +34,10 @@ define( function( require ) {
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
 
   /**
-   * {Model} model of the main simulation
-   * {Object} options
+   *
+   * @param {Graph} graph
+   * @param {Array.<DataPoint>} dataPoints
+   * @param {Object} [options]
    * @constructor
    */
   function MyLineControlPanel( graph, dataPoints, options ) {
@@ -53,8 +55,6 @@ define( function( require ) {
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.myLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, {font: LSRConstants.CHECK_BOX_TEXT_FONT}, graph.myLineShowSquaredResidualsProperty );
 
-    //   var sliderInterceptRange = new Range( 1.5 * graph.yRange.min - 0.5 * graph.yRange.max, 1.5 * graph.yRange.max - 0.5 * graph.yRange.min );
-    // TODO this is not robust, talk to AM
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10;
     var slidersBox = new HBox( {
@@ -107,16 +107,8 @@ define( function( require ) {
       ], align: 'left'
     } );
 
-    Panel.call( this, mainBox,
-      _.extend( {
-        resize: false,
-        cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
-        fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
-        align: 'left',
-        xMargin: 8,
-        yMargin: 5
-      }, options )
-    );
+    Panel.call( this, mainBox, options );
+
 
     graph.angleProperty.link( function( angle ) {
       var slope = graph.slope( angle );

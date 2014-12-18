@@ -28,13 +28,11 @@ define( function( require ) {
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
-  // constants
-//  var FONT = new PhetFont( 11 );
 
   /**
-   * {Graph} model of the graph
-   * {DataPoints} model of DataPoint
-   * {Object} options
+   * {Graph} graph - model of the graph
+   * {Array.<DataPoint>} dataPoints
+   * {Object} [options]
    * @constructor
    */
   function BestFitLineControlPanel( graph, dataPoints, options ) {
@@ -92,18 +90,11 @@ define( function( require ) {
       } ),
 
       _.extend( {
-        cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
-        fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
-
         buttonXMargin: 10,
         buttonYMargin: 6,
-
         expandedProperty: this.expandedProperty,
-        resize: false,
-
         titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
         titleXMargin: 0,
-
         contentXMargin: 8,
         contentYMargin: 5
       }, options ) );
@@ -112,18 +103,6 @@ define( function( require ) {
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
       addedDataPoint.positionProperty.link( function() {
-        //var linearFitParameters = graph.getLinearFit();
-        //if ( linearFitParameters !== null ) {
-        //  equationText.setSlopeText( linearFitParameters.slope * graph.slopeFactor );
-        //  equationText.setInterceptText( linearFitParameters.intercept * graph.interceptFactor );
-        //  if ( graph.bestFitLineVisibleProperty.value ) {
-        //    equationText.setToVisible();
-        //  }
-        //}
-        //else {
-        //  equationText.setToInvisible();
-        //}
-
         thisControlPanel.updateBestFitLineEquation();
       } );
     } );
