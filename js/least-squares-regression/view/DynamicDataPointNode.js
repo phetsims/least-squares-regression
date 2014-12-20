@@ -19,7 +19,7 @@ define( function( require ) {
 
   /**
    * @param {DataPoint} dataPoint
-   * @param {ModelViewTransform} modelViewTransform
+   * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
   function DynamicDataPointNode( dataPoint, modelViewTransform ) {
@@ -36,7 +36,6 @@ define( function( require ) {
 
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
     // this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
-
 
     // Add the listener that will allow the user to drag the dataPoint around.
     this.addInputListener( new SimpleDragHandler( {

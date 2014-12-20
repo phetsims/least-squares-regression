@@ -114,8 +114,6 @@ define( function( require ) {
     source: require( 'string!LEAST_SQUARES_REGRESSION/legStride.source' )
   };
 
-
-
   /**
    *
    * @param {string} name

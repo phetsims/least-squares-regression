@@ -1,5 +1,11 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
+/**
+ * A Scenery Node that represents a barometer chart of the sum of square residuals .
+ *
+ * @author Martin Veillette (Berea College)
+ */
+
 define( function( require ) {
   'use strict';
 
@@ -26,11 +32,11 @@ define( function( require ) {
   var FONT = LSRConstants.SUM_RESIDUALS_FONT;
 
   /**
-   * @param {Graph} model of graph
-   * @param {DataPoints} model of DataPoint
-   * @param {Function} sumOfSquaredResiduals
+   * @param {Graph} graph - model of a graph
+   * @param {Array.<DataPoint>} dataPoints - an array of DataPoint
+   * @param {Function} getSumOfSquaredResiduals
    * @param {Color} fillColor
-   * @param {Property<boolean>} visibleProperty
+   * @param {Property.<boolean>} visibleProperty
    * @constructor
    */
   function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, fillColor, visibleProperty ) {
@@ -53,7 +59,6 @@ define( function( require ) {
     // text for the chart
     var label = new Text( sumString, {font: FONT, centerX: horizontalArrow.centerX, top: horizontalArrow.bottom + 5} );
     var zeroLabel = new Text( '0', {font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5} );
-
 
     // the barometer width is adjustable
     // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
@@ -84,7 +89,6 @@ define( function( require ) {
 
     // controls the visibility of this node
     visibleProperty.linkAttribute( this, 'visible' );
-
 
     this.addChild( verticalLine );
     this.addChild( horizontalArrow );

@@ -3,7 +3,7 @@
 /**
  * A Scenery node that depicts a grid icon.
  *
- *  MArtin Veillette (Berea College)
+ *  Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';

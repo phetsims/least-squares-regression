@@ -4,6 +4,7 @@
  * Base type for graphs, displays a 2D grid and axes.
  *
  * @author Chris Malley (PixelZoom, Inc.)
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
@@ -41,7 +42,6 @@ define( function( require ) {
   var MAJOR_GRID_LINE_COLOR = LSRConstants.MAJOR_GRID_STROKE_COLOR;
   var MINOR_GRID_LINE_WIDTH = 0.35;
   var MINOR_GRID_LINE_COLOR = LSRConstants.MINOR_GRID_STROKE_COLOR;
-
 
   // axes
 
@@ -136,6 +136,11 @@ define( function( require ) {
   // Tick Spacing for major and minor ticks
   //--------------
 
+  /**
+   *
+   * @param {Range} range
+   * @constructor
+   */
   function tickSpacing( range ) {
     var width = range.max - range.min;
     var logOfWidth = Math.log10( width );

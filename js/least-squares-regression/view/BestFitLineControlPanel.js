@@ -3,6 +3,7 @@
 /**
  * Accordion Box Node in Least Squares Regression Simulation
  *
+ * @author Martin Veillette (Berea College)
  */
 
 define( function( require ) {
@@ -28,7 +29,6 @@ define( function( require ) {
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
-
   /**
    * {Graph} graph - model of the graph
    * {Array.<DataPoint>} dataPoints
@@ -42,7 +42,6 @@ define( function( require ) {
 
     // property of the accordion Box that control the expanded
     this.expandedProperty = new Property( false );
-
 
     var sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
       graph,

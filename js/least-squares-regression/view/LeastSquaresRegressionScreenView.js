@@ -1,6 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
+ * Main View for the simulation screen of Least Squares Regression.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -58,7 +59,8 @@ define( function( require ) {
   ];
 
   /**
-   * @param {LeastSquaresRegression}
+   * @param {LeastSquaresRegressionModel} model
+   * @constructor
    */
   function LeastSquaresRegressionScreenView( model ) {
 
@@ -91,7 +93,6 @@ define( function( require ) {
 
     // dataSet combo box
     var dataSetListParent = new Node();
-
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
     dataSetComboBox.centerX = viewGraphBounds.centerX;
     dataSetComboBox.top = 10;
@@ -137,7 +138,6 @@ define( function( require ) {
       }
     } );
 
-
     // pearson Correlation coefficient panel
     var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph );
     this.addChild( pearsonCorrelationCoefficientNode );
@@ -146,7 +146,6 @@ define( function( require ) {
     var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );
 
     this.addChild( gridCheckBox );
-
 
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
@@ -166,7 +165,6 @@ define( function( require ) {
       pearsonCorrelationCoefficientNode.update();
       bestFitLineControlPanel.updateBestFitLineEquation();
 
-
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketHole.visible = true;
         bucketFront.visible = true;
@@ -181,9 +179,7 @@ define( function( require ) {
         backLayer.visible = false;
       }
 
-
     } );
-
 
     // Handle the comings and goings of  dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
@@ -192,7 +188,6 @@ define( function( require ) {
         // Create and add the view representation for this dataPoint.
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         thisView.dataPointsLayer.addChild( dynamicDataPointNode );
-
 
         addedDataPoint.positionProperty.link( function() {
           graphNode.update();
@@ -263,9 +258,7 @@ define( function( require ) {
       pearsonCorrelationCoefficientNode.top = bestFitLineControlPanel.bottom + 40;
     }
 
-
   }
-
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView );
 } );

@@ -62,7 +62,6 @@ define( function( require ) {
     this.dataSets.push( DataSet.HEIGHT_SHOE );
     this.dataSets.push( DataSet.LEG_STRIDE );
 
-
     // Contains all information regarding the composition of the graph
     this.graph = new Graph(
       this.selectedDataSet.xRange,
@@ -77,7 +76,6 @@ define( function( require ) {
       size: BUCKET_SIZE,
       invertY: true
     } );
-
 
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
       thisModel.graph.reset();
@@ -110,13 +108,11 @@ define( function( require ) {
       this.graph.reset();
     },
 
-
     step: function( dt ) {
       this.dataPoints.forEach( function( dataPoint ) {
         dataPoint.step( dt );
       } );
     },
-
 
     /**
      * Function for adding new  dataPoints to this model when the user creates them, generally by clicking on some

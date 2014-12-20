@@ -1,9 +1,9 @@
-// Copyright 2002-2013, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
  * Combo box for choosing a dataSet.
  *
- * @author Chris Malley (PixelZoom, Inc.)
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
@@ -15,11 +15,9 @@ define( function( require ) {
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-
-
   /**
-   * @param {DataSet[]} dataSets
-   * @param {Property.<DataSet>} selectedDataSet
+   * @param {Array.<DataSet>} dataSets
+   * @param {Property.<DataSet>} selectedDataSetProperty
    * @param {Node} dataSetListParent
    * @constructor
    */

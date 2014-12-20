@@ -3,9 +3,10 @@
  */
 
 /**
- * A Scenery node that can be clicked upon to create new  dataPoints in the model.
+ * A Scenery node that can be clicked upon to create new dataPoints in the model.
  *
  * @author John Blanco
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
@@ -21,7 +22,7 @@ define( function( require ) {
 
   /**
    * @param {Function} addDataPointToModel - A function for adding the created dataPoint to the model
-   * @param {ModelViewTransform} modelViewTransform
+   * @param {ModelViewTransform2} modelViewTransform
    * @param {Object} [options]
    * @constructor
    */

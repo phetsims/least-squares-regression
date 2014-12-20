@@ -87,7 +87,6 @@ define( function( require ) {
       // the line residual should not show outside the graph.
       this.lineResidual.clipArea = Shape.bounds( this.viewBounds );
 
-
       // update square residual
 
       var top = Math.min( point1.y, point2.y );

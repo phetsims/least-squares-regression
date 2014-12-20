@@ -35,10 +35,8 @@ define( function( require ) {
     Node.call( this );
     this.graph = graph;
 
-
     var leftHandSideText = new Text( rEqualsString, {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
     this.rightHandSideText = new Text( '', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} );
-
 
     var rightHandSideMaxWidth = new Text( plusString + '0.00', {font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT} ).width;
     var hStrut = new HStrut( rightHandSideMaxWidth );

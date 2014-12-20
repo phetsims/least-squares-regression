@@ -18,7 +18,7 @@ define( function( require ) {
 
   /**
    * @param {DataPoint} dataPoint
-   * @param {ModelViewTransform} modelViewTransform
+   * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
   function StaticDataPointNode( dataPoint, modelViewTransform ) {

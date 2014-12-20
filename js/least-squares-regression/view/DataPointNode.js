@@ -14,10 +14,9 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
 
-
   /**
    * @param {DataPoint} dataPoint
-   * @param {ModelViewTransform} modelViewTransform
+   * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
   function DataPointNode( dataPoint, modelViewTransform ) {

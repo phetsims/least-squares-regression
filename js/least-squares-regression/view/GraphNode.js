@@ -1,10 +1,9 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * View representation of a Graph, which is a graph where points
- * can be placed.
+ * View representation of a Graph, which is a graph where points can be placed.
  *
- * @author John Blanco
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';
@@ -39,12 +38,10 @@ define( function( require ) {
     // get the two points form by the intersection of the line and the boundary of the graph
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
 
-
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
       {stroke: LSRConstants.MY_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH} );
-
 
     // set bestFitLine to zero length and then update it
     this.bestFitLine = new Line( 0, 0, 0, 0, {stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH} );
@@ -133,7 +130,6 @@ define( function( require ) {
     update: function() {
       this.updateBestFitLine();
     },
-
 
     updateBestFitLine: function() {
       var linearFitParameters = this.graph.getLinearFit();

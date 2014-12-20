@@ -1,8 +1,9 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Combo Box
+ * Scenery Node representing a Control Panel with check Boxes and Sliders that controls properties of My Line
  *
+ * @author Martin Veillette (Berea College)
  */
 
 define( function( require ) {
@@ -108,7 +109,6 @@ define( function( require ) {
     } );
 
     Panel.call( this, mainBox, options );
-
 
     graph.angleProperty.link( function( angle ) {
       var slope = graph.slope( angle );

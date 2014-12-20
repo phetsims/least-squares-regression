@@ -6,6 +6,7 @@
  * Type that defines a residual and a square residual.
  *
  * @author John Blanco
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';

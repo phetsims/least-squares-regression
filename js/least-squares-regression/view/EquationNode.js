@@ -1,8 +1,9 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Equation Node that renders a text node of a linear equation y= mx +b
+ * Equation Node that renders a text node of a linear equation of the form y = m x + b where m and b are numerical values
  *
+ * @author Martin Veillette (Berea College)
  */
 
 define( function( require ) {

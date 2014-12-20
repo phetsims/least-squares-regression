@@ -96,7 +96,6 @@ define( function( require ) {
       this.interceptFactor = (yRange.max - yRange.min);
     },
 
-
     update: function() {
       this.updateMyLineResiduals();
       if ( this.dataPointsOnGraph.length > 1 ) {
