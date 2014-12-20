@@ -221,7 +221,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.TEMPERATURE_LATITUDE = createDataSet( heightShoe, new Range( 0, 80 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_LATITUDE = createDataSet( temperatureLatitude, new Range( 0, 80 ), new Range( 0, 60 ),
     [
       {x: 31.2, y: 44},
       {x: 32.9, y: 38},
