@@ -70,7 +70,12 @@ define( function( require ) {
    */
   function LeastSquaresRegressionScreenView( model ) {
 
+
+    //var DEFAULT_LAYOUT_BOUNDS = new Bounds2( 0, 0, 768, 504 );
+    //var UPDATED_LAYOUT_BOUNDS = new Bounds2( 0, 0, 1024, 618 );
     ScreenView.call( this, {renderer: 'svg'} );
+    //this.layoutBounds = ScreenView.UPDATED_LAYOUT_BOUNDS.copy();
+    this.layoutBounds = new Bounds2( 0, 0, 768, 618 / 1024 * 768 );
     var thisView = this;
     var SIZE = 180;
     var OFFSET = 15;
