@@ -12,6 +12,110 @@ define( function( require ) {
   // modules
   var Range = require( 'DOT/Range' );
 
+  // strings
+  var custom = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/custom.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/custom.source' )
+  };
+
+  var temperatureLatitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.source' )
+  };
+
+  var temperatureLongitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.source' )
+  };
+
+  var spendingSalary = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.source' )
+  };
+
+  var wageYear = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.source' )
+  };
+
+  var mortalityYear = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.source' )
+  };
+
+  var userYear = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/userYear.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/userYear.source' )
+  };
+
+  var gasolineYear = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.source' )
+  };
+  var lifeTV = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.source' )
+  };
+  var speedDistance = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.source' )
+  };
+  var temperatureChirp = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.source' )
+  };
+
+  var heightShoe = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.source' )
+  };
+
+  var legStride = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/legStride.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/legStride.source' )
+  };
+
+
+
   /**
    *
    * @param {string} name
@@ -25,31 +129,37 @@ define( function( require ) {
       //name: name,
       yRange: yRange,
       xRange: xRange,
-      dataXY: dataXY
+      dataXY: dataXY,
+      //name : name,
+      name: name.graphTitle,
+      yAxisTitle: name.yAxisTitle,
+      xAxisTitle: name.xAxisTitle,
+      reference: name.reference,
+      source: name.source
     };
 
-    require( [
-        'string!LEAST_SQUARES_REGRESSION/' + name + '.graphTitle',
-        'string!LEAST_SQUARES_REGRESSION/' + name + '.yAxisTitle',
-        'string!LEAST_SQUARES_REGRESSION/' + name + '.xAxisTitle',
-        'string!LEAST_SQUARES_REGRESSION/' + name + '.reference',
-        'string!LEAST_SQUARES_REGRESSION/' + name + '.source'
-      ],
-      function( graphTitle, yAxisTitle, xAxisTitle, reference, source ) {
-        dataSet.name = graphTitle;
-        dataSet.yAxisTitle = yAxisTitle;
-        dataSet.xAxisTitle = xAxisTitle;
-        dataSet.reference = reference;
-        dataSet.source = source;
-      } );
+    //require( [
+    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.graphTitle',
+    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.yAxisTitle',
+    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.xAxisTitle',
+    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.reference',
+    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.source'
+    //  ],
+    //  function( graphTitle, yAxisTitle, xAxisTitle, reference, source ) {
+    //    dataSet.name = graphTitle;
+    //    dataSet.yAxisTitle = yAxisTitle;
+    //    dataSet.xAxisTitle = xAxisTitle;
+    //    dataSet.reference = reference;
+    //    dataSet.source = source;
+    //  } );
     return dataSet;
   }
 
   var DataSet = {};
 
-  DataSet.CUSTOM = createDataSet( 'custom', new Range( 0, 20 ), new Range( 0, 20 ), [] );
+  DataSet.CUSTOM = createDataSet( custom, new Range( 0, 20 ), new Range( 0, 20 ), [] );
 
-  DataSet.TEMPERATURE_LONGITUDE = createDataSet( 'temperatureLongitude', new Range( 0, 80 ), new Range( 0, 140 ),
+  DataSet.TEMPERATURE_LONGITUDE = createDataSet( temperatureLongitude, new Range( 0, 80 ), new Range( 0, 140 ),
     [
       {x: 88.5, y: 44},
       {x: 86.8, y: 38},
@@ -111,7 +221,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.TEMPERATURE_LATITUDE = createDataSet( 'temperatureLatitude', new Range( 0, 80 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_LATITUDE = createDataSet( heightShoe, new Range( 0, 80 ), new Range( 0, 60 ),
     [
       {x: 31.2, y: 44},
       {x: 32.9, y: 38},
@@ -172,7 +282,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.SPENDING_SALARY = createDataSet( 'spendingSalary', new Range( 0, 10 ), new Range( 0, 50 ),
+  DataSet.SPENDING_SALARY = createDataSet( spendingSalary, new Range( 0, 10 ), new Range( 0, 50 ),
     [
       {x: 19.583, y: 3.346},
       {x: 20.263, y: 3.114},
@@ -227,7 +337,7 @@ define( function( require ) {
       {x: 25.845, y: 3.766}
     ] );
 
-  DataSet.WAGE_YEAR = createDataSet( 'wageYear', new Range( 0, 8 ), new Range( 0, 60 ),
+  DataSet.WAGE_YEAR = createDataSet( wageYear, new Range( 0, 8 ), new Range( 0, 60 ),
     [
 
       {x: 0, y: 2.94},
@@ -293,7 +403,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.MORTALITY_YEAR = createDataSet( 'mortalityYear', new Range( 0, 500 ), new Range( 0, 40 ),
+  DataSet.MORTALITY_YEAR = createDataSet( mortalityYear, new Range( 0, 500 ), new Range( 0, 40 ),
     [
       {x: 1, y: 29},
       {x: 2, y: 62},
@@ -329,7 +439,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.USER_YEAR = createDataSet( 'userYear', new Range( 0, 2.1 ), new Range( 0, 20 ),
+  DataSet.USER_YEAR = createDataSet( userYear, new Range( 0, 2.1 ), new Range( 0, 20 ),
     [
       {x: 0, y: 0.002626964881},
       {x: 1, y: 0.004283257864},
@@ -356,7 +466,7 @@ define( function( require ) {
       //
     ] );
 
-  DataSet.GASOLINE_YEAR = createDataSet( 'gasolineYear', new Range( 0, 4 ), new Range( 0, 40 ),
+  DataSet.GASOLINE_YEAR = createDataSet( gasolineYear, new Range( 0, 4 ), new Range( 0, 40 ),
     [
       {x: 0, y: 0.73},
       {x: 1, y: 1.01},
@@ -396,7 +506,7 @@ define( function( require ) {
       {x: 35, y: 3.80}
     ] );
 
-  DataSet.LIFE_TV = createDataSet( 'lifeTV', new Range( 0, 80 ), new Range( 0, 600 ),
+  DataSet.LIFE_TV = createDataSet( lifeTV, new Range( 0, 80 ), new Range( 0, 600 ),
     [
       {x: 4, y: 70.5},
       {x: 315, y: 53.5},
@@ -438,7 +548,7 @@ define( function( require ) {
       {x: 29, y: 65}
     ] );
 
-  DataSet.SPEED_DISTANCE = createDataSet( 'speedDistance', new Range( 0, 50 ), new Range( 0, 30 ),
+  DataSet.SPEED_DISTANCE = createDataSet( speedDistance, new Range( 0, 50 ), new Range( 0, 30 ),
     [
       {x: 0.38709893, y: 47.8725},
       {x: 0.72333199, y: 35.0214},
@@ -450,7 +560,7 @@ define( function( require ) {
       {x: 30.06896348, y: 5.4778}
     ] );
 
-  DataSet.TEMPERATURE_CHIRP = createDataSet( 'temperatureChirp', new Range( 0, 100 ), new Range( 0, 20 ),
+  DataSet.TEMPERATURE_CHIRP = createDataSet( temperatureChirp, new Range( 0, 100 ), new Range( 0, 20 ),
     [
       {x: 20, y: 89},
       {x: 16, y: 72},
@@ -469,7 +579,7 @@ define( function( require ) {
       {x: 14, y: 76}
     ] );
 
-  DataSet.HEIGHT_SHOE = createDataSet( 'heightShoe', new Range( 0, 80 ), new Range( 0, 16 ),
+  DataSet.HEIGHT_SHOE = createDataSet( heightShoe, new Range( 0, 80 ), new Range( 0, 16 ),
     [
       {x: 5.5, y: 60},
       {x: 6, y: 60},
@@ -566,7 +676,7 @@ define( function( require ) {
       {x: 15, y: 81}
     ] );
 
-  DataSet.LEG_STRIDE = createDataSet( 'legStride', new Range( 0, 4 ), new Range( 0, 10 ),
+  DataSet.LEG_STRIDE = createDataSet( legStride, new Range( 0, 4 ), new Range( 0, 10 ),
     [] );
 
   return DataSet;
