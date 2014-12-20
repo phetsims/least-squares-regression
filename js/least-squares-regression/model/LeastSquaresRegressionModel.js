@@ -10,15 +10,13 @@ define( function( require ) {
 
   // modules
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
-  var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var Dimension2 = require( 'DOT/Dimension2' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
+  var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var ObservableArray = require( 'AXON/ObservableArray' );
   var PropertySet = require( 'AXON/PropertySet' );
-//  var Range = require( 'DOT/Range' );
-
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
 

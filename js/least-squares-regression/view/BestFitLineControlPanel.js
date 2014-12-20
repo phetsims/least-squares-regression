@@ -19,7 +19,6 @@ define( function( require ) {
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
-  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );

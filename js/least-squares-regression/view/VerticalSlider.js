@@ -1,8 +1,7 @@
-// Copyright 2002-2013, University of Colorado Boulder
+// Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Vertical sliders in the Molarity simulation.
- * Can be switched between qualitative and quantitative display of range and value.
+ * Vertical sliders in the simulation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
  */
