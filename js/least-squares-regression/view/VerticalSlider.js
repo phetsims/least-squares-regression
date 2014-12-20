@@ -141,7 +141,7 @@ define( function( require ) {
     // nodes
     var minNode = new Text( minLabel, {font: RANGE_FONT, fill: RANGE_COLOR} );
     var trackNode = new Track( trackSize, property, range );
-    var xMargin = 10, yMargin = 10, cornerRadius = 10;
+    var xMargin = 0, yMargin = 0, cornerRadius = 10;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
       {fill: new Color( 200, 200, 200, 0 )} );
     var tickNode = new Path( Shape.lineSegment( 5, 0, -5, 0 ),

@@ -43,11 +43,24 @@ define( function( require ) {
    */
   function MyLineControlPanel( graph, dataPoints, options ) {
 
-    var eqPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
+    var eqPartOneText = new Text( 'y =', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     var eqPartTwoText = new Text( aString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
-    var eqPartThreeText = new Text( ' x + ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
+    var eqPartThreeText = new Text( 'x +', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     var eqPartFourText = new Text( bString, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
-    var immutableEquationText = new HBox( {spacing: 3, children: [eqPartOneText, eqPartTwoText, eqPartThreeText, eqPartFourText]} );
+    var immutableEquationText = new Node( {
+      children: [
+        eqPartOneText,
+        eqPartTwoText,
+        eqPartThreeText,
+        eqPartFourText
+      ]
+    } );
+
+    eqPartTwoText.left = 40;
+    eqPartThreeText.left = 60;
+    eqPartFourText.left = 85;
+    //eqPartFiveText.left = 70;
+    //eqPartSixText.left = 80;
 
     var equationText = new EquationNode( graph.slope( graph.angle ), graph.intercept );
     var equationPanel = new Panel( equationText, {fill: 'white', cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS, resize: false} );
@@ -58,11 +71,14 @@ define( function( require ) {
 
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10;
-    var slidersBox = new HBox( {
-      spacing: 5, children: [
-        new VerticalSlider( aString, new Dimension2( 1, 120 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) ),
-        new VerticalSlider( bString, new Dimension2( 1, 120 ), graph.interceptProperty, sliderInterceptRange )]
-    } );
+
+
+    var aSlider = new VerticalSlider( aString, new Dimension2( 1, 140 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
+    var bSlider = new VerticalSlider( bString, new Dimension2( 1, 140 ), graph.interceptProperty, sliderInterceptRange );
+
+
+
+
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
       graph,
@@ -73,8 +89,10 @@ define( function( require ) {
 
     graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
-      slidersBox.opacity = enabled ? 1 : 0.3;
-      slidersBox.pickable = enabled ? true : false;
+      aSlider.opacity = enabled ? 1 : 0.3;
+      aSlider.pickable = enabled ? true : false;
+      bSlider.opacity = enabled ? 1 : 0.3;
+      bSlider.pickable = enabled ? true : false;
       equationPanel.opacity = enabled ? 1 : 0.3;
       immutableEquationText.opacity = enabled ? 1 : 0.3;
       residualsCheckBox.enabled = enabled;
@@ -85,7 +103,8 @@ define( function( require ) {
     var hStrut = new HStrut( 20 );
     rightAlignedPanel.addChild( equationPanel );
     rightAlignedPanel.addChild( immutableEquationText );
-    rightAlignedPanel.addChild( slidersBox );
+    rightAlignedPanel.addChild( aSlider );
+    rightAlignedPanel.addChild( bSlider );
 
     rightAlignedPanel.addChild( hStrut );
     equationPanel.left = hStrut.right;
@@ -93,8 +112,10 @@ define( function( require ) {
     immutableEquationText.top = equationPanel.bottom + 12;
 
     immutableEquationText.left = equationPanel.left + 5;
-    slidersBox.top = immutableEquationText.bottom + 5;
-    slidersBox.left = immutableEquationText.left + 11;
+    aSlider.top = immutableEquationText.bottom + 10;
+    bSlider.top = immutableEquationText.bottom + 10;
+    aSlider.centerX = immutableEquationText.left + eqPartTwoText.centerX;
+    bSlider.centerX = immutableEquationText.left + eqPartFourText.centerX;
     var mainBox = new VBox( {
       spacing: 5, children: [
         lineCheckBox,
