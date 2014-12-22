@@ -70,14 +70,11 @@ define( function( require ) {
    */
   function LeastSquaresRegressionScreenView( model ) {
 
-
-    //var DEFAULT_LAYOUT_BOUNDS = new Bounds2( 0, 0, 768, 504 );
-    //var UPDATED_LAYOUT_BOUNDS = new Bounds2( 0, 0, 1024, 618 );
     ScreenView.call( this, {renderer: 'svg'} );
-    //this.layoutBounds = ScreenView.UPDATED_LAYOUT_BOUNDS.copy();
-    this.layoutBounds = new Bounds2( 0, 0, 768, 618 / 1024 * 768 );
+    this.layoutBounds = ScreenView.UPDATED_LAYOUT_BOUNDS.copy();
+
     var thisView = this;
-    var SIZE = 180;
+    var SIZE = 230;
     var OFFSET = 15;
     var viewGraphBounds = new Bounds2( this.layoutBounds.centerX - SIZE + OFFSET, this.layoutBounds.centerY - SIZE, this.layoutBounds.centerX + SIZE + OFFSET, this.layoutBounds.centerY + SIZE );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
@@ -274,7 +271,8 @@ define( function( require ) {
     //Show the mock-up and a slider to change its transparency
     var mockupOpacityProperty = new Property( 0.02 );
     var image = new Image( mockupImage, {pickable: false} );
-    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
+    image.scale( this.layoutBounds.height / image.height );
+//    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
     mockupOpacityProperty.linkAttribute( image, 'opacity' );
     this.addChild( image );
     this.addChild( new HSlider( mockupOpacityProperty, {min: 0, max: 1}, {top: 10, left: -150} ) );

@@ -22,7 +22,7 @@ define( function( require ) {
 
   // constants
   var BUCKET_SIZE = new Dimension2( 90, 45 );
-  var BUCKET_POSITION = new Vector2( 100, 400 );
+  var BUCKET_POSITION = new Vector2( 100, 500 );
 
   /**
    * Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
