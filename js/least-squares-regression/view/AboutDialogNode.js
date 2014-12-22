@@ -13,10 +13,10 @@ define( function( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
+  //var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var VStrut = require( 'SUN/VStrut' );
+  //var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  //var VStrut = require( 'SUN/VStrut' );
   var Dialog = require( 'JOIST/Dialog' );
 
   /**

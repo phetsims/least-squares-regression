@@ -9,7 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
+
+  //var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -41,11 +42,14 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  //var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
   var mockupImage = require( 'image!LEAST_SQUARES_REGRESSION/mockup.png' );
+
+  // strings
+  var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
 
   // constants
   var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
@@ -110,9 +114,13 @@ define( function( require ) {
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
 
-    var textPushButton = new TextPushButton( new Text( '?' ) );
-    var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty );
+    var textPushButton = new TextPushButton( questionMarkString );
+    thisView.addChild( textPushButton );
 
+    //var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty );
+
+
+    //thisView.addChild( aboutDialogNode );
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -274,6 +282,8 @@ define( function( require ) {
       gridCheckBox.top = myLineControlPanel.bottom + 10;
       pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
       pearsonCorrelationCoefficientNode.centerY = viewGraphBounds.centerY;
+      textPushButton.centerY = dataSetComboBox.centerY;
+      textPushButton.left = dataSetComboBox.right + 10;
     }
 
     //Show the mock-up and a slider to change its transparency
