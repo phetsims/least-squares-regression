@@ -9,7 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-
   var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
@@ -73,7 +72,7 @@ define( function( require ) {
   function LeastSquaresRegressionScreenView( model ) {
 
     ScreenView.call( this, {renderer: 'svg'} );
-    this.layoutBounds = ScreenView.UPDATED_LAYOUT_BOUNDS.copy();
+    this.layoutBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.copy();
 
     var thisView = this;
     var SIZE = 240;
