@@ -13,7 +13,7 @@ define( function( require ) {
   var CheckBox = require( 'SUN/CheckBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
+  //var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
