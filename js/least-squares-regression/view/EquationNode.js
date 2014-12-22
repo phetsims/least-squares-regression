@@ -32,7 +32,7 @@ define( function( require ) {
   function EquationNode( slope, intercept ) {
     Node.call( this );
 
-    this.eqnPartOneText = new Text( 'y = ', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
+    this.eqnPartOneText = new Text( 'y =', {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     this.eqnPartTwoText = new Text( this.numberToString( slope ).optionalSign, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     this.eqnPartThreeText = new Text( this.numberToString( slope ).absoluteNumber, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     this.eqnPartFourText = new Text( 'x', {font: LSRConstants.TEXT_FONT, fill: 'black'} );

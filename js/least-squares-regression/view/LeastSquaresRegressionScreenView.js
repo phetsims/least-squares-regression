@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
 
+  var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -40,7 +41,8 @@ define( function( require ) {
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
-  // var Text = require( 'SCENERY/nodes/Text' );
+  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
@@ -107,6 +109,11 @@ define( function( require ) {
 
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
+
+
+    var textPushButton = new TextPushButton( new Text( '?' ) );
+    var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty );
+
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
