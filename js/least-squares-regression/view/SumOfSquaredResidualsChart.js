@@ -23,7 +23,7 @@ define( function( require ) {
   var sumString = require( 'string!LEAST_SQUARES_REGRESSION/sum' );
 
   // constants
-  var ARROW_LENGTH = 120;
+  var ARROW_LENGTH = 175;
   var ARROW_HEAD_WIDTH = 4;
   var ARROW_HEAD_HEIGHT = 6;
   var RECTANGLE_BAROMETER_HEIGHT = 10;

@@ -33,7 +33,7 @@ define( function( require ) {
 
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
-      itemYMargin: 4,
+      itemYMargin: 2,
       itemHighlightFill: LSRConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
       buttoncornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS

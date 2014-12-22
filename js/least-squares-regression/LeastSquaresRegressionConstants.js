@@ -58,12 +58,12 @@ define( function( require ) {
     MINOR_GRID_STROKE_COLOR: 'rgb(218,218,218)',
 
     // font sizes and weight
-    TEXT_FONT: new PhetFont( {size: 14} ), // default font for text
-    TEXT_FONT_BOLD: new PhetFont( {size: 14, weight: 'bold'} ), // default font for bold font
-    PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 16, weight: 'bold'} ),
-    CHECK_BOX_TEXT_FONT: new PhetFont( {size: 12} ),
-    MAJOR_TICK_FONT: new PhetFont( {size: 12} ),
-    SUM_RESIDUALS_FONT: new PhetFont( {size: 12} ),
+    TEXT_FONT: new PhetFont( {size: 16} ), // default font for text
+    TEXT_FONT_BOLD: new PhetFont( {size: 16, weight: 'bold'} ), // default font for bold font
+    PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 18, weight: 'bold'} ),
+    CHECK_BOX_TEXT_FONT: new PhetFont( {size: 14} ),
+    MAJOR_TICK_FONT: new PhetFont( {size: 14} ),
+    SUM_RESIDUALS_FONT: new PhetFont( {size: 14} ),
 
     // panels
     CONTROL_PANEL_CORNER_RADIUS: 10,

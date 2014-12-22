@@ -73,8 +73,8 @@ define( function( require ) {
     var maxSlope = 10;
 
 
-    var aSlider = new VerticalSlider( aString, new Dimension2( 1, 140 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
-    var bSlider = new VerticalSlider( bString, new Dimension2( 1, 140 ), graph.interceptProperty, sliderInterceptRange );
+    var aSlider = new VerticalSlider( aString, new Dimension2( 1, 190 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
+    var bSlider = new VerticalSlider( bString, new Dimension2( 1, 190 ), graph.interceptProperty, sliderInterceptRange );
 
 
 
@@ -117,7 +117,7 @@ define( function( require ) {
     aSlider.centerX = immutableEquationText.left + eqPartTwoText.centerX;
     bSlider.centerX = immutableEquationText.left + eqPartFourText.centerX;
     var mainBox = new VBox( {
-      spacing: 5, children: [
+      spacing: 10, children: [
         lineCheckBox,
         //equationPanel,
         //immutableEquationText,

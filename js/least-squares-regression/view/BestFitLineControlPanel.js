@@ -78,7 +78,7 @@ define( function( require ) {
     } );
 
     AccordionBox.call( this, new VBox( {
-        spacing: 5, children: [
+        spacing: 10, children: [
           lineCheckBox,
           new HBox( {children: [new HStrut( 20 ), equationPanel]} ),
           residualsCheckBox,
@@ -89,12 +89,12 @@ define( function( require ) {
 
       _.extend( {
         buttonXMargin: 10,
-        buttonYMargin: 6,
+        buttonYMargin: 10,
         expandedProperty: this.expandedProperty,
         titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
         titleXMargin: 0,
-        contentXMargin: 8,
-        contentYMargin: 5
+        contentXMargin: 10,
+        contentYMargin: 10
       }, options ) );
 
     // Handle the comings and goings of  dataPoints.

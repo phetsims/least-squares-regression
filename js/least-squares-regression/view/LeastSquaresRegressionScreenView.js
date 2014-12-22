@@ -74,8 +74,8 @@ define( function( require ) {
     this.layoutBounds = ScreenView.UPDATED_LAYOUT_BOUNDS.copy();
 
     var thisView = this;
-    var SIZE = 230;
-    var OFFSET = 15;
+    var SIZE = 240;
+    var OFFSET = 10;
     var viewGraphBounds = new Bounds2( this.layoutBounds.centerX - SIZE + OFFSET, this.layoutBounds.centerY - SIZE, this.layoutBounds.centerX + SIZE + OFFSET, this.layoutBounds.centerY + SIZE );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
@@ -87,8 +87,8 @@ define( function( require ) {
       cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
       fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
       align: 'left',
-      xMargin: 8,
-      yMargin: 5
+      xMargin: 10,
+      yMargin: 10
     };
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
@@ -104,8 +104,7 @@ define( function( require ) {
     // dataSet combo box
     var dataSetListParent = new Node();
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
-    dataSetComboBox.centerX = viewGraphBounds.centerX;
-    dataSetComboBox.top = 10;
+
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
@@ -140,6 +139,7 @@ define( function( require ) {
     var eraserButton = new EraserButton( {
       right: bucketFront.right - 3,
       top:   bucketFront.bottom + 5,
+      iconWidth: 25,
       listener: function() {
         model.dataPoints.forEach( function( dataPoint ) {
           dataPoint.animating = true;
@@ -259,13 +259,15 @@ define( function( require ) {
 
     {
       myLineControlPanel.right = thisView.layoutBounds.maxX - 10;
-      myLineControlPanel.top = 10;
-      bestFitLineControlPanel.left = 10;
-      bestFitLineControlPanel.top = 10;
+      myLineControlPanel.top = 20;
+      bestFitLineControlPanel.left = 15;
+      bestFitLineControlPanel.top = myLineControlPanel.top;
+      dataSetComboBox.centerX = viewGraphBounds.centerX;
+      dataSetComboBox.top = myLineControlPanel.top;
       gridCheckBox.left = myLineControlPanel.left + 10;
       gridCheckBox.top = myLineControlPanel.bottom + 10;
       pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
-      pearsonCorrelationCoefficientNode.top = bestFitLineControlPanel.bottom + 40;
+      pearsonCorrelationCoefficientNode.centerY = viewGraphBounds.centerY;
     }
 
     //Show the mock-up and a slider to change its transparency

@@ -39,7 +39,6 @@ define( function( require ) {
     this.eqnPartFiveText = new Text( this.numberToString( intercept ).sign, {font: LSRConstants.TEXT_FONT, fill: 'black'} );
     this.eqnPartSixText = new Text( this.numberToString( intercept ).absoluteNumber, {font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue'} );
     var mutableEquationText = new Node( {
-      spacing: 5,
       children: [
         this.eqnPartOneText,
         this.eqnPartTwoText,
@@ -50,11 +49,11 @@ define( function( require ) {
       ]
     } );
 
-    this.eqnPartTwoText.left = 20;
-    this.eqnPartThreeText.left = 29;
-    this.eqnPartFourText.left = 60;
-    this.eqnPartFiveText.left = 70;
-    this.eqnPartSixText.left = 80;
+    this.eqnPartTwoText.left = 23;
+    this.eqnPartThreeText.left = 32;
+    this.eqnPartFourText.left = 63;
+    this.eqnPartFiveText.left = 73;
+    this.eqnPartSixText.left = 83;
 
     this.addChild( mutableEquationText );
   }

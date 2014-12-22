@@ -28,7 +28,7 @@ define( function( require ) {
       // defaults
       columns: 4,
       rows: 4,
-      cellLength: 10,
+      cellLength: 12,
       gridStroke: LSRConstants.MAJOR_GRID_STROKE_COLOR,
       gridLineWidth: 1,
       gridFill: null
