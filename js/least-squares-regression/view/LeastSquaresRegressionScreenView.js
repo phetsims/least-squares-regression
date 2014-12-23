@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
 
-  //var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
+  var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -75,7 +75,7 @@ define( function( require ) {
    */
   function LeastSquaresRegressionScreenView( model ) {
 
-    ScreenView.call( this, {renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
+    ScreenView.call( this, {renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 )} );
 
     var thisView = this;
     var SIZE = 240;
@@ -85,7 +85,6 @@ define( function( require ) {
 
     thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
-
     var panelOptions = {
       resize: false,
       cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
@@ -94,6 +93,7 @@ define( function( require ) {
       xMargin: 10,
       yMargin: 10
     };
+
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
     var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
@@ -104,7 +104,6 @@ define( function( require ) {
     thisView.addChild( graphAxesNode );
     thisView.addChild( graphNode );
 
-
     // dataSet combo box
     var dataSetListParent = new Node();
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
@@ -112,13 +111,18 @@ define( function( require ) {
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
-
-    var textPushButton = new TextPushButton( questionMarkString );
+    var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty, this.layoutBounds );
+    //aboutDialogNode.visible=false;
+    var textPushButton = new TextPushButton( questionMarkString, {
+      baseColor: 'gray',
+      font: LSRConstants.TEXT_FONT_BOLD,
+      listener: function() {
+        //aboutDialogNode.visible=true;
+        aboutDialogNode.show();
+      }
+    } );
     thisView.addChild( textPushButton );
-
-    //var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty );
-
-
+    //TODO find a way to incorporate dialog without breaking the sim
     //thisView.addChild( aboutDialogNode );
 
     // Create the nodes that will be used to layer things visually.
