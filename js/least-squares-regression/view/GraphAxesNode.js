@@ -143,7 +143,7 @@ define( function( require ) {
    */
   function tickSpacing( range ) {
     var width = range.max - range.min;
-    var logOfWidth = Math.log10( width );
+    var logOfWidth = Math.log( width ) / Math.LN10; // polyfill for Math.log10(width)
     var exponent = Math.floor( logOfWidth ); // width = mantissa*10^exponent
     var mantissa = Math.pow( 10, logOfWidth - exponent );// mantissa  ranges from 1 to 10;
 
