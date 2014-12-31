@@ -1,7 +1,7 @@
 // Copyright 2002-2014, University of Colorado Boulder
 
 /**
- * Shows the About dialog.
+ * Shows a dialog box about the source and references of the selected Data Set.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -9,51 +9,59 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var VBox = require( 'SCENERY/nodes/VBox' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  //var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
+  var Dialog = require( 'JOIST/Dialog' );
+  var inherit = require( 'PHET_CORE/inherit' );
+
+  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   //var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  var Text = require( 'SCENERY/nodes/Text' );
+  var VBox = require( 'SCENERY/nodes/VBox' );
   var VStrut = require( 'SUN/VStrut' );
-  var Dialog = require( 'JOIST/Dialog' );
+
+  // strings
+  var sourceString = require( 'string!LEAST_SQUARES_REGRESSION/source' );
+  var colonPunctuationString = require( 'string!LEAST_SQUARES_REGRESSION/colonPunctuation' );
 
   /**
    * @param {Property.<DataSet>} selectedDataSetProperty
    * @param {Bounds2} layoutBounds
    * @constructor
    */
-  function AboutDialog( selectedDataSetProperty, layoutBounds ) {
+  function SourceAndReferenceNode( selectedDataSetProperty, layoutBounds ) {
     var dialog = this;
 
-    var referenceText = new Text( selectedDataSetProperty.value.reference, {font: new PhetFont( 16 )} );
-    var sourceText = new Text( selectedDataSetProperty.value.source, {font: new PhetFont( 12 )} );
-    var source2Text = new Text( 'CU', {font: new PhetFont( 12 )} );
+    var referenceText = new MultiLineText( '', {font: new PhetFont( 16 )} );
+    var sourceText = new Text( '', {font: new PhetFont( 14 )} );
+
     var children = [
       referenceText,
       new VStrut( 15 ),
-      sourceText,
-      source2Text
+      sourceText
     ];
 
-    selectedDataSetProperty.link( function( selectedDataSet ) {
-      referenceText.text = selectedDataSet.reference;
-      sourceText.text = selectedDataSet.source;
-    } );
+
 
 
     var content = new VBox( {align: 'left', spacing: 5, children: children} );
 
     Dialog.call( this, content, {
-      titleAlign: 'center',
+      //titleAlign: 'center',
       modal: true,
       hasCloseButton: true,
       layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
-        dialog.setScaleMagnitude( 1 );
-        dialog.center = layoutBounds.center;
+        dialog.setScaleMagnitude( scale );
+        dialog.centerX = layoutBounds.centerX;
+        dialog.centerY = layoutBounds.centerY;
       }
     } );
+
+    selectedDataSetProperty.link( function( selectedDataSet ) {
+      referenceText.text = selectedDataSet.reference;
+      sourceText.text = sourceString + colonPunctuationString + selectedDataSet.source;
+    } );
+
 
     // close it on a click
     this.addInputListener( new ButtonListener( {
@@ -75,5 +83,5 @@ define( function( require ) {
     } );
   }
 
-  return inherit( Dialog, AboutDialog );
+  return inherit( Dialog, SourceAndReferenceNode );
 } );

@@ -8,6 +8,8 @@
   "a": "a",
   "b": "b",
   "questionMark": "?",
+  "source": "Source",
+  "colonPunctuation": ":",
   "rEquals": "r =",
   "custom.graphTitle": "Custom",
   "custom.xAxisTitle": "X",

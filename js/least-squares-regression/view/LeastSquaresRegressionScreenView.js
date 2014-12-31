@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
 
-  var AboutDialogNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/AboutDialogNode' );
+  var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -111,19 +111,18 @@ define( function( require ) {
     thisView.addChild( dataSetComboBox );
     thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
-    var aboutDialogNode = new AboutDialogNode( model.selectedDataSetProperty, this.layoutBounds );
-    //aboutDialogNode.visible=false;
+    var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
     var textPushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
       font: LSRConstants.TEXT_FONT_BOLD,
       listener: function() {
-        //aboutDialogNode.visible=true;
-        aboutDialogNode.show();
+        sourceAndReferenceNode.show();
       }
     } );
+
     thisView.addChild( textPushButton );
     //TODO find a way to incorporate dialog without breaking the sim
-    //thisView.addChild( aboutDialogNode );
+
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -197,6 +196,7 @@ define( function( require ) {
         bucketFront.visible = true;
         eraserButton.visible = true;
         backLayer.visible = true;
+        textPushButton.visible = false;
 
       }
       else {
@@ -204,6 +204,7 @@ define( function( require ) {
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
+        textPushButton.visible = true;
       }
 
     } );
