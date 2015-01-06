@@ -51,9 +51,9 @@ define( function( require ) {
 
     this.eqnPartTwoText.left = 23;
     this.eqnPartThreeText.left = 32;
-    this.eqnPartFourText.left = 63;
-    this.eqnPartFiveText.left = 73;
-    this.eqnPartSixText.left = 83;
+    this.eqnPartFourText.left = 65;
+    this.eqnPartFiveText.left = 75;
+    this.eqnPartSixText.left = 87;
 
     this.addChild( mutableEquationText );
   }

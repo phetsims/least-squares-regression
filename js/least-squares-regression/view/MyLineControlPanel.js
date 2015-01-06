@@ -56,9 +56,9 @@ define( function( require ) {
       ]
     } );
 
-    eqPartTwoText.left = 40;
-    eqPartThreeText.left = 60;
-    eqPartFourText.left = 85;
+    eqPartTwoText.left = 42;
+    eqPartThreeText.left = 64;
+    eqPartFourText.left = 94;
     //eqPartFiveText.left = 70;
     //eqPartSixText.left = 80;
 
