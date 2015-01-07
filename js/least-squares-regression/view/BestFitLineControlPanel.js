@@ -77,6 +77,16 @@ define( function( require ) {
       squaredResidualsCheckBox.enabled = enabled;
     } );
 
+    var options = _.extend( {
+      buttonXMargin: 10,
+      buttonYMargin: 10,
+      expandedProperty: this.expandedProperty,
+      titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
+      titleXMargin: 0,
+      contentXMargin: 10,
+      contentYMargin: 10
+    }, options );
+
     AccordionBox.call( this, new VBox( {
         spacing: 10, children: [
           lineCheckBox,
@@ -87,15 +97,7 @@ define( function( require ) {
         ], align: 'left'
       } ),
 
-      _.extend( {
-        buttonXMargin: 10,
-        buttonYMargin: 10,
-        expandedProperty: this.expandedProperty,
-        titleNode: new Text( bestFitLineString, {font: LSRConstants.TEXT_FONT_BOLD} ),
-        titleXMargin: 0,
-        contentXMargin: 10,
-        contentYMargin: 10
-      }, options ) );
+      options );
 
     // Handle the comings and goings of  dataPoints.
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
@@ -103,6 +105,11 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         thisControlPanel.updateBestFitLineEquation();
       } );
+    } );
+
+    // the title of the Accordion Box  is set to invisible when the accordion Box is expanded
+    this.expandedProperty.link( function( expanded ) {
+      options.titleNode.visible = !expanded;
     } );
 
     this.equationText = equationText;
