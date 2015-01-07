@@ -106,13 +106,6 @@ define( function( require ) {
     source: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.source' )
   };
 
-  var legStride = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/legStride.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/legStride.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/legStride.source' )
-  };
 
   /**
    *
@@ -674,8 +667,6 @@ define( function( require ) {
       {x: 15, y: 81}
     ] );
 
-  DataSet.LEG_STRIDE = createDataSet( legStride, new Range( 0, 4 ), new Range( 0, 10 ),
-    [] );
 
   return DataSet;
 

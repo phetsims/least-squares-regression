@@ -58,7 +58,7 @@ define( function( require ) {
     this.dataSets.push( DataSet.SPEED_DISTANCE );
     this.dataSets.push( DataSet.TEMPERATURE_CHIRP );
     this.dataSets.push( DataSet.HEIGHT_SHOE );
-    this.dataSets.push( DataSet.LEG_STRIDE );
+
 
     // Contains all information regarding the composition of the graph
     this.graph = new Graph(
