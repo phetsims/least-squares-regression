@@ -115,10 +115,11 @@ define( function( require ) {
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
-    this.addChild( this.myLine );
-    this.addChild( this.bestFitLine );
+
     this.addChild( myLineResidualsLayer );
     this.addChild( bestFitLineResidualsLayer );
+    this.addChild( this.myLine );
+    this.addChild( this.bestFitLine );
 
   }
 
