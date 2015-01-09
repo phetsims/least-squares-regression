@@ -25,7 +25,7 @@ define( function( require ) {
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var HSlider = require( 'SUN/HSlider' );
+  //var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
@@ -34,8 +34,8 @@ define( function( require ) {
   var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
   // var Path = require( 'SCENERY/nodes/Path' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Image = require( 'SCENERY/nodes/Image' );
-  var Property = require( 'AXON/Property' );
+  //var Image = require( 'SCENERY/nodes/Image' );
+  //var Property = require( 'AXON/Property' );
   // var Range = require( 'DOT/Range' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
@@ -46,7 +46,7 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // images
-  var mockupImage = require( 'image!LEAST_SQUARES_REGRESSION/mockup.png' );
+  //var mockupImage = require( 'image!LEAST_SQUARES_REGRESSION/mockup.png' );
 
   // strings
   var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
@@ -83,7 +83,6 @@ define( function( require ) {
     var viewGraphBounds = new Bounds2( this.layoutBounds.centerX - SIZE + OFFSET, this.layoutBounds.centerY - SIZE, this.layoutBounds.centerX + SIZE + OFFSET, this.layoutBounds.centerY + SIZE );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
-    thisView.modelViewTransform = modelViewTransform; // Make the modelViewTransform available to descendant types.
 
     var panelOptions = {
       resize: false,
@@ -121,8 +120,6 @@ define( function( require ) {
     } );
 
     thisView.addChild( textPushButton );
-    //TODO find a way to incorporate dialog without breaking the sim
-
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
@@ -290,14 +287,14 @@ define( function( require ) {
       textPushButton.left = dataSetComboBox.right + 10;
     }
 
-    //Show the mock-up and a slider to change its transparency
-    var mockupOpacityProperty = new Property( 0.00 );
-    var image = new Image( mockupImage, {pickable: false} );
-    image.scale( this.layoutBounds.height / image.height );
-//    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
-    mockupOpacityProperty.linkAttribute( image, 'opacity' );
-    this.addChild( image );
-    this.addChild( new HSlider( mockupOpacityProperty, {min: 0, max: 1}, {top: 10, left: -150} ) );
+//    //Show the mock-up and a slider to change its transparency
+//    var mockupOpacityProperty = new Property( 0.00 );
+//    var image = new Image( mockupImage, {pickable: false} );
+//    image.scale( this.layoutBounds.height / image.height );
+////    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
+//    mockupOpacityProperty.linkAttribute( image, 'opacity' );
+//    this.addChild( image );
+//    this.addChild( new HSlider( mockupOpacityProperty, {min: 0, max: 1}, {top: 10, left: -150} ) );
 
 
   }
