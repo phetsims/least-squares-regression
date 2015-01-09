@@ -65,6 +65,9 @@ define( function( require ) {
     MAJOR_TICK_FONT: new PhetFont( {size: 14} ),
     SUM_RESIDUALS_FONT: new PhetFont( {size: 14} ),
 
+    REFERENCE_FONT: new PhetFont( {size: 16} ),
+    SOURCE_FONT: new PhetFont( {size: 14} ),
+
     // panels
     CONTROL_PANEL_CORNER_RADIUS: 10,
     SMALL_PANEL_CORNER_RADIUS: 5,

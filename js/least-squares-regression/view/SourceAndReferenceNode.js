@@ -12,13 +12,11 @@ define( function( require ) {
   var ButtonListener = require( 'SCENERY/input/ButtonListener' );
   var Dialog = require( 'JOIST/Dialog' );
   var inherit = require( 'PHET_CORE/inherit' );
-
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
-  var VStrut = require( 'SUN/VStrut' );
 
   // strings
   var sourceString = require( 'string!LEAST_SQUARES_REGRESSION/source' );
@@ -32,22 +30,17 @@ define( function( require ) {
   function SourceAndReferenceNode( selectedDataSetProperty, layoutBounds ) {
     var dialog = this;
 
-    var referenceText = new MultiLineText( '', {font: new PhetFont( 16 )} );
-    var sourceText = new Text( '', {font: new PhetFont( 14 )} );
+    var referenceText = new MultiLineText( '', {font: LSRConstants.REFERENCE_FONT, align: 'left'} );
+    var sourceText = new MultiLineText( '', {font: LSRConstants.SOURCE_FONT, align: 'left'} );
 
     var children = [
       referenceText,
-      new VStrut( 15 ),
       sourceText
     ];
 
-
-
-
-    var content = new VBox( {align: 'left', spacing: 5, children: children} );
+    var content = new VBox( {align: 'left', spacing: 20, children: children} );
 
     Dialog.call( this, content, {
-      //titleAlign: 'center',
       modal: true,
       hasCloseButton: true,
       layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
@@ -69,7 +62,7 @@ define( function( require ) {
     } ) );
 
     //TODO: The peer should not be in the DOM if the button is invisible
-    this.addPeer( '<input type="button" aria-label="Close About Dialog">', {
+    this.addPeer( '<input type="button" aria-label="Close Dialog">', {
       click: function() {
         dialog.hide();
       },
