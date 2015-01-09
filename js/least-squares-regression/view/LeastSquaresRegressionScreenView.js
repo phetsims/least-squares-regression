@@ -291,7 +291,7 @@ define( function( require ) {
     }
 
     //Show the mock-up and a slider to change its transparency
-    var mockupOpacityProperty = new Property( 0.02 );
+    var mockupOpacityProperty = new Property( 0.00 );
     var image = new Image( mockupImage, {pickable: false} );
     image.scale( this.layoutBounds.height / image.height );
 //    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
