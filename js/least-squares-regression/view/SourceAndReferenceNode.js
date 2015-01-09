@@ -14,8 +14,6 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  var Text = require( 'SCENERY/nodes/Text' );
   var VBox = require( 'SCENERY/nodes/VBox' );
 
   // strings
@@ -45,6 +43,11 @@ define( function( require ) {
       hasCloseButton: true,
       layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
         dialog.setScaleMagnitude( scale );
+        //TODO this is not kosher. find a better way to layout the sim
+        // simBounds is window.phet.sim.bounds
+        //  which is set to null in Sim()
+        // similar issue with screenBounds
+
         dialog.centerX = layoutBounds.centerX;
         dialog.centerY = layoutBounds.centerY;
       }
