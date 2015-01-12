@@ -22,7 +22,7 @@ define( function( require ) {
 
   /**
    *
-   * @param {Property.<Residual>}residualProperty
+   * @param {Property.<Residual>} residualProperty
    * @param {Color} lineColor
    * @param {Bounds2} viewBounds
    * @param {ModelViewTransform2} modelViewTransform
