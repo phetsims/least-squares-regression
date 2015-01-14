@@ -72,13 +72,8 @@ define( function( require ) {
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10;
 
-
-    var aSlider = new VerticalSlider( aString, new Dimension2( 1, 190 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
-    var bSlider = new VerticalSlider( bString, new Dimension2( 1, 190 ), graph.interceptProperty, sliderInterceptRange );
-
-
-
-
+    var aSlider = new VerticalSlider( aString, new Dimension2( 3, 190 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
+    var bSlider = new VerticalSlider( bString, new Dimension2( 3, 190 ), graph.interceptProperty, sliderInterceptRange );
 
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
       graph,
