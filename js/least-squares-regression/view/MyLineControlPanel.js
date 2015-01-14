@@ -79,7 +79,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
-      LSRConstants.MY_LINE_COLOR.SQUARED_RESIDUAL_COLOR,
+      LSRConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.myLineSquaredResidualsVisibleProperty );
 
     graph.myLineVisibleProperty.link( function( enabled ) {

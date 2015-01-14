@@ -60,7 +60,7 @@ define( function( require ) {
     // font sizes and weight
     TEXT_FONT: new PhetFont( {size: 16} ), // default font for text
     TEXT_FONT_BOLD: new PhetFont( {size: 16, weight: 'bold'} ), // default font for bold font
-    PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 18, weight: 'bold'} ),
+    PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( {size: 20, weight: 'bold'} ),
     CHECK_BOX_TEXT_FONT: new PhetFont( {size: 14} ),
     MAJOR_TICK_FONT: new PhetFont( {size: 14} ),
     SUM_RESIDUALS_FONT: new PhetFont( {size: 14} ),
