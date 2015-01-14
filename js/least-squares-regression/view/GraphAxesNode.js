@@ -11,11 +11,13 @@ define( function( require ) {
 
   // modules
 
+  //var ABSwitch = require( 'SUN/ABSwitch' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
+  //var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -173,7 +175,7 @@ define( function( require ) {
     var startPositionTick = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing;
     var stopPositionTick = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing;
     var numberOfTicks = (stopPositionTick - startPositionTick) / minorTickSpacing + 1;
-    var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log10( majorTickSpacing ) + 1;
+    var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1;
 
     var tickSeparation = {
       majorTickSpacing: majorTickSpacing,
@@ -192,17 +194,17 @@ define( function( require ) {
   //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function XAxisNode( graph, modelViewTransform ) {
+  function XAxisNode( dataSet, modelViewTransform ) {
 
     Node.call( this );
 
     // horizontal line
-    var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( graph.yRange.min ) );
-    var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( graph.yRange.min ) );
+    var tailLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
+    var tipLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
       stroke: 'black'
@@ -210,13 +212,13 @@ define( function( require ) {
     this.addChild( lineNode );
 
     // ticks
-    var tickSeparation = tickSpacing( graph.xRange );
+    var tickSeparation = tickSpacing( dataSet.xRange );
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
       var x = modelViewTransform.modelToViewX( modelX );
-      var y = modelViewTransform.modelToViewY( graph.yRange.min );
+      var y = modelViewTransform.modelToViewY( dataSet.yRange.min );
 
       if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
@@ -232,22 +234,22 @@ define( function( require ) {
 
   inherit( Node, XAxisNode );
 
-  //----------------------------------------------------------------------------------------
-  // y-axis (vertical)
-  //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//   y-axis (vertical)
+//----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function YAxisNode( graph, modelViewTransform ) {
+  function YAxisNode( dataSet, modelViewTransform ) {
 
     Node.call( this );
 
     // vertical line
-    var tailLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.min - AXIS_EXTENT ) );
-    var tipLocation = new Vector2( modelViewTransform.modelToViewX( graph.xRange.min ), modelViewTransform.modelToViewY( graph.yRange.max + AXIS_EXTENT ) );
+    var tailLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.min - AXIS_EXTENT ) );
+    var tipLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.max + AXIS_EXTENT ) );
     var lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
       fill: AXIS_COLOR,
       stroke: 'black'
@@ -256,13 +258,13 @@ define( function( require ) {
 
     // ticks
 
-    var tickSeparation = tickSpacing( graph.yRange );
+    var tickSeparation = tickSpacing( dataSet.yRange );
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
       var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
 
-      var x = modelViewTransform.modelToViewX( graph.xRange.min );
+      var x = modelViewTransform.modelToViewX( dataSet.xRange.min );
       var y = modelViewTransform.modelToViewY( modelY );
       if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
@@ -278,43 +280,43 @@ define( function( require ) {
 
   inherit( Node, YAxisNode );
 
-  //----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 //  X label
 //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function XLabelNode( graph, modelViewTransform ) {
+  function XLabelNode( dataSet, modelViewTransform ) {
 
     Node.call( this );
 
-    var centerX = modelViewTransform.modelToViewX( (graph.xRange.min + graph.xRange.max) / 2 );
-    var bottom = modelViewTransform.modelToViewY( graph.yRange.min );
-    var xLabelNode = new Text( graph.xAxisTitle, {font: AXIS_LABEL_FONT, fill: AXIS_LABEL_COLOR, centerX: centerX, bottom: bottom + 50} );
+    var centerX = modelViewTransform.modelToViewX( (dataSet.xRange.min + dataSet.xRange.max) / 2 );
+    var bottom = modelViewTransform.modelToViewY( dataSet.yRange.min );
+    var xLabelNode = new Text( dataSet.xAxisTitle, {font: AXIS_LABEL_FONT, fill: AXIS_LABEL_COLOR, centerX: centerX, bottom: bottom + 50} );
     this.addChild( xLabelNode );
   }
 
   inherit( Node, XLabelNode );
 
-  //----------------------------------------------------------------------------------------
-//  X label
+//----------------------------------------------------------------------------------------
+//  Y label
 //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function YLabelNode( graph, modelViewTransform ) {
+  function YLabelNode( dataSet, modelViewTransform ) {
 
     Node.call( this );
 
-    var centerY = modelViewTransform.modelToViewY( (graph.yRange.min + graph.yRange.max) / 2 );
-    var left = modelViewTransform.modelToViewX( graph.xRange.min );
-    var yLabelNode = new Text( graph.yAxisTitle, {
+    var centerY = modelViewTransform.modelToViewY( (dataSet.yRange.min + dataSet.yRange.max) / 2 );
+    var left = modelViewTransform.modelToViewX( dataSet.xRange.min );
+    var yLabelNode = new Text( dataSet.yAxisTitle, {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
       centerY: centerY,
@@ -322,27 +324,37 @@ define( function( require ) {
       rotation: -Math.PI / 2
     } );
     this.addChild( yLabelNode );
+
+
+    //var labelA = new Text( 'C' );
+    //var labelB = new Text( 'F' );
+    //var property = new Property( false );
+    //var swit = new ABSwitch( property, false, labelA, true, labelB );
+    //swit.rotation= -Math.PI / 2;
+    //swit.bottom= yLabelNode.top;
+    //swit.centerX= yLabelNode.centerX;
+    //this.addChild( swit );
   }
 
   inherit( Node, YLabelNode );
 
-  //----------------------------------------------------------------------------------------
-// 2D Background
+//----------------------------------------------------------------------------------------
+//  2D Background
 //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function BackgroundNode( graph, modelViewTransform ) {
+  function BackgroundNode( dataSet, modelViewTransform ) {
     Node.call( this );
 
     var backgroundNode = new Rectangle(
-      modelViewTransform.modelToViewX( graph.xRange.min ),
-      modelViewTransform.modelToViewY( graph.yRange.max ),
-      modelViewTransform.modelToViewDeltaX( graph.xRange.getLength() ),
-      modelViewTransform.modelToViewDeltaY( -graph.yRange.getLength() ),
+      modelViewTransform.modelToViewX( dataSet.xRange.min ),
+      modelViewTransform.modelToViewY( dataSet.yRange.max ),
+      modelViewTransform.modelToViewDeltaX( dataSet.xRange.getLength() ),
+      modelViewTransform.modelToViewDeltaY( -dataSet.yRange.getLength() ),
       {fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE} );
     this.addChild( backgroundNode );
 
@@ -351,28 +363,28 @@ define( function( require ) {
   inherit( Node, BackgroundNode );
 
 //----------------------------------------------------------------------------------------
-// 2D grid
+//   2D grid
 //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function GridNode( graph, modelViewTransform ) {
+  function GridNode( dataSet, modelViewTransform ) {
     Node.call( this );
 
     // horizontal grid lines, one line for each unit of grid spacing
     var horizontalGridLinesNode = new Node();
     this.addChild( horizontalGridLinesNode );
-    var tickYSeparation = tickSpacing( graph.yRange );
+    var tickYSeparation = tickSpacing( dataSet.yRange );
     var numberOfHorizontalGridLines = tickYSeparation.numberOfTicks;
 
-    var minX = modelViewTransform.modelToViewX( graph.xRange.min );
-    var maxX = modelViewTransform.modelToViewX( graph.xRange.max );
+    var minX = modelViewTransform.modelToViewX( dataSet.xRange.min );
+    var maxX = modelViewTransform.modelToViewX( dataSet.xRange.max );
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
       var modelY = tickYSeparation.startPositionTick + tickYSeparation.minorTickSpacing * i;
-      if ( modelY !== graph.yRange.min ) { // skip origin, x axis will live here
+      if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
         var yOffset = modelViewTransform.modelToViewY( modelY );
         var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < SMALL_EPSILON;
         horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
@@ -382,13 +394,13 @@ define( function( require ) {
     // vertical grid lines, one line for each unit of grid spacing
     var verticalGridLinesNode = new Node();
     this.addChild( verticalGridLinesNode );
-    var tickXSeparation = tickSpacing( graph.xRange );
+    var tickXSeparation = tickSpacing( dataSet.xRange );
     var numberOfVerticalGridLines = tickXSeparation.numberOfTicks;
-    var minY = modelViewTransform.modelToViewY( graph.yRange.max ); // yes, swap min and max
-    var maxY = modelViewTransform.modelToViewY( graph.yRange.min );
+    var minY = modelViewTransform.modelToViewY( dataSet.yRange.max ); // yes, swap min and max
+    var maxY = modelViewTransform.modelToViewY( dataSet.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
       var modelX = tickXSeparation.startPositionTick + tickXSeparation.minorTickSpacing * j;
-      if ( modelX !== graph.xRange.min ) { // skip origin, y axis will live here
+      if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
         var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < SMALL_EPSILON;
         verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
@@ -400,14 +412,14 @@ define( function( require ) {
 //----------------------------------------------------------------------------------------
 
   /**
-   * @param {Graph} graph
+   * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Property.<boolean>} showGridProperty
    * @constructor
    */
-  function GraphAxesNode( graph, modelViewTransform, showGridProperty ) {
+  function GraphAxesNode( dataSet, modelViewTransform, showGridProperty ) {
 
-    var gridNode = new GridNode( graph, modelViewTransform );
+    var gridNode = new GridNode( dataSet, modelViewTransform );
     this.showGridPropertyObserver = function( visible ) {
       gridNode.visible = visible;
     };
@@ -417,12 +429,12 @@ define( function( require ) {
 
     Node.call( this, {
         children: [
-          new BackgroundNode( graph, modelViewTransform ),
+          new BackgroundNode( dataSet, modelViewTransform ),
           gridNode,
-          new XAxisNode( graph, modelViewTransform ),
-          new YAxisNode( graph, modelViewTransform ),
-          new XLabelNode( graph, modelViewTransform ),
-          new YLabelNode( graph, modelViewTransform )
+          new XAxisNode( dataSet, modelViewTransform ),
+          new YAxisNode( dataSet, modelViewTransform ),
+          new XLabelNode( dataSet, modelViewTransform ),
+          new YLabelNode( dataSet, modelViewTransform )
         ]
       }
     );
