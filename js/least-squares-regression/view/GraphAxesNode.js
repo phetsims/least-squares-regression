@@ -11,13 +11,11 @@ define( function( require ) {
 
   // modules
 
-  //var ABSwitch = require( 'SUN/ABSwitch' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
-  //var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -325,15 +323,6 @@ define( function( require ) {
     } );
     this.addChild( yLabelNode );
 
-
-    //var labelA = new Text( 'C' );
-    //var labelB = new Text( 'F' );
-    //var property = new Property( false );
-    //var swit = new ABSwitch( property, false, labelA, true, labelB );
-    //swit.rotation= -Math.PI / 2;
-    //swit.bottom= yLabelNode.top;
-    //swit.centerX= yLabelNode.centerX;
-    //this.addChild( swit );
   }
 
   inherit( Node, YLabelNode );
