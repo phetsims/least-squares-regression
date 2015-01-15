@@ -2,6 +2,8 @@
 
 /**
  * Model of a rectangular graph upon which various data points can be placed.
+ * The graph Model is responsible for generating all statistical quantities related to a dataPoint set for 'best Fit Line' and 'My Line'
+ * In addition, the associated Residuals (for 'My Line' and 'Best Fit Line') of the dataPoints are handled by graph model.
  *
  * @author John Blanco
  * @author Martin Veillette (Berea College)
@@ -93,8 +95,8 @@ define( function( require ) {
     setGraphDomain: function( xRange, yRange ) {
       this.xRange = xRange; // @public
       this.yRange = yRange; // @public
-      this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min);// @public
-      this.interceptFactor = (yRange.max - yRange.min); // @public
+      this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min) / (this.bounds.height / this.bounds.width);// @public
+      this.interceptFactor = (yRange.max - yRange.min) / this.bounds.height; // @public
     },
 
     /**
@@ -107,12 +109,11 @@ define( function( require ) {
       }
     },
     /**
-     * Convert the angle of a line (measured from  horizontal x axis) to a slope
+     * Convert the angle of a line (measured from the horizontal x axis) to a slope
      * @param {number} angle
      */
     slope: function( angle ) {
-      //TODO find a more robust way
-      return Math.tan( angle );
+      return Math.tan( angle ) * this.bounds.height / this.bounds.width;
     },
     /**
      * Add a 'My Line' model Residual to a dataPoint
