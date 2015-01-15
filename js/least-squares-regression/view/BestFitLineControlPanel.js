@@ -47,7 +47,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
-      LSRConstants.BEST_FIT_LINE_COLOR.SQUARED_RESIDUAL_COLOR,
+      LSRConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
