@@ -15,7 +15,6 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  // var Color = require( 'SCENERY/util/Color' );
   var CheckBox = require( 'SUN/CheckBox' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DynamicDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DynamicDataPointNode' );
@@ -26,29 +25,18 @@ define( function( require ) {
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
   var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  //var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
-  // var Path = require( 'SCENERY/nodes/Path' );
-  // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  // var Image = require( 'SCENERY/nodes/Image' );
-  // var Property = require( 'AXON/Property' );
-  // var Range = require( 'DOT/Range' );
-  // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  //var Text = require( 'SCENERY/nodes/Text' );
   var Vector2 = require( 'DOT/Vector2' );
-
-  // images
-  //var mockupImage = require( 'image!LEAST_SQUARES_REGRESSION/mockup.png' );
 
   // strings
   var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
@@ -70,7 +58,6 @@ define( function( require ) {
     new Vector2( 10, -3 ),
     new Vector2( 15, -7 ),
     new Vector2( 25, -4 )
-
   ];
 
   /**
@@ -129,10 +116,10 @@ define( function( require ) {
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
-//    Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
-//     all of the point placement graphs in the z-order.
-    //TODO ask JB if this could be a local variable instead
-    thisView.dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
+    // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
+    // all of the point placement graphs in the z-order.
+    // TODO ask JB if this is OK to be a local variable (performance issue ?)
+    var dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
     var bucketFrontLayer = new Node();
 
     // Add the bucket view elements
@@ -217,7 +204,7 @@ define( function( require ) {
       if ( model.selectedDataSet === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
-        thisView.dataPointsLayer.addChild( dynamicDataPointNode );
+        dataPointsLayer.addChild( dynamicDataPointNode );
 
         addedDataPoint.positionProperty.link( function() {
           graphNode.update();
@@ -227,8 +214,6 @@ define( function( require ) {
         // Move the dataPoint to the front of this layer when grabbed by the user.
         addedDataPoint.userControlledProperty.link( function( userControlled ) {
           if ( userControlled ) {
-            graphNode.update();
-            pearsonCorrelationCoefficientNode.update();
             dynamicDataPointNode.moveToFront();
           }
         } );
@@ -236,7 +221,7 @@ define( function( require ) {
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
-            thisView.dataPointsLayer.removeChild( dynamicDataPointNode );
+            dataPointsLayer.removeChild( dynamicDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
@@ -245,12 +230,12 @@ define( function( require ) {
       else {
         // Create and add the view representation for this dataPoint.
         var staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
-        thisView.dataPointsLayer.addChild( staticDataPointNode );
+        dataPointsLayer.addChild( staticDataPointNode );
 
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
-            thisView.dataPointsLayer.removeChild( staticDataPointNode );
+            dataPointsLayer.removeChild( staticDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
@@ -281,8 +266,9 @@ define( function( require ) {
     this.addChild( gridCheckBox );
     this.addChild( eraserButton );
     this.addChild( resetAllButton );
-    this.addChild( this.dataPointsLayer ); // after everything but dataSetLisParent
+    this.addChild( dataPointsLayer ); // after everything but dataSetLisParent
     this.addChild( dataSetListParent ); // last, so that dataSet box list is on top
+
 
     {
       myLineControlPanel.right = this.layoutBounds.maxX - 10;
@@ -298,17 +284,6 @@ define( function( require ) {
       sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;
       sourceAndReferencePushButton.left = dataSetComboBox.right + 10;
     }
-
-//    //Show the mock-up and a slider to change its transparency
-//    var mockupOpacityProperty = new Property( 0.00 );
-//    var image = new Image( mockupImage, {pickable: false} );
-//    image.scale( this.layoutBounds.height / image.height );
-////    image.scale( this.layoutBounds.width / image.width, this.layoutBounds.height / image.height );
-//    mockupOpacityProperty.linkAttribute( image, 'opacity' );
-//    this.addChild( image );
-//    this.addChild( new HSlider( mockupOpacityProperty, {min: 0, max: 1}, {top: 10, left: -150} ) );
-
-
   }
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView );
