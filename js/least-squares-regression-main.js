@@ -5,38 +5,38 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
-  'use strict';
+define(function (require) {
+    'use strict';
 
-  // modules
-  var LeastSquaresRegressionScreen = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionScreen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
+    // modules
+    var LeastSquaresRegressionScreen = require('LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionScreen');
+    var Sim = require('JOIST/Sim');
+    var SimLauncher = require('JOIST/SimLauncher');
 
-  // strings
-  var simTitle = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.name' );
+    // strings
+    var simTitle = require('string!LEAST_SQUARES_REGRESSION/least-squares-regression.name');
 
-  var simOptions = {
-    credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
-      leadDesign: '',
-      softwareDevelopment: '',
-      team: '',
-      qualityAssurance: '',
-      graphicArts: '',
-      thanks: ''
+    var simOptions = {
+        credits: {
+            //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
+            leadDesign: '',
+            softwareDevelopment: '',
+            team: '',
+            qualityAssurance: '',
+            graphicArts: '',
+            thanks: ''
+        }
+    };
+
+    // Appending '?dev' to the URL will enable developer-only features.
+    if (window.phetcommon.getQueryParameter('dev')) {
+        simOptions = _.extend({
+            // add dev-specific options here
+        }, simOptions);
     }
-  };
 
-  // Appending '?dev' to the URL will enable developer-only features.
-  if ( window.phetcommon.getQueryParameter( 'dev' ) ) {
-    simOptions = _.extend( {
-      // add dev-specific options here
-    }, simOptions );
-  }
-
-  SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [new LeastSquaresRegressionScreen()], simOptions );
-    sim.start();
-  } );
-} );
+    SimLauncher.launch(function () {
+        var sim = new Sim(simTitle, [new LeastSquaresRegressionScreen()], simOptions);
+        sim.start();
+    });
+});
