@@ -27,8 +27,8 @@ define( function( require ) {
   function Graph( xRange, yRange ) {
 
     PropertySet.call( this, {
-      angle: 0, // in radians,
-      intercept: 0, //
+      angle: 0, // in radians, a proxy for the 'my line' slope.
+      intercept: 0, // in units of the graph bounds
       myLineVisible: true, //associated Property of My Line CheckBox AND visibility of My Line on the graph
       bestFitLineVisible: false, ///associated Property of Best Fit Line CheckBox AND visibility of Best Fit Line on the graph
       myLineShowResiduals: false, //associated Property with Residuals of My Line
@@ -61,14 +61,8 @@ define( function( require ) {
         return bestFitLineVisible && bestFitLineShowSquaredResiduals;
       } );
 
-    // range of the x and y axis graph (in the model)
-    this.xRange = xRange;
-    this.yRange = yRange;
-    this.slopeFactor = (this.yRange.max - this.yRange.min) / (this.xRange.max - this.xRange.min);
-    this.interceptFactor = (this.yRange.max - this.yRange.min);
-    // bounds for the graph in model coordinates
-    //   this.bounds = new Bounds2( this.xRange.min, this.yRange.min, this.xRange.max, this.yRange.max );
-
+    // Bounds for the graph in model coordinates, it is a unit square. This remains the same for all DataSets
+    // @public read-only
     this.bounds = new Bounds2( 0, 0, 1, 1 );
 
     // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
@@ -78,6 +72,8 @@ define( function( require ) {
     // array of the dataPoints that are overlapping the graph.
     this.dataPointsOnGraph = [];
 
+    // set the domain of the graphs (for future use by the equation Node and the graph Axes)
+    this.setGraphDomain( xRange, yRange );
   }
 
   return inherit( PropertySet, Graph, {
@@ -89,30 +85,48 @@ define( function( require ) {
       this.bestFitLineResiduals.clear();
     },
 
+    /**
+     * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor for the slope and intercept
+     * @public
+     * @param {Range} xRange
+     * @param {Range} yRange
+     */
     setGraphDomain: function( xRange, yRange ) {
-      this.xRange = xRange;
-      this.yRange = yRange;
-      this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min);
-      this.interceptFactor = (yRange.max - yRange.min);
+      this.xRange = xRange; // @public
+      this.yRange = yRange; // @public
+      this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min);// @public
+      this.interceptFactor = (yRange.max - yRange.min); // @public
     },
 
+    /**
+     * Update the model Residuals for 'My Line" and 'Best Fit Line'
+     */
     update: function() {
       this.updateMyLineResiduals();
       if ( this.dataPointsOnGraph.length > 1 ) {
         this.updateBestFitLineResiduals();
       }
     },
-
+    /**
+     * Convert the angle of a line (measured from  horizontal x axis) to a slope
+     * @param {number} angle
+     */
     slope: function( angle ) {
       //TODO find a more robust way
       return Math.tan( angle );
     },
-
+    /**
+     * Add a 'My Line' model Residual to a dataPoint
+     * @param {DataPoint} dataPoint
+     */
     addMyLineResidual: function( dataPoint ) {
       var myLineResidual = new Residual( dataPoint, this.slope( this.angle ), this.intercept );
       this.myLineResiduals.push( new Property( myLineResidual ) );
     },
-
+    /**
+     * Add a 'Best Fit Line' model Residual to a dataPoint
+     * @param {DataPoint} dataPoint
+     */
     addBestFitLineResidual: function( dataPoint ) {
       //TODO : optimize linearFit Parameter so that it only loads on change
       var linearFitParameters = this.getLinearFit();
@@ -120,6 +134,10 @@ define( function( require ) {
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
     },
 
+    /*
+     * Remove the 'My Line' model Residual attached to a dataPoint
+     * @param {DataPoint} dataPoint
+     */
     removeMyLineResidual: function( dataPoint ) {
       var graph = this;
       var myLineResidualsCopy = this.myLineResiduals.getArray();
@@ -130,6 +148,10 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Remove a 'Best Fit Line' model Residual attached to a dataPoint
+     * @param {DataPoint} dataPoint
+     */
     removeBestFitLineResidual: function( dataPoint ) {
       var graph = this;
       var bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
@@ -140,6 +162,10 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Update a 'My Line' model residual attached to a particular dataPoint
+     * @param {DataPoint} dataPoint
+     */
     updateMyLineResidual: function( dataPoint ) {
       var graph = this;
       this.myLineResiduals.forEach( function( myLineResidualProperty ) {
@@ -149,6 +175,9 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Update all 'My Line' model Residuals
+     */
     updateMyLineResiduals: function() {
       var graph = this;
       this.myLineResiduals.forEach( function( residualProperty ) {
@@ -157,6 +186,9 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Update all 'My Best Fit Line' model Residuals
+     */
     updateBestFitLineResiduals: function() {
       var linearFitParameters = this.getLinearFit();
       this.bestFitLineResiduals.forEach( function( residualProperty ) {
@@ -164,7 +196,11 @@ define( function( require ) {
         residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
       } );
     },
-
+    /**
+     * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
+     * This is done for performance reason.
+     * @param {Array.<dataPoint>} dataPoints
+     */
     addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
       var thisGraph = this;
       // for performance reason one should add all the dataPoints on the graph
@@ -187,30 +223,44 @@ define( function( require ) {
 
     },
 
+    /**
+     * Function that returns true if the dataPoint is on the array.
+     * @param {DataPoint} dataPoint
+     * @returns {boolean}
+     */
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
       return (index !== -1);
     },
 
+    /**
+     * Function that determines if the Position of a Data Point is within the visual bounds of the graph,
+     * @param {Vector2} position
+     * @returns {boolean}
+     */
     isDataPointPositionOverlappingGraph: function( position ) {
       return this.bounds.containsPoint( position );
     },
 
+    /**
+     * Add the dataPoint top the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals
+     * @param {DataPoint} dataPoint
+     */
     addPointAndResiduals: function( dataPoint ) {
       var self = this;
 
       this.dataPointsOnGraph.push( dataPoint );
       this.addMyLineResidual( dataPoint );
 
-      // a BestFit line exists if there are two datapoints or more.
-      // if there is only one dataPoint on the graph, we dont add my bestFitLine residual
+      // a BestFit line exists if there are two dataPoints or more.
+      // if there is only one dataPoint on the graph, we don't add my bestFitLine residual
       // if there are exactly two data points on the graph we need to add two residuals
       if ( this.dataPointsOnGraph.length === 2 ) {
         this.dataPointsOnGraph.forEach( function( dataPoint ) {
           self.addBestFitLineResidual( dataPoint );
         } );
       }
-      // for two dataPoints or more there is one residual for every datapoint addded
+      // for two dataPoints or more there is one residual for every dataPoint added
       if ( this.dataPointsOnGraph.length > 2 ) {
         this.addBestFitLineResidual( dataPoint );
       }
@@ -221,6 +271,10 @@ define( function( require ) {
 
     },
 
+    /**
+     * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
+     * @param {DataPoint} dataPoint
+     */
     removePointAndResiduals: function( dataPoint ) {
       assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
@@ -243,6 +297,12 @@ define( function( require ) {
       this.bestFitLineResiduals.clear();
     },
 
+    /**
+     * Function that returns the sum of squared residuals of all the dataPoints on the list (compared with a line with a slope and intercept)
+     * @param {number} slope
+     * @param {number} intercept
+     * @returns {number} sumOfSquareResiduals
+     */
     sumOfSquaredResiduals: function( slope, intercept ) {
       var sumOfSquareResiduals = 0;
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
@@ -252,6 +312,11 @@ define( function( require ) {
       return sumOfSquareResiduals;
     },
 
+    /**
+     * Function that returns the sum of squared residuals of 'My Line
+     * The sum of squared residual is zero if there are less than one dataPoint on the graph.
+     * @returns {number} sumOfSquareResiduals
+     */
     getMyLineSumOfSquaredResiduals: function() {
       if ( this.dataPointsOnGraph.length >= 1 ) {
         return this.sumOfSquaredResiduals( this.slope( this.angle ), this.intercept );
@@ -261,6 +326,11 @@ define( function( require ) {
       }
     },
 
+    /**
+     * Function that returns the sum of squared residuals of 'Best Fit Line'
+     * The sum of squared residual is zero if there are less than two dataPoints on the graph.
+     * @returns {number} sumOfSquareResiduals
+     */
     getBestFitLineSumOfSquaredResiduals: function() {
       if ( this.dataPointsOnGraph.length >= 2 ) {
         var linearFitParameters = this.getLinearFit();
@@ -272,10 +342,10 @@ define( function( require ) {
     },
 
     /**
-     * Returns an array of two points that crosses the rectangular bounds of the graph
-     *
+     * Returns an array of two points that crosses the left and the right hand side of the graph bounds
      * @param {number} slope
      * @param {number} intercept
+     * @returns {{point1: Vector2, point2: Vector2}}
      */
     getBoundaryPoints: function( slope, intercept ) {
 
@@ -289,6 +359,9 @@ define( function( require ) {
       return boundaryPoints;
     },
 
+    /**
+     * Function that updates statistical properties of the dataPoints on the graph.
+     */
     getStatistics: function() {
 
       var dataPointArray = this.dataPointsOnGraph;
@@ -318,6 +391,11 @@ define( function( require ) {
       this.averageOfSumOfY = sumOfY / arrayLength;
     },
 
+    /**
+     * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
+     * The function returns null if there are less than two dataPoints on the graph.
+     * @returns {null||{slope: number,intercept: number}}
+     */
     getLinearFit: function() {
       if ( this.dataPointsOnGraph.length < 2 ) {
         return null;
@@ -339,6 +417,14 @@ define( function( require ) {
       }
     },
 
+    /**
+     * Function that returns the Pearson Coefficient Correlation
+     * It returns null if there are less than two dataPoints on the graph.
+     * FOr two dataPoints and more, the Pearson coefficient ranges from -1 to 1.
+     * Note that the Pearson Coefficient Correlation is an intrinsic property of a set of DataPoint
+     * See http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
+     * @returns {null||number}
+     */
     getPearsonCoefficientCorrelation: function() {
       if ( this.dataPointsOnGraph.length < 2 ) {
         return null;
