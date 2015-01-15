@@ -71,14 +71,18 @@ define( function( require ) {
     this.bestFitLineResiduals = new ObservableArray(); // @public
 
     // array of the dataPoints that are overlapping the graph.
-    this.dataPointsOnGraph = [];
+    this.dataPointsOnGraph = [];  // @public read-only
 
     // set the domain of the graphs (for future use by the equation Node and the graph Axes)
     this.setGraphDomain( xRange, yRange );
   }
 
   return inherit( PropertySet, Graph, {
-
+    /**
+     * Reset the graph model, reset the visibility of the lines and residuals.
+     * Empty out the two residual arrays and the dataPoints on Graph array
+     * @public
+     */
     reset: function() {
       PropertySet.prototype.reset.call( this );
       this.dataPointsOnGraph = [];
@@ -101,6 +105,7 @@ define( function( require ) {
 
     /**
      * Update the model Residuals for 'My Line" and 'Best Fit Line'
+     * @private
      */
     update: function() {
       this.updateMyLineResiduals();
@@ -110,6 +115,7 @@ define( function( require ) {
     },
     /**
      * Convert the angle of a line (measured from the horizontal x axis) to a slope
+     * @public read-only
      * @param {number} angle
      */
     slope: function( angle ) {
@@ -117,6 +123,7 @@ define( function( require ) {
     },
     /**
      * Add a 'My Line' model Residual to a dataPoint
+     * @private
      * @param {DataPoint} dataPoint
      */
     addMyLineResidual: function( dataPoint ) {
@@ -125,10 +132,10 @@ define( function( require ) {
     },
     /**
      * Add a 'Best Fit Line' model Residual to a dataPoint
+     * @private
      * @param {DataPoint} dataPoint
      */
     addBestFitLineResidual: function( dataPoint ) {
-      //TODO : optimize linearFit Parameter so that it only loads on change
       var linearFitParameters = this.getLinearFit();
       var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
@@ -136,6 +143,7 @@ define( function( require ) {
 
     /*
      * Remove the 'My Line' model Residual attached to a dataPoint
+     * @private
      * @param {DataPoint} dataPoint
      */
     removeMyLineResidual: function( dataPoint ) {
@@ -150,6 +158,7 @@ define( function( require ) {
 
     /**
      * Remove a 'Best Fit Line' model Residual attached to a dataPoint
+     * @private
      * @param {DataPoint} dataPoint
      */
     removeBestFitLineResidual: function( dataPoint ) {
@@ -163,20 +172,9 @@ define( function( require ) {
     },
 
     /**
-     * Update a 'My Line' model residual attached to a particular dataPoint
-     * @param {DataPoint} dataPoint
-     */
-    updateMyLineResidual: function( dataPoint ) {
-      var graph = this;
-      this.myLineResiduals.forEach( function( myLineResidualProperty ) {
-        if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
-          myLineResidualProperty.value = new Residual( dataPoint, graph.slope( graph.angle ), graph.intercept );
-        }
-      } );
-    },
-
-    /**
      * Update all 'My Line' model Residuals
+     * (Necessary to update when the slope and the intercept of 'My Line' are modified)
+     * @public
      */
     updateMyLineResiduals: function() {
       var graph = this;
@@ -188,6 +186,7 @@ define( function( require ) {
 
     /**
      * Update all 'My Best Fit Line' model Residuals
+     * @private
      */
     updateBestFitLineResiduals: function() {
       var linearFitParameters = this.getLinearFit();
@@ -199,6 +198,7 @@ define( function( require ) {
     /**
      * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
      * This is done for performance reason.
+     * @public (accessed by LeastSquareRegressionModel)
      * @param {Array.<dataPoint>} dataPoints
      */
     addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
@@ -225,6 +225,7 @@ define( function( require ) {
 
     /**
      * Function that returns true if the dataPoint is on the array.
+     * @private
      * @param {DataPoint} dataPoint
      * @returns {boolean}
      */
@@ -234,7 +235,8 @@ define( function( require ) {
     },
 
     /**
-     * Function that determines if the Position of a Data Point is within the visual bounds of the graph,
+     * Function that determines if the Position of a Data Point is within the visual bounds of the graph
+     * @private
      * @param {Vector2} position
      * @returns {boolean}
      */
@@ -244,6 +246,7 @@ define( function( require ) {
 
     /**
      * Add the dataPoint top the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals
+     * @public (accessed by LeastSquareRegressionModel)
      * @param {DataPoint} dataPoint
      */
     addPointAndResiduals: function( dataPoint ) {
@@ -273,6 +276,7 @@ define( function( require ) {
 
     /**
      * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
+     * @public (accessed by LeastSquareRegressionModel)
      * @param {DataPoint} dataPoint
      */
     removePointAndResiduals: function( dataPoint ) {
@@ -293,13 +297,17 @@ define( function( require ) {
       dataPoint.positionProperty.unlink( dataPoint.positionListener );
 
     },
-
+    /**
+     * Function that removes all the best Fit Line Residuals
+     * @private
+     */
     removeBestFitLineResiduals: function() {
       this.bestFitLineResiduals.clear();
     },
 
     /**
      * Function that returns the sum of squared residuals of all the dataPoints on the list (compared with a line with a slope and intercept)
+     * @private
      * @param {number} slope
      * @param {number} intercept
      * @returns {number} sumOfSquareResiduals
@@ -314,8 +322,9 @@ define( function( require ) {
     },
 
     /**
-     * Function that returns the sum of squared residuals of 'My Line
+     * Function that returns the sum of squared residuals of 'My Line'
      * The sum of squared residual is zero if there are less than one dataPoint on the graph.
+     * @public read-only
      * @returns {number} sumOfSquareResiduals
      */
     getMyLineSumOfSquaredResiduals: function() {
@@ -329,7 +338,8 @@ define( function( require ) {
 
     /**
      * Function that returns the sum of squared residuals of 'Best Fit Line'
-     * The sum of squared residual is zero if there are less than two dataPoints on the graph.
+     * The sum of squared residual is zero if there are less than two dataPoints on the graph
+     * @public read-only
      * @returns {number} sumOfSquareResiduals
      */
     getBestFitLineSumOfSquaredResiduals: function() {
@@ -344,6 +354,7 @@ define( function( require ) {
 
     /**
      * Returns an array of two points that crosses the left and the right hand side of the graph bounds
+     * @public read-only
      * @param {number} slope
      * @param {number} intercept
      * @returns {{point1: Vector2, point2: Vector2}}
@@ -362,6 +373,7 @@ define( function( require ) {
 
     /**
      * Function that updates statistical properties of the dataPoints on the graph.
+     * @private
      */
     getStatistics: function() {
 
@@ -395,6 +407,7 @@ define( function( require ) {
     /**
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
      * The function returns null if there are less than two dataPoints on the graph.
+     * @public read-only
      * @returns {null||{slope: number,intercept: number}}
      */
     getLinearFit: function() {
@@ -421,9 +434,10 @@ define( function( require ) {
     /**
      * Function that returns the Pearson Coefficient Correlation
      * It returns null if there are less than two dataPoints on the graph.
-     * FOr two dataPoints and more, the Pearson coefficient ranges from -1 to 1.
+     * For two dataPoints and more, the Pearson coefficient ranges from -1 to 1.
      * Note that the Pearson Coefficient Correlation is an intrinsic property of a set of DataPoint
      * See http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
+     * @public read-only
      * @returns {null||number}
      */
     getPearsonCoefficientCorrelation: function() {
