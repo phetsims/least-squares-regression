@@ -1,9 +1,9 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * Model that defines data sets that are used to populate the comboBox
  *
- * @author Martin Veillette
+ * @author Martin Veillette (Berea College)
  */
 
 define( function( require ) {
@@ -208,8 +208,6 @@ define( function( require ) {
       {x: 90.2, y: 9},
       {x: 88.1, y: 13},
       {x: 104.9, y: 14}
-
-      //
     ] );
 
   DataSet.TEMPERATURE_LATITUDE = createDataSet( temperatureLatitude, new Range( 0, 80 ), new Range( 0, 60 ),
@@ -270,7 +268,6 @@ define( function( require ) {
       {x: 43.4, y: 9},
       {x: 43.3, y: 13},
       {x: 41.2, y: 14}
-      //
     ] );
 
   DataSet.SPENDING_SALARY = createDataSet( spendingSalary, new Range( 0, 10 ), new Range( 0, 50 ),
@@ -390,8 +387,6 @@ define( function( require ) {
       {x: 56, y: 5.41},
       {x: 57, y: 5.27},
       {x: 58, y: 5.15}
-
-      //
     ] );
 
   DataSet.MORTALITY_YEAR = createDataSet( mortalityYear, new Range( 0, 500 ), new Range( 0, 40 ),
@@ -426,8 +421,6 @@ define( function( require ) {
       {x: 28, y: 305},
       {x: 29, y: 380},
       {x: 30, y: 276}
-
-      //
     ] );
 
   DataSet.USER_YEAR = createDataSet( userYear, new Range( 0, 2.1 ), new Range( 0, 20 ),
@@ -453,8 +446,6 @@ define( function( require ) {
       {x: 18, y: 1.565562367},
       {x: 19, y: 1.768348783},
       {x: 20, y: 2.020788881}
-
-      //
     ] );
 
   DataSet.GASOLINE_YEAR = createDataSet( gasolineYear, new Range( 0, 4 ), new Range( 0, 40 ),
@@ -666,7 +657,6 @@ define( function( require ) {
       {x: 15, y: 80},
       {x: 15, y: 81}
     ] );
-
 
   return DataSet;
 

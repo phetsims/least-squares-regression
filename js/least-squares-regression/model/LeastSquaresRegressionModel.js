@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  *  Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
@@ -62,12 +62,14 @@ define( function( require ) {
 
 
     // Contains all information regarding the composition of the graph
+    // @public read-only
     this.graph = new Graph(
       this.selectedDataSet.xRange,
       this.selectedDataSet.yRange
     );
 
-    // bucket to draw particle
+    // Bucket model to be filled with dataPoint
+    // @public read-only
     this.bucket = new Bucket( {
       position: BUCKET_POSITION,
       baseColor: '#000080',
@@ -77,11 +79,17 @@ define( function( require ) {
     } );
 
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
+      // reset the graph model
       thisModel.graph.reset();
+      // clear the dataPoints array
       thisModel.dataPoints.clear();
+      // set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
+
       selectedDataSet.dataXY.forEach( function( position ) {
+        // rescale all the {X,Y} value to the normalized graph bounds
+        // Only one modelViewTransform will be used throughout the simulation
         var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
         var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
         var positionVector = new Vector2( XNormalized, YNormalized );

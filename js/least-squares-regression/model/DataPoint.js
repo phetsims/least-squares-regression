@@ -1,6 +1,4 @@
-/*
- * Copyright 2002-2014, University of Colorado Boulder
- */
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * Type that defines a data point.
@@ -25,8 +23,7 @@ define( function( require ) {
 
     PropertySet.call( this, {
 
-      // Property that indicates where in model space the center of this data point is. In general, this should
-      // not be set directly outside of this type, and should only be manipulated through the methods defined below.
+      // Property that indicates where in model space the center of this data point is.
       position: initialPosition,
 
       // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by the a
@@ -47,7 +44,10 @@ define( function( require ) {
         this.animationStep( dt );
       }
     },
-
+    /**
+     * Function that displaces the dataPoint to its initial Position
+     * @param {number} dt
+     */
     animationStep: function( dt ) {
       // perform any animation
       var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
