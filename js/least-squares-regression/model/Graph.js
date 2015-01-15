@@ -282,7 +282,8 @@ define( function( require ) {
 
       this.removeMyLineResidual( dataPoint );
 
-      if ( this.dataPointsOnGraph.length === 2 ) {
+      // if there is only one dataPoint on the graph, there is no best Fit Line, remove all residuals
+      if ( this.dataPointsOnGraph.length === 1 ) {
         this.removeBestFitLineResiduals();
       }
       else {
