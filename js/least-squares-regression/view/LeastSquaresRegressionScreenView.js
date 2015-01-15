@@ -198,14 +198,12 @@ define( function( require ) {
 
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
-        //   bucketHole.visible = true;
         bucketFront.visible = true;
         eraserButton.visible = true;
         backLayer.visible = true;
         sourceAndReferencePushButton.visible = false;
       }
       else {
-        //     bucketHole.visible = false;
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
