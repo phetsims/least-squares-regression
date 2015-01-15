@@ -1,6 +1,4 @@
-/*
- * Copyright 2002-2014, University of Colorado Boulder
- */
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * A Scenery node that can be clicked upon to create new dataPoints in the model.
@@ -12,10 +10,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Circle = require( 'SCENERY/nodes/Circle' );
-  var inherit = require( 'PHET_CORE/inherit' );
   var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
+  var inherit = require( 'PHET_CORE/inherit' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -41,7 +39,6 @@ define( function( require ) {
 
     // Set up the mouse and touch areas for this node so that this can still be grabbed when invisible.
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
-//    this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
 
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {

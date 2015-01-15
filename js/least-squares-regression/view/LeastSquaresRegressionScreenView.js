@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * Main View for the simulation screen of Least Squares Regression.
@@ -9,8 +9,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-
-
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -21,10 +19,10 @@ define( function( require ) {
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
-  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );

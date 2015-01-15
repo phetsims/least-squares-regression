@@ -1,9 +1,7 @@
-/*
- * Copyright 2002-2014, University of Colorado Boulder
- */
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Type that represents a movable dataPoint in the view.
+ * Type that represents a draggable dataPoint in the view.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -11,10 +9,11 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
+  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
@@ -25,7 +24,7 @@ define( function( require ) {
   function DynamicDataPointNode( dataPoint, modelViewTransform ) {
     DataPointNode.call( this, dataPoint, modelViewTransform );
 
-    // Create the node that the user may click upon to add a model element to the view.
+    // Create the visual representation of the DynamicDataPoint
     var representation = new Circle( LSRConstants.DYNAMIC_DATA_POINT_RADIUS, {
       fill: LSRConstants.DYNAMIC_DATA_POINT_FILL,
       stroke: LSRConstants.DYNAMIC_DATA_POINT_STROKE,
@@ -35,7 +34,6 @@ define( function( require ) {
     this.addChild( representation );
 
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
-    // this.mouseArea = this.localBounds.dilatedXY( 10, 10 );
 
     // Add the listener that will allow the user to drag the dataPoint around.
     this.addInputListener( new SimpleDragHandler( {
@@ -44,14 +42,15 @@ define( function( require ) {
 
       // Handler that moves the dataPoint in model space.
 
-      translate: function( args ) {
-        dataPoint.position = modelViewTransform.viewToModelPosition( args.position );
-      },
-
       start: function( event, trail ) {
         dataPoint.userControlled = true;
         dataPoint.animating = false; // can stop point animation by catching the moving point in flight.
       },
+
+      translate: function( args ) {
+        dataPoint.position = modelViewTransform.viewToModelPosition( args.position );
+      },
+
       end: function( event, trail ) {
         dataPoint.userControlled = false;
       }

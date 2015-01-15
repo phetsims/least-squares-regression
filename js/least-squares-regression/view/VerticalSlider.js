@@ -1,9 +1,10 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * Vertical sliders in the simulation.
  *
  * @author Chris Malley (PixelZoom, Inc.)
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';

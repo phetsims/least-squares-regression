@@ -4,7 +4,7 @@
  * Type that defines a data point.
  *
  * @author John Blanco
- * @author Martin Veillette
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';

@@ -1,9 +1,9 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * A Scenery node that shows the Pearson correlation coefficient in an equation form
  *
- *  Martin Veillette (Berea College)
+ * @author Martin Veillette (Berea College)
  */
 define( function( require ) {
   'use strict';

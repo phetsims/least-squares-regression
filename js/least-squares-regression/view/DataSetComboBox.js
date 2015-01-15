@@ -1,7 +1,7 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Combo box for choosing a dataSet.
+ * Combo box for selecting a dataSet.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -11,8 +11,8 @@ define( function( require ) {
   // modules
   var ComboBox = require( 'SUN/ComboBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var Node = require( 'SCENERY/nodes/Node' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   /**
@@ -36,13 +36,13 @@ define( function( require ) {
       itemYMargin: 2,
       itemHighlightFill: LSRConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
-      buttoncornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS
+      buttonCornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS
     } );
   }
 
   /**
    * Creates an item for the combo box.
-   * @param dataSet
+   * @param {DataSet} dataSet
    * @returns {*|{node: *, value: *}}
    */
   var createItem = function( dataSet ) {

@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- *  Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
+ * Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
  *
  * @author Martin Veillette (Berea College)
  */

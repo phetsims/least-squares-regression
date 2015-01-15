@@ -1,7 +1,8 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Accordion Box Node in Least Squares Regression Simulation
+ * Accordion Box Node that displays check boxes associated with properties of Best Fit Line
+ * This Node also displays the best Fit Line Equation and the sum of Squares Barometer Chart
  *
  * @author Martin Veillette (Berea College)
  */
@@ -46,7 +47,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
-      LSRConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
+      LSRConstants.BEST_FIT_LINE_COLOR.SQUARED_RESIDUAL_COLOR,
       graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
@@ -119,7 +120,9 @@ define( function( require ) {
       reset: function() {
         this.expandedProperty.reset();
       },
-
+      /**
+       * @public
+       */
       updateBestFitLineEquation: function() {
         var linearFitParameters = this.graph.getLinearFit();
         if ( linearFitParameters !== null ) {
