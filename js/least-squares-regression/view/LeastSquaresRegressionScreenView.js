@@ -21,6 +21,7 @@ define( function( require ) {
   var DynamicDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DynamicDataPointNode' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
+  var Dimension2 = require( 'DOT/Dimension2' );
   var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
@@ -53,6 +54,8 @@ define( function( require ) {
   var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
 
   // constants
+  var GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node
+  var GRAPH_OFFSET = new Vector2( 10, 0 ); // Offset Vector from the center of the screen
   var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
   var DATA_POINT_CREATOR_OFFSET_POSITIONS = [
     // Offsets used for initial position of point, relative to bucket hole center. Empirically determined.
@@ -79,12 +82,17 @@ define( function( require ) {
     ScreenView.call( this, {renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 )} );
 
     var thisView = this;
-    var SIZE = 240;
-    var OFFSET = 10;
-    var viewGraphBounds = new Bounds2( this.layoutBounds.centerX - SIZE + OFFSET, this.layoutBounds.centerY - SIZE, this.layoutBounds.centerX + SIZE + OFFSET, this.layoutBounds.centerY + SIZE );
+
+    // bounds on the graph (excluding the axes and labels) in scenery coordinates
+    var viewGraphBounds = new Bounds2(
+      this.layoutBounds.centerX - GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
+      this.layoutBounds.centerY - GRAPH_BOUNDS.height / 2 + GRAPH_OFFSET.y,
+      this.layoutBounds.centerX + GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
+      this.layoutBounds.centerY + GRAPH_BOUNDS.height / 2 + GRAPH_OFFSET.y
+    );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
-
+    // options for the two panels
     var panelOptions = {
       resize: false,
       cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
@@ -93,26 +101,25 @@ define( function( require ) {
       xMargin: 10,
       yMargin: 10
     };
-
+    // Create the "Best Fit Line" Control Panel (located to the right of the graph)
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
+
+    // Create the "My Line" Control Panel (located to the left of the graph)
     var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
-    var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
+
+    // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
-    thisView.addChild( bestFitLineControlPanel );
-    thisView.addChild( myLineControlPanel );
-    thisView.addChild( graphAxesNode );
-    thisView.addChild( graphNode );
+    // Create the Graph Axes, including the tick marks, labels and axis titles
+    var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
 
-    // dataSet combo box
+    // Create the dataSet combo box that appears on top of the graph
     var dataSetListParent = new Node();
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
 
-    thisView.addChild( dataSetComboBox );
-    thisView.addChild( dataSetListParent ); // last, so that dataSet box list is on top
-
+    // Create a Push Button (next to the Combox Box) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
-    var textPushButton = new TextPushButton( questionMarkString, {
+    var sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
       font: LSRConstants.TEXT_FONT_BOLD,
       listener: function() {
@@ -120,18 +127,13 @@ define( function( require ) {
       }
     } );
 
-    thisView.addChild( textPushButton );
-
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();
-    thisView.addChild( backLayer );
 //    Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
 //     all of the point placement graphs in the z-order.
-
+    //TODO ask JB if this could be a local variable instead
     thisView.dataPointsLayer = new Node( {layerSplit: true} ); // Force the moving dataPoint into a separate layer for performance reasons.
-
     var bucketFrontLayer = new Node();
-    thisView.addChild( bucketFrontLayer );
 
     // Add the bucket view elements
     var bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
@@ -139,7 +141,7 @@ define( function( require ) {
     var bucketHole = new BucketHole( model.bucket, IDENTITY_TRANSFORM );
     backLayer.addChild( bucketHole );
 
-    // Add the dataPoint creator nodes. These must be added after the bucket hole for proper layering.
+    // Add the dataPoint creator nodes. These must be added on the backlayer but after the bucket hole for proper layering.
     DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       backLayer.addChild( new DataPointCreatorNode(
         model.addUserCreatedDataPoint.bind( model ),
@@ -149,7 +151,7 @@ define( function( require ) {
         } ) );
     } );
 
-    // Add the button that allows the graph to be cleared of all dataPoints.
+    // Create the button that allows the graph to be cleared of all dataPoints.
     var eraserButton = new EraserButton( {
       right: bucketFront.right - 3,
       top:   bucketFront.bottom + 5,
@@ -158,53 +160,57 @@ define( function( require ) {
         model.dataPoints.forEach( function( dataPoint ) {
           dataPoint.animating = true;
         } );
-
       }
     } );
 
-    // pearson Correlation coefficient panel
+    // create the Pearson Correlation coefficient panel
     var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph );
-    this.addChild( pearsonCorrelationCoefficientNode );
 
-    // gridIcon
+    // Create grid check box with grid icon
     var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );
 
-    this.addChild( gridCheckBox );
+    // Add the graphAxesNode
+    this.addChild( graphAxesNode );
 
+    // link the se
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
+      // remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
         thisView.removeChild( graphAxesNode );
       }
 
-      thisView.graphbounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
-      //  thisView.graphbounds = new Bounds2( model.graph.xRange.min, model.graph.yRange.min, model.graph.xRange.max, model.graph.yRange.max );
-
-      var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( thisView.graphbounds, viewGraphBounds );
+      // Create and add the GraphAxesNode corresponding to the selected DataSet
+      var dataSetBounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
+      var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
       thisView.addChild( graphAxesNode );
       graphAxesNode.moveToBack();
 
+      // update the graphNode (will populate it with the new dataPoints)
       graphNode.update();
+
+      // update the Pearson Correlation Coefficient Panel
       pearsonCorrelationCoefficientNode.update();
+
+      // update the Best fit Line Equation in the best Fit Line Control Panel
       bestFitLineControlPanel.updateBestFitLineEquation();
 
+
       if ( selectedDataSet === DataSet.CUSTOM ) {
-        bucketHole.visible = true;
+        //   bucketHole.visible = true;
         bucketFront.visible = true;
         eraserButton.visible = true;
         backLayer.visible = true;
-        textPushButton.visible = false;
-
+        sourceAndReferencePushButton.visible = false;
       }
       else {
-        bucketHole.visible = false;
+        //     bucketHole.visible = false;
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
-        textPushButton.visible = true;
+        sourceAndReferencePushButton.visible = true;
       }
-
     } );
 
     // Handle the comings and goings of  dataPoints.
@@ -219,6 +225,7 @@ define( function( require ) {
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
         } );
+
         // Move the dataPoint to the front of this layer when grabbed by the user.
         addedDataPoint.userControlledProperty.link( function( userControlled ) {
           if ( userControlled ) {
@@ -226,7 +233,6 @@ define( function( require ) {
             pearsonCorrelationCoefficientNode.update();
             dynamicDataPointNode.moveToFront();
           }
-
         } );
 
         // Add the removal listener for if and when this dataPoint is removed from the model.
@@ -250,7 +256,6 @@ define( function( require ) {
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
-
       }
     } );
 
@@ -262,19 +267,27 @@ define( function( require ) {
         pearsonCorrelationCoefficientNode.reset();
         bestFitLineControlPanel.reset();
       },
-      right:  thisView.layoutBounds.maxX - 10,
-      bottom: thisView.layoutBounds.maxY - 10
+      right:  this.layoutBounds.maxX - 10,
+      bottom: this.layoutBounds.maxY - 10
     } );
 
-    thisView.addChild( eraserButton );
-    thisView.addChild( resetAllButton );
 
-    // Add the dataPoints layer last .
-    thisView.addChild( thisView.dataPointsLayer );
-    dataSetListParent.moveToFront();
+    this.addChild( bestFitLineControlPanel );
+    this.addChild( myLineControlPanel );
+    this.addChild( graphNode );
+    this.addChild( dataSetComboBox );
+    this.addChild( sourceAndReferencePushButton );
+    this.addChild( backLayer );
+    this.addChild( bucketFrontLayer );
+    this.addChild( pearsonCorrelationCoefficientNode );
+    this.addChild( gridCheckBox );
+    this.addChild( eraserButton );
+    this.addChild( resetAllButton );
+    this.addChild( this.dataPointsLayer ); // after everything but dataSetLisParent
+    this.addChild( dataSetListParent ); // last, so that dataSet box list is on top
 
     {
-      myLineControlPanel.right = thisView.layoutBounds.maxX - 10;
+      myLineControlPanel.right = this.layoutBounds.maxX - 10;
       myLineControlPanel.top = 20;
       bestFitLineControlPanel.left = 15;
       bestFitLineControlPanel.top = myLineControlPanel.top;
@@ -284,8 +297,8 @@ define( function( require ) {
       gridCheckBox.top = myLineControlPanel.bottom + 10;
       pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
       pearsonCorrelationCoefficientNode.centerY = viewGraphBounds.centerY;
-      textPushButton.centerY = dataSetComboBox.centerY;
-      textPushButton.left = dataSetComboBox.right + 10;
+      sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;
+      sourceAndReferencePushButton.left = dataSetComboBox.right + 10;
     }
 
 //    //Show the mock-up and a slider to change its transparency
