@@ -36,10 +36,11 @@ define( function( require ) {
       selectedDataSet: DataSet.CUSTOM  // dataSet selected by the Combo Box: initially value set on Custom
     } );
 
-    // dataPoints in the view (may not be necessarily on the graph)
+    // array of dataPoints in the model (may not be necessarily on the graph, could be user controlled outside the graph zone or animated)
     this.dataPoints = new ObservableArray(); // @public
 
-    // the various data Sets available in the Combo Box
+    // the various data Sets that populates the Combo Box
+    // @public read-only
     this.dataSets = [];
     //for ( var dataSet in DataSet ){
     //  if ( DataSet.hasOwnProperty( dataSet ) ){

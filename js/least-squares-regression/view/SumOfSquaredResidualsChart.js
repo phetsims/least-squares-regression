@@ -1,4 +1,4 @@
-// Copyright 2002-2014, University of Colorado Boulder
+// Copyright 2002-2015, University of Colorado Boulder
 
 /**
  * A Scenery Node that represents a barometer chart of the sum of square residuals .
@@ -43,10 +43,8 @@ define( function( require ) {
 
     Node.call( this );
 
-    // the barometer chart is on its side
-    var width = getSumOfSquaredResiduals();
-
-    var rectangleBarometer = new Rectangle( 0, 0, width, RECTANGLE_BAROMETER_HEIGHT, {
+    // the barometer chart is on its side, set width to 1 , will update it momentarily
+    var rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
       fill: fillColor,
       bottom: -LINE_WIDTH,
       left: LINE_WIDTH / 2
@@ -66,19 +64,26 @@ define( function( require ) {
       updateWidth();
     } );
 
-    // Handle the comings and goings of  dataPoints.
+    // the width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
         updateWidth();
       } );
     } );
 
-    // we want to map x=0 to infinity to y=0 to 1
-    // this (particular) definition of hyperbolic tan function will work well for large positive x values
+    /**
+     * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1
+     * @param {number} x
+     * @returns {number}
+     */
     function tanh( x ) {
+      // this (particular) definition of hyperbolic tan function will work well for large positive x values
       return (1 - Math.exp( -2 * x )) / (1 + Math.exp( -2 * x ));
     }
 
+    /**
+     * Update the width of the rectangular Barometer
+     */
     function updateWidth() {
       // the width of the barometer is a non-linear. we use the tanh function to map an infinite range to a finite range
       // Note that tanh(0.5)=0.46. i.e  approximately 1/2;
