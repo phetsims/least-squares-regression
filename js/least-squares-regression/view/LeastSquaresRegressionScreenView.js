@@ -10,7 +10,7 @@ define( function( require ) {
 
   // modules
 
-  var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
+
   var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
@@ -34,12 +34,13 @@ define( function( require ) {
   var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
   // var Path = require( 'SCENERY/nodes/Path' );
   // var PhetFont = require( 'SCENERY_PHET/PhetFont' );
-  //var Image = require( 'SCENERY/nodes/Image' );
-  //var Property = require( 'AXON/Property' );
+  // var Image = require( 'SCENERY/nodes/Image' );
+  // var Property = require( 'AXON/Property' );
   // var Range = require( 'DOT/Range' );
   // var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   //var Text = require( 'SCENERY/nodes/Text' );
