@@ -38,9 +38,9 @@ define( function( require ) {
 
   // grid
 
-  var MAJOR_GRID_LINE_WIDTH = 0.75;
+  var MAJOR_GRID_LINE_WIDTH = 1;
   var MAJOR_GRID_LINE_COLOR = LSRConstants.MAJOR_GRID_STROKE_COLOR;
-  var MINOR_GRID_LINE_WIDTH = 0.35;
+  var MINOR_GRID_LINE_WIDTH = 1;
   var MINOR_GRID_LINE_COLOR = LSRConstants.MINOR_GRID_STROKE_COLOR;
 
   // axes
@@ -54,7 +54,7 @@ define( function( require ) {
 
   // ticks
   var MINOR_TICK_LENGTH = 3; // how far a minor tick extends from the axis
-  var MINOR_TICK_LINE_WIDTH = 0.5;
+  var MINOR_TICK_LINE_WIDTH = 1;
   var MINOR_TICK_COLOR = 'black';
   var MAJOR_TICK_LENGTH = 6; // how far a major tick extends from the axis
   var MAJOR_TICK_LINE_WIDTH = 1;
