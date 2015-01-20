@@ -43,7 +43,7 @@ define( function( require ) {
     DYNAMIC_DATA_POINT_RADIUS: 7,
     DYNAMIC_DATA_POINT_FILL: 'orange',
     DYNAMIC_DATA_POINT_STROKE: 'black',
-    DYNAMIC_DATA_POINT_LINE_WIDTH: 0.5,
+    DYNAMIC_DATA_POINT_LINE_WIDTH: 1,
 
     // static data points
     STATIC_DATA_POINT_RADIUS: 5,
