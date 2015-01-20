@@ -33,7 +33,7 @@ define( function( require ) {
   // background
 
   var GRID_BACKGROUND_FILL = 'white';
-  var GRID_BACKGROUND_LINE_WIDTH = '0.5'; // for the border of graph
+  var GRID_BACKGROUND_LINE_WIDTH = 1; // for the border of graph
   var GRID_BACKGROUND_STROKE = 'gray';
 
   // grid
