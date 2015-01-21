@@ -30,6 +30,13 @@ define( function( require ) {
    */
   function SourceAndReferenceNode( selectedDataSetProperty ) {
 
+    /*
+     * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
+     * directly to the scene, instead of to some other node that already has svg renderer.
+     */
+    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
+
+    var screenView = this;
 
     var referenceText = new MultiLineText( '', { font: LSRConstants.REFERENCE_FONT, align: 'left' } );
     var sourceText = new MultiLineText( '', { font: LSRConstants.SOURCE_FONT, align: 'left' } );
@@ -39,17 +46,10 @@ define( function( require ) {
       sourceText
     ];
 
-
-    /*
-     * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
-     * directly to the scene, instead of to some other node that already has svg renderer.
-     */
-    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
-
-    var screenView = this;
+    // Create the content box
     var content = new LayoutBox( { align: 'left', spacing: 10, children: children } );
 
-    content.updateLayout();
+    // Create the panel that contains the source and reference
     var panel = new Panel( content, {
       centerX: this.layoutBounds.centerX,
       centerY: this.layoutBounds.centerY,
@@ -59,8 +59,8 @@ define( function( require ) {
       stroke: 'black'
     } );
 
-    // Create 'Closed Button" in the upper right corner with a circle and a cross inside it.
-    // The button is not hooked to any listener since this node will 'close' when clicked upon
+    // Create the 'Closed Button" in the upper right corner with a circle and a cross inside it.
+    // The button is not hooked to any listener since the closing of this node is handled in the main screenView
     var buttonSize = 20;
     var buttonLineWidth = 4;
     var circle = new Circle( buttonSize, { fill: 'black', stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
@@ -69,23 +69,20 @@ define( function( require ) {
     var downwardSlopeLine = new Line( l, -l, -l, l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
     var button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
 
+    // Add to this node
     this.addChild( panel );
     this.addChild( button );
 
-    button.centerX = panel.right + content.width;
-    button.centerY = panel.top;
-
+    // Update the content of this node and the layout.
     selectedDataSetProperty.link( function( selectedDataSet ) {
       referenceText.text = selectedDataSet.reference;
       sourceText.text = sourceString + colonPunctuationString + selectedDataSet.source;
-      content.updateLayout();
       panel.centerX = screenView.layoutBounds.centerX;
       panel.centerY = screenView.layoutBounds.centerY;
       button.centerX = panel.right;
       button.centerY = panel.top;
     } );
-
   }
 
   return inherit( ScreenView, SourceAndReferenceNode );
-} );;;;
+} );
