@@ -9,12 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ButtonListener = require( 'SCENERY/input/ButtonListener' );
-  var Dialog = require( 'JOIST/Dialog' );
+  var Bounds2 = require( 'DOT/Bounds2' );
+  var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+  var Node = require( 'SCENERY/nodes/Node' );
+  var Panel = require( 'SUN/Panel' );
+  var ScreenView = require( 'JOIST/ScreenView' );
 
   // strings
   var sourceString = require( 'string!LEAST_SQUARES_REGRESSION/source' );
@@ -22,11 +26,10 @@ define( function( require ) {
 
   /**
    * @param {Property.<DataSet>} selectedDataSetProperty
-   * @param {Bounds2} layoutBounds
    * @constructor
    */
-  function SourceAndReferenceNode( selectedDataSetProperty, layoutBounds ) {
-    var dialog = this;
+  function SourceAndReferenceNode( selectedDataSetProperty ) {
+
 
     var referenceText = new MultiLineText( '', { font: LSRConstants.REFERENCE_FONT, align: 'left' } );
     var sourceText = new MultiLineText( '', { font: LSRConstants.SOURCE_FONT, align: 'left' } );
@@ -36,48 +39,53 @@ define( function( require ) {
       sourceText
     ];
 
-    var content = new VBox( { align: 'left', spacing: 20, children: children } );
 
-    Dialog.call( this, content, {
-      modal: true,
-      hasCloseButton: true,
-      layoutStrategy: function( dialog, simBounds, screenBounds, scale ) {
-        dialog.setScaleMagnitude( scale );
-        //TODO this is not kosher. find a better way to layout the sim
-        // simBounds is window.phet.sim.bounds
-        //  which is set to null in Sim()
-        // similar issue with screenBounds
+    /*
+     * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
+     * directly to the scene, instead of to some other node that already has svg renderer.
+     */
+    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
-        dialog.centerX = layoutBounds.centerX;
-        dialog.centerY = layoutBounds.centerY;
-      }
+    var screenView = this;
+    var content = new LayoutBox( { align: 'left', spacing: 10, children: children } );
+
+    content.updateLayout();
+    var panel = new Panel( content, {
+      centerX: this.layoutBounds.centerX,
+      centerY: this.layoutBounds.centerY,
+      xMargin: 20,
+      yMargin: 20,
+      fill: 'white',
+      stroke: 'black'
     } );
+
+    // Create 'Closed Button" in the upper right corner with a circle and a cross inside it.
+    // The button is not hooked to any listener since this node will 'close' when clicked upon
+    var buttonSize = 20;
+    var buttonLineWidth = 4;
+    var circle = new Circle( buttonSize, { fill: 'black', stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    var l = buttonSize / 2;
+    var upSlopeLine = new Line( l, l, -l, -l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    var downwardSlopeLine = new Line( l, -l, -l, l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    var button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
+
+    this.addChild( panel );
+    this.addChild( button );
+
+    button.centerX = panel.right + content.width;
+    button.centerY = panel.top;
 
     selectedDataSetProperty.link( function( selectedDataSet ) {
       referenceText.text = selectedDataSet.reference;
       sourceText.text = sourceString + colonPunctuationString + selectedDataSet.source;
+      content.updateLayout();
+      panel.centerX = screenView.layoutBounds.centerX;
+      panel.centerY = screenView.layoutBounds.centerY;
+      button.centerX = panel.right;
+      button.centerY = panel.top;
     } );
 
-
-    // close it on a click
-    this.addInputListener( new ButtonListener( {
-      fire: dialog.hide.bind( dialog )
-    } ) );
-
-    //TODO: The peer should not be in the DOM if the button is invisible
-    this.addPeer( '<input type="button" aria-label="Close Dialog">', {
-      click: function() {
-        dialog.hide();
-      },
-
-      //Visit this button after the user has added some pullers to the rope
-      tabIndex: 20000,
-
-      onAdded: function( peer ) {
-        peer.peerElement.focus();
-      }
-    } );
   }
 
-  return inherit( Dialog, SourceAndReferenceNode );
-} );
+  return inherit( ScreenView, SourceAndReferenceNode );
+} );;;;

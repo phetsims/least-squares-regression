@@ -29,6 +29,7 @@ define( function( require ) {
   var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
   var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
+  var Plane = require( 'SCENERY/nodes/Plane' );
   var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
@@ -108,7 +109,7 @@ define( function( require ) {
       baseColor: 'gray',
       font: LSRConstants.TEXT_FONT_BOLD,
       listener: function() {
-        sourceAndReferenceNode.show();
+        thisView.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
       }
     } );
 
@@ -291,5 +292,38 @@ define( function( require ) {
     }
   }
 
-  return inherit( ScreenView, LeastSquaresRegressionScreenView );
+  return inherit( ScreenView, LeastSquaresRegressionScreenView, {
+
+
+    /**
+     * This is taken from MoleculesAndLightScreenView with modifications.
+     *
+     * Update the Source and Reference 'Dialog-like' Node visibility.  This node has behavior which is identical to the about dialog
+     * window, and this code is heavily borrowed from AboutDialog.js.
+     *
+     * @param {SourceAndReferenceNode} sourceAndReferenceNode - The SourceAndReferenceNode whose visibility should be updated.
+     * @private
+     */
+    updateSourceAndReferenceNodeVisibility: function( sourceAndReferenceNode ) {
+      // Renderer must be specified here because the plane is added directly to the scene (instead of to some other node
+      // that already has svg renderer)
+      var plane = new Plane( { fill: 'black', opacity: 0.3, renderer: 'svg' } );
+      this.addChild( plane );
+      this.addChild( sourceAndReferenceNode );
+
+      var sourceAndReferenceListener = {
+        up: function() {
+          sourceAndReferenceNode.removeInputListener( sourceAndReferenceListener );
+          plane.addInputListener( sourceAndReferenceListener );
+          sourceAndReferenceNode.detach();
+          plane.detach();
+        }
+      };
+
+      sourceAndReferenceNode.addInputListener( sourceAndReferenceListener );
+      plane.addInputListener( sourceAndReferenceListener );
+
+
+    }
+  } );
 } );
