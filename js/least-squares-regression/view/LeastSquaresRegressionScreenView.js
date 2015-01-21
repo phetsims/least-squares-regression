@@ -68,7 +68,7 @@ define( function( require ) {
 
     var thisView = this;
 
-    // bounds on the graph (excluding the axes and labels) in scenery coordinates
+    // Bounds of the graph (excluding the axes and labels) in scenery coordinates
     var viewGraphBounds = new Bounds2(
       this.layoutBounds.centerX - GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
       this.layoutBounds.centerY - GRAPH_BOUNDS.height / 2 + GRAPH_OFFSET.y,
@@ -77,7 +77,7 @@ define( function( require ) {
     );
     var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
-    // options for the two panels
+    // Options for the two panels
     var panelOptions = {
       resize: false,
       cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
@@ -148,7 +148,7 @@ define( function( require ) {
       }
     } );
 
-    // create the Pearson Correlation coefficient panel
+    // Create the Pearson Correlation coefficient panel
     var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph );
 
     // Create grid check box with grid icon
@@ -157,31 +157,32 @@ define( function( require ) {
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
 
-    // link the se
+    // Link the combox box selectedDataSet to the Scene Graph
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
-      // remove graphAxesNode from the scene graph if it exists
+      // Remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
         thisView.removeChild( graphAxesNode );
       }
 
       // Create and add the GraphAxesNode corresponding to the selected DataSet
       var dataSetBounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
+      // GraphAxesNode require a special modelView Transform that is set by the dataSet
       var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
       thisView.addChild( graphAxesNode );
-      graphAxesNode.moveToBack();
+      graphAxesNode.moveToBack(); //
 
-      // update the graphNode (will populate it with the new dataPoints)
+      // Update the graphNode (will populate it with the new dataPoints)
       graphNode.update();
 
-      // update the Pearson Correlation Coefficient Panel
+      // Update the Pearson Correlation Coefficient Panel
       pearsonCorrelationCoefficientNode.update();
 
-      // update the Best fit Line Equation in the best Fit Line Control Panel
+      // Update the Best fit Line Equation in the best Fit Line Control Panel, (regardless of the status of the node visibility )
       bestFitLineControlPanel.updateBestFitLineEquation();
 
-
+      // The bucket, eraser button must be present when custom data set is selected whereas the pushButton next to the combox box must be set to invisible
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketFront.visible = true;
         eraserButton.visible = true;
@@ -196,14 +197,16 @@ define( function( require ) {
       }
     } );
 
-    // Handle the comings and goings of  dataPoints.
+    // Handle the comings and goings of dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
       if ( model.selectedDataSet === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
+        // DataPoints are movable
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( dynamicDataPointNode );
 
+        // Update graph upon a change of position of a dataPoint
         addedDataPoint.positionProperty.link( function() {
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
@@ -224,9 +227,10 @@ define( function( require ) {
           }
         } );
       }
-
+      // For all other DataSet than CUSTOM, the dataPoints are static
       else {
         // Create and add the view representation for this dataPoint.
+        // The dataPoints are static (not movable)
         var staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( staticDataPointNode );
 
@@ -240,7 +244,7 @@ define( function( require ) {
       }
     } );
 
-    // Create and add the Reset All Button in the bottom right, which resets the model
+    // Create the Reset All Button at the bottom right, which resets the model and some view elements
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
@@ -252,22 +256,25 @@ define( function( require ) {
       bottom: this.layoutBounds.maxY - 10
     } );
 
-
-    this.addChild( bestFitLineControlPanel );
-    this.addChild( myLineControlPanel );
-    this.addChild( graphNode );
-    this.addChild( dataSetComboBox );
-    this.addChild( sourceAndReferencePushButton );
-    this.addChild( backLayer );
-    this.addChild( bucketFrontLayer );
+    // Add nodes to the scene graph. Order is irrelevant for the following nodes
     this.addChild( pearsonCorrelationCoefficientNode );
     this.addChild( gridCheckBox );
     this.addChild( eraserButton );
     this.addChild( resetAllButton );
+    this.addChild( bestFitLineControlPanel );
+    this.addChild( myLineControlPanel );
+    this.addChild( dataSetComboBox );
+    this.addChild( sourceAndReferencePushButton );
+    this.addChild( backLayer );
+    this.addChild( graphNode );
+
+    // Order matters here. These must come last
+    this.addChild( bucketFrontLayer ); //must come after backlayer
     this.addChild( dataPointsLayer ); // after everything but dataSetLisParent
-    this.addChild( dataSetListParent ); // last, so that dataSet box list is on top
+    this.addChild( dataSetListParent ); // last, so that dataSet box list is on top of dataPoint and the graph
 
 
+    // Layout all the other nodes
     {
       myLineControlPanel.right = this.layoutBounds.maxX - 10;
       myLineControlPanel.top = 20;

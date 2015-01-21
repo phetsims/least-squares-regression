@@ -36,17 +36,12 @@ define( function( require ) {
       selectedDataSet: DataSet.CUSTOM  // dataSet selected by the Combo Box: initially value set on Custom
     } );
 
-    // array of dataPoints in the model (may not be necessarily on the graph, could be user controlled outside the graph zone or animated)
+    // Array of dataPoints in the model (may not be necessarily on the graph, could be user controlled outside the graph zone or animated)
     this.dataPoints = new ObservableArray(); // @public
 
-    // the various data Sets that populates the Combo Box
+    // The various data Sets that populates the Combo Box
     // @public read-only
     this.dataSets = [];
-    //for ( var dataSet in DataSet ){
-    //  if ( DataSet.hasOwnProperty( dataSet ) ){
-    //    this.dataSets.push( dataSet );
-    //  }
-    //}
     this.dataSets.push( DataSet.CUSTOM );
     this.dataSets.push( DataSet.TEMPERATURE_LONGITUDE );
     this.dataSets.push( DataSet.TEMPERATURE_LATITUDE );
@@ -61,7 +56,7 @@ define( function( require ) {
     this.dataSets.push( DataSet.HEIGHT_SHOE );
 
 
-    // Contains all information regarding the composition of the graph
+    // Model of the graph that contains all information regarding the composition of the graph
     // @public read-only
     this.graph = new Graph(
       this.selectedDataSet.xRange,
@@ -78,24 +73,27 @@ define( function( require ) {
       invertY: true
     } );
 
+    // What to do when the selected Data Set changes
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
-      // reset the graph model
+      // Reset the graph model
       thisModel.graph.reset();
-      // clear the dataPoints array
+      // Clear the dataPoints array
       thisModel.dataPoints.clear();
-      // set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
+      // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
-
+      // Populate the dataPoints array with the new SelectedDataSet
       selectedDataSet.dataXY.forEach( function( position ) {
-        // rescale all the {X,Y} value to the normalized graph bounds
-        // Only one modelViewTransform will be used throughout the simulation
+        // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
+        // Rescale all the {X,Y} value to the normalized graph bounds
         var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
         var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
         var positionVector = new Vector2( XNormalized, YNormalized );
         thisModel.dataPoints.push( new DataPoint( positionVector ) );
       } );
 
+      // Add the Data Points on Graph and all the Residuals
+      // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
       thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
 
       // TODO : terrible hack here
@@ -115,6 +113,7 @@ define( function( require ) {
       this.graph.reset();
     },
 
+    // Step is responsible for the animation of the dataPoints when they return to the bucket
     step: function( dt ) {
       this.dataPoints.forEach( function( dataPoint ) {
         dataPoint.step( dt );
@@ -122,28 +121,34 @@ define( function( require ) {
     },
 
     /**
-     * Function for adding new  dataPoints to this model when the user creates them, generally by clicking on some
+     * Function for adding new dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
      * @public
-     * @param dataPoint
+     * @param {DataPoint} dataPoint
      */
     addUserCreatedDataPoint: function( dataPoint ) {
       var self = this;
       this.dataPoints.push( dataPoint );
 
       dataPoint.positionProperty.link( function( position ) {
+        // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
         if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
-          if ( !self.graph.isDataPointOnList( dataPoint ) ) {
+
+          if ( !self.graph.isDataPointOnList( dataPoint ) )
+          // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
+          {
             self.graph.addPointAndResiduals( dataPoint );
           }
         }
         else {
           if ( self.graph.isDataPointOnList( dataPoint ) ) {
+            // Remove dataPoint from dataPoint on graph and its associated residuals.
             self.graph.removePointAndResiduals( dataPoint );
           }
         }
       } );
 
+      // Determine if the data Point is not user controlled and not on graph. If so let's animate it, i.e. return it to the bucket
       dataPoint.userControlledProperty.link( function( userControlled ) {
         var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
         if ( !isOnGraph && !userControlled ) {
@@ -151,8 +156,8 @@ define( function( require ) {
         }
       } );
 
-//      The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
-//      can be 'put back' into the bucket.
+      // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
+      // can be 'put back' into the bucket.
       dataPoint.on( 'returnedToOrigin', function() {
         self.dataPoints.remove( dataPoint );
       } );

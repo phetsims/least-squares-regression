@@ -22,6 +22,7 @@ define( function( require ) {
   function StaticDataPointNode( dataPoint, modelViewTransform ) {
     DataPointNode.call( this, dataPoint, modelViewTransform );
 
+    // Create and add  visual representation of the dataPoint
     var representation = new Circle( LSRConstants.STATIC_DATA_POINT_RADIUS, {
       fill: LSRConstants.STATIC_DATA_POINT_FILL,
       stroke: LSRConstants.STATIC_DATA_POINT_STROKE,

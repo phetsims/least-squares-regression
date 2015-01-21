@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -21,7 +20,7 @@ define( function( require ) {
   /**
    *
    * @param {Property.<Residual>} residualProperty
-   * @param {Object} lineColor
+   * @param {Object} lineColor - Object that defines all color properties of residual, squared residuals, line, etc.
    * @param {Bounds2} viewBounds
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Property.<boolean>} lineVisibilityProperty
@@ -44,14 +43,13 @@ define( function( require ) {
       var point1 = modelViewTransform.modelToViewPosition( residualProperty.value.point1 );
       var point2 = modelViewTransform.modelToViewPosition( residualProperty.value.point2 );
 
-      // update line residual
+      // Update line residual
       lineResidual.setPoint1( point1 );
       lineResidual.setPoint2( point2 );
       // the line residual should not show outside the graph.
       lineResidual.clipArea = Shape.bounds( viewBounds );
 
-      // update square residual
-
+      // Update square residual
       var top = Math.min( point1.y, point2.y );
       var height = Math.abs( point1.y - point2.y );
       // we want a square
@@ -68,6 +66,7 @@ define( function( require ) {
 
     updateLineAndSquare();
 
+    // Add the square residual and line residual
     this.addChild( squareResidual );
     this.addChild( lineResidual );
 

@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Type that represents a draggable dataPoint in the view.
+ * Type that represents a movable dataPoint in the view.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -31,8 +31,10 @@ define( function( require ) {
       lineWidth: LSRConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
     } );
 
+    // Add the visual representation to this node
     this.addChild( representation );
 
+    // Expand the touch area
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
 
     // Add the listener that will allow the user to drag the dataPoint around.
@@ -41,10 +43,9 @@ define( function( require ) {
       allowTouchSnag: true,
 
       // Handler that moves the dataPoint in model space.
-
       start: function( event, trail ) {
         dataPoint.userControlled = true;
-        dataPoint.animating = false; // can stop point animation by catching the moving point in flight.
+        dataPoint.animating = false; // will stop point animation by catching the moving point in mid-flight.
       },
 
       translate: function( args ) {

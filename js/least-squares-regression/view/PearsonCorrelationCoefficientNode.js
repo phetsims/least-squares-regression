@@ -19,7 +19,6 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // string
-
   var rEqualsString = require( 'string!LEAST_SQUARES_REGRESSION/rEquals' );
   var pattern_0r_1value = "{0} {1}";
   var plusString = '\u002B'; // we want a large + sign
@@ -69,7 +68,7 @@ define( function( require ) {
 
     update: function() {
       var rValueString;
-      // check the existence of the rValue
+      // Check for the existence of the rValue
       if ( this.graph.dataPointsOnGraph.length >= 2 ) {
         var rValue = this.graph.getPearsonCoefficientCorrelation();
         var isNegative = (rValue < 0);
@@ -77,10 +76,10 @@ define( function( require ) {
         rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
       }
       else {
-        // set to null if the Pearson Coefficient does not exist
+        // Set to null if the Pearson Coefficient does not exist
         rValueString = '';
       }
-      // update the text on the right Hand side of the equation
+      // Update the text on the right Hand side of the equation
       this.rightHandSideText.text = rValueString;
     }
   } );

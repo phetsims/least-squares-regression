@@ -108,7 +108,7 @@ define( function( require ) {
 
 
   /**
-   *
+   * Function that returns a dataSet Object
    * @param {string} name
    * @param {Range} yRange
    * @param {Range} xRange
@@ -129,20 +129,6 @@ define( function( require ) {
       source: name.source
     };
 
-    //require( [
-    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.graphTitle',
-    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.yAxisTitle',
-    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.xAxisTitle',
-    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.reference',
-    //    'string!LEAST_SQUARES_REGRESSION/' + name + '.source'
-    //  ],
-    //  function( graphTitle, yAxisTitle, xAxisTitle, reference, source ) {
-    //    dataSet.name = graphTitle;
-    //    dataSet.yAxisTitle = yAxisTitle;
-    //    dataSet.xAxisTitle = xAxisTitle;
-    //    dataSet.reference = reference;
-    //    dataSet.source = source;
-    //  } );
     return dataSet;
   }
 

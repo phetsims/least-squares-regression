@@ -17,14 +17,11 @@ define( function( require ) {
   var Util = require( 'DOT/Util' );
 
   // strings
-
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
 
-  // constants
-
   /**
-   *
+   * Scenery Node responsible for laying out the linear equation y = m x + b
    * @param {number} slope
    * @param {number} intercept
    * @constructor
@@ -61,6 +58,8 @@ define( function( require ) {
       ]
     } );
 
+    // TODO: Is there a way to have less magic number for layout?
+    // The layout of this equation must match the layout of another equation in MyLineControlPanel
     this.eqnPartTwoText.left = 23;
     this.eqnPartThreeText.left = 32;
     this.eqnPartFourText.left = 65;
@@ -71,29 +70,40 @@ define( function( require ) {
   }
 
   return inherit( Node, EquationNode, {
-    setSlopeText: function( slope ) {
-      this.eqnPartTwoText.text = this.numberToString( slope ).optionalSign;
-      this.eqnPartThreeText.text = this.numberToString( slope ).absoluteNumber;
+    /**
+     * Set the text of the slope and its accompanying sign
+     * @public
+     * @param {number} slope
+     * @param {Object} [options]
+     */
+    setSlopeText: function( slope, options ) {
+      this.eqnPartTwoText.text = this.numberToString( slope, options ).optionalSign;
+      this.eqnPartThreeText.text = this.numberToString( slope, options ).absoluteNumber;
     },
 
-    setInterceptText: function( intercept ) {
-      this.eqnPartFiveText.text = this.numberToString( intercept ).sign;
-      this.eqnPartSixText.text = this.numberToString( intercept ).absoluteNumber;
+    /**
+     * Set the text of the intercept and its accompanying sign
+     * @public
+     * @param {number} intercept
+     * @param {Object} [options]
+     */
+    setInterceptText: function( intercept, options ) {
+      this.eqnPartFiveText.text = this.numberToString( intercept, options ).sign;
+      this.eqnPartSixText.text = this.numberToString( intercept, options ).absoluteNumber;
     },
 
-    setToInvisible: function() {
-      this.visible = false;
-    },
-
-    setToVisible: function() {
-      this.visible = true;
-    },
-
-    numberToString: function( number ) {
+    /**
+     * Convert a number to a String, subject to rounding to a certain number of decimal places
+     * @private
+     * @param {number} number
+     * @param {Object} [options]
+     * @returns {{absoluteNumber: number, optionalSign: string, sign: string}}
+     */
+    numberToString: function( number, options ) {
       var isNegative = (this.roundNumber( number ) < 0);
       var signString = isNegative ? minusString : plusString;
       var optionalSignString = isNegative ? minusString : ' ';
-      var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number ) ) );
+      var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number, options ) ) );
       var numberString = {
         absoluteNumber: absoluteNumber,
         optionalSign: optionalSignString,
@@ -102,20 +112,27 @@ define( function( require ) {
       return numberString;
     },
 
+    /**
+     * Round a number to a certain number of decimal places. Higher numbers have less decimal places.
+     * @private
+     * @param {number} number
+     * @param {Object} [options]
+     * @returns {number}
+     */
     roundNumber: function( number, options ) {
       options = _.extend( {
-        maxSigFigs: 2
+        maxDecimalPlaces: 2
       }, options );
 
       var roundedNumber;
       if ( Math.abs( number ) < 1 ) {
-        roundedNumber = Util.toFixed( number, options.maxSigFigs );
+        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces );
       }
       else if ( Math.abs( number ) < 100 ) {
-        roundedNumber = Util.toFixed( number, options.maxSigFigs - 1 );
+        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces - 1 );
       }
       else {
-        roundedNumber = Util.toFixed( number, options.maxSigFigs - 2 );
+        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces - 2 );
       }
       return roundedNumber;
     }

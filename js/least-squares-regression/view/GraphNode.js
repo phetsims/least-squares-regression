@@ -9,12 +9,10 @@ define( function( require ) {
   'use strict';
 
   // modules
-//  var Bounds2 = require( 'DOT/Bounds2' );
-
   var inherit = require( 'PHET_CORE/inherit' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var Property = require( 'AXON/Property' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );

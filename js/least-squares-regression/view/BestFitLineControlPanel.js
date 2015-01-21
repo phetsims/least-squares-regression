@@ -64,12 +64,13 @@ define( function( require ) {
       this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
     }
 
+    // Create the checkBoxes
     var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineVisibleProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
 
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
-      // TODO find less hacky way to toggle equationText visibility (using derived property perhaps)
+      // Set Equation to invisible if there is less than one point on the graph
       if ( graph.dataPointsOnGraph.length > 1 ) {
         equationText.visible = enabled;
       }
@@ -97,7 +98,6 @@ define( function( require ) {
           sumOfSquaredResidualsChart
         ], align: 'left'
       } ),
-
       options );
 
     // Handle the comings and goings of  dataPoints.
@@ -108,7 +108,7 @@ define( function( require ) {
       } );
     } );
 
-    // the title of the Accordion Box  is set to invisible when the accordion Box is expanded
+    // The title of the control Panel (Accordion Box)  is set to invisible when the control panel is expanded
     this.expandedProperty.link( function( expanded ) {
       options.titleNode.visible = !expanded;
     } );
@@ -129,11 +129,11 @@ define( function( require ) {
           this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
           this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor );
           if ( this.graph.bestFitLineVisibleProperty.value ) {
-            this.equationText.setToVisible();
+            this.equationText.visible = true;
           }
         }
         else {
-          this.equationText.setToInvisible();
+          this.equationText.visible = false;
         }
       }
     }

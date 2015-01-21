@@ -17,6 +17,7 @@ define( function( require ) {
   var Shape = require( 'KITE/Shape' );
 
   /**
+   *
    * @param {Object} [options]
    * @constructor
    */
@@ -28,7 +29,7 @@ define( function( require ) {
       // defaults
       columns: 4,
       rows: 4,
-      cellLength: 12,
+      cellLength: 12, // in scenery coordinates
       gridStroke: LSRConstants.MAJOR_GRID_STROKE_COLOR,
       gridLineWidth: 1,
       gridFill: null
@@ -37,16 +38,14 @@ define( function( require ) {
     var bounds = new Bounds2( 0, 0, options.columns * options.cellLength, options.rows * options.cellLength );
     var gridShape = new Shape();
 
-    // Add the vertical lines
-    for ( var i = bounds.minX + options.cellLength; i < bounds.minX + bounds.width; i += options.cellLength ) {
-      gridShape.moveTo( i, bounds.minY );
-      gridShape.lineTo( i, bounds.minY + bounds.height );
+    // Create the vertical lines
+    for ( var i = bounds.minX + options.cellLength; i < bounds.maxX; i += options.cellLength ) {
+      gridShape.moveTo( i, bounds.minY ).verticalLineTo( bounds.maxX );
     }
 
-    // Add the horizontal lines
-    for ( i = bounds.minY + options.cellLength; i < bounds.minY + bounds.height; i += options.cellLength ) {
-      gridShape.moveTo( bounds.minX, i );
-      gridShape.lineTo( bounds.minX + bounds.width, i );
+    // Create the horizontal lines
+    for ( i = bounds.minY + options.cellLength; i < bounds.maxY; i += options.cellLength ) {
+      gridShape.moveTo( bounds.minX, i ).horizontalLineTo( bounds.maxY );
     }
 
     var gridPath = new Path( gridShape, {

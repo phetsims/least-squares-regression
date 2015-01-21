@@ -236,7 +236,7 @@ define( function( require ) {
 //   y-axis (vertical)
 //----------------------------------------------------------------------------------------
 
-  /**
+  /***
    * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
@@ -406,6 +406,7 @@ define( function( require ) {
 //----------------------------------------------------------------------------------------
 
   /**
+   * Function responsible for laying out the ticks of the graph, the axis titles and the grid
    * @param {DataSet} dataSet
    * @param {ModelViewTransform2} modelViewTransform
    * @param {Property.<boolean>} showGridProperty

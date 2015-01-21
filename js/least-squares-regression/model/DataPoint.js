@@ -46,6 +46,7 @@ define( function( require ) {
     },
     /**
      * Function that displaces the dataPoint to its initial Position
+     * @private
      * @param {number} dt
      */
     animationStep: function( dt ) {

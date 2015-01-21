@@ -43,14 +43,14 @@ define( function( require ) {
 
     Node.call( this );
 
-    // the barometer chart is on its side, set width to 1 , will update it momentarily
+    // The barometer chart is on its side, set width to 1 , will update it momentarily
     var rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
       fill: fillColor,
       bottom: -LINE_WIDTH,
       left: LINE_WIDTH / 2
     } );
 
-    // create the chart
+    // Create the chart
     var horizontalArrow = new ArrowNode( 0, 0, ARROW_LENGTH, 0, {
       tailWidth: LINE_WIDTH,
       headWidth: ARROW_HEAD_WIDTH,
@@ -61,7 +61,7 @@ define( function( require ) {
       stroke: LINE_COLOR
     } );
 
-    // text for the chart
+    // Text for the chart
     var label = new Text( sumString, {
       font: FONT,
       centerX: horizontalArrow.centerX,
@@ -69,13 +69,13 @@ define( function( require ) {
     } );
     var zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
-    // the barometer width is adjustable
+    // The barometer width is adjustable
     // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
     Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
       updateWidth();
     } );
 
-    // the width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
+    // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
       addedDataPoint.positionProperty.link( function() {
         updateWidth();
@@ -103,9 +103,10 @@ define( function( require ) {
       rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 4 * getSumOfSquaredResiduals() );
     }
 
-    // controls the visibility of this node
+    // Controls the visibility of this node
     visibleProperty.linkAttribute( this, 'visible' );
 
+    // Add all the nodes
     this.addChild( verticalLine );
     this.addChild( horizontalArrow );
     this.addChild( rectangleBarometer );
