@@ -1,7 +1,8 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * View representation of a Graph, which is a graph where points can be placed.
+ * View representation of a Graph. Responsible for the view of 'MyLine', 'BestFitLine'
+ * and the residuals on the graph. The view of the dataPoints is handled in the main ScreenView
  *
  * @author Martin Veillette (Berea College)
  */
@@ -33,15 +34,15 @@ define( function( require ) {
 
     Node.call( this );
 
-    // get the two points form by the intersection of the line and the boundary of the graph
+    // Create 'MyLine'
+    // First, get the two points formed by the intersection of the line and the boundary of the graph
     var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
-
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
       { stroke: LSRConstants.MY_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH } );
 
-    // set bestFitLine to zero length and then update it
+    // Create 'Best Fit Line'; initially set bestFitLine to zero length and then update it
     this.bestFitLine = new Line( 0, 0, 0, 0, {
       stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
       lineWidth: LSRConstants.LINE_WIDTH
@@ -55,24 +56,17 @@ define( function( require ) {
         { stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH } );
     }
 
-    // set the residuals  on a separate layer in order to toggle visibility
-    // TODO: check if it is still necessary
-    var myLineResidualsLayer = new Node();
-    var bestFitLineResidualsLayer = new Node();
-
+    // Update 'MyLine' and update 'MyLine' Residuals upon of change of angle (a proxy for the slope), or intercept
     Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
       var slope = graph.slope( angle );
-      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
-      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
-      graphNode.myLine.clipArea = Shape.bounds( graphNode.viewBounds );
+      updateMyLine( slope, intercept );
       graph.updateMyLineResiduals();
     } );
 
-    // Handle the comings and goings of  dataPoints.
+    // Handle the comings and goings of 'My Line' Residuals.
     graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
 
-      // Create and add the view representation for this dataPoint.
+      // Create and add the view representation for this residual.
       var residualNode = new ResidualLineAndSquareNode(
         addedResidual,
         LSRConstants.MY_LINE_COLOR,
@@ -80,21 +74,21 @@ define( function( require ) {
         modelViewTransform,
         graph.myLineResidualsVisibleProperty,
         graph.myLineSquaredResidualsVisibleProperty );
-      myLineResidualsLayer.addChild( residualNode );
+      graphNode.addChild( residualNode );
 
-      // Add the removal listener for if and when this dataPoint is removed from the model.
+      // Add the removal listener for if and when this residual is removed from the model.
       graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
-          myLineResidualsLayer.removeChild( residualNode );
+          graphNode.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );
 
-    // Handle the comings and goings of  dataPoints.
+    // Handle the comings and goings of Best Fit Line Residuals.
     graph.bestFitLineResiduals.addItemAddedListener( function( addedResidual ) {
 
-      // Create and add the view representation for this dataPoint.
+      // Create and add the view representation for this residual.
       var residualNode = new ResidualLineAndSquareNode(
         addedResidual,
         LSRConstants.BEST_FIT_LINE_COLOR,
@@ -102,25 +96,36 @@ define( function( require ) {
         modelViewTransform,
         graph.bestFitLineResidualsVisibleProperty,
         graph.bestFitLineSquaredResidualsVisibleProperty );
-      bestFitLineResidualsLayer.addChild( residualNode );
+      graphNode.addChild( residualNode );
 
-      // Add the removal listener for if and when this dataPoint is removed from the model.
+      // Add the removal listener for if and when this residual is removed from the model.
       graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
-          bestFitLineResidualsLayer.removeChild( residualNode );
+          graphNode.removeChild( residualNode );
           graph.bestFitLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );
 
+    // Hide or show the visibility of 'MyLine' and 'BestFitLine'
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
-
-    this.addChild( myLineResidualsLayer );
-    this.addChild( bestFitLineResidualsLayer );
+    // Add the two lines to this Node
     this.addChild( this.myLine );
     this.addChild( this.bestFitLine );
+
+    /**
+     * Update 'My Line'
+     * @param {number} slope
+     * @param {number} intercept
+     */
+    function updateMyLine( slope, intercept ) {
+      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
+      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+      graphNode.myLine.clipArea = Shape.bounds( graphNode.viewBounds );
+    }
 
   }
 
@@ -132,7 +137,10 @@ define( function( require ) {
     update: function() {
       this.updateBestFitLine();
     },
-
+    /**
+     * Update Best Fit Line
+     * @private
+     */
     updateBestFitLine: function() {
       var linearFitParameters = this.graph.getLinearFit();
       if ( linearFitParameters !== null ) {

@@ -226,7 +226,7 @@ define( function( require ) {
           }
         } );
       }
-      // For all other DataSet than CUSTOM, the dataPoints are static
+      // For all other DataSets than CUSTOM, the dataPoints are static
       else {
         // Create and add the view representation for this dataPoint.
         // The dataPoints are static (not movable)
@@ -243,7 +243,7 @@ define( function( require ) {
       }
     } );
 
-    // Create the Reset All Button at the bottom right, which resets the model and some view elements
+    // Create the 'Reset All' Button at the bottom right, which resets the model and some view elements
     var resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
