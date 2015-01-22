@@ -30,12 +30,13 @@ define( function( require ) {
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
   /**
-   * {Graph} graph - model of the graph
-   * {Array.<DataPoint>} dataPoints
-   * {Object} [options]
+   * @param {Graph} graph - model of the graph
+   * @param {Array.<DataPoint>} dataPoints
+   * @param {Function} onEvent - listener function when event is trigger
+   * @param {Object} [options]
    * @constructor
    */
-  function BestFitLineControlPanel( graph, dataPoints, options ) {
+  function BestFitLineControlPanel( graph, dataPoints, onEvent, options ) {
 
     this.graph = graph;
     var thisControlPanel = this;
@@ -47,6 +48,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
+      onEvent,
       LSRConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.bestFitLineSquaredResidualsVisibleProperty
     );

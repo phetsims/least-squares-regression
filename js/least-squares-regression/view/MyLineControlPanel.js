@@ -36,10 +36,11 @@ define( function( require ) {
    *
    * @param {Graph} graph
    * @param {Array.<DataPoint>} dataPoints
+   * @param {Function} onEvent - listener function when event is trigger
    * @param {Object} [options]
    * @constructor
    */
-  function MyLineControlPanel( graph, dataPoints, options ) {
+  function MyLineControlPanel( graph, dataPoints, onEvent, options ) {
 
     var eqPartOneText = new Text( 'y =', { font: LSRConstants.TEXT_FONT, fill: 'black' } );
     var eqPartTwoText = new Text( aString, { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' } );
@@ -79,6 +80,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
+      onEvent,
       LSRConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.myLineSquaredResidualsVisibleProperty );
 

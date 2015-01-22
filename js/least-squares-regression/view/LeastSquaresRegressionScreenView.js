@@ -88,10 +88,10 @@ define( function( require ) {
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, panelOptions );
+    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
-    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, panelOptions );
+    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
 
     // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );

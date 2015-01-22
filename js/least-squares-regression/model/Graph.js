@@ -92,6 +92,7 @@ define( function( require ) {
 
     /**
      * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor for the slope and intercept
+     * Use to dis
      * @public
      * @param {Range} xRange
      * @param {Range} yRange

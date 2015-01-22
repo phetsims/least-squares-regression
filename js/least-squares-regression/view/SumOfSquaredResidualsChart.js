@@ -34,12 +34,13 @@ define( function( require ) {
   /**
    * @param {Graph} graph - model of a graph
    * @param {Array.<DataPoint>} dataPoints - an array of DataPoint
-   * @param {Function} getSumOfSquaredResiduals
+   * @param {Function} getSumOfSquaredResiduals -
+   * @param {Function} onEvent - listener function when event is trigger
    * @param {Color} fillColor
    * @param {Property.<boolean>} visibleProperty
    * @constructor
    */
-  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, fillColor, visibleProperty ) {
+  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, onEvent, fillColor, visibleProperty ) {
 
     Node.call( this );
 
@@ -77,10 +78,11 @@ define( function( require ) {
 
     // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      addedDataPoint.positionProperty.link( function() {
-        updateWidth();
-      } );
+      addedDataPoint.positionProperty.link( updateWidth );
     } );
+
+    // Trigger an update after all the points have been added in bulk to the model
+    onEvent( 'DataPointsAdded', updateWidth );
 
     /**
      * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1
@@ -116,4 +118,5 @@ define( function( require ) {
   }
 
   return inherit( Node, SumOfSquaredResidualsChart );
-} );
+} )
+;

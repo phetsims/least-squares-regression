@@ -95,13 +95,8 @@ define( function( require ) {
       // Add the Data Points on Graph and all the Residuals
       // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
       thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
-
-      // TODO : terrible hack here
-      // oh terrible hack here
-      // forces an update for the leastsquareschart
-      var fakeData = new DataPoint( new Vector2( 0, 0 ) );
-      thisModel.dataPoints.push( fakeData );
-      thisModel.dataPoints.remove( fakeData );
+      // Since we added the dataPoints in Bulk, let's send a trigger to the view
+      thisModel.trigger( 'DataPointsAdded' );
     } );
   }
 
