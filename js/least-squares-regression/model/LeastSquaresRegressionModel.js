@@ -120,6 +120,13 @@ define( function( require ) {
       } );
     },
 
+    // Function that sets all dataPoint animating flag to true, setting them up to be animated in the step function
+    // @public
+    returnAllDataPointsToBucket: function() {
+      this.dataPoints.forEach( function( dataPoint ) {
+        dataPoint.animating = true;
+      } );
+    },
     /**
      * Function for adding new dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.

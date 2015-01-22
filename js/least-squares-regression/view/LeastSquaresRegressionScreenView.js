@@ -143,9 +143,7 @@ define( function( require ) {
       top:   bucketFront.bottom + 5,
       iconWidth: 25,
       listener: function() {
-        model.dataPoints.forEach( function( dataPoint ) {
-          dataPoint.animating = true;
-        } );
+        model.returnAllDataPointsToBucket();
       }
     } );
 
