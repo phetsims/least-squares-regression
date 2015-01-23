@@ -70,19 +70,6 @@ define( function( require ) {
     } );
     var zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
-    // The barometer width is adjustable
-    // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
-    Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
-      updateWidth();
-    } );
-
-    // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
-    dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      addedDataPoint.positionProperty.link( updateWidth );
-    } );
-
-    // Trigger an update after all the points have been added in bulk to the model
-    onEvent( 'DataPointsAdded', updateWidth );
 
     /**
      * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1
@@ -104,6 +91,22 @@ define( function( require ) {
       // half the maximum value hence the value 4=8*1/2 .
       rectangleBarometer.rectWidth = ARROW_LENGTH * tanh( 4 * getSumOfSquaredResiduals() );
     }
+
+    // The barometer width is adjustable
+    // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
+    Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
+      updateWidth();
+    } );
+
+    // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
+    dataPoints.addItemAddedListener( function( addedDataPoint ) {
+      addedDataPoint.positionProperty.link( updateWidth );
+    } );
+
+    // Trigger an update after all the points have been added in bulk to the model
+    onEvent( 'DataPointsAdded', updateWidth );
+
+
 
     // Controls the visibility of this node
     visibleProperty.linkAttribute( this, 'visible' );
