@@ -91,6 +91,16 @@ define( function( require ) {
     },
 
     /**
+     * Empty out the two residual arrays and the dataPoints on Graph array
+     * @public
+     */
+    resetOnChangeOfDataSet: function() {
+      this.dataPointsOnGraph = [];
+      this.myLineResiduals.clear();
+      this.bestFitLineResiduals.clear();
+    },
+
+    /**
      * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor for the slope and intercept
      * Use to dis
      * @public
