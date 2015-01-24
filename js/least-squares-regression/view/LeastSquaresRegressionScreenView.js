@@ -117,7 +117,6 @@ define( function( require ) {
     var backLayer = new Node();
     // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
     // all of the point placement graphs in the z-order.
-    // TODO ask JB if this is OK to be a local variable (performance issue ?)
     var dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
     var bucketFrontLayer = new Node();
 
