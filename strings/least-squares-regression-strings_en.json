@@ -59,7 +59,7 @@
   "speedDistance.graphTitle": "Orbital Speed vs. Distance from Sun",
   "speedDistance.xAxisTitle": "Distance from Sun (AU)",
   "speedDistance.yAxisTitle": "Mean Orbital Speed (km/s)",
-  "speedDistance.reference": "Planet orbital speed by distance from Sun (AU)",
+  "speedDistance.reference": "Planet orbital speed by distance from Sun",
   "speedDistance.source": "Wikipedia",
   "temperatureChirp.graphTitle": "Temperature vs. Cricket Chirps",
   "temperatureChirp.xAxisTitle": "Number of Cricket Chirps in 15 Seconds",
