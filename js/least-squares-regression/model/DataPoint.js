@@ -44,21 +44,28 @@ define( function( require ) {
         this.animationStep( dt );
       }
     },
+
     /**
-     * Function that displaces the dataPoint to its initial Position
+     * Function that animates dataPoint back to the bucket.
      * @private
      * @param {number} dt
      */
     animationStep: function( dt ) {
+
       // perform any animation
       var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
+
+      // If the particle is further than one time step away, move it toward the destination
+      // TODO: Would it be appropriate to use TWEEN.js here?  If not, perhaps comment that it was an option and another strategy was used
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
+
         // Move a step toward the position.
         var stepAngle = Math.atan2( this.positionProperty.initialValue.y - this.position.y, this.positionProperty.initialValue.x - this.position.x );
         var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
         this.position = this.position.plus( stepVector );
       }
       else {
+
         // Less than one time step away, so just go to the initial position.
         this.position = this.positionProperty.initialValue;
         this.animating = false;
