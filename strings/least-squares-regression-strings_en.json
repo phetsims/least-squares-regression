@@ -57,7 +57,7 @@
   "lifeTV.reference": "Life expectancy in 40 countries is compared to\nthe average number of people per TV in that country.",
   "lifeTV.source": "The World Almanac and Book of Facts",
   "speedDistance.graphTitle": "Orbital Speed vs. Distance from Sun",
-  "speedDistance.xAxisTitle": "Distance from Sun",
+  "speedDistance.xAxisTitle": "Distance from Sun (AU)",
   "speedDistance.yAxisTitle": "Mean Orbital Speed (km/s)",
   "speedDistance.reference": "Planet orbital speed by distance from Sun (AU)",
   "speedDistance.source": "Wikipedia",
