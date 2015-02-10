@@ -150,11 +150,11 @@ define( function( require ) {
     Panel.call( this, mainBox, options );
 
     graph.angleProperty.link( function( angle ) {
-      updateTextSlope( angle )
+      updateTextSlope( angle );
     } );
 
     graph.interceptProperty.link( function( intercept ) {
-      updateTextIntercept( intercept )
+      updateTextIntercept( intercept );
     } );
 
     // Trigger an update after all the points have been added in bulk to the model
