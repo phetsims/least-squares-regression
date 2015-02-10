@@ -112,6 +112,7 @@ define( function( require ) {
       this.yRange = yRange; // @public
       this.slopeFactor = (yRange.max - yRange.min) / (xRange.max - xRange.min) / (this.bounds.height / this.bounds.width);// @public
       this.interceptFactor = (yRange.max - yRange.min) / this.bounds.height; // @public
+      this.interceptOffset = (yRange.min); // @public
     },
 
     /**

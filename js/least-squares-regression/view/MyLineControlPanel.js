@@ -59,12 +59,36 @@ define( function( require ) {
     eqPartThreeText.left = 64;
     eqPartFourText.left = 94;
 
-    var equationText = new EquationNode( graph.slope( graph.angle ), graph.intercept );
+    var equationText = new EquationNode( 0, 0 );
+
+    /**
+     * Function that updates the value of the current slope (based on the angle of the line)
+     * @param {number} angle
+     */
+    function updateTextSlope( angle ) {
+      var slope = graph.slope( angle );
+      equationText.setSlopeText( slope * graph.slopeFactor );
+    }
+
+    /**
+     * Function that updates the value of the intercept
+     * @param {number} intercept
+     */
+    function updateTextIntercept( intercept ) {
+      equationText.setInterceptText( intercept * graph.interceptFactor + graph.interceptOffset );
+    }
+
+
+    updateTextIntercept( 0 );
+    updateTextSlope( 0 );
+
+
     var equationPanel = new Panel( equationText, {
       fill: 'white',
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
       resize: false
     } );
+
 
     var lineCheckBox = CheckBox.createTextCheckBox( myLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineVisibleProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowResidualsProperty );
@@ -116,9 +140,6 @@ define( function( require ) {
     var mainBox = new VBox( {
       spacing: 10, children: [
         lineCheckBox,
-        //equationPanel,
-        //immutableEquationText,
-        //slidersBox,
         rightAlignedPanel,
         residualsCheckBox,
         squaredResidualsCheckBox,
@@ -129,13 +150,20 @@ define( function( require ) {
     Panel.call( this, mainBox, options );
 
     graph.angleProperty.link( function( angle ) {
-      var slope = graph.slope( angle );
-      equationText.setSlopeText( slope * graph.slopeFactor );
+      updateTextSlope( angle )
     } );
 
     graph.interceptProperty.link( function( intercept ) {
-      equationText.setInterceptText( intercept * graph.interceptFactor );
+      updateTextIntercept( intercept )
     } );
+
+    // Trigger an update after all the points have been added in bulk to the model
+    // Update the equation text
+    onEvent( 'DataPointsAdded', function() {
+      updateTextSlope( graph.angle );
+      updateTextIntercept( graph.intercept );
+    } );
+
 
   }
 

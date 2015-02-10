@@ -129,7 +129,7 @@ define( function( require ) {
         var linearFitParameters = this.graph.getLinearFit();
         if ( linearFitParameters !== null ) {
           this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
-          this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor );
+          this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor + this.graph.interceptOffset );
           if ( this.graph.bestFitLineVisibleProperty.value ) {
             this.equationText.visible = true;
           }
