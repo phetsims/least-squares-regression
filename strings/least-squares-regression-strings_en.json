@@ -11,6 +11,7 @@
   "source": "Source",
   "colonPunctuation": ": ",
   "rEquals": "r =",
+  "correlationCoefficient": "Correlation Coefficient",
   "custom.graphTitle": "Custom",
   "custom.xAxisTitle": "",
   "custom.yAxisTitle": "",
