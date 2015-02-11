@@ -32,7 +32,7 @@ define( function( require ) {
   /**
    * @param {Graph} graph - model of the graph
    * @param {Array.<DataPoint>} dataPoints
-   * @param {Function} onEvent - listener function when event is trigger
+   * @param {Function} onEvent - listener function when points have been added to the graph
    * @param {Object} [options]
    * @constructor
    */
@@ -41,9 +41,10 @@ define( function( require ) {
     this.graph = graph;
     var thisControlPanel = this;
 
-    // property of the accordion Box that control the expanded
+    // property of the accordion Box
     this.expandedProperty = new Property( false );
 
+    // Create the chart (barometer) displaying the sum of the squares
     var sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
       graph,
       dataPoints,
@@ -53,24 +54,24 @@ define( function( require ) {
       graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
-    var equationText = new EquationNode( 0, 0 );
+    // Create the 'Best Fit Line' equation
+    var equationText = new EquationNode( 0, 0 ); // the correct values for the slope and the intercept will be updated below
     equationText.visible = false;
+    this.equationText = equationText;
     var equationPanel = new Panel( equationText, {
       fill: 'white',
       stroke: 'black',
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
       resize: false
     } );
-    var linearFitParameters = graph.getLinearFit();
-    if ( linearFitParameters !== null ) {
-      this.equationNode = new EquationNode( linearFitParameters.slope * graph.slopeFactor, linearFitParameters.intercept * graph.interceptFactor );
-    }
+    this.updateBestFitLineEquation();
 
     // Create the checkBoxes
     var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineVisibleProperty );
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
 
+    // Update the control Panel upon a change of the status of the Best Fit Line CheckBox
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // Set Equation to invisible if there is less than one point on the graph
       if ( graph.dataPointsOnGraph.length > 1 ) {
@@ -115,14 +116,21 @@ define( function( require ) {
       options.titleNode.visible = !expanded;
     } );
 
-    this.equationText = equationText;
+
   }
 
   return inherit( AccordionBox, BestFitLineControlPanel, {
+      /**
+       * Reset
+       * @public
+       */
       reset: function() {
+        // Close the accordion Box
         this.expandedProperty.reset();
       },
+
       /**
+       * Update the text of the best Fit Line Equation
        * @public
        */
       updateBestFitLineEquation: function() {
