@@ -43,8 +43,6 @@ define( function( require ) {
     // @public read-only
     this.dataSets = [];
     this.dataSets.push( DataSet.CUSTOM );
-    this.dataSets.push( DataSet.TEMPERATURE_LONGITUDE );
-    this.dataSets.push( DataSet.TEMPERATURE_LATITUDE );
     this.dataSets.push( DataSet.SPENDING_SALARY );
     this.dataSets.push( DataSet.WAGE_YEAR );
     this.dataSets.push( DataSet.MORTALITY_YEAR );
@@ -52,7 +50,12 @@ define( function( require ) {
     this.dataSets.push( DataSet.GASOLINE_YEAR );
     this.dataSets.push( DataSet.LIFE_TV );
     this.dataSets.push( DataSet.SPEED_DISTANCE );
-    this.dataSets.push( DataSet.TEMPERATURE_CHIRP );
+    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_CHIRP );
+    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE );
+    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE );
+    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_CHIRP );
+    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LONGITUDE );
+    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LATITUDE );
     this.dataSets.push( DataSet.HEIGHT_SHOE );
 
 

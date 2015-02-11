@@ -21,22 +21,37 @@ define( function( require ) {
     source: require( 'string!LEAST_SQUARES_REGRESSION/custom.source' )
   };
 
-  var temperatureLatitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLatitude.source' )
+  var temperatureCelsiusLatitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.source' )
   };
 
-  var temperatureLongitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureLongitude.source' )
+  var temperatureCelsiusLongitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.source' )
   };
 
+  var temperatureFahrenheitLatitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.source' )
+  };
+
+  var temperatureFahrenheitLongitude = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.source' )
+  };
   var spendingSalary = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
@@ -90,14 +105,21 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.source' )
   };
-  var temperatureChirp = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureChirp.source' )
+  var temperatureFahrenheitChirp = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.source' )
   };
 
+  var temperatureCelsiusChirp = {
+    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.graphTitle' ),
+    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.yAxisTitle' ),
+    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.xAxisTitle' ),
+    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.reference' ),
+    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.source' )
+  };
   var heightShoe = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
@@ -136,7 +158,7 @@ define( function( require ) {
 
   DataSet.CUSTOM = createDataSet( custom, new Range( 0, 20 ), new Range( 0, 20 ), [] );
 
-  DataSet.TEMPERATURE_LONGITUDE = createDataSet( temperatureLongitude, new Range( 0, 80 ), new Range( 0, 140 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE = createDataSet( temperatureFahrenheitLongitude, new Range( 0, 80 ), new Range( 0, 140 ),
     [
       { x: 88.5, y: 44 },
       { x: 86.8, y: 38 },
@@ -196,8 +218,8 @@ define( function( require ) {
       { x: 104.9, y: 14 }
     ] );
 
-  // celcius
-  DataSet.TEMPERATURE_LONGITUDE = createDataSet( temperatureLongitude, new Range( -20, 20 ), new Range( 0, 140 ),
+  // celsius
+  DataSet.TEMPERATURE_CELSIUS_LONGITUDE = createDataSet( temperatureCelsiusLongitude, new Range( -20, 20 ), new Range( 0, 140 ),
     [
       { x: 88.5, y: 6.6 },
       { x: 86.8, y: 3.3 },
@@ -257,7 +279,7 @@ define( function( require ) {
       { x: 104.9, y: -10 }
     ] );
 
-  DataSet.TEMPERATURE_LATITUDE = createDataSet( temperatureLatitude, new Range( 0, 80 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE = createDataSet( temperatureFahrenheitLatitude, new Range( 0, 80 ), new Range( 0, 60 ),
     [
       { x: 31.2, y: 44 },
       { x: 32.9, y: 38 },
@@ -317,7 +339,7 @@ define( function( require ) {
       { x: 41.2, y: 14 }
     ] );
 // in celcius
-  DataSet.TEMPERATURE_LATITUDE = createDataSet( temperatureLatitude, new Range( -20, 20 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_CELSIUS_LATITUDE = createDataSet( temperatureCelsiusLatitude, new Range( -20, 20 ), new Range( 0, 60 ),
     [
       { x: 31.2, y: 6.6 },
       { x: 32.9, y: 3.3 },
@@ -648,7 +670,7 @@ define( function( require ) {
       { x: 30.06896348, y: 5.4778 }
     ] );
 
-  DataSet.TEMPERATURE_CHIRP = createDataSet( temperatureChirp, new Range( 0, 100 ), new Range( 0, 20 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_CHIRP = createDataSet( temperatureFahrenheitChirp, new Range( 0, 100 ), new Range( 0, 20 ),
     [
       { x: 20, y: 89 },
       { x: 16, y: 72 },
@@ -667,8 +689,8 @@ define( function( require ) {
       { x: 14, y: 76 }
     ] );
 
-  // celcius
-  DataSet.TEMPERATURE_CHIRP = createDataSet( temperatureChirp, new Range( 0, 40 ), new Range( 0, 20 ),
+  // celsius
+  DataSet.TEMPERATURE_CELSIUS_CHIRP = createDataSet( temperatureCelsiusChirp, new Range( 0, 40 ), new Range( 0, 20 ),
     [
       { x: 20, y: 31.6 },
       { x: 16, y: 22.2 },
