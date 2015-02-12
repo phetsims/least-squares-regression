@@ -444,14 +444,20 @@ define( function( require ) {
         var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
         var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
 
-        var slope = slopeNumerator / slopeDenominator;
-        var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
+        // make sure the slopeDenominator is not equal to zero, this happens if all the points are aligned vertically
+        if ( slopeDenominator === 0 ) {
+          return null; //
+        }
+        else {
+          var slope = slopeNumerator / slopeDenominator;
+          var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-        var fitParameters = {
-          slope: slope,
-          intercept: intercept
-        };
-        return fitParameters;
+          var fitParameters = {
+            slope: slope,
+            intercept: intercept
+          };
+          return fitParameters;
+        }
       }
     },
 
@@ -472,8 +478,14 @@ define( function( require ) {
         this.getStatistics();
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
         var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
-        var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-        return pearsonCoefficientCorrelation;
+        // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
+        if ( pearsonCoefficientCorrelationDenominator === 0 ) {
+          return null; //
+        }
+        else {
+          var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+          return pearsonCoefficientCorrelation;
+        }
       }
     }
 
