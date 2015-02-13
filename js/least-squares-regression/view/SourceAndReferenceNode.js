@@ -63,10 +63,21 @@ define( function( require ) {
     // The button is not hooked to any listener since the closing of this node is handled in the main screenView
     var buttonSize = 15;
     var buttonLineWidth = 2;
-    var circle = new Circle( buttonSize, { fill: 'black', stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    var circle = new Circle( buttonSize, {
+      fill: 'black',
+      stroke: 'white',
+      lineWidth: buttonLineWidth,
+      centerX: 0,
+      centerY: 0
+    } );
     var l = buttonSize / 3;
     var upSlopeLine = new Line( l, l, -l, -l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
-    var downwardSlopeLine = new Line( l, -l, -l, l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    var downwardSlopeLine = new Line( l, -l, -l, l, {
+      stroke: 'white',
+      lineWidth: buttonLineWidth,
+      centerX: 0,
+      centerY: 0
+    } );
     var button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
 
     // Add to this node
