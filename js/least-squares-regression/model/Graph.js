@@ -457,7 +457,7 @@ define( function( require ) {
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
      * It would be wise to check if isLinearFitDefined() is true before calling this function.
      * @public read-only
-     * @returns {{slope: number,intercept: number}}
+     * @returns {{slope: number, intercept: number}}
      */
     getLinearFit: function() {
       this.getStatistics();
