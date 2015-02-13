@@ -138,8 +138,8 @@ define( function( require ) {
        * @public
        */
       updateBestFitLineEquation: function() {
-        var linearFitParameters = this.graph.getLinearFit();
-        if ( linearFitParameters !== null ) {
+        if ( this.graph.isLinearFitDefined() ) {
+          var linearFitParameters = this.graph.getLinearFit();
           this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
           this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor + this.graph.interceptOffset );
           if ( this.graph.bestFitLineVisibleProperty.value ) {

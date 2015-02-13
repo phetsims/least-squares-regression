@@ -121,9 +121,8 @@ define( function( require ) {
      */
     update: function() {
       this.updateMyLineResiduals();
-      if ( this.dataPointsOnGraph.length > 1 ) {
-        this.updateBestFitLineResiduals();
-      }
+      this.updateBestFitLineResiduals();
+
     },
     /**
      * Convert the angle of a line (measured from the horizontal x axis) to a slope
@@ -148,6 +147,7 @@ define( function( require ) {
      * @param {DataPoint} dataPoint
      */
     addBestFitLineResidual: function( dataPoint ) {
+
       var linearFitParameters = this.getLinearFit();
       var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
@@ -455,28 +455,22 @@ define( function( require ) {
 
     /**
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
-     * The function returns null if there are less than two dataPoints on the graph.
+     * It would be wise to check if isLinearFitDefined() is true before calling this function.
      * @public read-only
-     * @returns {null||{slope: number,intercept: number}}
+     * @returns {{slope: number,intercept: number}}
      */
     getLinearFit: function() {
-      if ( this.isLinearFitDefined() ) {
+      this.getStatistics();
+      var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
+      var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+      var slope = slopeNumerator / slopeDenominator;
+      var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-        this.getStatistics();
-        var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
-        var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
-        var slope = slopeNumerator / slopeDenominator;
-        var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
-
-        var fitParameters = {
-          slope: slope,
-          intercept: intercept
-        };
-        return fitParameters;
-      }
-      else {
-        return null;
-      }
+      var fitParameters = {
+        slope: slope,
+        intercept: intercept
+      };
+      return fitParameters;
     },
 
     /**

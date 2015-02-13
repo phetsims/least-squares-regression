@@ -47,8 +47,9 @@ define( function( require ) {
       stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
       lineWidth: LSRConstants.LINE_WIDTH
     } );
-    var linearFitParameters = graph.getLinearFit();
-    if ( linearFitParameters !== null ) {
+
+    if ( graph.isLinearFitDefined() ) {
+      var linearFitParameters = graph.getLinearFit();
       var bestFitLineBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLine = new Line(
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point1 ),
@@ -142,8 +143,8 @@ define( function( require ) {
      * @private
      */
     updateBestFitLine: function() {
-      var linearFitParameters = this.graph.getLinearFit();
-      if ( linearFitParameters !== null ) {
+      if ( this.graph.isLinearFitDefined() ) {
+        var linearFitParameters = this.graph.getLinearFit();
         var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
         this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
         this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
