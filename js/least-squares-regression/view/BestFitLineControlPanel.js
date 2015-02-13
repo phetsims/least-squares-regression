@@ -14,15 +14,15 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var CheckBox = require( 'SUN/CheckBox' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
-  var HBox = require( 'SCENERY/nodes/HBox' );
   var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VBox = require( 'SCENERY/nodes/VBox' );
+
 
   // strings
   var bestFitLineString = require( 'string!LEAST_SQUARES_REGRESSION/bestFitLine' );
@@ -82,6 +82,7 @@ define( function( require ) {
       squaredResidualsCheckBox.enabled = enabled;
     } );
 
+    // options for the accordion box
     options = _.extend( {
       buttonXMargin: 10,
       buttonYMargin: 10,
@@ -92,10 +93,10 @@ define( function( require ) {
       contentYMargin: 10
     }, options );
 
-    AccordionBox.call( this, new VBox( {
+    AccordionBox.call( this, new LayoutBox( {
         spacing: 10, children: [
           lineCheckBox,
-          new HBox( { children: [ new HStrut( 20 ), equationPanel ] } ),
+          new LayoutBox( { children: [ new HStrut( 20 ), equationPanel ], orientation: 'horizontal' } ),
           residualsCheckBox,
           squaredResidualsCheckBox,
           sumOfSquaredResidualsChart
