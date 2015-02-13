@@ -110,6 +110,11 @@ define( function( require ) {
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowSquaredResidualsProperty );
 
+    // Expand the touch Area
+    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 10, 10 );
+    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 10, 10 );
+    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 10, 10 );
+
     // Create the barometer chart for the sum of the squares
     var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
       graph,

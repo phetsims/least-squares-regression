@@ -70,10 +70,15 @@ define( function( require ) {
     var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
 
+    // Expand the touch Area
+    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 10, 10 );
+    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 10, 10 );
+    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 10, 10 );
+
     // Update the control Panel upon a change of the status of the Best Fit Line CheckBox
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // Set Equation to invisible if there is less than one point on the graph
-      if ( graph.dataPointsOnGraph.length > 1 ) {
+      if ( graph.isLinearFitDefined() ) {
         equationText.visible = enabled;
       }
       equationPanel.opacity = enabled ? 1 : 0.3;
