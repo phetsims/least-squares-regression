@@ -1,6 +1,6 @@
 {
   "chipper": {
-    "sha": "b89aa0d21a273cd2326d4d47809a4ec572dd7239",
+    "sha": "3af6b6de8450267e03c2fd931372283b9830a24a",
     "branch": "master"
   },
   "sherpa": {
@@ -44,7 +44,7 @@
     "branch": "master"
   },
   "axon": {
-    "sha": "d55aac41892a501d5053ab60fd6f76eaa29a593b",
+    "sha": "3046f6c946f4d974b652ba89b672ef195d15063e",
     "branch": "master"
   },
   "assert": {
@@ -52,8 +52,8 @@
     "branch": "master"
   },
   "least-squares-regression": {
-    "sha": "bcc44df0497ba67b5f2b16f59723b1e57ff04958",
+    "sha": "ed635577d107aaf979181acfc96acb478f023101",
     "branch": "master"
   },
-  "comment": "# least-squares-regression 1.0.0-dev.7 Fri Feb 13 2015 11:05:27 GMT-0700 (Mountain Standard Time)"
+  "comment": "# least-squares-regression 1.0.0-dev.8 Fri Feb 13 2015 15:30:18 GMT-0700 (Mountain Standard Time)"
 }
