@@ -130,7 +130,7 @@ define( function( require ) {
 
   /**
    * Function that returns a dataSet Object
-   * @param {string} name
+   * @param {Object} name - {{ graphTitle: string),yAxisTitle: string ), xAxisTitle: string ),reference: string ),source: string )}
    * @param {Range} yRange
    * @param {Range} xRange
    * @param {Array.<Object>} dataXY - array of object of the form {x: 2, y: 5}
@@ -337,7 +337,7 @@ define( function( require ) {
       { x: 43.3, y: 13 },
       { x: 41.2, y: 14 }
     ] );
-// in celcius
+// in celsius
   DataSet.TEMPERATURE_CELSIUS_LATITUDE = createDataSet( temperatureCelsiusLatitude, new Range( -20, 20 ), new Range( 0, 60 ),
     [
       { x: 31.2, y: 6.6 },

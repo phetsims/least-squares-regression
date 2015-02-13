@@ -157,8 +157,7 @@ define( function( require ) {
     this.addChild( thumbNode );
 
     // layout
-    var centerX = backgroundNode.centerX;
-    minNode.centerX = centerX;
+    minNode.centerX = backgroundNode.centerX;
     minNode.top = backgroundNode.bottom + ( thumbNode.height / 2 );
     tickNode.centerX = backgroundNode.centerX;
     tickNode.centerY = trackNode.centerY;

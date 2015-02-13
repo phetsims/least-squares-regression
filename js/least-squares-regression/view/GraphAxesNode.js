@@ -170,7 +170,7 @@ define( function( require ) {
     }
 
     var majorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ); // separation between two major ticks
-    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ) / minorTicksPerMajor; // speration between two minor ticks
+    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ) / minorTicksPerMajor; // separation between two minor ticks
     var tickStartPosition = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing; // {number} position of the first tick
     var tickStopPosition = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing; // {number} position of the last tick
     var numberOfTicks = (tickStopPosition - tickStartPosition) / minorTickSpacing + 1; // number of ticks

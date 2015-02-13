@@ -59,7 +59,7 @@ define( function( require ) {
     eqPartThreeText.left = 64;
     eqPartFourText.left = 94;
 
-    // create a mutable equation y = {1} x + {2} , the slope and interecept are updated later
+    // create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
     var equationText = new EquationNode( 0, 0 );
 
     /**
@@ -143,7 +143,7 @@ define( function( require ) {
     // call the superconstructor
     Panel.call( this, mainBox, options );
 
-    // Trigger the opacity/nonopacity when checking the myLine checkcbox
+    // Trigger the opacity/non-opacity when checking the myLine checkbox
     graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
       aSlider.opacity = enabled ? 1 : 0.3;

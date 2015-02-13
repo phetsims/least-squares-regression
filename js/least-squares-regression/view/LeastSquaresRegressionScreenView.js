@@ -103,7 +103,7 @@ define( function( require ) {
     var dataSetListParent = new Node();
     var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
 
-    // Create a Push Button (next to the Combox Box) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
+    // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
     var sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
@@ -126,7 +126,7 @@ define( function( require ) {
     var bucketHole = new BucketHole( model.bucket, IDENTITY_TRANSFORM );
     backLayer.addChild( bucketHole );
 
-    // Add the dataPoint creator nodes. These must be added on the backlayer but after the bucket hole for proper layering.
+    // Add the dataPoint creator nodes. These must be added on the backLayer but after the bucket hole for proper layering.
     DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
       backLayer.addChild( new DataPointCreatorNode(
         model.addUserCreatedDataPoint.bind( model ),
@@ -155,7 +155,7 @@ define( function( require ) {
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
 
-    // Link the combox box selectedDataSet to the Scene Graph
+    // Link the comboBox selectedDataSet to the Scene Graph
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       // Remove graphAxesNode from the scene graph if it exists
@@ -180,7 +180,7 @@ define( function( require ) {
       // Update the Best fit Line Equation in the best Fit Line Control Panel, (regardless of the status of the node visibility )
       bestFitLineControlPanel.updateBestFitLineEquation();
 
-      // The bucket, eraser button must be present when custom data set is selected whereas the pushButton next to the combox box must be set to invisible
+      // The bucket, eraser button must be present when custom data set is selected whereas the pushButton next to the comboBox box must be set to invisible
       if ( selectedDataSet === DataSet.CUSTOM ) {
         bucketFront.visible = true;
         eraserButton.visible = true;
@@ -267,7 +267,7 @@ define( function( require ) {
     this.addChild( graphNode );
 
     // Order matters here. These must come last
-    this.addChild( bucketFrontLayer ); //must come after backlayer
+    this.addChild( bucketFrontLayer ); //must come after back layer
     this.addChild( dataPointsLayer ); // after everything but dataSetLisParent
     this.addChild( dataSetListParent ); // last, so that dataSet box list is on top of dataPoint and the graph
 
