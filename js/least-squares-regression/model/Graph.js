@@ -235,9 +235,7 @@ define( function( require ) {
         thisGraph.myLineResiduals.push( new Property( myLineResidual ) );
       } );
 
-    }
-
-    ,
+    },
 
     /**
      * Function that returns true if the dataPoint is on the array.
@@ -248,8 +246,7 @@ define( function( require ) {
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
       return (index !== -1);
-    }
-    ,
+    },
 
     /**
      * Function that determines if the Position of a Data Point is within the visual bounds of the graph
@@ -259,8 +256,7 @@ define( function( require ) {
      */
     isDataPointPositionOverlappingGraph: function( position ) {
       return this.bounds.containsPoint( position );
-    }
-    ,
+    },
 
     /**
      * Add the dataPoint top the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals
@@ -293,8 +289,7 @@ define( function( require ) {
       dataPoint.positionProperty.link( positionListener );
       dataPoint.positionListener = positionListener;
 
-    }
-    ,
+    },
 
     /**
      * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
@@ -318,16 +313,14 @@ define( function( require ) {
       this.update();
       dataPoint.positionProperty.unlink( dataPoint.positionListener );
 
-    }
-    ,
+    },
     /**
      * Function that removes all the best Fit Line Residuals
      * @private
      */
     removeBestFitLineResiduals: function() {
       this.bestFitLineResiduals.clear();
-    }
-    ,
+    },
 
     /**
      * Function that returns the sum of squared residuals of all the dataPoints on the list (compared with a line with a slope and intercept)
@@ -343,8 +336,7 @@ define( function( require ) {
         sumOfSquareResiduals += yResidual * yResidual;
       } );
       return sumOfSquareResiduals;
-    }
-    ,
+    },
 
     /**
      * Function that returns the sum of squared residuals of 'My Line'
@@ -359,8 +351,7 @@ define( function( require ) {
       else {
         return 0;
       }
-    }
-    ,
+    },
 
     /**
      * Function that returns the sum of squared residuals of 'Best Fit Line'
@@ -376,8 +367,7 @@ define( function( require ) {
       else {
         return 0;
       }
-    }
-    ,
+    },
 
     /**
      * Returns an array of two points that crosses the left and the right hand side of the graph bounds
@@ -396,8 +386,7 @@ define( function( require ) {
       };
 
       return boundaryPoints;
-    }
-    ,
+    },
 
     /**
      * Function that updates statistical properties of the dataPoints on the graph.
@@ -440,8 +429,7 @@ define( function( require ) {
       this.averageOfSumOfSquaresYY = sumOfSquaresYY / arrayLength;
       this.averageOfSumOfX = sumOfX / arrayLength;
       this.averageOfSumOfY = sumOfY / arrayLength;
-    }
-    ,
+    },
 
     /**
      * Function that determines if a best fit line fit exists
@@ -466,8 +454,7 @@ define( function( require ) {
         }
       }
       return isDefined;
-    }
-    ,
+    },
 
     /**
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
@@ -487,8 +474,7 @@ define( function( require ) {
         intercept: intercept
       };
       return fitParameters;
-    }
-    ,
+    },
 
     /**
      * Function that returns the Pearson Coefficient Correlation
