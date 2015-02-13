@@ -70,7 +70,6 @@ define( function( require ) {
     } );
     var zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
-
     /**
      * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1
      * @param {number} x
@@ -105,8 +104,6 @@ define( function( require ) {
 
     // Trigger an update after all the points have been added in bulk to the model
     onEvent( 'DataPointsAdded', updateWidth );
-
-
 
     // Controls the visibility of this node
     visibleProperty.linkAttribute( this, 'visible' );

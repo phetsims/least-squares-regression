@@ -128,7 +128,6 @@ define( function( require ) {
     source: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.source' )
   };
 
-
   /**
    * Function that returns a dataSet Object
    * @param {string} name

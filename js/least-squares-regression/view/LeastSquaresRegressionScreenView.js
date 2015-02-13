@@ -271,7 +271,6 @@ define( function( require ) {
     this.addChild( dataPointsLayer ); // after everything but dataSetLisParent
     this.addChild( dataSetListParent ); // last, so that dataSet box list is on top of dataPoint and the graph
 
-
     // Layout all the other nodes
     {
       myLineControlPanel.right = this.layoutBounds.maxX - 10;
@@ -290,7 +289,6 @@ define( function( require ) {
   }
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView, {
-
 
     /**
      * This is taken from MoleculesAndLightScreenView with modifications.
@@ -319,7 +317,6 @@ define( function( require ) {
 
       sourceAndReferenceNode.addInputListener( sourceAndReferenceListener );
       plane.addInputListener( sourceAndReferenceListener );
-
 
     }
   } );

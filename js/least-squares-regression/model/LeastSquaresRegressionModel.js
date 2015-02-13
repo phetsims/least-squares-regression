@@ -58,7 +58,6 @@ define( function( require ) {
     this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LATITUDE );
     this.dataSets.push( DataSet.HEIGHT_SHOE );
 
-
     // Model of the graph that contains all information regarding the composition of the graph
     // @public read-only
     this.graph = new Graph(

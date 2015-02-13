@@ -23,7 +23,6 @@ define( function( require ) {
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-
   // strings
   var bestFitLineString = require( 'string!LEAST_SQUARES_REGRESSION/bestFitLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
@@ -116,7 +115,6 @@ define( function( require ) {
     this.expandedProperty.link( function( expanded ) {
       options.titleNode.visible = !expanded;
     } );
-
 
   }
 

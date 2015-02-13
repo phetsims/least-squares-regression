@@ -31,7 +31,6 @@ define( function( require ) {
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
-
   /**
    *
    * @param {Graph} graph
