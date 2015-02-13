@@ -29,24 +29,15 @@ define( function( require ) {
   function EquationNode( slope, intercept ) {
     Node.call( this );
 
-    this.eqnPartOneText = new Text( 'y =', { font: LSRConstants.TEXT_FONT, fill: 'black' } );
-    this.eqnPartTwoText = new Text( this.numberToString( slope ).optionalSign, {
-      font: LSRConstants.TEXT_FONT_BOLD,
-      fill: 'blue'
-    } );
-    this.eqnPartThreeText = new Text( this.numberToString( slope ).absoluteNumber, {
-      font: LSRConstants.TEXT_FONT_BOLD,
-      fill: 'blue'
-    } );
-    this.eqnPartFourText = new Text( 'x', { font: LSRConstants.TEXT_FONT, fill: 'black' } );
-    this.eqnPartFiveText = new Text( this.numberToString( intercept ).sign, {
-      font: LSRConstants.TEXT_FONT,
-      fill: 'black'
-    } );
-    this.eqnPartSixText = new Text( this.numberToString( intercept ).absoluteNumber, {
-      font: LSRConstants.TEXT_FONT_BOLD,
-      fill: 'blue'
-    } );
+    var blackOption = { font: LSRConstants.TEXT_FONT, fill: 'black' };
+    var blueOption = { font: LSRConstants.TEXT_FONT, fill: 'blue' };
+
+    this.eqnPartOneText = new Text( 'y =', blackOption );
+    this.eqnPartTwoText = new Text( this.numberToString( slope ).optionalSign, blueOption );
+    this.eqnPartThreeText = new Text( this.numberToString( slope ).absoluteNumber, blueOption );
+    this.eqnPartFourText = new Text( 'x', blackOption );
+    this.eqnPartFiveText = new Text( this.numberToString( intercept ).sign, blackOption );
+    this.eqnPartSixText = new Text( this.numberToString( intercept ).absoluteNumber, blueOption );
     var mutableEquationText = new Node( {
       children: [
         this.eqnPartOneText,

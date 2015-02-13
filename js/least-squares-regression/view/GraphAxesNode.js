@@ -150,7 +150,8 @@ define( function( require ) {
     var majorBaseMultiple;
     var minorTicksPerMajor;
 
-    // on a graph there should be minimum of 4 major ticks mark and a maximum of 8.
+    // on a graph there should be minimum of 4 major ticks and a maximum of 8.
+    // the numbers for the mantissa were chosen empirically
     if ( mantissa >= 6.5 ) {
       majorBaseMultiple = 2;
       minorTicksPerMajor = 4;
@@ -168,19 +169,19 @@ define( function( require ) {
       minorTicksPerMajor = 4;
     }
 
-    var majorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent );
-    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ) / minorTicksPerMajor;
-    var startPositionTick = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing;
-    var stopPositionTick = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing;
-    var numberOfTicks = (stopPositionTick - startPositionTick) / minorTickSpacing + 1;
-    var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1;
+    var majorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ); // separation between two major ticks
+    var minorTickSpacing = majorBaseMultiple * Math.pow( 10, exponent ) / minorTicksPerMajor; // speration between two minor ticks
+    var tickStartPosition = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing; // {number} position of the first tick
+    var tickStopPosition = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing; // {number} position of the last tick
+    var numberOfTicks = (tickStopPosition - tickStartPosition) / minorTickSpacing + 1; // number of ticks
+    var decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1; // the precision of ticks (for text purposes)
 
     var tickSeparation = {
       majorTickSpacing: majorTickSpacing,
       minorTickSpacing: minorTickSpacing,
       minorTicksPerMajor: minorTicksPerMajor,
-      startPositionTick: startPositionTick,
-      stopPositionTick: stopPositionTick,
+      tickStartPosition: tickStartPosition,
+      tickStopPosition: tickStopPosition,
       numberOfTicks: numberOfTicks,
       decimalPlaces: decimalPlaces
     };
@@ -214,7 +215,7 @@ define( function( require ) {
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
-      var modelX = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+      var modelX = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
       var x = modelViewTransform.modelToViewX( modelX );
       var y = modelViewTransform.modelToViewY( dataSet.yRange.min );
 
@@ -260,7 +261,7 @@ define( function( require ) {
     var numberOfTicks = tickSeparation.numberOfTicks;
 
     for ( var i = 0; i < numberOfTicks; i++ ) {
-      var modelY = tickSeparation.startPositionTick + tickSeparation.minorTickSpacing * i;
+      var modelY = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
 
       var x = modelViewTransform.modelToViewX( dataSet.xRange.min );
       var y = modelViewTransform.modelToViewY( modelY );
@@ -377,7 +378,7 @@ define( function( require ) {
     var minX = modelViewTransform.modelToViewX( dataSet.xRange.min );
     var maxX = modelViewTransform.modelToViewX( dataSet.xRange.max );
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
-      var modelY = tickYSeparation.startPositionTick + tickYSeparation.minorTickSpacing * i;
+      var modelY = tickYSeparation.tickStartPosition + tickYSeparation.minorTickSpacing * i;
       if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
         var yOffset = modelViewTransform.modelToViewY( modelY );
         var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < SMALL_EPSILON;
@@ -393,7 +394,7 @@ define( function( require ) {
     var minY = modelViewTransform.modelToViewY( dataSet.yRange.max ); // yes, swap min and max
     var maxY = modelViewTransform.modelToViewY( dataSet.yRange.min );
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
-      var modelX = tickXSeparation.startPositionTick + tickXSeparation.minorTickSpacing * j;
+      var modelX = tickXSeparation.tickStartPosition + tickXSeparation.minorTickSpacing * j;
       if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
         var xOffset = modelViewTransform.modelToViewX( modelX );
         var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < SMALL_EPSILON;
