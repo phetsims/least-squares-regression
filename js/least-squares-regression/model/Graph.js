@@ -357,7 +357,7 @@ define( function( require ) {
      * @returns {number} sumOfSquareResiduals
      */
     getBestFitLineSumOfSquaredResiduals: function() {
-      if ( this.dataPointsOnGraph.length >= 2 ) {
+      if ( this.isLinearFitDefined() ) {
         var linearFitParameters = this.getLinearFit();
         return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept );
       }
@@ -429,35 +429,53 @@ define( function( require ) {
     },
 
     /**
+     * Function that determines if a best fit line fit exists
+     * @public read-only
+     * @returns {boolean}
+     */
+    isLinearFitDefined: function() {
+      var isDefined;
+      // you can't have a linear fit with less than 2 data points
+      if ( this.dataPointsOnGraph.length < 2 ) {
+        isDefined = false;
+      }
+      else {
+        this.getStatistics();
+        var xVariance = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+        // the linear fit parameters are not defined when the points are aligned vertically (infinite slope).
+        if ( xVariance === 0 ) {
+          isDefined = false;
+        }
+        else {
+          isDefined = true;
+        }
+      }
+      return isDefined;
+    },
+
+    /**
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
      * The function returns null if there are less than two dataPoints on the graph.
      * @public read-only
      * @returns {null||{slope: number,intercept: number}}
      */
     getLinearFit: function() {
-      if ( this.dataPointsOnGraph.length < 2 ) {
-        return null;
-      }
-      else {
-        this.getStatistics();
+      if ( this.isLinearFitDefined() ) {
 
+        this.getStatistics();
         var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
         var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+        var slope = slopeNumerator / slopeDenominator;
+        var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-        // make sure the slopeDenominator is not equal to zero, this happens if all the points are aligned vertically
-        if ( slopeDenominator === 0 ) {
-          return null; //
-        }
-        else {
-          var slope = slopeNumerator / slopeDenominator;
-          var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
-
-          var fitParameters = {
-            slope: slope,
-            intercept: intercept
-          };
-          return fitParameters;
-        }
+        var fitParameters = {
+          slope: slope,
+          intercept: intercept
+        };
+        return fitParameters;
+      }
+      else {
+        return null;
       }
     },
 
@@ -471,7 +489,7 @@ define( function( require ) {
      * @returns {null||number}
      */
     getPearsonCoefficientCorrelation: function() {
-      if ( this.dataPointsOnGraph.length < 2 ) {
+      if ( !this.isLinearFitDefined() ) {
         return null;
       }
       else {

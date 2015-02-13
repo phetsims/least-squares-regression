@@ -100,7 +100,7 @@ define( function( require ) {
     update: function() {
       var rValueString;
       // Check for the existence of the rValue
-      if ( this.graph.dataPointsOnGraph.length >= 2 ) {
+      if ( this.graph.isLinearFitDefined() ) {
         var rValue = this.graph.getPearsonCoefficientCorrelation();
         var isNegative = (rValue < 0);
         var signString = isNegative ? minusString : plusString;

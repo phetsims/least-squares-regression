@@ -77,10 +77,12 @@ define( function( require ) {
 
     // What to do when the selected Data Set changes
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
-      // Clear the residual arrays and the dataPointsOnGraph array
-      thisModel.graph.resetOnChangeOfDataSet();
+
       // Clear the dataPoints array
       thisModel.dataPoints.clear();
+      // Clear the residual arrays and the dataPointsOnGraph array
+      thisModel.graph.resetOnChangeOfDataSet();
+
       // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
