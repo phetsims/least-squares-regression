@@ -201,11 +201,13 @@ define( function( require ) {
      * @private
      */
     updateBestFitLineResiduals: function() {
-      var linearFitParameters = this.getLinearFit();
-      this.bestFitLineResiduals.forEach( function( residualProperty ) {
-        var dataPoint = residualProperty.value.dataPoint;
-        residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
-      } );
+      if ( this.isLinearFitDefined() ) {
+        var linearFitParameters = this.getLinearFit();
+        this.bestFitLineResiduals.forEach( function( residualProperty ) {
+          var dataPoint = residualProperty.value.dataPoint;
+          residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+        } );
+      }
     },
     /**
      * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
@@ -233,7 +235,9 @@ define( function( require ) {
         thisGraph.myLineResiduals.push( new Property( myLineResidual ) );
       } );
 
-    },
+    }
+
+    ,
 
     /**
      * Function that returns true if the dataPoint is on the array.
@@ -244,7 +248,8 @@ define( function( require ) {
     isDataPointOnList: function( dataPoint ) {
       var index = this.dataPointsOnGraph.indexOf( dataPoint );
       return (index !== -1);
-    },
+    }
+    ,
 
     /**
      * Function that determines if the Position of a Data Point is within the visual bounds of the graph
@@ -254,7 +259,8 @@ define( function( require ) {
      */
     isDataPointPositionOverlappingGraph: function( position ) {
       return this.bounds.containsPoint( position );
-    },
+    }
+    ,
 
     /**
      * Add the dataPoint top the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals
@@ -268,15 +274,16 @@ define( function( require ) {
       this.addMyLineResidual( dataPoint );
 
       // a BestFit line exists if there are two dataPoints or more.
-      // if there is only one dataPoint on the graph, we don't add my bestFitLine residual
-      // if there are exactly two data points on the graph we need to add two residuals
-      if ( this.dataPointsOnGraph.length === 2 ) {
+      // if there are two dataPoints on the graph, we don't add my bestFitLine residual
+      // since the residual are zero by definition
+      // if there are exactly three data points on the graph we need to add three residuals
+      if ( this.dataPointsOnGraph.length === 3 ) {
         this.dataPointsOnGraph.forEach( function( dataPoint ) {
           self.addBestFitLineResidual( dataPoint );
         } );
       }
-      // for two dataPoints or more there is one residual for every dataPoint added
-      if ( this.dataPointsOnGraph.length > 2 ) {
+      // for three dataPoints or more there is one residual for every dataPoint added
+      if ( this.dataPointsOnGraph.length > 3 ) {
         this.addBestFitLineResidual( dataPoint );
       }
 
@@ -286,7 +293,8 @@ define( function( require ) {
       dataPoint.positionProperty.link( positionListener );
       dataPoint.positionListener = positionListener;
 
-    },
+    }
+    ,
 
     /**
      * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
@@ -300,8 +308,8 @@ define( function( require ) {
 
       this.removeMyLineResidual( dataPoint );
 
-      // if there is only one dataPoint on the graph, there is no best Fit Line, remove all residuals
-      if ( this.dataPointsOnGraph.length === 1 ) {
+      // if there are two dataPoints on the graph, remove all residuals
+      if ( this.dataPointsOnGraph.length === 2 ) {
         this.removeBestFitLineResiduals();
       }
       else {
@@ -310,14 +318,16 @@ define( function( require ) {
       this.update();
       dataPoint.positionProperty.unlink( dataPoint.positionListener );
 
-    },
+    }
+    ,
     /**
      * Function that removes all the best Fit Line Residuals
      * @private
      */
     removeBestFitLineResiduals: function() {
       this.bestFitLineResiduals.clear();
-    },
+    }
+    ,
 
     /**
      * Function that returns the sum of squared residuals of all the dataPoints on the list (compared with a line with a slope and intercept)
@@ -333,7 +343,8 @@ define( function( require ) {
         sumOfSquareResiduals += yResidual * yResidual;
       } );
       return sumOfSquareResiduals;
-    },
+    }
+    ,
 
     /**
      * Function that returns the sum of squared residuals of 'My Line'
@@ -348,7 +359,8 @@ define( function( require ) {
       else {
         return 0;
       }
-    },
+    }
+    ,
 
     /**
      * Function that returns the sum of squared residuals of 'Best Fit Line'
@@ -364,7 +376,8 @@ define( function( require ) {
       else {
         return 0;
       }
-    },
+    }
+    ,
 
     /**
      * Returns an array of two points that crosses the left and the right hand side of the graph bounds
@@ -383,7 +396,8 @@ define( function( require ) {
       };
 
       return boundaryPoints;
-    },
+    }
+    ,
 
     /**
      * Function that updates statistical properties of the dataPoints on the graph.
@@ -426,7 +440,8 @@ define( function( require ) {
       this.averageOfSumOfSquaresYY = sumOfSquaresYY / arrayLength;
       this.averageOfSumOfX = sumOfX / arrayLength;
       this.averageOfSumOfY = sumOfY / arrayLength;
-    },
+    }
+    ,
 
     /**
      * Function that determines if a best fit line fit exists
@@ -451,7 +466,8 @@ define( function( require ) {
         }
       }
       return isDefined;
-    },
+    }
+    ,
 
     /**
      * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
@@ -471,7 +487,8 @@ define( function( require ) {
         intercept: intercept
       };
       return fitParameters;
-    },
+    }
+    ,
 
     /**
      * Function that returns the Pearson Coefficient Correlation
