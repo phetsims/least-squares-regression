@@ -1,6 +1,6 @@
 {
   "chipper": {
-    "sha": "4c118bfe590efd3645c01c4b19a37e7c6cfd3916",
+    "sha": "b89aa0d21a273cd2326d4d47809a4ec572dd7239",
     "branch": "master"
   },
   "sherpa": {
@@ -8,52 +8,52 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "0094fe3acb898f277c0020bfb411690dd04a9efb",
+    "sha": "644826529dad423a7dad83245ad8cb9324ede4ca",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "3c86b6ed77a9f42ac70cc1bed37faaf836c36d51",
+    "sha": "743d6f9f18f20f6c5172b2c7bcb08599c3d8d115",
     "branch": "master"
   },
   "scenery": {
-    "sha": "dac45523a1e28c34ea8ad29905868a5f7826e231",
+    "sha": "b970113aa620937c92921f58641d652ad3d9bbfc",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "986cb730bb423bce191a95beef9b9d516d59c7d3",
+    "sha": "7bda5692420309dd0538bdd1b6a17498df5557b8",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "38dbc8837af8a9bee5ff8cd876e3ecd97936feb7",
+    "sha": "d02813a9be0fc709f2b2a5475160451a17f3d778",
     "branch": "master"
   },
   "kite": {
-    "sha": "2c6cfed19197b041abcd19c1cdc893ffbb5d579f",
+    "sha": "294d830b8e7be6d94b53310c845561defe8b522e",
     "branch": "master"
   },
   "joist": {
-    "sha": "04bc117f2c4acf03c6710648ba840375c3160a92",
+    "sha": "aee9e4fdb0c7433badf5a5a7cb5656386b4df750",
     "branch": "master"
   },
   "dot": {
-    "sha": "5c494f9bccf191fb266a4551df095d024d652144",
+    "sha": "0d8e4292ea836baab14230c20e0f07b7a18dbf28",
     "branch": "master"
   },
   "brand": {
-    "sha": "d8931905471f7937a1c5855761ae796e15b1864e",
+    "sha": "11254483d666f01cb4487d7008c8ac781f376dbc",
     "branch": "master"
   },
   "axon": {
-    "sha": "bb12a7a1403a1fca7d942e4beb031f91828ce8f8",
+    "sha": "d55aac41892a501d5053ab60fd6f76eaa29a593b",
     "branch": "master"
   },
   "assert": {
-    "sha": "386e00157abe609741d3095120e0e425d10e7b51",
+    "sha": "fda4483ee521229dcbbee6bad2fa3bebb8a213e8",
     "branch": "master"
   },
   "least-squares-regression": {
-    "sha": "9c94ff3312c19afa643b88181aaae2e90fc551c9",
+    "sha": "bcc44df0497ba67b5f2b16f59723b1e57ff04958",
     "branch": "master"
   },
-  "comment": "# least-squares-regression 1.0.0-dev.6 Wed Feb 11 2015 11:12:28 GMT-0700 (Mountain Standard Time)"
+  "comment": "# least-squares-regression 1.0.0-dev.7 Fri Feb 13 2015 11:05:27 GMT-0700 (Mountain Standard Time)"
 }
