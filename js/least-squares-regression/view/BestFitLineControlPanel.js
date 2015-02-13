@@ -71,9 +71,9 @@ define( function( require ) {
     var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
-    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 10, 10 );
-    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 10, 10 );
-    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 10, 10 );
+    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
+    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 8, 8 );
+    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 8, 8 );
 
     // Update the control Panel upon a change of the status of the Best Fit Line CheckBox
     graph.bestFitLineVisibleProperty.link( function( enabled ) {

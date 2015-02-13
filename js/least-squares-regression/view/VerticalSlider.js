@@ -89,8 +89,8 @@ define( function( require ) {
     thisNode.addChild( centerLineNode );
 
     // touch area
-    var touchXMargin = 0 * bodyNode.width; // thumb seems wide enough, so zero for now
-    var touchYMargin = 1 * bodyNode.height; // expand height since thumb is not very tall and drag direction is vertical
+    var touchXMargin = 0.25 * bodyNode.width; // expand thumb width,
+    var touchYMargin = 0.5 * bodyNode.height; // expand height since thumb is not very tall and drag direction is vertical
     bodyNode.touchArea = Shape.rectangle( bodyNode.left - touchXMargin, bodyNode.top - touchYMargin,
       bodyNode.width + ( 2 * touchXMargin ), bodyNode.height + ( 2 * touchYMargin ) );
 
@@ -142,6 +142,8 @@ define( function( require ) {
     // nodes
     var minNode = new Text( minLabel, { font: RANGE_FONT, fill: RANGE_COLOR } );
     var trackNode = new Track( trackSize, property, range );
+    trackNode.touchArea = trackNode.localBounds.dilatedXY( 8, 2 );
+
     var xMargin = 0, yMargin = 0, cornerRadius = 10;
     var backgroundNode = new Rectangle( -xMargin, -yMargin, trackSize.width + ( 2 * xMargin ), trackSize.height + ( 2 * yMargin ), cornerRadius, cornerRadius,
       { fill: new Color( 200, 200, 200, 0 ) } );
