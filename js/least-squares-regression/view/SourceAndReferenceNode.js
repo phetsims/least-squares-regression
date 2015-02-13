@@ -80,6 +80,9 @@ define( function( require ) {
     } );
     var button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
 
+    // Add a cursor when hovering (see https://github.com/phetsims/least-squares-regression/issues/10)
+    button.cursor = 'pointer';
+
     // Add to this node
     this.addChild( panel );
     this.addChild( button );
