@@ -147,7 +147,7 @@ define( function( require ) {
     } );
 
     // Create the Pearson Correlation coefficient panel
-    var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph );
+    var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
 
     // Create grid check box with grid icon
     var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );

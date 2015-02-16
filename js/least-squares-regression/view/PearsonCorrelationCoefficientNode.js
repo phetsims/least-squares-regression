@@ -12,7 +12,9 @@ define( function( require ) {
   var AccordionBox = require( 'SUN/AccordionBox' );
   var HStrut = require( 'SUN/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
@@ -30,9 +32,10 @@ define( function( require ) {
   /**
    *
    * @param {Graph} graph
+   * @param {Object} [options]
    * @constructor
    */
-  function PearsonCorrelationCoefficientNode( graph ) {
+  function PearsonCorrelationCoefficientNode( graph, options ) {
 
     // property of the accordion Box
     this.expandedProperty = new Property( false );
@@ -74,14 +77,16 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
-      titleNode: new Text( correlationCoefficientString, { font: LSRConstants.TEXT_FONT_BOLD } ),
-      titleXMargin: 30,
+      titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_FONT_BOLD } ),
       contentXMargin: 10,
       contentYMargin: 10
     }, options );
 
     // Add the panel to the Accordion Box
-    AccordionBox.call( this, mutableEquationPanel,
+    AccordionBox.call( this, new LayoutBox( {
+        children: [ new HStrut( 180 ), mutableEquationPanel ],
+        orientation: 'vertical'
+      } ),
       options );
   }
 
