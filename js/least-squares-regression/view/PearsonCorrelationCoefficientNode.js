@@ -77,6 +77,7 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
+      titleYMargin: 10,
       titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_FONT_BOLD } ),
       contentXMargin: 10,
       contentYMargin: 10
