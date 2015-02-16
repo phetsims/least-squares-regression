@@ -73,7 +73,7 @@ define( function( require ) {
     } );
 
     // Options for the Accordion Box
-    var options = _.extend( {
+    options = _.extend( {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
