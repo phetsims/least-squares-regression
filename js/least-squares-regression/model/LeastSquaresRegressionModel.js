@@ -43,9 +43,10 @@ define( function( require ) {
     // @public read-only
     this.dataSets = [];
     this.dataSets.push( DataSet.CUSTOM );
+    this.dataSets.push( DataSet.HEIGHT_SHOE );
     this.dataSets.push( DataSet.SPENDING_SALARY );
-    this.dataSets.push( DataSet.WAGE_YEAR );
     this.dataSets.push( DataSet.MORTALITY_YEAR );
+    this.dataSets.push( DataSet.WAGE_YEAR );
     this.dataSets.push( DataSet.USER_YEAR );
     this.dataSets.push( DataSet.GASOLINE_YEAR );
     this.dataSets.push( DataSet.LIFE_TV );
@@ -56,7 +57,7 @@ define( function( require ) {
     this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_CHIRP );
     this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LONGITUDE );
     this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LATITUDE );
-    this.dataSets.push( DataSet.HEIGHT_SHOE );
+
 
     // Model of the graph that contains all information regarding the composition of the graph
     // @public read-only
