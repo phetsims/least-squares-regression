@@ -283,11 +283,10 @@ define( function( require ) {
         this.addBestFitLineResidual( dataPoint );
       }
 
-      var positionListener = function() {
+      dataPoint.positionUpdateListener = function() {
         self.update();
       };
-      dataPoint.positionProperty.link( positionListener );
-      dataPoint.positionListener = positionListener;
+      dataPoint.positionProperty.link( dataPoint.positionUpdateListener );
 
     },
 
@@ -311,7 +310,7 @@ define( function( require ) {
         this.removeBestFitLineResidual( dataPoint );
       }
       this.update();
-      dataPoint.positionProperty.unlink( dataPoint.positionListener );
+      dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
 
     },
     /**

@@ -79,14 +79,14 @@ define( function( require ) {
     // What to do when the selected Data Set changes
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
 
+      // unlink the listeners to dataPoints
+      // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
+      //  see  https://github.com/phetsims/least-squares-regression/issues/11
+      thisModel.dispose();
       // Clear the dataPoints array
       thisModel.dataPoints.clear();
       // Clear the residual arrays and the dataPointsOnGraph array
       thisModel.graph.resetOnChangeOfDataSet();
-
-      // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
-      //  see  https://github.com/phetsims/least-squares-regression/issues/11
-      thisModel.returnAllDataPointsToBucket();
 
       // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
@@ -113,6 +113,7 @@ define( function( require ) {
 
     reset: function() {
       PropertySet.prototype.reset.call( this );
+      this.dispose();
       this.dataPoints.clear();
       this.graph.reset();
     },
@@ -124,6 +125,15 @@ define( function( require ) {
       } );
     },
 
+    /**
+     * Unlink listeners to dataPoint
+     */
+    dispose: function() {
+      this.dataPoints.forEach( function( dataPoint ) {
+        dataPoint.positionProperty.unlink( dataPoint.positionListener );
+        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+      } );
+    },
     // Function that sets all dataPoint animating flag to true, setting them up to be animated in the step function
     // @public
     returnAllDataPointsToBucket: function() {
@@ -141,7 +151,7 @@ define( function( require ) {
       var self = this;
       this.dataPoints.push( dataPoint );
 
-      dataPoint.positionProperty.link( function( position ) {
+      dataPoint.positionListener = function( position ) {
         // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
         if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
 
@@ -157,15 +167,19 @@ define( function( require ) {
             self.graph.removePointAndResiduals( dataPoint );
           }
         }
-      } );
+      };
 
-      // Determine if the data Point is not user controlled and not on graph. If so let's animate it, i.e. return it to the bucket
-      dataPoint.userControlledProperty.link( function( userControlled ) {
+      dataPoint.positionProperty.link( dataPoint.positionListener );
+
+      dataPoint.userControlledListener = function( userControlled ) {
         var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
         if ( !isOnGraph && !userControlled ) {
           dataPoint.animating = true;
         }
-      } );
+      };
+
+      // Determine if the data Point is not user controlled and not on graph. If so let's animate it, i.e. return it to the bucket
+      dataPoint.userControlledProperty.link( dataPoint.userControlledListener );
 
       // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
       // can be 'put back' into the bucket.
