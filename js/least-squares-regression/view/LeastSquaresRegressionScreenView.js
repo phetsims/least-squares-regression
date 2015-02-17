@@ -204,11 +204,13 @@ define( function( require ) {
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( dynamicDataPointNode );
 
+        //TODO: is it necessary to unlink these listeners?
         // Update graph upon a change of position of a dataPoint
         addedDataPoint.positionProperty.link( function() {
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
         } );
+
 
         // Move the dataPoint to the front of this layer when grabbed by the user.
         addedDataPoint.userControlledProperty.link( function( userControlled ) {
