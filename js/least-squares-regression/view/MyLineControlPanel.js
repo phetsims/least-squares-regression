@@ -14,6 +14,7 @@ define( function( require ) {
   var Dimension2 = require( 'DOT/Dimension2' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
   var HStrut = require( 'SUN/HStrut' );
+  var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -22,7 +23,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
-  var VerticalSlider = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/VerticalSlider' );
+
 
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
@@ -30,6 +31,38 @@ define( function( require ) {
   var myLineString = require( 'string!LEAST_SQUARES_REGRESSION/myLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
+
+  // conmstants
+  var SLIDER_OPTIONS = {
+    trackFill: 'black',
+    trackSize: new Dimension2( 190, 2 ),
+    thumbSize: new Dimension2( 15, 30 )
+  };
+  var TICK_COLOR = 'black';
+  var TICK_LENGTH = 8;
+  var TICK_WIDTH = 2;
+
+
+  /**
+   * Create a vertical slider with a central tick
+   * @param {Property.<number>} property parameter to track.
+   * @param {Range} range - Possible range for property.
+   * @param {Object} options for slider node.
+   * @constructor
+   */
+  function VerticalSlider( property, range, options ) {
+    var sliderNode = new HSlider( property, range, options );
+
+    // make vertical slider by rotating it
+    sliderNode.rotate( -Math.PI / 2 );
+
+    //add central tick
+    sliderNode.addTick( 0, '', TICK_LENGTH, TICK_COLOR, TICK_WIDTH ); // left side tick
+    sliderNode.addTick( 0, '', -TICK_LENGTH - 2 * SLIDER_OPTIONS.trackSize.height, TICK_COLOR, TICK_WIDTH ); // right side tick
+
+    return sliderNode;
+  }
+
 
   /**
    *
@@ -42,10 +75,12 @@ define( function( require ) {
   function MyLineControlPanel( graph, dataPoints, onEvent, options ) {
 
     // Create an immutable equation y = a x + b
-    var eqPartOneText = new Text( 'y =', { font: LSRConstants.TEXT_FONT, fill: 'black' } );
-    var eqPartTwoText = new Text( aString, { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' } );
-    var eqPartThreeText = new Text( 'x +', { font: LSRConstants.TEXT_FONT, fill: 'black' } );
-    var eqPartFourText = new Text( bString, { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' } );
+    var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
+    var blueOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' };
+    var eqPartOneText = new Text( 'y =', blackOptions );
+    var eqPartTwoText = new Text( aString, blueOptions );
+    var eqPartThreeText = new Text( 'x +', blackOptions );
+    var eqPartFourText = new Text( bString, blueOptions );
     var immutableEquationText = new Node( {
       children: [
         eqPartOneText,
@@ -82,6 +117,7 @@ define( function( require ) {
     updateTextIntercept( 0 );
     updateTextSlope( 0 );
 
+
     // create the equation panel with white background
     var equationPanel = new Panel( equationText, {
       fill: 'white',
@@ -93,17 +129,24 @@ define( function( require ) {
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = new VerticalSlider( aString, new Dimension2( 3, 190 ), graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ) );
-    var bSlider = new VerticalSlider( bString, new Dimension2( 3, 190 ), graph.interceptProperty, sliderInterceptRange );
+    var aSlider = new VerticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+
+    // Create label below the sliders
+    var aText = new Text( aString, blueOptions );
+    var bText = new Text( bString, blueOptions );
+
 
     // collect the immutable equation, the mutable equation and the sliders in one node
-    var rightAlignedPanel = new Node();
+    var rightAlignedNode = new Node();
     var hStrut = new HStrut( 20 );
-    rightAlignedPanel.addChild( equationPanel );
-    rightAlignedPanel.addChild( immutableEquationText );
-    rightAlignedPanel.addChild( aSlider );
-    rightAlignedPanel.addChild( bSlider );
-    rightAlignedPanel.addChild( hStrut );
+    rightAlignedNode.addChild( equationPanel );
+    rightAlignedNode.addChild( immutableEquationText );
+    rightAlignedNode.addChild( aSlider );
+    rightAlignedNode.addChild( bSlider );
+    rightAlignedNode.addChild( aText );
+    rightAlignedNode.addChild( bText );
+    rightAlignedNode.addChild( hStrut );
 
     // Create three check boxes
     var lineCheckBox = CheckBox.createTextCheckBox( myLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineVisibleProperty );
@@ -128,14 +171,14 @@ define( function( require ) {
     var mainBox = new LayoutBox( {
       spacing: 10, children: [
         lineCheckBox,
-        rightAlignedPanel,
+        rightAlignedNode,
         residualsCheckBox,
         squaredResidualsCheckBox,
         sumOfSquaredResiduals
       ], align: 'left'
     } );
 
-    // layout the internal nodes
+    // layout the internal nodes of the right Aligned Node
     equationPanel.left = hStrut.right;
     equationPanel.top = lineCheckBox.bottom;
     immutableEquationText.top = equationPanel.bottom + 12;
@@ -144,6 +187,10 @@ define( function( require ) {
     bSlider.top = immutableEquationText.bottom + 10;
     aSlider.centerX = immutableEquationText.left + eqPartTwoText.centerX;
     bSlider.centerX = immutableEquationText.left + eqPartFourText.centerX;
+    aText.top = aSlider.bottom + 8;
+    bText.top = bSlider.bottom + 8;
+    aText.centerX = aSlider.centerX;
+    bText.centerX = bSlider.centerX;
 
     // call the superconstructor
     Panel.call( this, mainBox, options );
@@ -151,14 +198,11 @@ define( function( require ) {
     // Trigger the opacity/non-opacity when checking the myLine checkbox
     graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
-      aSlider.opacity = enabled ? 1 : 0.3;
       aSlider.pickable = enabled ? true : false; // enable/disable slider
-      bSlider.opacity = enabled ? 1 : 0.3;
       bSlider.pickable = enabled ? true : false;// enable/disable slider
-      equationPanel.opacity = enabled ? 1 : 0.3;
-      immutableEquationText.opacity = enabled ? 1 : 0.3;
       residualsCheckBox.enabled = enabled;
       squaredResidualsCheckBox.enabled = enabled;
+      rightAlignedNode.opacity = enabled ? 1 : 0.3;
     } );
 
     // update the text (slope) of the equation when the aSlider is moving
