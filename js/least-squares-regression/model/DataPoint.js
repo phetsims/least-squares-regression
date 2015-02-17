@@ -38,7 +38,14 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, DataPoint, {
+    reset: function() {
+      PropertySet.prototype.reset.call( this );
+    },
 
+    /**
+     * Animate the data Point
+     * @param {number} dt
+     */
     step: function( dt ) {
       if ( this.animating ) {
         this.animationStep( dt );

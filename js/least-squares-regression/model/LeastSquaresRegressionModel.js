@@ -84,6 +84,10 @@ define( function( require ) {
       // Clear the residual arrays and the dataPointsOnGraph array
       thisModel.graph.resetOnChangeOfDataSet();
 
+      // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
+      //  see  https://github.com/phetsims/least-squares-regression/issues/11
+      thisModel.returnAllDataPointsToBucket();
+
       // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
