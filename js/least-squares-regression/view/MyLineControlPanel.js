@@ -32,7 +32,7 @@ define( function( require ) {
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
-  // conmstants
+  // constants
   var SLIDER_OPTIONS = {
     trackFill: 'black',
     trackSize: new Dimension2( 190, 2 ),
