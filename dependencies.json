@@ -1,30 +1,30 @@
 {
   "chipper": {
-    "sha": "3af6b6de8450267e03c2fd931372283b9830a24a",
+    "sha": "60e3a835364517fddf8bebc759b9ab3d3e2c2afc",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "cb447a1622d55143dafaf5aace6431b9878775d3",
+    "sha": "bf15240caf4ab055d45b669a5a2243b497fc3511",
     "branch": "master"
   },
   "sun": {
-    "sha": "644826529dad423a7dad83245ad8cb9324ede4ca",
+    "sha": "85bc9dce280b38a906c95130d44700e04f5fe523",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "743d6f9f18f20f6c5172b2c7bcb08599c3d8d115",
+    "sha": "80f5f48dc006b1fcfe60aa03b64ac7969e6789e6",
     "branch": "master"
   },
   "scenery": {
-    "sha": "b970113aa620937c92921f58641d652ad3d9bbfc",
+    "sha": "29921a40d8ee2823daae737d6e12a511258ffbc2",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "7bda5692420309dd0538bdd1b6a17498df5557b8",
+    "sha": "49183543035c2e169dff7deedb6e49f6c58b0afa",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "d02813a9be0fc709f2b2a5475160451a17f3d778",
+    "sha": "c98d56c366b265802198a7f3eeee8a7f7644215b",
     "branch": "master"
   },
   "kite": {
@@ -32,7 +32,7 @@
     "branch": "master"
   },
   "joist": {
-    "sha": "aee9e4fdb0c7433badf5a5a7cb5656386b4df750",
+    "sha": "0e1ece9bd10ef5daab86dd534cc9817573baa82e",
     "branch": "master"
   },
   "dot": {
@@ -40,20 +40,20 @@
     "branch": "master"
   },
   "brand": {
-    "sha": "11254483d666f01cb4487d7008c8ac781f376dbc",
+    "sha": "0f9ee9b8ca1a0e121f66d57109bca59f05c2ef2c",
     "branch": "master"
   },
   "axon": {
-    "sha": "3046f6c946f4d974b652ba89b672ef195d15063e",
+    "sha": "a9d4cbeec06ad2f0231d5a2d76a725b90292a263",
     "branch": "master"
   },
   "assert": {
-    "sha": "fda4483ee521229dcbbee6bad2fa3bebb8a213e8",
+    "sha": "e9e725994176afd0103aff427acda10bf31192c4",
     "branch": "master"
   },
   "least-squares-regression": {
-    "sha": "4294172b0f0981b3fc6acd4175bff442123d38ae",
+    "sha": "45c73ede0f9296ec9ffbf421d8e6dc6407509bc5",
     "branch": "master"
   },
-  "comment": "# least-squares-regression 1.0.0-dev.9 Fri Feb 13 2015 16:49:28 GMT-0700 (Mountain Standard Time)"
+  "comment": "# least-squares-regression 1.0.0-dev.10 Mon Feb 16 2015 20:04:00 GMT-0700 (Mountain Standard Time)"
 }
