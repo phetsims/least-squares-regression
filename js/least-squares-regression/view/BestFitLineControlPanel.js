@@ -98,13 +98,15 @@ define( function( require ) {
     }, options );
 
     AccordionBox.call( this, new LayoutBox( {
-        spacing: 10, children: [
+        spacing: 10,
+        children: [
           lineCheckBox,
           new LayoutBox( { children: [ new HStrut( 20 ), equationPanel ], orientation: 'horizontal' } ),
           residualsCheckBox,
           squaredResidualsCheckBox,
           sumOfSquaredResidualsChart
-        ], align: 'left'
+        ],
+        align: 'left'
       } ),
       options );
 
