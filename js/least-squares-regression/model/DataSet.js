@@ -52,6 +52,7 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.source' )
   };
+
   var spendingSalary = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
@@ -91,6 +92,7 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.source' )
   };
+
   var lifeTV = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ),
@@ -98,6 +100,7 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.source' )
   };
+
   var speedDistance = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ),
@@ -105,6 +108,7 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.source' )
   };
+
   var temperatureFahrenheitChirp = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ),
@@ -120,6 +124,7 @@ define( function( require ) {
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.reference' ),
     source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.source' )
   };
+
   var heightShoe = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
