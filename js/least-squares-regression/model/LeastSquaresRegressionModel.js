@@ -133,6 +133,7 @@ define( function( require ) {
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
       } );
     },
+
     // Function that sets all dataPoint animating flag to true, setting them up to be animated in the step function
     // @public
     returnAllDataPointsToBucket: function() {
@@ -140,6 +141,7 @@ define( function( require ) {
         dataPoint.animating = true;
       } );
     },
+
     /**
      * Function for adding new dataPoints to this model when the user creates them, generally by clicking on some
      * some sort of creator node.
