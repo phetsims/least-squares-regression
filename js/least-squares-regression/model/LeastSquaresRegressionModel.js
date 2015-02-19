@@ -1,7 +1,7 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
+ * Contains all of the model logic for the screen LeastSquaresRegressionScreen.
  *
  * @author Martin Veillette (Berea College)
  */
@@ -25,7 +25,6 @@ define( function( require ) {
   var BUCKET_POSITION = new Vector2( 120, 480 );
 
   /**
-   * Main constructor for LeastSquaresModel, which contains all of the model logic for the entire sim screen.
    * @constructor
    */
   function LeastSquaresRegressionModel() {
