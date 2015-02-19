@@ -18,13 +18,10 @@ define( function( require ) {
 
   var simOptions = {
     credits: {
-      //TODO fill in proper credits, all of these fields are optional, see joist.AboutDialog
-      leadDesign: '',
-      softwareDevelopment: '',
-      team: '',
-      qualityAssurance: '',
-      graphicArts: '',
-      thanks: ''
+      leadDesign: 'Amanda McGarry',
+      softwareDevelopment: 'Martin Veillette',
+      team: 'Kathy Perkins, Trish Loeblein, Ariel Paul',
+      qualityAssurance: 'Steele Dalton,  Amanda McGarry, Bryan Yoelin'
     }
   };
 
