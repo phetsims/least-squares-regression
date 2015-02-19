@@ -10,7 +10,6 @@ define( function( require ) {
   'use strict';
 
   // modules
-
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -23,7 +22,6 @@ define( function( require ) {
   var Vector2 = require( 'DOT/Vector2' );
 
   // strings
-
   var minusString = '\u2212';
 
   //----------------------------------------------------------------------------------------
@@ -31,20 +29,17 @@ define( function( require ) {
   //----------------------------------------------------------------------------------------
 
   // background
-
   var GRID_BACKGROUND_FILL = 'white';
   var GRID_BACKGROUND_LINE_WIDTH = 1; // for the border of graph
   var GRID_BACKGROUND_STROKE = 'gray';
 
   // grid
-
   var MAJOR_GRID_LINE_WIDTH = 1;
   var MAJOR_GRID_LINE_COLOR = LSRConstants.MAJOR_GRID_STROKE_COLOR;
   var MINOR_GRID_LINE_WIDTH = 1;
   var MINOR_GRID_LINE_COLOR = LSRConstants.MINOR_GRID_STROKE_COLOR;
 
   // axes
-
   var AXIS_COLOR = 'black';
   var AXIS_EXTENT = 0.0; // how far the line extends past the min/max ticks, in model coordinates
 
@@ -227,7 +222,6 @@ define( function( require ) {
         // minor tick
         this.addChild( new MinorTickNode( x, y, true ) );
       }
-
     }
   }
 
@@ -256,7 +250,6 @@ define( function( require ) {
     this.addChild( lineNode );
 
     // ticks
-
     var tickSeparation = tickSpacing( dataSet.yRange );
     var numberOfTicks = tickSeparation.numberOfTicks;
 
@@ -352,7 +345,6 @@ define( function( require ) {
       modelViewTransform.modelToViewDeltaY( -dataSet.yRange.getLength() ),
       { fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE } );
     this.addChild( backgroundNode );
-
   }
 
   inherit( Node, BackgroundNode );
