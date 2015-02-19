@@ -24,7 +24,6 @@ define( function( require ) {
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
 
-
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
@@ -41,7 +40,6 @@ define( function( require ) {
   var TICK_COLOR = 'black';
   var TICK_LENGTH = 8;
   var TICK_WIDTH = 2;
-
 
   /**
    * Create a vertical slider with a central tick
@@ -62,7 +60,6 @@ define( function( require ) {
 
     return sliderNode;
   }
-
 
   /**
    *
@@ -117,7 +114,6 @@ define( function( require ) {
     updateTextIntercept( 0 );
     updateTextSlope( 0 );
 
-
     // create the equation panel with white background
     var equationPanel = new Panel( equationText, {
       fill: 'white',
@@ -135,7 +131,6 @@ define( function( require ) {
     // Create label below the sliders
     var aText = new Text( aString, blueOptions );
     var bText = new Text( bString, blueOptions );
-
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     var rightAlignedNode = new Node();
