@@ -135,7 +135,7 @@ define( function( require ) {
 
   /**
    * Function that returns a dataSet Object
-   * @param {Object} name - {{ graphTitle: string),yAxisTitle: string ), xAxisTitle: string ),reference: string ),source: string )}
+   * @param {Object} name - object of the form { graphTitle: string, yAxisTitle: string, xAxisTitle: string, reference: string, source: string}
    * @param {Range} yRange
    * @param {Range} xRange
    * @param {Array.<Object>} dataXY - array of object of the form {x: 2, y: 5}
@@ -143,11 +143,9 @@ define( function( require ) {
    */
   function createDataSet( name, yRange, xRange, dataXY ) {
     var dataSet = {
-      //name: name,
       yRange: yRange,
       xRange: xRange,
       dataXY: dataXY,
-      //name : name,
       name: name.graphTitle,
       yAxisTitle: name.yAxisTitle,
       xAxisTitle: name.xAxisTitle,
