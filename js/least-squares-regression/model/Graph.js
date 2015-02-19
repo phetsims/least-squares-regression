@@ -213,7 +213,7 @@ define( function( require ) {
      * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
      * This is done for performance reason.
      * @public (accessed by LeastSquareRegressionModel)
-     * @param {Array.<dataPoint>} dataPoints
+     * @param {Array.<DataPoint>} dataPoints
      */
     addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
       var thisGraph = this;
