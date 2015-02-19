@@ -17,7 +17,7 @@ define( function( require ) {
     ANIMATION_VELOCITY: 2, // in the view reference frame
 
     // Background color for sim and graph
-    BACKGROUND_COLOR: 'rgb( 236,255,245 )',
+    BACKGROUND_COLOR: 'rgb( 236, 255, 245 )',
     GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',
 
     // LineWidth of 'Best Fit Line' and 'MyLine'
@@ -28,17 +28,17 @@ define( function( require ) {
     // 'MyLine' color
     MY_LINE_COLOR: {
       BASE_COLOR: 'rgb( 0, 0, 255)',
-      RESIDUAL_COLOR: 'rgb( 110, 92, 231)',
-      SQUARED_RESIDUAL_COLOR: 'rgba( 154, 150, 255, 0.4)',
-      SUM_OF_SQUARES_COLOR: 'rgb( 154, 150, 255)'
+      RESIDUAL_COLOR: 'rgb( 110, 92, 231 )',
+      SQUARED_RESIDUAL_COLOR: 'rgba( 154, 150, 255, 0.4 )',
+      SUM_OF_SQUARES_COLOR: 'rgb( 154, 150, 255 )'
     },
 
     // 'Best Fit Line' Color
     BEST_FIT_LINE_COLOR: {
-      BASE_COLOR: 'rgb( 255, 0 ,0)',
-      RESIDUAL_COLOR: 'rgb( 178, 21, 27)',
-      SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4)',
-      SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59)'
+      BASE_COLOR: 'rgb( 255, 0, 0 )',
+      RESIDUAL_COLOR: 'rgb( 178, 21, 27 )',
+      SQUARED_RESIDUAL_COLOR: 'rgba( 255, 52, 59, 0.4 )',
+      SUM_OF_SQUARES_COLOR: 'rgb( 255, 52, 59 )'
     },
 
     // Movable data points (and points in bucket)
@@ -54,8 +54,8 @@ define( function( require ) {
     STATIC_DATA_POINT_LINE_WIDTH: 1,
 
     // Gridlines and grid icon
-    MAJOR_GRID_STROKE_COLOR: 'rgb(128,128,128)',
-    MINOR_GRID_STROKE_COLOR: 'rgb(218,218,218)',
+    MAJOR_GRID_STROKE_COLOR: 'rgb( 128, 128, 128 )',
+    MINOR_GRID_STROKE_COLOR: 'rgb( 218, 218, 218)',
 
     // Font sizes and weight
     TEXT_FONT: new PhetFont( { size: 16 } ), // default font for text
@@ -71,10 +71,10 @@ define( function( require ) {
     // Panels
     CONTROL_PANEL_CORNER_RADIUS: 10,
     SMALL_PANEL_CORNER_RADIUS: 5,
-    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb(255, 245, 238)', //seashell
+    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 255, 245, 238 )', //seashell
 
     // Combo box
-    ITEM_HIGHLIGHT_FILL: 'rgb(	236,255,245)'
+    ITEM_HIGHLIGHT_FILL: 'rgb( 236, 255, 245 )'
 
   };
 } );
