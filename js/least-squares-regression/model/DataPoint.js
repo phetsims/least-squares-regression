@@ -39,7 +39,7 @@ define( function( require ) {
 
   return inherit( PropertySet, DataPoint, {
     reset: function() {
-      PropertySet.prototype.reset.call( this );
+      PropertySet.reset.call( this );
     },
 
     /**
