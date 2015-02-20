@@ -70,7 +70,7 @@ define( function( require ) {
     this.addChild( squareResidual );
     this.addChild( lineResidual );
 
-    //TODO: MEMORY LEAK ISSUE?
+    //TODO: MEMORY LEAK ISSUE? issue #28
     lineVisibilityProperty.linkAttribute( lineResidual, 'visible' );
     squareVisibilityProperty.linkAttribute( squareResidual, 'visible' );
 

@@ -99,7 +99,7 @@ define( function( require ) {
 
     // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      // TODO: memory leak?
+      // TODO: memory leak? issue #28
       addedDataPoint.positionProperty.link( updateWidth );
     } );
 
