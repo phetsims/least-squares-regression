@@ -59,7 +59,7 @@ define( function( require ) {
       var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
 
       // If the particle is further than one time step away, move it toward the destination
-      // TODO: Would it be appropriate to use TWEEN.js here?  If not, perhaps comment that it was an option and another strategy was used
+      // TODO: issue #27, Would it be appropriate to use TWEEN.js here?  If not, perhaps comment that it was an option and another strategy was used
       if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
 
         // Move a step toward the position.
