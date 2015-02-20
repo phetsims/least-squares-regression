@@ -20,8 +20,8 @@ define( function( require ) {
     credits: {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Martin Veillette',
-      team: 'Kathy Perkins, Trish Loeblein, Ariel Paul',
-      qualityAssurance: 'Steele Dalton,  Amanda McGarry, Bryan Yoelin'
+      team: 'Trish Loeblein, Ariel Paul, Kathy Perkins',
+      qualityAssurance: 'Steele Dalton, Bryan Yoelin'
     }
   };
 
