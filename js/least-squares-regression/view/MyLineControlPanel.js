@@ -87,6 +87,7 @@ define( function( require ) {
       ]
     } );
 
+    //TODO issue #25, layout of equations relies on magic numbers
     eqPartTwoText.left = 42;
     eqPartThreeText.left = 64;
     eqPartFourText.left = 94;

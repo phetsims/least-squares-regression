@@ -49,7 +49,7 @@ define( function( require ) {
       ]
     } );
 
-    // TODO: Is there a way to have less magic number for layout?
+    //TODO issue #25, layout of equations relies on magic numbers
     // The layout of this equation must match the layout of another equation in MyLineControlPanel
     this.eqnPartTwoText.left = 23;
     this.eqnPartThreeText.left = 32;
