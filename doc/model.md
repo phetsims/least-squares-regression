@@ -1,4 +1,4 @@
-# Description of the model used in least-squares regression
+## Description of the model used in least-squares regression
 
 The model uses a standard least squares approach to determine the 'best fit line'
 of a series of data points. A residual is the difference between the measured Y
