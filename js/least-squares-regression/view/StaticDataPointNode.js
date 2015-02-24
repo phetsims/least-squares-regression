@@ -20,7 +20,6 @@ define( function( require ) {
    * @constructor
    */
   function StaticDataPointNode( dataPoint, modelViewTransform ) {
-    DataPointNode.call( this, dataPoint, modelViewTransform );
 
     // Create and add  visual representation of the dataPoint
     var representation = new Circle( LSRConstants.STATIC_DATA_POINT_RADIUS, {
@@ -29,7 +28,7 @@ define( function( require ) {
       lineWidth: LSRConstants.STATIC_DATA_POINT_LINE_WIDTH
     } );
 
-    this.addChild( representation );
+    DataPointNode.call( this, dataPoint, representation, modelViewTransform );
   }
 
   return inherit( DataPointNode, StaticDataPointNode );

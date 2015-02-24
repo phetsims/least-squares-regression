@@ -15,11 +15,12 @@ define( function( require ) {
 
   /**
    * @param {DataPoint} dataPoint
+   * @param {Node} representation
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function DataPointNode( dataPoint, modelViewTransform ) {
-    Node.call( this, { cursor: 'pointer' } );
+  function DataPointNode( dataPoint, representation, modelViewTransform ) {
+    Node.call( this, { cursor: 'pointer', children: [ representation ] } );
     var self = this;
 
     // Move this node as the model representation moves

@@ -21,7 +21,7 @@ define( function( require ) {
    * @constructor
    */
   function DynamicDataPointNode( dataPoint, modelViewTransform ) {
-    DataPointNode.call( this, dataPoint, modelViewTransform );
+
 
     // Create the visual representation of the DynamicDataPoint
     var representation = new Circle( LSRConstants.DYNAMIC_DATA_POINT_RADIUS, {
@@ -30,8 +30,7 @@ define( function( require ) {
       lineWidth: LSRConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
     } );
 
-    // Add the visual representation to this node
-    this.addChild( representation );
+    DataPointNode.call( this, dataPoint, representation, modelViewTransform );
 
     // Expand the touch area
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
