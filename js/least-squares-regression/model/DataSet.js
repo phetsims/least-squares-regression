@@ -1,7 +1,8 @@
 // Copyright 2002-2015, University of Colorado Boulder
 
 /**
- * Model that defines data sets that are used to populate the comboBox
+ * Model that defines data sets that are used to populate the comboBox.
+ * See doc/implementation-notes.md for more information.
  *
  * @author Martin Veillette (Berea College)
  */
