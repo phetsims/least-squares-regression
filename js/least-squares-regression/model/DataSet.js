@@ -711,7 +711,7 @@ define( function( require ) {
       { x: 14, y: 24.4 }
     ] );
 
-  DataSet.HEIGHT_SHOE = createDataSet( heightShoe, new Range( 0, 80 ), new Range( 0, 16 ),
+  DataSet.HEIGHT_SHOE = createDataSet( heightShoe, new Range( 0, 85 ), new Range( 0, 16 ),
     [
       { x: 5.5, y: 60 },
       { x: 6, y: 60 },
