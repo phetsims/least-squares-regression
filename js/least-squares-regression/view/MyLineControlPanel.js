@@ -27,6 +27,9 @@ define( function( require ) {
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
+  var xString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  var yString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
+  var plusString = '\u002B'; // we want a large + sign
   var myLineString = require( 'string!LEAST_SQUARES_REGRESSION/myLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
@@ -71,29 +74,10 @@ define( function( require ) {
    */
   function MyLineControlPanel( graph, dataPoints, onEvent, options ) {
 
-    // Create an immutable equation y = a x + b
-    var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
-    var blueOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' };
-    var eqPartOneText = new Text( 'y =', blackOptions );
-    var eqPartTwoText = new Text( aString, blueOptions );
-    var eqPartThreeText = new Text( 'x +', blackOptions );
-    var eqPartFourText = new Text( bString, blueOptions );
-    var immutableEquationText = new Node( {
-      children: [
-        eqPartOneText,
-        eqPartTwoText,
-        eqPartThreeText,
-        eqPartFourText
-      ]
-    } );
 
-    //TODO issue #25, layout of equations relies on magic numbers
-    eqPartTwoText.left = 42;
-    eqPartThreeText.left = 64;
-    eqPartFourText.left = 94;
-
-    // create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
-    var equationText = new EquationNode( 0, 0 );
+    // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
+    // initial values set the spacing
+    var equationText = new EquationNode( -0.53, -0.53 );
 
     /**
      * Function that updates the value of the current slope (based on the angle of the line)
@@ -115,6 +99,37 @@ define( function( require ) {
     updateTextIntercept( 0 );
     updateTextSlope( 0 );
 
+
+    // Create an immutable equation y = a x + b
+    var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
+    var blueOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' };
+
+    var yText = new Text( yString, blackOptions ); // 'y'
+    var equalText = new Text( '=', blackOptions ); // the '=' sign
+    var aText = new Text( aString, blueOptions ); // a number
+    var xText = new Text( xString, blackOptions ); // 'x'
+    var signInterceptText = new Text( plusString, blackOptions );// '+'
+    var bText = new Text( bString, blueOptions );// a number
+
+    var immutableEquationText = new Node( {
+      children: [
+        yText,
+        equalText,
+        aText,
+        xText,
+        signInterceptText,
+        bText
+      ]
+    } );
+
+    // Layout the immutable equation
+    yText.left = equationText.yText.left;
+    equalText.left = equationText.equalText.left;
+    aText.center = equationText.valueSlopeText.center;
+    xText.left = equationText.xText.left;
+    signInterceptText.left = equationText.signInterceptText.left;
+    bText.center = equationText.valueInterceptText.center;
+
     // create the equation panel with white background
     var equationPanel = new Panel( equationText, {
       fill: 'white',
@@ -130,8 +145,8 @@ define( function( require ) {
     var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
-    var aText = new Text( aString, blueOptions );
-    var bText = new Text( bString, blueOptions );
+    var aSliderText = new Text( aString, blueOptions );
+    var bSliderText = new Text( bString, blueOptions );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     var rightAlignedNode = new Node();
@@ -140,8 +155,8 @@ define( function( require ) {
     rightAlignedNode.addChild( immutableEquationText );
     rightAlignedNode.addChild( aSlider );
     rightAlignedNode.addChild( bSlider );
-    rightAlignedNode.addChild( aText );
-    rightAlignedNode.addChild( bText );
+    rightAlignedNode.addChild( aSliderText );
+    rightAlignedNode.addChild( bSliderText );
     rightAlignedNode.addChild( hStrut );
 
     // Create three check boxes
@@ -181,12 +196,12 @@ define( function( require ) {
     immutableEquationText.left = equationPanel.left + 5;
     aSlider.top = immutableEquationText.bottom + 10;
     bSlider.top = immutableEquationText.bottom + 10;
-    aSlider.centerX = immutableEquationText.left + eqPartTwoText.centerX;
-    bSlider.centerX = immutableEquationText.left + eqPartFourText.centerX;
-    aText.top = aSlider.bottom + 8;
-    bText.top = bSlider.bottom + 8;
-    aText.centerX = aSlider.centerX;
-    bText.centerX = bSlider.centerX;
+    aSlider.centerX = immutableEquationText.left + aText.centerX;
+    bSlider.centerX = immutableEquationText.left + bText.centerX;
+    aSliderText.top = aSlider.bottom + 8;
+    bSliderText.top = bSlider.bottom + 8;
+    aSliderText.centerX = aSlider.centerX;
+    bSliderText.centerX = bSlider.centerX;
 
     // call the superconstructor
     Panel.call( this, mainBox, options );

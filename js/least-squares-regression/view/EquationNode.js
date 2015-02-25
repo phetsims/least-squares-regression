@@ -19,6 +19,8 @@ define( function( require ) {
   // strings
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
+  var xString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  var yString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   /**
    * Scenery Node responsible for laying out the linear equation y = m x + b
@@ -32,30 +34,36 @@ define( function( require ) {
     var blackOption = { font: LSRConstants.TEXT_FONT, fill: 'black' };
     var blueOption = { font: LSRConstants.TEXT_FONT, fill: 'blue' };
 
-    this.eqnPartOneText = new Text( 'y =', blackOption );
-    this.eqnPartTwoText = new Text( this.numberToString( slope ).optionalSign, blueOption );
-    this.eqnPartThreeText = new Text( this.numberToString( slope ).absoluteNumber, blueOption );
-    this.eqnPartFourText = new Text( 'x', blackOption );
-    this.eqnPartFiveText = new Text( this.numberToString( intercept ).sign, blackOption );
-    this.eqnPartSixText = new Text( this.numberToString( intercept ).absoluteNumber, blueOption );
+    // Create the text elements of the equations
+    // @public
+    this.yText = new Text( yString, blackOption ); // 'y'
+    this.equalText = new Text( '=', blackOption ); // the '=' sign
+    this.signSlopeText = new Text( this.numberToString( slope ).optionalSign, blueOption ); // + or -
+    this.valueSlopeText = new Text( this.numberToString( slope ).absoluteNumber, blueOption ); // a number
+    this.xText = new Text( xString, blackOption ); // 'x'
+    this.signInterceptText = new Text( this.numberToString( intercept ).sign, blackOption );// + or -
+    this.valueInterceptText = new Text( this.numberToString( intercept ).absoluteNumber, blueOption );// a number
+
     var mutableEquationText = new Node( {
       children: [
-        this.eqnPartOneText,
-        this.eqnPartTwoText,
-        this.eqnPartThreeText,
-        this.eqnPartFourText,
-        this.eqnPartFiveText,
-        this.eqnPartSixText
+        this.yText,
+        this.equalText,
+        this.signSlopeText,
+        this.valueSlopeText,
+        this.xText,
+        this.signInterceptText,
+        this.valueInterceptText
       ]
     } );
 
-    //TODO issue #25, layout of equations relies on magic numbers
-    // The layout of this equation must match the layout of another equation in MyLineControlPanel
-    this.eqnPartTwoText.left = 23;
-    this.eqnPartThreeText.left = 32;
-    this.eqnPartFourText.left = 65;
-    this.eqnPartFiveText.left = 75;
-    this.eqnPartSixText.left = 87;
+    // layout of the entire equation
+    this.yText.left = 0;
+    this.equalText.left = this.yText.right + 3;
+    this.signSlopeText.left = this.equalText.right + 1;
+    this.valueSlopeText.left = this.signSlopeText.right + 3;
+    this.xText.left = this.valueSlopeText.right + 3;
+    this.signInterceptText.left = this.xText.right + 3;
+    this.valueInterceptText.left = this.signInterceptText.right + 3;
 
     this.addChild( mutableEquationText );
   }
@@ -68,8 +76,8 @@ define( function( require ) {
      * @param {Object} [options]
      */
     setSlopeText: function( slope, options ) {
-      this.eqnPartTwoText.text = this.numberToString( slope, options ).optionalSign;
-      this.eqnPartThreeText.text = this.numberToString( slope, options ).absoluteNumber;
+      this.signSlopeText.text = this.numberToString( slope, options ).optionalSign;
+      this.valueSlopeText.text = this.numberToString( slope, options ).absoluteNumber;
     },
 
     /**
@@ -79,8 +87,8 @@ define( function( require ) {
      * @param {Object} [options]
      */
     setInterceptText: function( intercept, options ) {
-      this.eqnPartFiveText.text = this.numberToString( intercept, options ).sign;
-      this.eqnPartSixText.text = this.numberToString( intercept, options ).absoluteNumber;
+      this.signInterceptText.text = this.numberToString( intercept, options ).sign;
+      this.valueInterceptText.text = this.numberToString( intercept, options ).absoluteNumber;
     },
 
     /**

@@ -7,6 +7,8 @@
   "sum": "sum",
   "a": "a",
   "b": "b",
+  "symbol.x": "x",
+  "symbol.y": "y",
   "questionMark": "?",
   "source": "Source",
   "colonPunctuation": ": ",
