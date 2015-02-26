@@ -80,6 +80,7 @@ define( function( require ) {
       // Add the removal listener for if and when this residual is removed from the model.
       graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
+          residualNode.dispose();
           graphNode.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
@@ -102,8 +103,8 @@ define( function( require ) {
       // Add the removal listener for if and when this residual is removed from the model.
       graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
+          residualNode.dispose();
           graphNode.removeChild( residualNode );
-          graph.bestFitLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );

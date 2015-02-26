@@ -82,8 +82,10 @@ define( function( require ) {
       // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
       //  see  https://github.com/phetsims/least-squares-regression/issues/11
       thisModel.dispose();
+
       // Clear the dataPoints array
       thisModel.dataPoints.clear();
+
       // Clear the residual arrays and the dataPointsOnGraph array
       thisModel.graph.resetOnChangeOfDataSet();
 
@@ -103,6 +105,7 @@ define( function( require ) {
       // Add the Data Points on Graph and all the Residuals
       // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
       thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+
       // Since we added the dataPoints in Bulk, let's send a trigger to the view
       thisModel.trigger( 'DataPointsAdded' );
     } );

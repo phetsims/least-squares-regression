@@ -160,6 +160,7 @@ define( function( require ) {
 
       // Remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
+        graphAxesNode.dispose();
         thisView.removeChild( graphAxesNode );
       }
 
@@ -204,24 +205,34 @@ define( function( require ) {
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( dynamicDataPointNode );
 
-        //TODO: is it necessary to unlink these listeners? issue #28
-        // Update graph upon a change of position of a dataPoint
-        addedDataPoint.positionProperty.link( function() {
+        // Listener for position
+        var positionPropertyListener = function() {
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
-        } );
+        };
 
+        // Update graph upon a change of position of a dataPoint
+        addedDataPoint.positionProperty.link( positionPropertyListener );
 
-        // Move the dataPoint to the front of this layer when grabbed by the user.
-        addedDataPoint.userControlledProperty.link( function( userControlled ) {
+        // Listener for userControlled
+        var userControlledPropertyListener = function( userControlled ) {
           if ( userControlled ) {
             dynamicDataPointNode.moveToFront();
           }
-        } );
+        };
+
+        // Move the dataPoint to the front of this layer when grabbed by the user.
+        addedDataPoint.userControlledProperty.link( userControlledPropertyListener );
 
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
+
+            // unlink the listeners on removedDataPoint
+            removedDataPoint.positionProperty.unlink( positionPropertyListener );
+            removedDataPoint.userControlledProperty.unlink( userControlledPropertyListener );
+            dynamicDataPointNode.dispose();
+            // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( dynamicDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
@@ -237,6 +248,7 @@ define( function( require ) {
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
+            staticDataPointNode.dispose();
             dataPointsLayer.removeChild( staticDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
@@ -288,6 +300,7 @@ define( function( require ) {
       sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;
       sourceAndReferencePushButton.left = dataSetComboBox.right + 10;
     }
+
   }
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView, {

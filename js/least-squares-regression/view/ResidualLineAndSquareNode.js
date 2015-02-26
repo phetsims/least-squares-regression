@@ -70,16 +70,32 @@ define( function( require ) {
     this.addChild( squareResidual );
     this.addChild( lineResidual );
 
-    //TODO: MEMORY LEAK ISSUE? issue #28
-    lineVisibilityProperty.linkAttribute( lineResidual, 'visible' );
-    squareVisibilityProperty.linkAttribute( squareResidual, 'visible' );
 
-    residualProperty.link( function() {
-        updateLineAndSquare();
-      }
-    );
+    this.lineVisibilityPropertyListener = function( visible ) {
+      lineResidual.visible = visible;
+    };
+
+    this.squareVisibilityPropertyListener = function( visible ) {
+      squareResidual.visible = visible;
+    };
+
+    this.updateLineAndSquare = updateLineAndSquare;
+
+    lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
+    squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
+    residualProperty.link( this.updateLineAndSquare );
+
+    this.lineVisibilityProperty = lineVisibilityProperty;
+    this.squareVisibilityProperty = squareVisibilityProperty;
+    this.residualProperty = residualProperty;
 
   }
 
-  return inherit( Node, ResidualLineAndSquareNode );
+  return inherit( Node, ResidualLineAndSquareNode, {
+    dispose: function() {
+      this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
+      this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
+      this.residualProperty.link( this.updateLineAndSquare );
+    }
+  } );
 } );

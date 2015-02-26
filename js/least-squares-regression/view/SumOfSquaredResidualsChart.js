@@ -99,8 +99,14 @@ define( function( require ) {
 
     // The width of the barometer changes if (1) a dataPoint is added, (2) removed, (3) its position changes
     dataPoints.addItemAddedListener( function( addedDataPoint ) {
-      // TODO: memory leak? issue #28
       addedDataPoint.positionProperty.link( updateWidth );
+
+      dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
+        if ( removedDataPoint === addedDataPoint ) {
+          removedDataPoint.positionProperty.unlink( updateWidth );
+        }
+        dataPoints.removeItemRemovedListener( removalListener );
+      } );
     } );
 
     // Trigger an update after all the points have been added in bulk to the model

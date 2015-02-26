@@ -23,11 +23,20 @@ define( function( require ) {
     Node.call( this, { cursor: 'pointer', children: [ representation ] } );
     var self = this;
 
-    // Move this node as the model representation moves
-    dataPoint.positionProperty.link( function( position ) {
+    // Create a listener to the position of the dataPoint
+    this.centerPositionListener = function( position ) {
       self.center = modelViewTransform.modelToViewPosition( position );
-    } );
+    };
+
+    // Move this node as the model representation moves
+    dataPoint.positionProperty.link( this.centerPositionListener );
+
+    this.dataPoint = dataPoint;
   }
 
-  return inherit( Node, DataPointNode );
+  return inherit( Node, DataPointNode, {
+    dispose: function() {
+      this.dataPoint.positionProperty.unlink( this.centerPositionListener );
+    }
+  } );
 } );
