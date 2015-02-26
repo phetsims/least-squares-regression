@@ -55,7 +55,7 @@ define( function( require ) {
 
     // Create the 'Best Fit Line' equation
     // initial values set the spacing, the correct values for the slope and the intercept will be updated below
-    var equationText = new EquationNode( -0.53, -0.53 );
+    var equationText = new EquationNode();
     equationText.visible = false;
     this.equationText = equationText;
     var equationPanel = new Panel( equationText, {

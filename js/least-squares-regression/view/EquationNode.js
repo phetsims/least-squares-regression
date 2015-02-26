@@ -24,25 +24,42 @@ define( function( require ) {
 
   /**
    * Scenery Node responsible for laying out the linear equation y = m x + b
-   * @param {number} slope
-   * @param {number} intercept
+   * @param {Object} [options]
    * @constructor
    */
-  function EquationNode( slope, intercept ) {
+  function EquationNode( options ) {
     Node.call( this );
 
+    options = _.extend( {
+      maxDecimalPlaces: 2 // maximum of number of decimal places on slope and intercept
+    }, options );
+
+    this.options = options;
+
+    // options for the text elements of the equation
     var blackOption = { font: LSRConstants.TEXT_FONT, fill: 'black' };
     var blueOption = { font: LSRConstants.TEXT_FONT, fill: 'blue' };
 
-    // Create the text elements of the equations
+    // use the widest possible numbers for layout the equation
+
+    var maxWidthSlopeString = '0.';
+    for ( var i = 0; i < options.maxDecimalPlaces; i++ ) {
+      maxWidthSlopeString = maxWidthSlopeString + '0';
+    }
+
+    var maxWidthInterceptString = '0.';
+    for ( var j = 0; j < options.maxDecimalPlaces; j++ ) {
+      maxWidthInterceptString = maxWidthInterceptString + '0';
+    }
+
     // @public
     this.yText = new Text( yString, blackOption ); // 'y'
     this.equalText = new Text( '=', blackOption ); // the '=' sign
-    this.signSlopeText = new Text( this.numberToString( slope ).optionalSign, blueOption ); // + or -
-    this.valueSlopeText = new Text( this.numberToString( slope ).absoluteNumber, blueOption ); // a number
+    this.signSlopeText = new Text( plusString, blueOption ); // + or -
+    this.valueSlopeText = new Text( maxWidthSlopeString, blueOption ); // a number
     this.xText = new Text( xString, blackOption ); // 'x'
-    this.signInterceptText = new Text( this.numberToString( intercept ).sign, blackOption );// + or -
-    this.valueInterceptText = new Text( this.numberToString( intercept ).absoluteNumber, blueOption );// a number
+    this.signInterceptText = new Text( plusString, blackOption );// + or -
+    this.valueInterceptText = new Text( maxWidthInterceptString, blueOption );// a number
 
     var mutableEquationText = new Node( {
       children: [
@@ -66,6 +83,7 @@ define( function( require ) {
     this.valueInterceptText.left = this.signInterceptText.right + 3;
 
     this.addChild( mutableEquationText );
+
   }
 
   return inherit( Node, EquationNode, {
@@ -73,36 +91,33 @@ define( function( require ) {
      * Set the text of the slope and its accompanying sign
      * @public
      * @param {number} slope
-     * @param {Object} [options]
      */
-    setSlopeText: function( slope, options ) {
-      this.signSlopeText.text = this.numberToString( slope, options ).optionalSign;
-      this.valueSlopeText.text = this.numberToString( slope, options ).absoluteNumber;
+    setSlopeText: function( slope ) {
+      this.signSlopeText.text = this.numberToString( slope ).optionalSign;
+      this.valueSlopeText.text = this.numberToString( slope ).absoluteNumber;
     },
 
     /**
      * Set the text of the intercept and its accompanying sign
      * @public
      * @param {number} intercept
-     * @param {Object} [options]
      */
-    setInterceptText: function( intercept, options ) {
-      this.signInterceptText.text = this.numberToString( intercept, options ).sign;
-      this.valueInterceptText.text = this.numberToString( intercept, options ).absoluteNumber;
+    setInterceptText: function( intercept ) {
+      this.signInterceptText.text = this.numberToString( intercept ).sign;
+      this.valueInterceptText.text = this.numberToString( intercept ).absoluteNumber;
     },
 
     /**
      * Convert a number to a String, subject to rounding to a certain number of decimal places
      * @private
      * @param {number} number
-     * @param {Object} [options]
      * @returns {{absoluteNumber: number, optionalSign: string, sign: string}}
      */
-    numberToString: function( number, options ) {
+    numberToString: function( number ) {
       var isNegative = (this.roundNumber( number ) < 0);
       var signString = isNegative ? minusString : plusString;
       var optionalSignString = isNegative ? minusString : ' ';
-      var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number, options ) ) );
+      var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number ) ) );
       var numberString = {
         absoluteNumber: absoluteNumber,
         optionalSign: optionalSignString,
@@ -115,23 +130,19 @@ define( function( require ) {
      * Round a number to a certain number of decimal places. Higher numbers have less decimal places.
      * @private
      * @param {number} number
-     * @param {Object} [options]
+
      * @returns {number}
      */
-    roundNumber: function( number, options ) {
-      options = _.extend( {
-        maxDecimalPlaces: 2
-      }, options );
-
+    roundNumber: function( number ) {
       var roundedNumber;
       if ( Math.abs( number ) < 1 ) {
-        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces );
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces );
       }
       else if ( Math.abs( number ) < 100 ) {
-        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces - 1 );
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 1 );
       }
       else {
-        roundedNumber = Util.toFixed( number, options.maxDecimalPlaces - 2 );
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 2 );
       }
       return roundedNumber;
     }

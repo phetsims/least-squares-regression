@@ -76,8 +76,7 @@ define( function( require ) {
 
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
-    // initial values set the spacing
-    var equationText = new EquationNode( -0.53, -0.53 );
+    var equationText = new EquationNode();
 
     /**
      * Function that updates the value of the current slope (based on the angle of the line)
