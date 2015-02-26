@@ -64,6 +64,9 @@ define( function( require ) {
       graph.updateMyLineResiduals();
     } );
 
+    // we will add all the residuals in a seperate node
+    var residualsLayer = new Node();
+
     // Handle the comings and goings of 'My Line' Residuals.
     graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
 
@@ -75,13 +78,13 @@ define( function( require ) {
         modelViewTransform,
         graph.myLineResidualsVisibleProperty,
         graph.myLineSquaredResidualsVisibleProperty );
-      graphNode.addChild( residualNode );
+      residualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
       graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
           residualNode.dispose();
-          graphNode.removeChild( residualNode );
+          residualsLayer.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
@@ -98,13 +101,13 @@ define( function( require ) {
         modelViewTransform,
         graph.bestFitLineResidualsVisibleProperty,
         graph.bestFitLineSquaredResidualsVisibleProperty );
-      graphNode.addChild( residualNode );
+      residualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
       graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
         if ( removedResidual === addedResidual ) {
           residualNode.dispose();
-          graphNode.removeChild( residualNode );
+          residualsLayer.removeChild( residualNode );
         }
       } );
     } );
@@ -113,9 +116,13 @@ define( function( require ) {
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
+    // Add the residuaslLayer
+    this.addChild( residualsLayer );
+
     // Add the two lines to this Node
     this.addChild( this.myLine );
     this.addChild( this.bestFitLine );
+
 
     /**
      * Update 'My Line'
