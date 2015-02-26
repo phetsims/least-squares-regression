@@ -1,6 +1,6 @@
 {
   "chipper": {
-    "sha": "60e3a835364517fddf8bebc759b9ab3d3e2c2afc",
+    "sha": "522ff3ed9ac716816db94aec87f67477601e8068",
     "branch": "master"
   },
   "sherpa": {
@@ -8,19 +8,19 @@
     "branch": "master"
   },
   "sun": {
-    "sha": "85bc9dce280b38a906c95130d44700e04f5fe523",
+    "sha": "a5e0a77c29c9e58dd8082f7e6cc595103db36b79",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "80f5f48dc006b1fcfe60aa03b64ac7969e6789e6",
+    "sha": "016a7ff38fdcce3ac4924cb942c1a57c81c4f755",
     "branch": "master"
   },
   "scenery": {
-    "sha": "29921a40d8ee2823daae737d6e12a511258ffbc2",
+    "sha": "dc3670e19d890cb4755d949274cb1bee6540c63b",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "49183543035c2e169dff7deedb6e49f6c58b0afa",
+    "sha": "dd722834a1cb3f91b2dc2698ea4b95da907301e2",
     "branch": "master"
   },
   "phet-core": {
@@ -28,15 +28,15 @@
     "branch": "master"
   },
   "kite": {
-    "sha": "294d830b8e7be6d94b53310c845561defe8b522e",
+    "sha": "1d3668fa88ee160dd17bbf13a03edc0389938b7d",
     "branch": "master"
   },
   "joist": {
-    "sha": "0e1ece9bd10ef5daab86dd534cc9817573baa82e",
+    "sha": "083b40c65a268eab22be50489bd529ec2097ea9c",
     "branch": "master"
   },
   "dot": {
-    "sha": "0d8e4292ea836baab14230c20e0f07b7a18dbf28",
+    "sha": "bccefb655ef000fe5761c243f73ed2e9d97dbd9d",
     "branch": "master"
   },
   "brand": {
@@ -44,7 +44,7 @@
     "branch": "master"
   },
   "axon": {
-    "sha": "a9d4cbeec06ad2f0231d5a2d76a725b90292a263",
+    "sha": "a63cc44375c1cbd0437bf9920de1b7b5da4f2ad1",
     "branch": "master"
   },
   "assert": {
@@ -52,8 +52,8 @@
     "branch": "master"
   },
   "least-squares-regression": {
-    "sha": "45c73ede0f9296ec9ffbf421d8e6dc6407509bc5",
+    "sha": "2539a21ef944d80c5874a7648e28e410239de507",
     "branch": "master"
   },
-  "comment": "# least-squares-regression 1.0.0-dev.10 Mon Feb 16 2015 20:04:00 GMT-0700 (Mountain Standard Time)"
+  "comment": "# least-squares-regression 1.0.0-dev.10 Wed Feb 25 2015 19:47:56 GMT-0700 (Mountain Standard Time)"
 }
