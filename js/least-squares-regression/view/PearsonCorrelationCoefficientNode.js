@@ -80,6 +80,7 @@ define( function( require ) {
       expandedProperty: this.expandedProperty,
       titleYMargin: 10,
       titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_BOLD_FONT } ),
+      titleAlignY: 'top',
       contentXMargin: 10,
       contentYMargin: 10
     }, options );
