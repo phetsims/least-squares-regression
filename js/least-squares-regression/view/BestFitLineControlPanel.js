@@ -55,12 +55,12 @@ define( function( require ) {
 
     // Create the 'Best Fit Line' equation
     // initial values set the spacing, the correct values for the slope and the intercept will be updated below
-    var equationText = new EquationNode();
+    var equationText = new EquationNode( { mode: 'bestFitLine' } );
     equationText.visible = false;
     this.equationText = equationText;
     var equationPanel = new Panel( equationText, {
       fill: 'white',
-      stroke: 'black',
+      stroke: LSRConstants.SMALL_PANEL_STROKE,
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
       resize: false
     } );
@@ -117,11 +117,6 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( function() {
         thisControlPanel.updateBestFitLineEquation();
       } );
-    } );
-
-    // The title of the control Panel (Accordion Box)  is set to invisible when the control panel is expanded
-    this.expandedProperty.link( function( expanded ) {
-      options.titleNode.visible = !expanded;
     } );
 
   }

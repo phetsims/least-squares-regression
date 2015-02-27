@@ -31,16 +31,32 @@ define( function( require ) {
     Node.call( this );
 
     options = _.extend( {
-      maxDecimalPlaces: 2 // maximum of number of decimal places on slope and intercept
+      maxDecimalPlaces: 2,  // maximum of number of decimal places on slope and intercept
+      mode: 'myLine'  // valid options are 'myLine' and 'bestFitLine'
     }, options );
 
     this.options = options;
 
     // options for the text elements of the equation
-    var blackOption = { font: LSRConstants.TEXT_FONT, fill: 'black' };
-    var blueOption = { font: LSRConstants.TEXT_FONT, fill: 'blue' };
 
-    // use the widest possible numbers for layout the equation
+    var numericalTextOptions; // font and fill options for numerical strings , i.e.  '- 9.54'
+    var stringTextOptions; // font and fill options for 'pure' strings, eg. 'y'
+
+    switch( options.mode ) {
+      case  'myLine' :
+        numericalTextOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
+        stringTextOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
+        break;
+      case 'bestFitLine':
+        numericalTextOptions = { font: LSRConstants.TEXT_FONT, fill: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR };
+        stringTextOptions = numericalTextOptions;
+        break;
+      default:
+        throw new Error( 'Unknown mode for EquationNode: ' );
+        break;
+    }
+
+    // use the widest possible numbers for laying out the equation
 
     var maxWidthSlopeString = '0.';
     for ( var i = 0; i < options.maxDecimalPlaces; i++ ) {
@@ -53,13 +69,13 @@ define( function( require ) {
     }
 
     // @public
-    this.yText = new Text( yString, blackOption ); // 'y'
-    this.equalText = new Text( '=', blackOption ); // the '=' sign
-    this.signSlopeText = new Text( plusString, blueOption ); // + or -
-    this.valueSlopeText = new Text( maxWidthSlopeString, blueOption ); // a number
-    this.xText = new Text( xString, blackOption ); // 'x'
-    this.signInterceptText = new Text( plusString, blackOption );// + or -
-    this.valueInterceptText = new Text( maxWidthInterceptString, blueOption );// a number
+    this.yText = new Text( yString, stringTextOptions ); // 'y'
+    this.equalText = new Text( '=', stringTextOptions ); // the '=' sign
+    this.signSlopeText = new Text( plusString, numericalTextOptions ); // + or -
+    this.valueSlopeText = new Text( maxWidthSlopeString, numericalTextOptions ); // a number
+    this.xText = new Text( xString, stringTextOptions ); // 'x'
+    this.signInterceptText = new Text( plusString, stringTextOptions );// + or -
+    this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 
     var mutableEquationText = new Node( {
       children: [
@@ -135,14 +151,14 @@ define( function( require ) {
      */
     roundNumber: function( number ) {
       var roundedNumber;
-      if ( Math.abs( number ) < 1 ) {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces );
+      if ( Math.abs( number ) < 10 ) {
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces ); // eg. 9.99 , 0.01 if this.options.maxDecimalPlaces=2
       }
       else if ( Math.abs( number ) < 100 ) {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 1 );
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 1 ); // eg. 10.1 99.9
       }
       else {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 2 );
+        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 2 );// 100, 9999
       }
       return roundedNumber;
     }

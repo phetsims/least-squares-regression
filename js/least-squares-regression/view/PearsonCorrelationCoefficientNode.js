@@ -68,6 +68,7 @@ define( function( require ) {
     var mutableEquationPanel = new Panel( equation, {
       fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LSRConstants.SMALL_PANEL_STROKE,
       resize: false,
       xMargin: 10
     } );

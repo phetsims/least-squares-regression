@@ -98,17 +98,16 @@ define( function( require ) {
     updateTextIntercept( 0 );
     updateTextSlope( 0 );
 
-
     // Create an immutable equation y = a x + b
     var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
-    var blueOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: 'blue' };
-
+    var boldOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
+    
     var yText = new Text( yString, blackOptions ); // 'y'
     var equalText = new Text( '=', blackOptions ); // the '=' sign
-    var aText = new Text( aString, blueOptions ); // a number
+    var aText = new Text( aString, boldOptions ); // a number
     var xText = new Text( xString, blackOptions ); // 'x'
     var signInterceptText = new Text( plusString, blackOptions );// '+'
-    var bText = new Text( bString, blueOptions );// a number
+    var bText = new Text( bString, boldOptions );// a number
 
     var immutableEquationText = new Node( {
       children: [
@@ -133,6 +132,7 @@ define( function( require ) {
     var equationPanel = new Panel( equationText, {
       fill: 'white',
       cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LSRConstants.SMALL_PANEL_STROKE,
       resize: false
     } );
 
@@ -144,8 +144,8 @@ define( function( require ) {
     var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
-    var aSliderText = new Text( aString, blueOptions );
-    var bSliderText = new Text( bString, blueOptions );
+    var aSliderText = new Text( aString, boldOptions );
+    var bSliderText = new Text( bString, boldOptions );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     var rightAlignedNode = new Node();

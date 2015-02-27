@@ -71,8 +71,9 @@ define( function( require ) {
     // Panels
     CONTROL_PANEL_CORNER_RADIUS: 10,
     SMALL_PANEL_CORNER_RADIUS: 5,
-    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 255, 245, 238 )', //seashell
-
+    CONTROL_PANEL_BACKGROUND_COLOR: 'rgb( 255, 245, 238 )', // seashell
+    SMALL_PANEL_STROKE: 'rgb(204,204,204)', // gray
+    
     // Combo box
     ITEM_HIGHLIGHT_FILL: 'rgb( 236, 255, 245 )'
 
