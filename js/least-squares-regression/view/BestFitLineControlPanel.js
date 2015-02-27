@@ -92,7 +92,7 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
-      titleNode: new Text( bestFitLineString, { font: LSRConstants.TEXT_FONT_BOLD } ),
+      titleNode: new Text( bestFitLineString, { font: LSRConstants.TEXT_BOLD_FONT } ),
       titleXMargin: 0,
       contentXMargin: 10,
       contentYMargin: 10

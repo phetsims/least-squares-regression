@@ -79,7 +79,7 @@ define( function( require ) {
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
       titleYMargin: 10,
-      titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_FONT_BOLD } ),
+      titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_BOLD_FONT } ),
       contentXMargin: 10,
       contentYMargin: 10
     }, options );

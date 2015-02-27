@@ -107,7 +107,7 @@ define( function( require ) {
     var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
     var sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
-      font: LSRConstants.TEXT_FONT_BOLD,
+      font: LSRConstants.TEXT_BOLD_FONT,
       listener: function() {
         thisView.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
       }

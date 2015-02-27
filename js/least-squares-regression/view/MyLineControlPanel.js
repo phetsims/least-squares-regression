@@ -100,7 +100,7 @@ define( function( require ) {
 
     // Create an immutable equation y = a x + b
     var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
-    var boldOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
+    var boldOptions = { font: LSRConstants.TEXT_BOLD_FONT, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
     
     var yText = new Text( yString, blackOptions ); // 'y'
     var equalText = new Text( '=', blackOptions ); // the '=' sign

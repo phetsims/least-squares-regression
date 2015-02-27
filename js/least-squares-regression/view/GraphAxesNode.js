@@ -44,7 +44,7 @@ define( function( require ) {
   var AXIS_EXTENT = 0.0; // how far the line extends past the min/max ticks, in model coordinates
 
   // labels
-  var AXIS_LABEL_FONT = LSRConstants.TEXT_FONT_BOLD;
+  var AXIS_LABEL_FONT = LSRConstants.TEXT_BOLD_FONT;
   var AXIS_LABEL_COLOR = 'black'; // space between end of axis and label
 
   // ticks

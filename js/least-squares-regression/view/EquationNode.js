@@ -44,7 +44,7 @@ define( function( require ) {
 
     switch( options.mode ) {
       case  'myLine' :
-        numericalTextOptions = { font: LSRConstants.TEXT_FONT_BOLD, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
+        numericalTextOptions = { font: LSRConstants.TEXT_BOLD_FONT, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
         stringTextOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
         break;
       case 'bestFitLine':
@@ -53,7 +53,6 @@ define( function( require ) {
         break;
       default:
         throw new Error( 'Unknown mode for EquationNode: ' );
-        break;
     }
 
     // use the widest possible numbers for laying out the equation
