@@ -156,6 +156,7 @@ define( function( require ) {
     this.addChild( graphAxesNode );
 
     // Link the comboBox selectedDataSet to the Scene Graph
+    // No need to unlink, listener is present for the lifetime of the sim
     model.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       // Remove graphAxesNode from the scene graph if it exists
@@ -232,6 +233,7 @@ define( function( require ) {
             removedDataPoint.positionProperty.unlink( positionPropertyListener );
             removedDataPoint.userControlledProperty.unlink( userControlledPropertyListener );
             dynamicDataPointNode.dispose();
+
             // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( dynamicDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
@@ -249,6 +251,8 @@ define( function( require ) {
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
             staticDataPointNode.dispose();
+
+            // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( staticDataPointNode );
             model.dataPoints.removeItemRemovedListener( removalListener );
           }

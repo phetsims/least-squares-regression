@@ -88,6 +88,7 @@ define( function( require ) {
     this.addChild( button );
 
     // Update the content of this node and the layout.
+    // no need to unlink, present for the lifetime of the sim
     selectedDataSetProperty.link( function( selectedDataSet ) {
       referenceText.text = selectedDataSet.reference;
       sourceText.text = sourceString + colonPunctuationString + selectedDataSet.source;

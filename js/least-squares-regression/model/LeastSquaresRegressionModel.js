@@ -75,7 +75,7 @@ define( function( require ) {
       invertY: true
     } );
 
-    // What to do when the selected Data Set changes
+    // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
     this.selectedDataSetProperty.link( function( selectedDataSet ) {
 
       // unlink the listeners to dataPoints

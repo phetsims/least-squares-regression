@@ -70,7 +70,7 @@ define( function( require ) {
     this.addChild( squareResidual );
     this.addChild( lineResidual );
 
-
+    // Add listeners 
     this.lineVisibilityPropertyListener = function( visible ) {
       lineResidual.visible = visible;
     };
@@ -81,6 +81,7 @@ define( function( require ) {
 
     this.updateLineAndSquare = updateLineAndSquare;
 
+    // link listeners
     lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
     squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
     residualProperty.link( this.updateLineAndSquare );
@@ -93,6 +94,7 @@ define( function( require ) {
 
   return inherit( Node, ResidualLineAndSquareNode, {
     dispose: function() {
+      // unlink listeners
       this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
       this.residualProperty.unlink( this.updateLineAndSquare );

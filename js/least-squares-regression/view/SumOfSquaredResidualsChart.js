@@ -113,6 +113,7 @@ define( function( require ) {
     onEvent( 'DataPointsAdded', updateWidth );
 
     // Controls the visibility of this node
+    // no need to unlink since the chart is present for the lifetime of the sim
     visibleProperty.linkAttribute( this, 'visible' );
 
     // Add all the nodes
@@ -121,7 +122,6 @@ define( function( require ) {
     this.addChild( rectangleBarometer );
     this.addChild( zeroLabel );
     this.addChild( label );
-
   }
 
   return inherit( Node, SumOfSquaredResidualsChart );

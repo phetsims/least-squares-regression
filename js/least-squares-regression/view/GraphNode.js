@@ -58,6 +58,7 @@ define( function( require ) {
     }
 
     // Update 'MyLine' and update 'MyLine' Residuals upon of change of angle (a proxy for the slope), or intercept
+    // No need to unlink, listener is present for the lifetime of the sim
     Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
       var slope = graph.slope( angle );
       updateMyLine( slope, intercept );
@@ -67,12 +68,13 @@ define( function( require ) {
     // we will add all the residuals in a seperate node
     var residualsLayer = new Node();
 
-    // Handle the comings and goings of 'My Line' Residuals.
-    graph.myLineResiduals.addItemAddedListener( function( addedResidual ) {
+    // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an 
+    // observable array of Property.<Residual>
+    graph.myLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
       var residualNode = new ResidualLineAndSquareNode(
-        addedResidual,
+        addedResidualProperty,
         LSRConstants.MY_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
@@ -81,8 +83,8 @@ define( function( require ) {
       residualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
-      graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
-        if ( removedResidual === addedResidual ) {
+      graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
+        if ( removedResidualProperty === addedResidualProperty ) {
           residualNode.dispose();
           residualsLayer.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
@@ -90,12 +92,13 @@ define( function( require ) {
       } );
     } );
 
-    // Handle the comings and goings of Best Fit Line Residuals.
-    graph.bestFitLineResiduals.addItemAddedListener( function( addedResidual ) {
+    // Handle the comings and goings of Best Fit Line Residuals. Recall that graph.bestFitResiduals is an 
+    // observable array of Property.<Residual>
+    graph.bestFitLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
       var residualNode = new ResidualLineAndSquareNode(
-        addedResidual,
+        addedResidualProperty, 
         LSRConstants.BEST_FIT_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
@@ -104,15 +107,15 @@ define( function( require ) {
       residualsLayer.addChild( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
-      graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidual ) {
-        if ( removedResidual === addedResidual ) {
+      graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
+        if ( removedResidualProperty === addedResidualProperty ) {
           residualNode.dispose();
           residualsLayer.removeChild( residualNode );
         }
       } );
     } );
 
-    // Hide or show the visibility of 'MyLine' and 'BestFitLine'
+    // Hide or show the visibility of 'MyLine' and 'BestFitLine', both listeners are present for the lifetime of the sim
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 

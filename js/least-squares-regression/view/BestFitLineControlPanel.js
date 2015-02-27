@@ -77,6 +77,7 @@ define( function( require ) {
     squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 8, 8 );
 
     // Update the control Panel upon a change of the status of the Best Fit Line CheckBox
+    // No need to unlink, present for the lifetime of the sim
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // Set Equation to invisible if there is less than one point on the graph
       if ( graph.isLinearFitDefined() ) {
