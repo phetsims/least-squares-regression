@@ -93,9 +93,9 @@ define( function( require ) {
 
   return inherit( Node, ResidualLineAndSquareNode, {
     dispose: function() {
-      this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
-      this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
-      this.residualProperty.link( this.updateLineAndSquare );
+      this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
+      this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
+      this.residualProperty.unlink( this.updateLineAndSquare );
     }
   } );
 } );
