@@ -75,8 +75,17 @@ define( function( require ) {
       invertY: true
     } );
 
+    // array for the CUSTOM dataPoints
+    var savedCustomDataPoints = []; // {Array.<DataPoints>} 
+
     // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
-    this.selectedDataSetProperty.link( function( selectedDataSet ) {
+    this.selectedDataSetProperty.link( function( selectedDataSet, oldSelectedDataSet ) {
+
+      // saved the position data of CUSTOM if we are going from CUSTOM to another dataSet
+      if ( oldSelectedDataSet && oldSelectedDataSet === DataSet.CUSTOM ) {
+        // add the current dataPoints on graph to savedCustomDataPoints
+        savedCustomDataPoints = thisModel.graph.dataPointsOnGraph;
+      }
 
       // unlink the listeners to dataPoints
       // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
@@ -92,22 +101,32 @@ define( function( require ) {
       // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
       thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
-      // Populate the dataPoints array with the new SelectedDataSet
-      selectedDataSet.dataXY.forEach( function( position ) {
-        // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
-        // Rescale all the {X,Y} value to the normalized graph bounds
-        var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
-        var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
-        var positionVector = new Vector2( XNormalized, YNormalized );
-        thisModel.dataPoints.push( new DataPoint( positionVector ) );
-      } );
+      // Populate the dataPoints array
 
-      // Add the Data Points on Graph and all the Residuals
-      // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
-      thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+      if ( selectedDataSet === DataSet.CUSTOM ) {
+        // use the savedCustomDataPoints to populate the dataPoints array
+        savedCustomDataPoints.forEach( function( dataPoint ) {
+          thisModel.addUserCreatedDataPoint( dataPoint );
+        } );
 
-      // Since we added the dataPoints in Bulk, let's send a trigger to the view
-      thisModel.trigger( 'DataPointsAdded' );
+      }
+      else {
+        // Populate the dataPoints array with the new SelectedDataSet
+        selectedDataSet.dataXY.forEach( function( position ) {
+          // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
+          // Rescale all the {X,Y} value to the normalized graph bounds
+          var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
+          var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
+          var positionVector = new Vector2( XNormalized, YNormalized );
+          thisModel.dataPoints.push( new DataPoint( positionVector ) );
+        } );
+        // Add the Data Points on Graph and all the Residuals
+        // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
+        thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+
+        // Since we added the dataPoints in Bulk, let's send a trigger to the view
+        thisModel.trigger( 'DataPointsAdded' );
+      }
     } );
   }
 
@@ -194,5 +213,6 @@ define( function( require ) {
 
   } );
 
-} );
+} )
+;
 
