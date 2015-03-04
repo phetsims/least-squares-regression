@@ -34,7 +34,7 @@ define( function( require ) {
      * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
      * directly to the scene, instead of to some other node that already has svg renderer.
      */
-    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
+    ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
     var screenView = this;
 

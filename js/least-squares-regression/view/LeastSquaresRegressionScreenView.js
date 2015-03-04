@@ -65,7 +65,7 @@ define( function( require ) {
    */
   function LeastSquaresRegressionScreenView( model ) {
 
-    ScreenView.call( this, { renderer: 'svg', layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
+    ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
     var thisView = this;
 
