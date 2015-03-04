@@ -139,15 +139,9 @@ define( function( require ) {
       this.graph.reset();
     },
 
-    // Step is responsible for the animation of the dataPoints when they return to the bucket
-    step: function( dt ) {
-      this.dataPoints.forEach( function( dataPoint ) {
-        dataPoint.step( dt );
-      } );
-    },
-
     /**
      * Unlink listeners to dataPoint
+     * @private 
      */
     dispose: function() {
       this.dataPoints.forEach( function( dataPoint ) {
@@ -156,11 +150,13 @@ define( function( require ) {
       } );
     },
 
-    // Function that sets all dataPoint animating flag to true, setting them up to be animated in the step function
-    // @public
+    /**
+     * Function that animates all the dataPoints
+     * @public
+     */
     returnAllDataPointsToBucket: function() {
       this.dataPoints.forEach( function( dataPoint ) {
-        dataPoint.animating = true;
+        dataPoint.animate();
       } );
     },
 
@@ -197,7 +193,8 @@ define( function( require ) {
       dataPoint.userControlledListener = function( userControlled ) {
         var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
         if ( !isOnGraph && !userControlled ) {
-          dataPoint.animating = true;
+          // return the dataPoint to the bucket
+          dataPoint.animate();
         }
       };
 

@@ -43,7 +43,6 @@ define( function( require ) {
       // Handler that moves the dataPoint in model space.
       start: function( event, trail ) {
         dataPoint.userControlled = true;
-        dataPoint.animating = false; // will stop point animation by catching the moving point in mid-flight.
       },
 
       translate: function( args ) {

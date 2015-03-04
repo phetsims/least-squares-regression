@@ -31,6 +31,7 @@ define( function( require ) {
       userControlled: false,
 
       // Flag that indicates whether this element is animating from one location to the bucket.
+      // @public read-only
       animating: false
 
     } );
@@ -38,43 +39,36 @@ define( function( require ) {
   }
 
   return inherit( PropertySet, DataPoint, {
-    /**
-     * Animate the data Point
-     * @param {number} dt
-     */
-    step: function( dt ) {
-      if ( this.animating ) {
-        this.animationStep( dt );
-      }
-    },
 
     /**
      * Function that animates dataPoint back to the bucket.
-     * @private
-     * @param {number} dt
+     * @public
      */
-    animationStep: function( dt ) {
+    animate: function() {
+      var self = this;
 
-      // perform any animation
-      var distanceToDestination = this.position.distance( this.positionProperty.initialValue );
+      this.animating = true;
 
-      // If the particle is further than one time step away, move it toward the destination
-      // TODO: issue #27, Would it be appropriate to use TWEEN.js here?  If not, perhaps comment that it was an option and another strategy was used
-      if ( distanceToDestination > dt * LeastSquaresRegressionConstants.ANIMATION_VELOCITY ) {
+      var position = {
+        x: this.position.x,
+        y: this.position.y
+      };
 
-        // Move a step toward the position.
-        var stepAngle = Math.atan2( this.positionProperty.initialValue.y - this.position.y, this.positionProperty.initialValue.x - this.position.x );
-        var stepVector = Vector2.createPolar( LeastSquaresRegressionConstants.ANIMATION_VELOCITY * dt, stepAngle );
-        this.position = this.position.plus( stepVector );
-      }
-      else {
+      var animationTween = new TWEEN.Tween( position ).
+        to( {
+          x: this.positionProperty.initialValue.x,
+          y: this.positionProperty.initialValue.y
+        }, LeastSquaresRegressionConstants.ANIMATION_TIME ).
+        easing( TWEEN.Easing.Cubic.InOut ).
+        onUpdate( function() {
+          self.position = new Vector2( position.x, position.y );
+        } ).
+        onComplete( function() {
+          self.animating = false;
+          self.trigger( 'returnedToOrigin' );
+        } );
 
-        // Less than one time step away, so just go to the initial position.
-        this.position = this.positionProperty.initialValue;
-        this.animating = false;
-        this.trigger( 'returnedToOrigin' );
-      }
+      animationTween.start();
     }
-
   } );
 } );

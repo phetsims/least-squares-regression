@@ -13,8 +13,8 @@ define( function( require ) {
 
   return {
 
-    // Velocity at which animated dataPoints move
-    ANIMATION_VELOCITY: 2, // in the view reference frame
+    // time for dataPoints to reach the bucket when animated
+    ANIMATION_TIME: 1000, //  in milliseconds
 
     // Background color for sim and graph
     BACKGROUND_COLOR: 'rgb( 236, 255, 245 )',
