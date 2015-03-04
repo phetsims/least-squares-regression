@@ -205,6 +205,9 @@ define( function( require ) {
       // can be 'put back' into the bucket.
       dataPoint.on( 'returnedToOrigin', function() {
         self.dataPoints.remove( dataPoint );
+
+        dataPoint.positionProperty.unlink( dataPoint.positionListener );
+        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
       } );
     }
 
