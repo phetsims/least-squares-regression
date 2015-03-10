@@ -85,7 +85,7 @@ define( function( require ) {
       fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
       align: 'left',
       xMargin: 10,
-      yMargin: 10,
+      yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
