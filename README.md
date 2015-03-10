@@ -1,4 +1,15 @@
-least-squares-regression
-========================
+Least-Squares Regression
+================
 
-An interactive educational simulation that teaches about the least squares technique for a linear fit to data. The least-squares approach minimizes the sum of squared residuals, a residual being the difference between a measured value and the fitted value provided by the linear model.  The simulation demonstrates the usage of the best fit regression for various data sets.
+"Least-Squares Regression" is an educational simulation in HTML5, by <a href="http://phet.colorado.edu/" target="_blank">PhET Interactive Simulations</a>
+at the University of Colorado Boulder.
+
+*This simulation is under development and has not been published.*
+
+### Documentation
+The <a href="http://bit.ly/phet-development-overview" target="_blank">PhET Development Overview</a> is the most complete guide to PhET Simulation
+Development. This guide includes how to obtain simulation code and its dependencies, notes about architecture & design, how to test and build
+the sims, as well as other important issues.
+
+### License
+See the <a href="https://github.com/phetsims/least-squares-regression/blob/master/LICENSE" target="_blank">LICENSE</a>
