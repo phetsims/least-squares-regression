@@ -54,11 +54,14 @@ define( function( require ) {
         y: this.position.y
       };
 
+      // distance from the dataPoint current position to its initial position (in the bucket)
+      var distance = this.positionProperty.initialValue.distance( this.position );
+
       var animationTween = new TWEEN.Tween( position ).
         to( {
           x: this.positionProperty.initialValue.x,
           y: this.positionProperty.initialValue.y
-        }, LeastSquaresRegressionConstants.ANIMATION_TIME ).
+        }, distance/ LeastSquaresRegressionConstants.ANIMATION_SPEED ).
         easing( TWEEN.Easing.Cubic.InOut ).
         onUpdate( function() {
           self.position = new Vector2( position.x, position.y );
