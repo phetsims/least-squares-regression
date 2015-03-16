@@ -56,7 +56,19 @@ define( function( require ) {
     new Vector2( 5, -14 ),
     new Vector2( 10, -3 ),
     new Vector2( 15, -7 ),
-    new Vector2( 25, -4 )
+    new Vector2( 25, -4 ),
+    new Vector2( -0, 15 ),
+    new Vector2( 5, 24 ),
+    new Vector2( 10, 13 ),
+    new Vector2( 15, 17 ),
+    new Vector2( 25, 14 ),
+    new Vector2( -35, 15 ),
+    new Vector2( -25, 19 ),
+    new Vector2( -20, 14 ),
+    new Vector2( -15, 14 ),
+    new Vector2( -10, 14 ),
+    new Vector2( -5, 17 ),
+    new Vector2( -0, 15 )
   ];
 
   /**
@@ -118,7 +130,7 @@ define( function( require ) {
     // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
     // all of the point placement graphs in the z-order.
     var dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
-    var bucketFrontLayer = new Node();
+    var bucketFrontLayer = new Node({ pickable: false } );
 
     // Add the bucket view elements
     var bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
