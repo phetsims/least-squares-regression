@@ -111,10 +111,10 @@ define( function( require ) {
         // Add the Data Points on Graph and all the Residuals
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
         thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
-       // The CUSTOM dataPoints are dynamical, we need to add listeners to their position
         thisModel.dataPoints.forEach( function( dataPoint ) {
           thisModel.addDataPointListeners( dataPoint );
         } );
+
       }
       else {
         // Populate the dataPoints array with the new SelectedDataSet
