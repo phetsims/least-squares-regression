@@ -33,12 +33,11 @@ define( function( require ) {
 
     var self = this;
 
+    // create line and square residual with nominal values, will set the correct value later
     this.squareResidual = new Rectangle( 0, 0, 1, 1 );
     this.lineResidual = new Line( 0, 0, 1, 1, {
       lineWidth: LSRConstants.RESIDUAL_LINE_WIDTH
     } );
-
-    this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
 
     // Add the square residual and line residual
     this.addChild( this.squareResidual );
@@ -52,6 +51,8 @@ define( function( require ) {
     this.squareVisibilityPropertyListener = function( visible ) {
       self.squareResidual.visible = visible;
     };
+
+    this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
 
     this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
   }
@@ -91,7 +92,7 @@ define( function( require ) {
       this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
       this.residualProperty.unlink( this.updateLineAndSquareListener );
 
-      this.freeToPool();
+      this.freeToPool(); // will throw ResidualLineAndSquareNode into the pool
     },
 
     set: function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
@@ -100,16 +101,15 @@ define( function( require ) {
       this.residualProperty = residualProperty;
       this.viewBounds = viewBounds;
       this.modelViewTransform = modelViewTransform;
-      this.lineColor = lineColor;
 
+      // link the listeners
       this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
       this.residualProperty.link( this.updateLineAndSquareListener );
 
+      // set the appropriate color for the square and line residuals
       this.squareResidual.fill = lineColor.SQUARED_RESIDUAL_COLOR;
       this.lineResidual.stroke = lineColor.RESIDUAL_COLOR;
-
-      this.updateLineAndSquare();
 
       return this; // for chaining
     }
@@ -117,7 +117,7 @@ define( function( require ) {
 
   Poolable.mixin( ResidualLineAndSquareNode, {
     constructorDuplicateFactory: function( pool ) {
-      return function(  residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+      return function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
         if ( pool.length ) {
           return pool.pop().set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
         }
