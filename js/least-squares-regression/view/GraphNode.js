@@ -65,7 +65,7 @@ define( function( require ) {
       graph.updateMyLineResiduals();
     } );
 
-    // we will add all the residuals in a seperate node
+    // we will add all the residuals in a separate node
     var residualsLayer = new Node();
 
     // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an 
@@ -73,7 +73,7 @@ define( function( require ) {
     graph.myLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
-      var residualNode = new ResidualLineAndSquareNode(
+      var residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LSRConstants.MY_LINE_COLOR,
         graphNode.viewBounds,
@@ -97,8 +97,8 @@ define( function( require ) {
     graph.bestFitLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
-      var residualNode = new ResidualLineAndSquareNode(
-        addedResidualProperty, 
+      var residualNode = ResidualLineAndSquareNode.createFromPool(
+        addedResidualProperty,
         LSRConstants.BEST_FIT_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,

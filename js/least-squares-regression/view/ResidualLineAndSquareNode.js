@@ -14,6 +14,7 @@ define( function( require ) {
   var Line = require( 'SCENERY/nodes/Line' );
   var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Poolable = require( 'PHET_CORE/Poolable' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
 
@@ -39,7 +40,7 @@ define( function( require ) {
     /**
      * Update the Line and Square Residual
      */
-    function updateLineAndSquare() {
+    function updateLineAndSquare () {
       var point1 = modelViewTransform.modelToViewPosition( residualProperty.value.point1 );
       var point2 = modelViewTransform.modelToViewPosition( residualProperty.value.point2 );
 
@@ -64,7 +65,10 @@ define( function( require ) {
       squareResidual.clipArea = Shape.bounds( viewBounds );
     }
 
+
     updateLineAndSquare();
+
+
 
     // Add the square residual and line residual
     this.addChild( squareResidual );
@@ -79,25 +83,54 @@ define( function( require ) {
       squareResidual.visible = visible;
     };
 
-    this.updateLineAndSquare = updateLineAndSquare;
+    this.updateLineAndSquare= updateLineAndSquare;
 
-    // link listeners
-    lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
-    squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
-    residualProperty.link( this.updateLineAndSquare );
-
-    this.lineVisibilityProperty = lineVisibilityProperty;
-    this.squareVisibilityProperty = squareVisibilityProperty;
-    this.residualProperty = residualProperty;
+    this.set(residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+    //
+    //// link listeners
+    //this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
+    //this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
+    //this.residualProperty.link( this.updateLineAndSquare );
 
   }
 
-  return inherit( Node, ResidualLineAndSquareNode, {
+  inherit( Node, ResidualLineAndSquareNode, {
     dispose: function() {
       // unlink listeners
       this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
       this.residualProperty.unlink( this.updateLineAndSquare );
+
+      this.freeToPool();
+    },
+
+    set: function(residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty )
+    {
+      this.lineVisibilityProperty = lineVisibilityProperty;
+      this.squareVisibilityProperty = squareVisibilityProperty;
+      this.residualProperty = residualProperty;
+      this.viewBounds = viewBounds;
+      this.modelViewTransform= modelViewTransform;
+      this.lineColor=lineColor;
+      this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
+      this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
+      this.residualProperty.link( this.updateLineAndSquare );
+
     }
   } );
+
+  Poolable.mixin( ResidualLineAndSquareNode, {
+    constructorDuplicateFactory: function( pool ) {
+      return function(  residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+        if ( pool.length ) {
+          return pool.pop().set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+        }
+        else {
+          return new ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+        }
+      };
+    }
+  } );
+
+  return ResidualLineAndSquareNode;
 } );
