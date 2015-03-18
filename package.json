@@ -1,6 +1,6 @@
 {
   "name": "least-squares-regression",
-  "version": "1.0.0-dev.13",
+  "version": "1.0.0-dev.14",
   "license": "GPLv3",
   "simTitleStringKey": "LEAST_SQUARES_REGRESSION/least-squares-regression.name",
   "phetLibs": [
