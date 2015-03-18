@@ -31,24 +31,44 @@ define( function( require ) {
   function ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
     Node.call( this );
 
-    var squareResidual = new Rectangle( 0, 0, 1, 1, { fill: lineColor.SQUARED_RESIDUAL_COLOR } );
-    var lineResidual = new Line( 0, 0, 1, 1, {
-      stroke: lineColor.RESIDUAL_COLOR,
+    var self = this;
+
+    this.squareResidual = new Rectangle( 0, 0, 1, 1 );
+    this.lineResidual = new Line( 0, 0, 1, 1, {
       lineWidth: LSRConstants.RESIDUAL_LINE_WIDTH
     } );
 
+    this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
+
+    // Add the square residual and line residual
+    this.addChild( this.squareResidual );
+    this.addChild( this.lineResidual );
+
+    // Add listeners
+    this.lineVisibilityPropertyListener = function( visible ) {
+      self.lineResidual.visible = visible;
+    };
+
+    this.squareVisibilityPropertyListener = function( visible ) {
+      self.squareResidual.visible = visible;
+    };
+
+    this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+  }
+
+  inherit( Node, ResidualLineAndSquareNode, {
     /**
      * Update the Line and Square Residual
      */
-    function updateLineAndSquare () {
-      var point1 = modelViewTransform.modelToViewPosition( residualProperty.value.point1 );
-      var point2 = modelViewTransform.modelToViewPosition( residualProperty.value.point2 );
+    updateLineAndSquare: function() {
+      var point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
+      var point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
 
       // Update line residual
-      lineResidual.setPoint1( point1 );
-      lineResidual.setPoint2( point2 );
+      this.lineResidual.setPoint1( point1 );
+      this.lineResidual.setPoint2( point2 );
       // the line residual should not show outside the graph.
-      lineResidual.clipArea = Shape.bounds( viewBounds );
+      this.lineResidual.clipArea = Shape.bounds( this.viewBounds );
 
       // Update square residual
       var top = Math.min( point1.y, point2.y );
@@ -58,64 +78,40 @@ define( function( require ) {
 
       // the square residual can be on the left or on the right of point1 (the dataPoint position)
       // however the square residual should not overlap with the y = m x + b line:
-      var left = (residualProperty.value.isSquaredResidualToTheLeft) ? point1.x - width : point1.x;
+      var left = ( this.residualProperty.value.isSquaredResidualToTheLeft ) ? point1.x - width : point1.x;
 
-      squareResidual.setRect( left, top, width, height );
+      this.squareResidual.setRect( left, top, width, height );
       // the squareResidual should not show outside the graph.
-      squareResidual.clipArea = Shape.bounds( viewBounds );
-    }
+      this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
+    },
 
-
-    updateLineAndSquare();
-
-
-
-    // Add the square residual and line residual
-    this.addChild( squareResidual );
-    this.addChild( lineResidual );
-
-    // Add listeners 
-    this.lineVisibilityPropertyListener = function( visible ) {
-      lineResidual.visible = visible;
-    };
-
-    this.squareVisibilityPropertyListener = function( visible ) {
-      squareResidual.visible = visible;
-    };
-
-    this.updateLineAndSquare= updateLineAndSquare;
-
-    this.set(residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
-    //
-    //// link listeners
-    //this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
-    //this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
-    //this.residualProperty.link( this.updateLineAndSquare );
-
-  }
-
-  inherit( Node, ResidualLineAndSquareNode, {
     dispose: function() {
       // unlink listeners
       this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
-      this.residualProperty.unlink( this.updateLineAndSquare );
+      this.residualProperty.unlink( this.updateLineAndSquareListener );
 
       this.freeToPool();
     },
 
-    set: function(residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty )
-    {
+    set: function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
       this.lineVisibilityProperty = lineVisibilityProperty;
       this.squareVisibilityProperty = squareVisibilityProperty;
       this.residualProperty = residualProperty;
       this.viewBounds = viewBounds;
-      this.modelViewTransform= modelViewTransform;
-      this.lineColor=lineColor;
+      this.modelViewTransform = modelViewTransform;
+      this.lineColor = lineColor;
+
       this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
-      this.residualProperty.link( this.updateLineAndSquare );
+      this.residualProperty.link( this.updateLineAndSquareListener );
 
+      this.squareResidual.fill = lineColor.SQUARED_RESIDUAL_COLOR;
+      this.lineResidual.stroke = lineColor.RESIDUAL_COLOR;
+
+      this.updateLineAndSquare();
+
+      return this; // for chaining
     }
   } );
 
