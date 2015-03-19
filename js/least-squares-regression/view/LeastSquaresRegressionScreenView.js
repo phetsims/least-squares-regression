@@ -56,7 +56,19 @@ define( function( require ) {
     new Vector2( 5, -14 ),
     new Vector2( 10, -3 ),
     new Vector2( 15, -7 ),
-    new Vector2( 25, -4 )
+    new Vector2( 25, -4 ),
+    new Vector2( -0, 15 ),
+    new Vector2( 5, 24 ),
+    new Vector2( 10, 13 ),
+    new Vector2( 15, 17 ),
+    new Vector2( 25, 14 ),
+    new Vector2( -35, 15 ),
+    new Vector2( -25, 19 ),
+    new Vector2( -20, 14 ),
+    new Vector2( -15, 14 ),
+    new Vector2( -10, 14 ),
+    new Vector2( -5, 17 ),
+    new Vector2( -0, 15 )
   ];
 
   /**
@@ -85,7 +97,7 @@ define( function( require ) {
       fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
       align: 'left',
       xMargin: 10,
-      yMargin: 10,
+      yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
     var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
@@ -118,7 +130,7 @@ define( function( require ) {
     // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
     // all of the point placement graphs in the z-order.
     var dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
-    var bucketFrontLayer = new Node();
+    var bucketFrontLayer = new Node({ pickable: false } );
 
     // Add the bucket view elements
     var bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
@@ -321,7 +333,7 @@ define( function( require ) {
     updateSourceAndReferenceNodeVisibility: function( sourceAndReferenceNode ) {
       // Renderer must be specified here because the plane is added directly to the scene (instead of to some other node
       // that already has svg renderer)
-      var plane = new Plane( { fill: 'black', opacity: 0.3, renderer: 'svg' } );
+      var plane = new Plane( { fill: 'black', opacity: 0.3 } );
       this.addChild( plane );
       this.addChild( sourceAndReferenceNode );
 

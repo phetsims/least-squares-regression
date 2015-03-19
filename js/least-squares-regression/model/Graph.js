@@ -224,17 +224,24 @@ define( function( require ) {
         thisGraph.dataPointsOnGraph.push( dataPoint );
       } );
 
-      var linearFitParameters = this.getLinearFit();
       var mySlope = this.slope( this.angle );
       var myIntercept = this.intercept;
 
+      // add a 'myLineResidual' for every single dataPoint
       dataPoints.forEach( function( dataPoint ) {
-        var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
         var myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
-        thisGraph.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
         thisGraph.myLineResiduals.push( new Property( myLineResidual ) );
       } );
 
+      // add a 'best fit Line' residual  for every single dataPoint
+      // unless there is not  inearFit (because there is less than 2 data points on the board for instance)
+      if ( this.isLinearFitDefined() ) {
+        var linearFitParameters = this.getLinearFit();
+        dataPoints.forEach( function( dataPoint ) {
+          var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+          thisGraph.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
+        } );
+      }
     },
 
     /**

@@ -106,7 +106,13 @@ define( function( require ) {
       if ( selectedDataSet === DataSet.CUSTOM ) {
         // use the savedCustomDataPoints to populate the dataPoints array
         savedCustomDataPoints.forEach( function( dataPoint ) {
-          thisModel.addUserCreatedDataPoint( dataPoint );
+          thisModel.dataPoints.push( dataPoint );
+        } );
+        // Add the Data Points on Graph and all the Residuals
+        // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
+        thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+        thisModel.dataPoints.forEach( function( dataPoint ) {
+          thisModel.addDataPointListeners( dataPoint );
         } );
 
       }
@@ -123,10 +129,10 @@ define( function( require ) {
         // Add the Data Points on Graph and all the Residuals
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
         thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
-
-        // Since we added the dataPoints in Bulk, let's send a trigger to the view
-        thisModel.trigger( 'DataPointsAdded' );
       }
+      // Since we added the dataPoints in Bulk, let's send a trigger to the view
+      thisModel.trigger( 'DataPointsAdded' );
+
     } );
   }
 
@@ -141,7 +147,7 @@ define( function( require ) {
 
     /**
      * Unlink listeners to dataPoint
-     * @private 
+     * @private
      */
     dispose: function() {
       this.dataPoints.forEach( function( dataPoint ) {
@@ -167,9 +173,19 @@ define( function( require ) {
      * @param {DataPoint} dataPoint
      */
     addUserCreatedDataPoint: function( dataPoint ) {
-      var self = this;
+
       this.dataPoints.push( dataPoint );
 
+      this.addDataPointListeners( dataPoint );
+    },
+
+    /**
+     * Function that adds position listener and user Controlled listnener;
+     * Useful for dynamical points
+     * @param {DataPoint} dataPoint
+     */
+    addDataPointListeners: function( dataPoint ) {
+      var self = this;
       dataPoint.positionListener = function( position ) {
         // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
         if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {

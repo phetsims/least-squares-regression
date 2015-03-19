@@ -59,19 +59,7 @@ define( function( require ) {
   var MINUS_SIGN_WIDTH = new Text( minusString, { font: MAJOR_TICK_FONT } ).width;
 
   var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
-  //----------------------------------------------------------------------------------------
-  // A major or minor line in the grid
-  //----------------------------------------------------------------------------------------
 
-  // Line goes from (x1,y1) to (x2,y2), and is either a major or minor grid line.
-  function GridLineNode( x1, y1, x2, y2, isMajor ) {
-    Line.call( this, x1, y1, x2, y2, {
-      lineWidth: isMajor ? MAJOR_GRID_LINE_WIDTH : MINOR_GRID_LINE_WIDTH,
-      stroke: isMajor ? MAJOR_GRID_LINE_COLOR : MINOR_GRID_LINE_COLOR
-    } );
-  }
-
-  inherit( Line, GridLineNode );
 
   //----------------------------------------------------------------------------------------
   // major tick with label, orientation is vertical or horizontal
@@ -367,14 +355,24 @@ define( function( require ) {
     var tickYSeparation = tickSpacing( dataSet.yRange );
     var numberOfHorizontalGridLines = tickYSeparation.numberOfTicks;
 
-    var minX = modelViewTransform.modelToViewX( dataSet.xRange.min );
-    var maxX = modelViewTransform.modelToViewX( dataSet.xRange.max );
+    var majorGridLinesShape = new Shape();
+    var minorGridLinesShape = new Shape();
+
+    var minX = dataSet.xRange.min;
+    var maxX = dataSet.xRange.max;
     for ( var i = 0; i < numberOfHorizontalGridLines; i++ ) {
       var modelY = tickYSeparation.tickStartPosition + tickYSeparation.minorTickSpacing * i;
       if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
-        var yOffset = modelViewTransform.modelToViewY( modelY );
+        var yOffset = modelY;
         var isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % (tickYSeparation.minorTicksPerMajor) < SMALL_EPSILON;
-        horizontalGridLinesNode.addChild( new GridLineNode( minX, yOffset, maxX, yOffset, isMajorX ) );
+        if ( isMajorX ) {
+          majorGridLinesShape.moveTo( minX, yOffset )
+            .horizontalLineTo( maxX );
+        }
+        else {
+          minorGridLinesShape.moveTo( minX, yOffset )
+            .horizontalLineTo( maxX );
+        }
       }
     }
 
@@ -383,16 +381,35 @@ define( function( require ) {
     this.addChild( verticalGridLinesNode );
     var tickXSeparation = tickSpacing( dataSet.xRange );
     var numberOfVerticalGridLines = tickXSeparation.numberOfTicks;
-    var minY = modelViewTransform.modelToViewY( dataSet.yRange.max ); // yes, swap min and max
-    var maxY = modelViewTransform.modelToViewY( dataSet.yRange.min );
+    var minY = dataSet.yRange.max; // yes, swap min and max
+    var maxY = dataSet.yRange.min;
     for ( var j = 0; j < numberOfVerticalGridLines; j++ ) {
       var modelX = tickXSeparation.tickStartPosition + tickXSeparation.minorTickSpacing * j;
       if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
-        var xOffset = modelViewTransform.modelToViewX( modelX );
+        var xOffset = modelX;
         var isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % (tickXSeparation.minorTicksPerMajor) < SMALL_EPSILON;
-        verticalGridLinesNode.addChild( new GridLineNode( xOffset, minY, xOffset, maxY, isMajorY ) );
+        if ( isMajorY ) {
+          majorGridLinesShape.moveTo( xOffset, minY )
+            .verticalLineTo( maxY );
+        }
+        else {
+          minorGridLinesShape.moveTo( xOffset, minY )
+            .verticalLineTo( maxY );
+        }
       }
     }
+
+    var majorGridLinesPath = new Path( modelViewTransform.modelToViewShape( majorGridLinesShape ), {
+      lineWidth: MAJOR_GRID_LINE_WIDTH,
+      stroke: MAJOR_GRID_LINE_COLOR
+    } );
+    var minorGridLinesPath = new Path( modelViewTransform.modelToViewShape( minorGridLinesShape ), {
+      lineWidth: MINOR_GRID_LINE_WIDTH,
+      stroke: MINOR_GRID_LINE_COLOR
+    } );
+
+    this.addChild( majorGridLinesPath );
+    this.addChild( minorGridLinesPath );
   }
 
   inherit( Node, GridNode );
