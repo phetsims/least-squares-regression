@@ -62,10 +62,9 @@ define( function( require ) {
           testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
         }
 
-        // Determine the initial position of the new element as a function of the event position and this node's bounds.
+        // Determine the initial position of the  center of the new  element.
         var centerPositionGlobal = self.parentToGlobalPoint( self.center );
-        var initialPositionOffset = centerPositionGlobal.minus( event.pointer.point );
-        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
+        var initialPosition = this.parentScreen.globalToLocalPoint( centerPositionGlobal);
 
         // Create and add the new model element.
         this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
