@@ -48,7 +48,7 @@ define( function( require ) {
    * Create a vertical slider with a central tick
    * @param {Property.<number>} property parameter to track.
    * @param {Range} range - Possible range for property.
-   * @param {Object} options for slider node.
+   * @param {Object} [options] for slider node.
    * @constructor
    */
   function VerticalSlider( property, range, options ) {
