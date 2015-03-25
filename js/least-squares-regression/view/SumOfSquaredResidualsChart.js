@@ -117,9 +117,9 @@ define( function( require ) {
     visibleProperty.linkAttribute( this, 'visible' );
 
     // Add all the nodes
+    this.addChild( rectangleBarometer );
     this.addChild( verticalLine );
     this.addChild( horizontalArrow );
-    this.addChild( rectangleBarometer );
     this.addChild( zeroLabel );
     this.addChild( label );
   }
