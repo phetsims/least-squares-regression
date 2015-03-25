@@ -62,7 +62,7 @@ define( function( require ) {
           x: this.positionProperty.initialValue.x,
           y: this.positionProperty.initialValue.y
         }, distance/ LeastSquaresRegressionConstants.ANIMATION_SPEED ).
-        easing( TWEEN.Easing.Cubic.InOut ).
+        easing( TWEEN.Easing.Cubic.In ).
         onUpdate( function() {
           self.position = new Vector2( position.x, position.y );
         } ).
