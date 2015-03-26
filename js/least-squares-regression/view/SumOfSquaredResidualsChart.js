@@ -102,6 +102,7 @@ define( function( require ) {
       addedDataPoint.positionProperty.link( updateWidth );
 
       dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
+
         if ( removedDataPoint === addedDataPoint ) {
           removedDataPoint.positionProperty.unlink( updateWidth );
         }
@@ -117,13 +118,19 @@ define( function( require ) {
     visibleProperty.linkAttribute( this, 'visible' );
 
     // Add all the nodes
+    this.addChild( rectangleBarometer );
     this.addChild( verticalLine );
     this.addChild( horizontalArrow );
-    this.addChild( rectangleBarometer );
     this.addChild( zeroLabel );
     this.addChild( label );
+
+    this.updateWidth = updateWidth;
   }
 
-  return inherit( Node, SumOfSquaredResidualsChart );
+  return inherit( Node, SumOfSquaredResidualsChart, {
+    reset: function() {
+      this.updateWidth();
+    }
+  } );
 } )
 ;

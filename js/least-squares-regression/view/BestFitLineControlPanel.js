@@ -44,7 +44,7 @@ define( function( require ) {
     this.expandedProperty = new Property( false );
 
     // Create the chart (barometer) displaying the sum of the squares
-    var sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
+    this.sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
@@ -106,7 +106,7 @@ define( function( require ) {
           new LayoutBox( { children: [ new HStrut( 20 ), equationPanel ], orientation: 'horizontal' } ),
           residualsCheckBox,
           squaredResidualsCheckBox,
-          sumOfSquaredResidualsChart
+          this.sumOfSquaredResidualsChart
         ],
         align: 'left'
       } ),
@@ -130,6 +130,7 @@ define( function( require ) {
       reset: function() {
         // Close the accordion Box
         this.expandedProperty.reset();
+        this.sumOfSquaredResidualsChart.reset();
       },
 
       /**

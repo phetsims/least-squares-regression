@@ -17,6 +17,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var Vector2 = require( 'DOT/Vector2' );
 
   /**
    * @param {Function} addDataPointToModel - A function for adding the created dataPoint to the model
@@ -62,10 +63,8 @@ define( function( require ) {
           testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
         }
 
-        // Determine the initial position of the new element as a function of the event position and this node's bounds.
-        var centerPositionGlobal = self.parentToGlobalPoint( self.center );
-        var initialPositionOffset = centerPositionGlobal.minus( event.pointer.point );
-        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( initialPositionOffset ) );
+        // Determine the initial position (set to be one circle radius above the pointer point)
+        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LSRConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
 
         // Create and add the new model element.
         this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );

@@ -279,6 +279,7 @@ define( function( require ) {
         graphNode.reset();
         pearsonCorrelationCoefficientNode.reset();
         bestFitLineControlPanel.reset();
+        myLineControlPanel.reset();
       },
       right:  this.layoutBounds.maxX - 10,
       bottom: this.layoutBounds.maxY - 10

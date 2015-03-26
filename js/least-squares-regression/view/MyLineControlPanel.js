@@ -48,7 +48,7 @@ define( function( require ) {
    * Create a vertical slider with a central tick
    * @param {Property.<number>} property parameter to track.
    * @param {Range} range - Possible range for property.
-   * @param {Object} options for slider node.
+   * @param {Object} [options] for slider node.
    * @constructor
    */
   function VerticalSlider( property, range, options ) {
@@ -169,7 +169,7 @@ define( function( require ) {
     squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 8, 8 );
 
     // Create the barometer chart for the sum of the squares
-    var sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
+    this.sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
       graph,
       dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
@@ -184,7 +184,7 @@ define( function( require ) {
         rightAlignedNode,
         residualsCheckBox,
         squaredResidualsCheckBox,
-        sumOfSquaredResiduals
+        this.sumOfSquaredResiduals
       ], align: 'left'
     } );
 
@@ -234,5 +234,9 @@ define( function( require ) {
 
   }
 
-  return inherit( Panel, MyLineControlPanel );
+  return inherit( Panel, MyLineControlPanel, {
+    reset: function(){
+      this.sumOfSquaredResiduals.reset();
+    }
+  } );
 } );
