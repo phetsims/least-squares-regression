@@ -52,8 +52,8 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "34948352a16209141a1c2182351224cd0cb9e5e0",
+    "sha": "f3005ad721f96835797b0799069e638aa23ea676",
     "branch": "1.0"
   },
-  "comment": "# least-squares-regression 1.0.0-rc.3 Thu Mar 26 2015 13:10:52 GMT-0600 (Mountain Daylight Time)"
+  "comment": "# least-squares-regression 1.0.0 Thu Mar 26 2015 16:16:59 GMT-0600 (Mountain Daylight Time)"
 }
