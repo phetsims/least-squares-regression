@@ -24,19 +24,23 @@ define( function( require ) {
     var self = this;
 
     // Create a listener to the position of the dataPoint
-    this.centerPositionListener = function( position ) {
+    var centerPositionListener = function ( position ) {
       self.center = modelViewTransform.modelToViewPosition( position );
     };
 
     // Move this node as the model representation moves
-    dataPoint.positionProperty.link( this.centerPositionListener );
+    dataPoint.positionProperty.link( centerPositionListener );
 
-    this.dataPoint = dataPoint;
+    // @private: just for dispose.  Named based on the type name so it won't have a name collision with parent/child ones
+    this.disposeDataPointNode = function () {
+      dataPoint.positionProperty.unlink( centerPositionListener );
+    };
+
   }
 
   return inherit( Node, DataPointNode, {
     dispose: function() {
-      this.dataPoint.positionProperty.unlink( this.centerPositionListener );
+      this.disposeDataPointNode();
     }
   } );
 } );

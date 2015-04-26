@@ -6,7 +6,7 @@
  * @author Chris Malley (PixelZoom, Inc.)
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( function ( require ) {
   'use strict';
 
   // modules
@@ -56,7 +56,7 @@ define( function( require ) {
   var MAJOR_TICK_COLOR = 'black';
   var MAJOR_TICK_FONT = LSRConstants.MAJOR_TICK_FONT;
   var TICK_LABEL_SPACING = 2;
-  var MINUS_SIGN_WIDTH = new Text( minusString, { font: MAJOR_TICK_FONT } ).width;
+  var MINUS_SIGN_WIDTH = new Text( minusString, {font: MAJOR_TICK_FONT} ).width;
 
   var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
 
@@ -80,7 +80,7 @@ define( function( require ) {
     this.addChild( tickLineNode );
 
     // tick label
-    var tickLabelNode = new Text( value, { font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR } );
+    var tickLabelNode = new Text( value, {font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR} );
     this.addChild( tickLabelNode );
 
     // label position
@@ -305,7 +305,7 @@ define( function( require ) {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
       centerY: centerY,
-      left:     left - 50,
+      left: left - 50,
       rotation: -Math.PI / 2
     } );
     this.addChild( yLabelNode );
@@ -331,7 +331,7 @@ define( function( require ) {
       modelViewTransform.modelToViewY( dataSet.yRange.max ),
       modelViewTransform.modelToViewDeltaX( dataSet.xRange.getLength() ),
       modelViewTransform.modelToViewDeltaY( -dataSet.yRange.getLength() ),
-      { fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE } );
+      {fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE} );
     this.addChild( backgroundNode );
   }
 
@@ -425,29 +425,31 @@ define( function( require ) {
   function GraphAxesNode( dataSet, modelViewTransform, showGridProperty ) {
 
     var gridNode = new GridNode( dataSet, modelViewTransform );
-    this.showGridPropertyObserver = function( visible ) {
+    var showGridPropertyObserver = function ( visible ) {
       gridNode.visible = visible;
     };
-    this.showGridProperty = showGridProperty;
 
-    showGridProperty.link( this.showGridPropertyObserver );
+    showGridProperty.link( showGridPropertyObserver );
 
     Node.call( this, {
-        children: [
-          new BackgroundNode( dataSet, modelViewTransform ),
-          gridNode,
-          new XAxisNode( dataSet, modelViewTransform ),
-          new YAxisNode( dataSet, modelViewTransform ),
-          new XLabelNode( dataSet, modelViewTransform ),
-          new YLabelNode( dataSet, modelViewTransform )
-        ]
-      }
-    );
+      children: [
+        new BackgroundNode( dataSet, modelViewTransform ),
+        gridNode,
+        new XAxisNode( dataSet, modelViewTransform ),
+        new YAxisNode( dataSet, modelViewTransform ),
+        new XLabelNode( dataSet, modelViewTransform ),
+        new YLabelNode( dataSet, modelViewTransform )
+      ]
+    } );
+
+    this.disposeGraphAxesNode = function () {
+      showGridProperty.unlink( showGridPropertyObserver );
+    }
   }
 
   return inherit( Node, GraphAxesNode, {
-    dispose: function() {
-      this.showGridProperty.unlink( this.showGridPropertyObserver );
+    dispose: function () {
+      this.disposeGraphAxesNode();
     }
   } );
 } );
