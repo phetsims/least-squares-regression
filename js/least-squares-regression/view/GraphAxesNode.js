@@ -444,7 +444,7 @@ define( function ( require ) {
 
     this.disposeGraphAxesNode = function () {
       showGridProperty.unlink( showGridPropertyObserver );
-    }
+    };
   }
 
   return inherit( Node, GraphAxesNode, {

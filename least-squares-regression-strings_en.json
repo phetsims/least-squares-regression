@@ -47,18 +47,6 @@
   "custom.graphTitle": {
     "value": "Custom"
   },
-  "custom.xAxisTitle": {
-    "value": ""
-  },
-  "custom.yAxisTitle": {
-    "value": ""
-  },
-  "custom.reference": {
-    "value": ""
-  },
-  "custom.source": {
-    "value": ""
-  },
   "temperatureFahrenheitLatitude.graphTitle": {
     "value": "Temperature (˚F) vs. Latitude"
   },

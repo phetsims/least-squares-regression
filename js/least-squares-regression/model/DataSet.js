@@ -16,10 +16,10 @@ define( function( require ) {
   // strings
   var custom = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/custom.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/custom.source' )
+    yAxisTitle: "",
+    xAxisTitle: "",
+    reference: "",
+    source: ""
   };
 
   var temperatureCelsiusLatitude = {
