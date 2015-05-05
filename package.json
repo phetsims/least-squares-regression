@@ -7,6 +7,7 @@
     "least-squares-regression",
     "assert",
     "axon",
+    "babel",
     "brand",
     "chipper",
     "dot",
