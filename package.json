@@ -15,7 +15,6 @@
   },
   "phet": {
     "requirejsNamespace": "LEAST_SQUARES_REGRESSION",
-    "simTitleStringKey": "LEAST_SQUARES_REGRESSION/least-squares-regression.name",
     "preload": [
       "../sherpa/lib/Tween-r12.js"
     ]
