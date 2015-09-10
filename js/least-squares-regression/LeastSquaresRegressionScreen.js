@@ -15,7 +15,7 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
 
   // strings
-  var leastSquaresRegressionSimString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.name' );
+  var leastSquaresRegressionSimString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
 
   /**
    * @constructor
