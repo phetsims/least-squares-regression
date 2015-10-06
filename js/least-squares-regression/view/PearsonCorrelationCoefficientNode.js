@@ -24,7 +24,7 @@ define( function( require ) {
 
   // string
   var rEqualsString = require( 'string!LEAST_SQUARES_REGRESSION/rEquals' );
-  var pattern_0r_1value = "{0} {1}";
+  var pattern_0r_1value = '{0} {1}';
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
   var correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
