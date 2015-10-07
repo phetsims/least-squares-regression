@@ -13,7 +13,7 @@ define( function( require ) {
   var ArrowNode = require( 'SCENERY_PHET/ArrowNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -29,7 +29,7 @@ define( function( require ) {
   var RECTANGLE_BAROMETER_HEIGHT = 10;
   var LINE_WIDTH = 1;
   var LINE_COLOR = 'black';
-  var FONT = LSRConstants.SUM_RESIDUALS_FONT;
+  var FONT = LeastSquaresRegressionConstants.SUM_RESIDUALS_FONT;
 
   /**
    * @param {Graph} graph - model of a graph

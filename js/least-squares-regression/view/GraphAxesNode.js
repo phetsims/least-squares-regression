@@ -12,7 +12,7 @@ define( function ( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -35,16 +35,16 @@ define( function ( require ) {
 
   // grid
   var MAJOR_GRID_LINE_WIDTH = 1;
-  var MAJOR_GRID_LINE_COLOR = LSRConstants.MAJOR_GRID_STROKE_COLOR;
+  var MAJOR_GRID_LINE_COLOR = LeastSquaresRegressionConstants.MAJOR_GRID_STROKE_COLOR;
   var MINOR_GRID_LINE_WIDTH = 1;
-  var MINOR_GRID_LINE_COLOR = LSRConstants.MINOR_GRID_STROKE_COLOR;
+  var MINOR_GRID_LINE_COLOR = LeastSquaresRegressionConstants.MINOR_GRID_STROKE_COLOR;
 
   // axes
   var AXIS_COLOR = 'black';
   var AXIS_EXTENT = 0.0; // how far the line extends past the min/max ticks, in model coordinates
 
   // labels
-  var AXIS_LABEL_FONT = LSRConstants.TEXT_BOLD_FONT;
+  var AXIS_LABEL_FONT = LeastSquaresRegressionConstants.TEXT_BOLD_FONT;
   var AXIS_LABEL_COLOR = 'black'; // space between end of axis and label
 
   // ticks
@@ -54,7 +54,7 @@ define( function ( require ) {
   var MAJOR_TICK_LENGTH = 6; // how far a major tick extends from the axis
   var MAJOR_TICK_LINE_WIDTH = 1;
   var MAJOR_TICK_COLOR = 'black';
-  var MAJOR_TICK_FONT = LSRConstants.MAJOR_TICK_FONT;
+  var MAJOR_TICK_FONT = LeastSquaresRegressionConstants.MAJOR_TICK_FONT;
   var TICK_LABEL_SPACING = 2;
   var MINUS_SIGN_WIDTH = new Text( minusString, {font: MAJOR_TICK_FONT} ).width;
 

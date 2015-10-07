@@ -17,7 +17,7 @@ define( function( require ) {
   var HSlider = require( 'SUN/HSlider' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Range = require( 'DOT/Range' );
@@ -99,8 +99,11 @@ define( function( require ) {
     updateTextSlope( 0 );
 
     // Create an immutable equation y = a x + b
-    var blackOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
-    var boldOptions = { font: LSRConstants.TEXT_BOLD_FONT, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
+    var blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black' };
+    var boldOptions = {
+      font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
+      fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
+    };
     
     var yText = new Text( yString, blackOptions ); // 'y'
     var equalText = new Text( '=', blackOptions ); // the '=' sign
@@ -131,8 +134,8 @@ define( function( require ) {
     // create the equation panel with white background
     var equationPanel = new Panel( equationText, {
       fill: 'white',
-      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
-      stroke: LSRConstants.SMALL_PANEL_STROKE,
+      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
       resize: false
     } );
 
@@ -159,9 +162,9 @@ define( function( require ) {
     rightAlignedNode.addChild( hStrut );
 
     // Create three check boxes
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
     lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
@@ -174,7 +177,7 @@ define( function( require ) {
       dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
       onEvent,
-      LSRConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
+      LeastSquaresRegressionConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.myLineSquaredResidualsVisibleProperty );
 
     // assemble all the previous nodes in a vertical box

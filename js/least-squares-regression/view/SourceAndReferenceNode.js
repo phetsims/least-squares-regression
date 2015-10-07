@@ -14,7 +14,7 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
@@ -38,8 +38,11 @@ define( function( require ) {
 
     var screenView = this;
 
-    var referenceText = new MultiLineText( '', { font: LSRConstants.REFERENCE_FONT, align: 'left' } );
-    var sourceText = new MultiLineText( '', { font: LSRConstants.SOURCE_FONT, align: 'left' } );
+    var referenceText = new MultiLineText( '', {
+      font: LeastSquaresRegressionConstants.REFERENCE_FONT,
+      align: 'left'
+    } );
+    var sourceText = new MultiLineText( '', { font: LeastSquaresRegressionConstants.SOURCE_FONT, align: 'left' } );
 
     var children = [
       referenceText,

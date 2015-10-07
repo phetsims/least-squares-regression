@@ -24,7 +24,7 @@ define( function( require ) {
   var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
   var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
   var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
   var Node = require( 'SCENERY/nodes/Node' );
@@ -93,8 +93,8 @@ define( function( require ) {
     // Options for the two panels
     var panelOptions = {
       resize: false,
-      cornerRadius: LSRConstants.CONTROL_PANEL_CORNER_RADIUS,
-      fill: LSRConstants.CONTROL_PANEL_BACKGROUND_COLOR,
+      cornerRadius: LeastSquaresRegressionConstants.CONTROL_PANEL_CORNER_RADIUS,
+      fill: LeastSquaresRegressionConstants.CONTROL_PANEL_BACKGROUND_COLOR,
       align: 'left',
       xMargin: 10,
       yMargin: 10
@@ -119,7 +119,7 @@ define( function( require ) {
     var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
     var sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
-      font: LSRConstants.TEXT_BOLD_FONT,
+      font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       listener: function() {
         thisView.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
       }

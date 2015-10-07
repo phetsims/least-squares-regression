@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -36,7 +36,7 @@ define( function( require ) {
     // create line and square residual with nominal values, will set the correct value later
     this.squareResidual = new Rectangle( 0, 0, 1, 1 );
     this.lineResidual = new Line( 0, 0, 1, 1, {
-      lineWidth: LSRConstants.RESIDUAL_LINE_WIDTH
+      lineWidth: LeastSquaresRegressionConstants.RESIDUAL_LINE_WIDTH
     } );
 
     // Add the square residual and line residual

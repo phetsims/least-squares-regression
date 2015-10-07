@@ -17,7 +17,7 @@ define( function( require ) {
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
@@ -49,7 +49,7 @@ define( function( require ) {
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
       onEvent,
-      LSRConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
+      LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.bestFitLineSquaredResidualsVisibleProperty
     );
 
@@ -60,16 +60,16 @@ define( function( require ) {
     this.equationText = equationText;
     var equationPanel = new Panel( equationText, {
       fill: 'white',
-      stroke: LSRConstants.SMALL_PANEL_STROKE,
-      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
+      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       resize: false
     } );
     this.updateBestFitLineEquation();
 
     // Create the checkBoxes
-    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LSRConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
     lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
@@ -93,7 +93,7 @@ define( function( require ) {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
-      titleNode: new Text( bestFitLineString, { font: LSRConstants.TEXT_BOLD_FONT } ),
+      titleNode: new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT } ),
       titleXMargin: 0,
       contentXMargin: 10,
       contentYMargin: 10

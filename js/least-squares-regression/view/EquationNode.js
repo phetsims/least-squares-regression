@@ -11,7 +11,7 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
@@ -44,11 +44,17 @@ define( function( require ) {
 
     switch( options.mode ) {
       case  'myLine' :
-        numericalTextOptions = { font: LSRConstants.TEXT_BOLD_FONT, fill: LSRConstants.MY_LINE_COLOR.BASE_COLOR };
-        stringTextOptions = { font: LSRConstants.TEXT_FONT, fill: 'black' };
+        numericalTextOptions = {
+          font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
+          fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
+        };
+        stringTextOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black' };
         break;
       case 'bestFitLine':
-        numericalTextOptions = { font: LSRConstants.TEXT_FONT, fill: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR };
+        numericalTextOptions = {
+          font: LeastSquaresRegressionConstants.TEXT_FONT,
+          fill: LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.BASE_COLOR
+        };
         stringTextOptions = numericalTextOptions;
         break;
       default:

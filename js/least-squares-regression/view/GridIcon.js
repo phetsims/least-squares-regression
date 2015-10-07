@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var Bounds2 = require( 'DOT/Bounds2' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
@@ -30,7 +30,7 @@ define( function( require ) {
       columns: 4,
       rows: 4,
       cellLength: 12, // in scenery coordinates
-      gridStroke: LSRConstants.MAJOR_GRID_STROKE_COLOR,
+      gridStroke: LeastSquaresRegressionConstants.MAJOR_GRID_STROKE_COLOR,
       gridLineWidth: 1,
       gridFill: null
     }, options );

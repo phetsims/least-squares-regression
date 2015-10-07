@@ -13,7 +13,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
@@ -30,10 +30,10 @@ define( function( require ) {
     var self = this;
 
     // Create the node that the user will click upon to add a model element to the view.
-    var representation = new Circle( LSRConstants.DYNAMIC_DATA_POINT_RADIUS, {
-      fill: LSRConstants.DYNAMIC_DATA_POINT_FILL,
-      stroke: LSRConstants.DYNAMIC_DATA_POINT_STROKE,
-      lineWidth: LSRConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
+    var representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
+      fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
+      stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
+      lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
     } );
 
     this.addChild( representation );
@@ -64,7 +64,7 @@ define( function( require ) {
         }
 
         // Determine the initial position (set to be one circle radius above the pointer point)
-        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LSRConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
+        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
 
         // Create and add the new model element.
         this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );

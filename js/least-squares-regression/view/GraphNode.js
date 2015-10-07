@@ -12,7 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Property = require( 'AXON/Property' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
@@ -40,12 +40,15 @@ define( function( require ) {
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
-      { stroke: LSRConstants.MY_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH } );
+      {
+        stroke: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
+        lineWidth: LeastSquaresRegressionConstants.LINE_WIDTH
+      } );
 
     // Create 'Best Fit Line'; initially set bestFitLine to zero length and then update it
     this.bestFitLine = new Line( 0, 0, 0, 0, {
-      stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
-      lineWidth: LSRConstants.LINE_WIDTH
+      stroke: LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
+      lineWidth: LeastSquaresRegressionConstants.LINE_WIDTH
     } );
 
     if ( graph.isLinearFitDefined() ) {
@@ -54,7 +57,10 @@ define( function( require ) {
       this.bestFitLine = new Line(
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point1 ),
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point2 ),
-        { stroke: LSRConstants.BEST_FIT_LINE_COLOR.BASE_COLOR, lineWidth: LSRConstants.LINE_WIDTH } );
+        {
+          stroke: LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
+          lineWidth: LeastSquaresRegressionConstants.LINE_WIDTH
+        } );
     }
 
     // Update 'MyLine' and update 'MyLine' Residuals upon of change of angle (a proxy for the slope), or intercept
@@ -75,7 +81,7 @@ define( function( require ) {
       // Create and add the view representation for this residual.
       var residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
-        LSRConstants.MY_LINE_COLOR,
+        LeastSquaresRegressionConstants.MY_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
         graph.myLineResidualsVisibleProperty,
@@ -99,7 +105,7 @@ define( function( require ) {
       // Create and add the view representation for this residual.
       var residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
-        LSRConstants.BEST_FIT_LINE_COLOR,
+        LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
         graphNode.viewBounds,
         modelViewTransform,
         graph.bestFitLineResidualsVisibleProperty,

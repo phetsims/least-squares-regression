@@ -12,7 +12,7 @@ define( function( require ) {
   var Circle = require( 'SCENERY/nodes/Circle' );
   var inherit = require( 'PHET_CORE/inherit' );
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
 
   /**
@@ -24,10 +24,10 @@ define( function( require ) {
 
 
     // Create the visual representation of the DynamicDataPoint
-    var representation = new Circle( LSRConstants.DYNAMIC_DATA_POINT_RADIUS, {
-      fill: LSRConstants.DYNAMIC_DATA_POINT_FILL,
-      stroke: LSRConstants.DYNAMIC_DATA_POINT_STROKE,
-      lineWidth: LSRConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
+    var representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
+      fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
+      stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
+      lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
     } );
 
     DataPointNode.call( this, dataPoint, representation, modelViewTransform );

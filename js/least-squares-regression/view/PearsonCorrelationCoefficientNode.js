@@ -13,7 +13,7 @@ define( function( require ) {
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
@@ -43,13 +43,13 @@ define( function( require ) {
     this.graph = graph;
 
     // Create the left hand side of the equation (includes the equal sign)
-    var leftHandSideText = new Text( rEqualsString, { font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
+    var leftHandSideText = new Text( rEqualsString, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // Create the right hand side of the equation
-    this.rightHandSideText = new Text( '', { font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
+    this.rightHandSideText = new Text( '', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // calculate the maximum width of the right hand side of the equation
-    var rightHandSideMaxWidth = new Text( plusString + ' 0.00', { font: LSRConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
+    var rightHandSideMaxWidth = new Text( plusString + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
     var hStrut = new HStrut( rightHandSideMaxWidth );
 
     hStrut.left = leftHandSideText.right + 5;
@@ -66,9 +66,9 @@ define( function( require ) {
 
     // Create the panel that holds the equation
     var mutableEquationPanel = new Panel( equation, {
-      fill: LSRConstants.GRAPH_BACKGROUND_COLOR,
-      cornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS,
-      stroke: LSRConstants.SMALL_PANEL_STROKE,
+      fill: LeastSquaresRegressionConstants.GRAPH_BACKGROUND_COLOR,
+      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
       resize: false,
       xMargin: 10
     } );
@@ -79,7 +79,7 @@ define( function( require ) {
       buttonYMargin: 10,
       expandedProperty: this.expandedProperty,
       titleYMargin: 10,
-      titleNode: new MultiLineText( correlationCoefficientString, { font: LSRConstants.TEXT_BOLD_FONT } ),
+      titleNode: new MultiLineText( correlationCoefficientString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT } ),
       titleAlignY: 'top',
       contentXMargin: 10,
       contentYMargin: 10

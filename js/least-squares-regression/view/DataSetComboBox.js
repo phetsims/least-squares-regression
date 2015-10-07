@@ -11,7 +11,7 @@ define( function( require ) {
   // modules
   var ComboBox = require( 'SUN/ComboBox' );
   var inherit = require( 'PHET_CORE/inherit' );
-  var LSRConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
 
@@ -34,9 +34,9 @@ define( function( require ) {
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
       itemYMargin: 2,
-      itemHighlightFill: LSRConstants.ITEM_HIGHLIGHT_FILL,
+      itemHighlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
-      buttonCornerRadius: LSRConstants.SMALL_PANEL_CORNER_RADIUS
+      buttonCornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
     } );
   }
 
@@ -48,7 +48,7 @@ define( function( require ) {
   var createItem = function( dataSet ) {
     var node = new Node();
     // label
-    var textNode = new Text( dataSet.name, { font: LSRConstants.TEXT_FONT } );
+    var textNode = new Text( dataSet.name, { font: LeastSquaresRegressionConstants.TEXT_FONT } );
     node.addChild( textNode );
     return ComboBox.createItem( node, dataSet );
   };
