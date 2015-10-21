@@ -1,7 +1,7 @@
 {
   "name": "least-squares-regression",
   "version": "1.0.0-dev.14",
-  "license": "GPLv3",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/phetsims/least-squares-regression.git"
