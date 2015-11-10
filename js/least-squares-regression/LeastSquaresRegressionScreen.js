@@ -15,7 +15,7 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
 
   // strings
-  var leastSquaresRegressionSimString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
+  var leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
 
   /**
    * @constructor
@@ -26,7 +26,7 @@ define( function( require ) {
     //If there are multiple screens, then the icon must be provided here.
     var icon = null;
 
-    Screen.call( this, leastSquaresRegressionSimString, icon,
+    Screen.call( this, leastSquaresRegressionTitleString, icon,
       function() {
         return new LeastSquaresRegressionModel();
       },

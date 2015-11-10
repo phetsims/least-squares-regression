@@ -19,8 +19,8 @@ define( function( require ) {
   // strings
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
-  var xString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
-  var yString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
+  var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   /**
    * Scenery Node responsible for laying out the linear equation y = m x + b
@@ -74,11 +74,11 @@ define( function( require ) {
     }
 
     // @public
-    this.yText = new Text( yString, stringTextOptions ); // 'y'
+    this.yText = new Text( symbolYString, stringTextOptions ); // 'y'
     this.equalText = new Text( '=', stringTextOptions ); // the '=' sign
     this.signSlopeText = new Text( plusString, numericalTextOptions ); // + or -
     this.valueSlopeText = new Text( maxWidthSlopeString, numericalTextOptions ); // a number
-    this.xText = new Text( xString, stringTextOptions ); // 'x'
+    this.xText = new Text( symbolXString, stringTextOptions ); // 'x'
     this.signInterceptText = new Text( plusString, stringTextOptions );// + or -
     this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 

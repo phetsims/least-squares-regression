@@ -14,7 +14,7 @@ define( function( require ) {
   var SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var simTitle = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
+  var leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
 
   var simOptions = {
     credits: {
@@ -33,7 +33,7 @@ define( function( require ) {
   }
 
   SimLauncher.launch( function() {
-    var sim = new Sim( simTitle, [ new LeastSquaresRegressionScreen() ], simOptions );
+    var sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
     sim.start();
   } );
 } );

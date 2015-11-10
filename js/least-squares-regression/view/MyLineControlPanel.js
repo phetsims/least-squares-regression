@@ -27,8 +27,8 @@ define( function( require ) {
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
-  var xString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
-  var yString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
+  var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
   var plusString = '\u002B'; // we want a large + sign
   var myLineString = require( 'string!LEAST_SQUARES_REGRESSION/myLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
@@ -105,10 +105,10 @@ define( function( require ) {
       fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
     };
     
-    var yText = new Text( yString, blackOptions ); // 'y'
+    var yText = new Text( symbolYString, blackOptions ); // 'y'
     var equalText = new Text( '=', blackOptions ); // the '=' sign
     var aText = new Text( aString, boldOptions ); // a number
-    var xText = new Text( xString, blackOptions ); // 'x'
+    var xText = new Text( symbolXString, blackOptions ); // 'x'
     var signInterceptText = new Text( plusString, blackOptions );// '+'
     var bText = new Text( bString, boldOptions );// a number
 
