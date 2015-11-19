@@ -51,15 +51,15 @@ define( function( require ) {
    * @param {Object} [options] for slider node.
    * @constructor
    */
-  function VerticalSlider( property, range, options ) {
+  function verticalSlider( property, range, options ) {
     var sliderNode = new HSlider( property, range, options );
 
     // make vertical slider by rotating it
     sliderNode.rotate( -Math.PI / 2 );
 
     //add central tick
-    sliderNode.addTick( 0, '', TICK_LENGTH, TICK_COLOR, TICK_WIDTH ); // left side tick
-    sliderNode.addTick( 0, '', -TICK_LENGTH - 2 * SLIDER_OPTIONS.trackSize.height, TICK_COLOR, TICK_WIDTH ); // right side tick
+    sliderNode.addTick( sliderNode.majorTicksParent, 0, '', TICK_LENGTH, TICK_COLOR, TICK_WIDTH ); // left side tick
+    sliderNode.addTick( sliderNode.majorTicksParent, 0, '', -TICK_LENGTH - 2 * SLIDER_OPTIONS.trackSize.height, TICK_COLOR, TICK_WIDTH ); // right side tick
 
     return sliderNode;
   }
@@ -104,7 +104,7 @@ define( function( require ) {
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
     };
-    
+
     var yText = new Text( symbolYString, blackOptions ); // 'y'
     var equalText = new Text( '=', blackOptions ); // the '=' sign
     var aText = new Text( aString, boldOptions ); // a number
@@ -143,8 +143,8 @@ define( function( require ) {
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = new VerticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
-    var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+    var aSlider = verticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    var bSlider = verticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
     var aSliderText = new Text( aString, boldOptions );
