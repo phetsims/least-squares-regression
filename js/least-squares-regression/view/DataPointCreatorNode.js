@@ -46,25 +46,29 @@ define( function( require ) {
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {
 
-      parentScreen: null, // needed for coordinate transforms
+      parentScreenView: null, // needed for coordinate transforms
       dataPoint: null,
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
 
       start: function( event, trail ) {
-        // Find the parent screen by moving up the scene graph.
-        var testNode = self;
-        while ( testNode !== null ) {
-          if ( testNode instanceof ScreenView ) {
-            this.parentScreen = testNode;
-            break;
+
+        // find the parent screen if not already found by moving up the scene graph
+        if ( !this.parentScreenView ) {
+          var testNode = self;
+          while ( testNode !== null ) {
+            if ( testNode instanceof ScreenView ) {
+              this.parentScreenView = testNode;
+              break;
+            }
+            testNode = testNode.parents[ 0 ]; // move up the scene graph by one level
           }
-          testNode = testNode.parents[ 0 ]; // Move up the scene graph by one level
+          assert && assert( this.parentScreenView, 'unable to find parent screen view' );
         }
 
         // Determine the initial position (set to be one circle radius above the pointer point)
-        var initialPosition = this.parentScreen.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
+        var initialPosition = this.parentScreenView.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
 
         // Create and add the new model element.
         this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
