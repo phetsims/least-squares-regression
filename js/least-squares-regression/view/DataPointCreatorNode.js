@@ -42,12 +42,10 @@ define( function( require ) {
     this.touchArea = this.localBounds.dilated( 15 );
     this.mouseArea = this.localBounds.dilated( 5 );
 
-
+    var parentScreenView = null;
+    var dataPoint;
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {
-
-      parentScreenView: null, // needed for coordinate transforms
-      dataPoint: null,
 
       // Allow moving a finger (touch) across this node to interact with it
       allowTouchSnag: true,
@@ -55,35 +53,35 @@ define( function( require ) {
       start: function( event, trail ) {
 
         // find the parent screen if not already found by moving up the scene graph
-        if ( !this.parentScreenView ) {
+        if ( !parentScreenView ) {
           var testNode = self;
           while ( testNode !== null ) {
             if ( testNode instanceof ScreenView ) {
-              this.parentScreenView = testNode;
+              parentScreenView = testNode;
               break;
             }
             testNode = testNode.parents[ 0 ]; // move up the scene graph by one level
           }
-          assert && assert( this.parentScreenView, 'unable to find parent screen view' );
+          assert && assert( parentScreenView, 'unable to find parent screen view' );
         }
 
         // Determine the initial position (set to be one circle radius above the pointer point)
-        var initialPosition = this.parentScreenView.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
+        var initialPosition = parentScreenView.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
 
         // Create and add the new model element.
-        this.dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
-        this.dataPoint.userControlled = true;
-        addDataPointToModel( this.dataPoint );
+        dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
+        dataPoint.userControlled = true;
+        addDataPointToModel( dataPoint );
 
       },
 
       translate: function( translationParams ) {
-        this.dataPoint.position = this.dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
+        dataPoint.position = dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
       },
 
       end: function( event, trail ) {
-        this.dataPoint.userControlled = false;
-        this.dataPoint = null;
+        dataPoint.userControlled = false;
+        dataPoint = null;
       }
     } ) );
 
