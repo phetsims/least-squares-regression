@@ -40,9 +40,9 @@ define( function( require ) {
    * @param {Property.<boolean>} visibleProperty
    * @constructor
    */
-  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, onEvent, fillColor, visibleProperty ) {
+  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, onEvent, fillColor, visibleProperty, options ) {
 
-    Node.call( this );
+    Node.call( this, options );
 
     // The barometer chart is on its side, set width to 1 , will update it momentarily
     var rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
