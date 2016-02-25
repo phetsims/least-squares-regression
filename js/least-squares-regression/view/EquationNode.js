@@ -105,7 +105,7 @@ define( function( require ) {
 
     this.addChild( mutableEquationText );
 
-    this.mutate( options )
+    this.mutate( options );
 
   }
 
