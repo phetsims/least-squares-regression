@@ -105,6 +105,8 @@ define( function( require ) {
 
     this.addChild( mutableEquationText );
 
+    this.mutate( options )
+
   }
 
   return inherit( Node, EquationNode, {
