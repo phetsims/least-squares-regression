@@ -42,6 +42,10 @@ define( function( require ) {
    */
   function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, onEvent, fillColor, visibleProperty, options ) {
 
+    options = _.extend( {
+      maxLabelWidth: 150
+    }, options );
+
     Node.call( this, options );
 
     // The barometer chart is on its side, set width to 1 , will update it momentarily
@@ -66,7 +70,8 @@ define( function( require ) {
     var label = new Text( sumString, {
       font: FONT,
       centerX: horizontalArrow.centerX,
-      top: horizontalArrow.bottom + 5
+      top: horizontalArrow.bottom + 5,
+      maxWidth: options.maxLabelWidth
     } );
     var zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 

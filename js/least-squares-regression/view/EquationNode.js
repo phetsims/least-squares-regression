@@ -32,7 +32,8 @@ define( function( require ) {
 
     options = _.extend( {
       maxDecimalPlaces: 2,  // maximum of number of decimal places on slope and intercept
-      mode: 'myLine'  // valid options are 'myLine' and 'bestFitLine'
+      mode: 'myLine',  // valid options are 'myLine' and 'bestFitLine',
+      maxCharacterWidth: 25
     }, options );
 
     this.options = options;
@@ -46,14 +47,16 @@ define( function( require ) {
       case  'myLine' :
         numericalTextOptions = {
           font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-          fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
+          fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
+          maxWidth: options.maxCharacterWidth
         };
-        stringTextOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black' };
+        stringTextOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black', maxWidth: options.maxCharacterWidth };
         break;
       case 'bestFitLine':
         numericalTextOptions = {
           font: LeastSquaresRegressionConstants.TEXT_FONT,
-          fill: LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.BASE_COLOR
+          fill: LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.BASE_COLOR,
+          maxWidth: options.maxCharacterWidth
         };
         stringTextOptions = numericalTextOptions;
         break;

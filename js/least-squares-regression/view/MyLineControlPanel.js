@@ -43,6 +43,7 @@ define( function( require ) {
   var TICK_COLOR = 'black';
   var TICK_LENGTH = 8;
   var TICK_WIDTH = 2;
+  var MAX_WIDTH = 150;
 
   /**
    * Create a vertical slider with a central tick
@@ -76,7 +77,9 @@ define( function( require ) {
 
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
-    var equationText = new EquationNode();
+    // max width determined empirically, and there are 6 elements that make up the equation node
+    var equationCharacterMaxWidth = MAX_WIDTH / 6;
+    var equationText = new EquationNode( { maxCharacterWidth: equationCharacterMaxWidth } );
 
     /**
      * Function that updates the value of the current slope (based on the angle of the line)
@@ -99,10 +102,11 @@ define( function( require ) {
     updateTextSlope( 0 );
 
     // Create an immutable equation y = a x + b
-    var blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black' };
+    var blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black', maxWidth: equationCharacterMaxWidth };
     var boldOptions = {
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-      fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR
+      fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
+      maxWidth: equationCharacterMaxWidth
     };
 
     var yText = new Text( symbolYString, blackOptions ); // 'y'
@@ -147,8 +151,8 @@ define( function( require ) {
     var bSlider = verticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
-    var aSliderText = new Text( aString, boldOptions );
-    var bSliderText = new Text( bString, boldOptions );
+    var aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    var bSliderText = new Text( bString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     var rightAlignedNode = new Node();
@@ -162,9 +166,10 @@ define( function( require ) {
     rightAlignedNode.addChild( hStrut );
 
     // Create three check boxes
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.myLineShowSquaredResidualsProperty );
+    var checkBoxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
+    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, checkBoxTextOptions, graph.myLineVisibleProperty );
+    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, checkBoxTextOptions, graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, checkBoxTextOptions, graph.myLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
     lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
@@ -178,7 +183,9 @@ define( function( require ) {
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
       onEvent,
       LeastSquaresRegressionConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
-      graph.myLineSquaredResidualsVisibleProperty );
+      graph.myLineSquaredResidualsVisibleProperty, {
+        maxLabelWidth: MAX_WIDTH
+      } );
 
     // assemble all the previous nodes in a vertical box
     var mainBox = new LayoutBox( {
