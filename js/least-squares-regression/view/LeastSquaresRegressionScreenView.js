@@ -112,8 +112,10 @@ define( function( require ) {
     var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
 
     // Create the dataSet combo box that appears on top of the graph
+    // Width of contents limited by width of graphNode for i18n
+    var dataSetLabelMaxWidth = graphNode.width / 2;
     var dataSetListParent = new Node();
-    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent );
+    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent, dataSetLabelMaxWidth );
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );

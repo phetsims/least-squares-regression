@@ -19,16 +19,17 @@ define( function( require ) {
    * @param {Array.<DataSet>} dataSets
    * @param {Property.<DataSet>} selectedDataSetProperty
    * @param {Node} dataSetListParent
+   * @param {number} maxTextWidth - max width of text in the combo box
    * @constructor
    */
 
-  function DataSetComboBox( dataSets, selectedDataSetProperty, dataSetListParent ) {
+  function DataSetComboBox( dataSets, selectedDataSetProperty, dataSetListParent, maxTextWidth ) {
 
     // items
     var items = [];
     for ( var i = 0; i < dataSets.length; i++ ) {
       var dataSet = dataSets[ i ];
-      items[ i ] = createItem( dataSet );
+      items[ i ] = createItem( dataSet, maxTextWidth );
     }
 
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
@@ -43,12 +44,13 @@ define( function( require ) {
   /**
    * Creates an item for the combo box.
    * @param {DataSet} dataSet
+   * @param {number} maxTextWidth
    * @returns {*|{node: *, value: *}}
    */
-  var createItem = function( dataSet ) {
+  var createItem = function( dataSet, maxTextWidth ) {
     var node = new Node();
     // label
-    var textNode = new Text( dataSet.name, { font: LeastSquaresRegressionConstants.TEXT_FONT } );
+    var textNode = new Text( dataSet.name, { font: LeastSquaresRegressionConstants.TEXT_FONT, maxWidth: maxTextWidth } );
     node.addChild( textNode );
     return ComboBox.createItem( node, dataSet );
   };
