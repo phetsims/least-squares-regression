@@ -42,6 +42,9 @@ define( function( require ) {
 
     this.graph = graph;
 
+    // restrict width of labels for i18n
+    var maxLabelWidth = 120;
+
     // Create the left hand side of the equation (includes the equal sign)
     var leftHandSideText = new Text( rEqualsString, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
@@ -61,7 +64,8 @@ define( function( require ) {
         leftHandSideText,
         hStrut,
         this.rightHandSideText
-      ]
+      ],
+      maxWidth: maxLabelWidth
     } );
 
     // Create the panel that holds the equation
@@ -81,7 +85,7 @@ define( function( require ) {
       buttonTouchAreaYDilation: 16,
       expandedProperty: this.expandedProperty,
       titleYMargin: 10,
-      titleNode: new MultiLineText( correlationCoefficientString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT } ),
+      titleNode: new MultiLineText( correlationCoefficientString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT, maxWidth: maxLabelWidth } ),
       titleAlignY: 'top',
       contentXMargin: 10,
       contentYMargin: 10
