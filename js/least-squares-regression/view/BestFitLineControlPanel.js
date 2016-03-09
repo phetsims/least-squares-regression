@@ -40,6 +40,10 @@ define( function( require ) {
     this.graph = graph;
     var thisControlPanel = this;
 
+    // max length of label text for i18n
+    var maxLabelWidth = 120;
+
+
     // property of the accordion Box
     this.expandedProperty = new Property( false );
 
@@ -67,9 +71,21 @@ define( function( require ) {
     this.updateBestFitLineEquation();
 
     // Create the checkBoxes
-    var lineCheckBox = CheckBox.createTextCheckBox( bestFitLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT }, graph.bestFitLineShowSquaredResidualsProperty );
+    var lineCheckBox = CheckBox.createTextCheckBox( 
+      bestFitLineString,
+      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+      graph.bestFitLineVisibleProperty
+    );
+    var residualsCheckBox = CheckBox.createTextCheckBox(
+      residualsString,
+      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+      graph.bestFitLineShowResidualsProperty
+    );
+    var squaredResidualsCheckBox = CheckBox.createTextCheckBox(
+      squaredResidualsString,
+      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+      graph.bestFitLineShowSquaredResidualsProperty
+    );
 
     // Expand the touch Area
     lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
@@ -95,7 +111,7 @@ define( function( require ) {
       buttonTouchAreaXDilation: 16,
       buttonTouchAreaYDilation: 16,
       expandedProperty: this.expandedProperty,
-      titleNode: new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT } ),
+      titleNode: new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT, maxWidth: maxLabelWidth } ),
       titleXMargin: 0,
       contentXMargin: 10,
       contentYMargin: 10
