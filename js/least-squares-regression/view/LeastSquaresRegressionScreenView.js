@@ -124,8 +124,10 @@ define( function( require ) {
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       listener: function() {
         thisView.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
-      }
+      },
+      maxWidth: graphNode.width / 15
     } );
+
 
     // Create the nodes that will be used to layer things visually.
     var backLayer = new Node();

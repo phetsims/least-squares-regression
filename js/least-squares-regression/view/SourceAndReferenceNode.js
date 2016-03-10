@@ -36,6 +36,9 @@ define( function( require ) {
      */
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
+    // limit the width of the dialog content for i18n
+    var maxContentWidth = this.layoutBounds.width * 2 / 3;
+
     var screenView = this;
 
     var referenceText = new MultiLineText( '', {
@@ -50,7 +53,7 @@ define( function( require ) {
     ];
 
     // Create the content box
-    var content = new LayoutBox( { align: 'left', spacing: 10, children: children } );
+    var content = new LayoutBox( { align: 'left', spacing: 10, children: children, maxWidth: maxContentWidth } );
 
     // Create the panel that contains the source and reference
     var panel = new Panel( content, {
