@@ -20,6 +20,7 @@ define( function( require ) {
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
+  var Line = require( 'SCENERY/nodes/Line' );
   var Range = require( 'DOT/Range' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
@@ -41,7 +42,7 @@ define( function( require ) {
     thumbSize: new Dimension2( 15, 30 )
   };
   var TICK_COLOR = 'black';
-  var TICK_LENGTH = 8;
+  var TICK_LENGTH = 10;
   var TICK_WIDTH = 2;
   var MAX_WIDTH = 150;
 
@@ -55,12 +56,20 @@ define( function( require ) {
   function verticalSlider( property, range, options ) {
     var sliderNode = new HSlider( property, range, options );
 
+    // HSlider does not support a tick that is centered on the track.  We need to use our own tick node here.
+    var trackCenterX = SLIDER_OPTIONS.trackSize.width / 2;
+    var tickYOffset = SLIDER_OPTIONS.trackSize.height / 2;
+    var tickNode = new Line( trackCenterX, -TICK_LENGTH, trackCenterX, TICK_LENGTH + tickYOffset, {
+      stroke: TICK_COLOR,
+      lineWidth: TICK_WIDTH
+    } );
+
+    // add the tick as a child and move it behind the slider thumb
+    sliderNode.addChild( tickNode );
+    tickNode.moveToBack();
+
     // make vertical slider by rotating it
     sliderNode.rotate( -Math.PI / 2 );
-
-    //add central tick
-    sliderNode.addTick( sliderNode.majorTicksParent, 0, '', TICK_LENGTH, TICK_COLOR, TICK_WIDTH ); // left side tick
-    sliderNode.addTick( sliderNode.majorTicksParent, 0, '', -TICK_LENGTH - 2 * SLIDER_OPTIONS.trackSize.height, TICK_COLOR, TICK_WIDTH ); // right side tick
 
     return sliderNode;
   }
