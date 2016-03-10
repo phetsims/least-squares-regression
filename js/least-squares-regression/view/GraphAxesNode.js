@@ -46,6 +46,7 @@ define( function ( require ) {
   // labels
   var AXIS_LABEL_FONT = LeastSquaresRegressionConstants.TEXT_BOLD_FONT;
   var AXIS_LABEL_COLOR = 'black'; // space between end of axis and label
+  var MAX_LABEL_WIDTH = 500; // i18n restriction, empirically determined
 
   // ticks
   var MINOR_TICK_LENGTH = 3; // how far a minor tick extends from the axis
@@ -269,9 +270,9 @@ define( function ( require ) {
    * @param {ModelViewTransform2} modelViewTransform
    * @constructor
    */
-  function XLabelNode( dataSet, modelViewTransform ) {
+  function XLabelNode( dataSet, modelViewTransform, options ) {
 
-    Node.call( this );
+    Node.call( this, options );
 
     var centerX = modelViewTransform.modelToViewX( (dataSet.xRange.min + dataSet.xRange.max) / 2 );
     var bottom = modelViewTransform.modelToViewY( dataSet.yRange.min );
@@ -279,7 +280,8 @@ define( function ( require ) {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
       centerX: centerX,
-      bottom: bottom + 50
+      bottom: bottom + 50,
+      maxWidth: MAX_LABEL_WIDTH
     } );
     this.addChild( xLabelNode );
   }
@@ -306,6 +308,7 @@ define( function ( require ) {
       fill: AXIS_LABEL_COLOR,
       centerY: centerY,
       left: left - 50,
+      maxWidth: MAX_LABEL_WIDTH,
       rotation: -Math.PI / 2
     } );
     this.addChild( yLabelNode );
