@@ -18,6 +18,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var sumString = require( 'string!LEAST_SQUARES_REGRESSION/sum' );
@@ -132,10 +133,11 @@ define( function( require ) {
     this.updateWidth = updateWidth;
   }
 
+  leastSquaresRegression.register( 'SumOfSquaredResidualsChart', SumOfSquaredResidualsChart );
+
   return inherit( Node, SumOfSquaredResidualsChart, {
     reset: function() {
       this.updateWidth();
     }
   } );
-} )
-;
+} );

@@ -19,6 +19,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var ScreenView = require( 'JOIST/ScreenView' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var sourceString = require( 'string!LEAST_SQUARES_REGRESSION/source' );
@@ -104,6 +105,8 @@ define( function( require ) {
       button.centerY = panel.top;
     } );
   }
+
+  leastSquaresRegression.register( 'SourceAndReferenceNode', SourceAndReferenceNode );  
 
   return inherit( ScreenView, SourceAndReferenceNode );
 } );

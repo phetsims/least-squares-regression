@@ -20,6 +20,7 @@ define( function ( require ) {
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var minusString = '\u2212';
@@ -61,6 +62,39 @@ define( function ( require ) {
 
   var SMALL_EPSILON = 0.0000001; // for equalEpsilon check
 
+  /**
+   * Function responsible for laying out the ticks of the graph, the axis titles and the grid
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<boolean>} showGridProperty
+   * @constructor
+   */
+  function GraphAxesNode( dataSet, modelViewTransform, showGridProperty ) {
+
+    var gridNode = new GridNode( dataSet, modelViewTransform );
+    var showGridPropertyObserver = function ( visible ) {
+      gridNode.visible = visible;
+    };
+
+    showGridProperty.link( showGridPropertyObserver );
+
+    Node.call( this, {
+      children: [
+        new BackgroundNode( dataSet, modelViewTransform ),
+        gridNode,
+        new XAxisNode( dataSet, modelViewTransform ),
+        new YAxisNode( dataSet, modelViewTransform ),
+        new XLabelNode( dataSet, modelViewTransform ),
+        new YLabelNode( dataSet, modelViewTransform )
+      ]
+    } );
+
+    this.disposeGraphAxesNode = function () {
+      showGridProperty.unlink( showGridPropertyObserver );
+    };
+  }
+
+  leastSquaresRegression.register( 'GraphAxesNode', GraphAxesNode );
 
   //----------------------------------------------------------------------------------------
   // major tick with label, orientation is vertical or horizontal
@@ -97,7 +131,7 @@ define( function ( require ) {
       tickLabelNode.centerY = tickLineNode.centerY;
     }
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.MajorTickNode', MajorTickNode );
   inherit( Node, MajorTickNode );
 
   //----------------------------------------------------------------------------------------
@@ -113,7 +147,7 @@ define( function ( require ) {
       stroke: MINOR_TICK_COLOR
     } );
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.MinorTickNode', MinorTickNode );
   inherit( Path, MinorTickNode );
 
   //--------------
@@ -213,7 +247,7 @@ define( function ( require ) {
       }
     }
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.XAxisNode', XAxisNode );
   inherit( Node, XAxisNode );
 
 //----------------------------------------------------------------------------------------
@@ -258,7 +292,7 @@ define( function ( require ) {
     }
 
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.YAxisNode', YAxisNode );
   inherit( Node, YAxisNode );
 
 //----------------------------------------------------------------------------------------
@@ -285,7 +319,7 @@ define( function ( require ) {
     } );
     this.addChild( xLabelNode );
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.XLabelNode', XLabelNode );
   inherit( Node, XLabelNode );
 
 //----------------------------------------------------------------------------------------
@@ -314,7 +348,7 @@ define( function ( require ) {
     this.addChild( yLabelNode );
 
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.YLabelNode', YLabelNode );
   inherit( Node, YLabelNode );
 
 //----------------------------------------------------------------------------------------
@@ -337,7 +371,7 @@ define( function ( require ) {
       {fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE} );
     this.addChild( backgroundNode );
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.BackgroundNode', BackgroundNode );
   inherit( Node, BackgroundNode );
 
 //----------------------------------------------------------------------------------------
@@ -414,41 +448,9 @@ define( function ( require ) {
     this.addChild( majorGridLinesPath );
     this.addChild( minorGridLinesPath );
   }
-
+  leastSquaresRegression.register( 'GraphAxesNode.GridNode', GridNode );
   inherit( Node, GridNode );
 //----------------------------------------------------------------------------------------
-
-  /**
-   * Function responsible for laying out the ticks of the graph, the axis titles and the grid
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property.<boolean>} showGridProperty
-   * @constructor
-   */
-  function GraphAxesNode( dataSet, modelViewTransform, showGridProperty ) {
-
-    var gridNode = new GridNode( dataSet, modelViewTransform );
-    var showGridPropertyObserver = function ( visible ) {
-      gridNode.visible = visible;
-    };
-
-    showGridProperty.link( showGridPropertyObserver );
-
-    Node.call( this, {
-      children: [
-        new BackgroundNode( dataSet, modelViewTransform ),
-        gridNode,
-        new XAxisNode( dataSet, modelViewTransform ),
-        new YAxisNode( dataSet, modelViewTransform ),
-        new XLabelNode( dataSet, modelViewTransform ),
-        new YLabelNode( dataSet, modelViewTransform )
-      ]
-    } );
-
-    this.disposeGraphAxesNode = function () {
-      showGridProperty.unlink( showGridPropertyObserver );
-    };
-  }
 
   return inherit( Node, GraphAxesNode, {
     dispose: function () {

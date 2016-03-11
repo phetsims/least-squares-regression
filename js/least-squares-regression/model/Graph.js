@@ -19,6 +19,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Residual = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Residual' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {Range} xRange
@@ -76,6 +77,8 @@ define( function( require ) {
     // set the domain of the graphs (for future use by the equation Node and the graph Axes)
     this.setGraphDomain( xRange, yRange );
   }
+
+  leastSquaresRegression.register( 'Graph', Graph );
 
   return inherit( PropertySet, Graph, {
     /**

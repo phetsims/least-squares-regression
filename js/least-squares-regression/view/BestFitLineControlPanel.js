@@ -22,6 +22,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var bestFitLineString = require( 'string!LEAST_SQUARES_REGRESSION/bestFitLine' );
@@ -139,6 +140,8 @@ define( function( require ) {
     } );
 
   }
+
+  leastSquaresRegression.register( 'BestFitLineControlPanel', BestFitLineControlPanel );
 
   return inherit( AccordionBox, BestFitLineControlPanel, {
       /**

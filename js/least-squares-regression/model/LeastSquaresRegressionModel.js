@@ -19,6 +19,7 @@ define( function( require ) {
   var PropertySet = require( 'AXON/PropertySet' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // constants
   var BUCKET_SIZE = new Dimension2( 100, 55 );
@@ -135,6 +136,8 @@ define( function( require ) {
 
     } );
   }
+
+  leastSquaresRegression.register( 'LeastSquaresRegressionModel', LeastSquaresRegressionModel );
 
   return inherit( PropertySet, LeastSquaresRegressionModel, {
 

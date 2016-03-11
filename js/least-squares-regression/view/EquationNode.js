@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var plusString = '\u002B'; // we want a large + sign
@@ -111,6 +112,8 @@ define( function( require ) {
     this.mutate( options );
 
   }
+
+  leastSquaresRegression.register( 'EquationNode', EquationNode );
 
   return inherit( Node, EquationNode, {
     /**

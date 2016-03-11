@@ -21,6 +21,7 @@ define( function( require ) {
   var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // string
   var rEqualsString = require( 'string!LEAST_SQUARES_REGRESSION/rEquals' );
@@ -98,6 +99,8 @@ define( function( require ) {
       } ),
       options );
   }
+
+  leastSquaresRegression.register( 'PearsonCorrelationCoefficientNode', PearsonCorrelationCoefficientNode );
 
   return inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
     reset: function() {

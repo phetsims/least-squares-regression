@@ -12,6 +12,7 @@ define( function( require ) {
 
   // modules
   var Range = require( 'DOT/Range' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var custom = {
@@ -808,6 +809,8 @@ define( function( require ) {
       { x: 15, y: 80 },
       { x: 15, y: 81 }
     ] );
+
+  leastSquaresRegression.register( 'DataSet', DataSet );  
 
   return DataSet;
 

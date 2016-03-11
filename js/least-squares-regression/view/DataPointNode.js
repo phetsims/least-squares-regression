@@ -12,6 +12,7 @@ define( function( require ) {
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {DataPoint} dataPoint
@@ -37,6 +38,8 @@ define( function( require ) {
     };
 
   }
+
+  leastSquaresRegression.register( 'DataPointNode', DataPointNode );
 
   return inherit( Node, DataPointNode, {
     dispose: function() {

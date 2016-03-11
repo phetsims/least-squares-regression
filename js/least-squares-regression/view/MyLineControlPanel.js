@@ -24,6 +24,7 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
@@ -252,6 +253,8 @@ define( function( require ) {
     } );
 
   }
+
+  leastSquaresRegression.register( 'MyLineControlPanel', MyLineControlPanel );
 
   return inherit( Panel, MyLineControlPanel, {
     reset: function(){

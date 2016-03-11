@@ -17,6 +17,7 @@ define( function( require ) {
   var Property = require( 'AXON/Property' );
   var ResidualLineAndSquareNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/ResidualLineAndSquareNode' );
   var Shape = require( 'KITE/Shape' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    *
@@ -146,6 +147,8 @@ define( function( require ) {
     }
 
   }
+
+  leastSquaresRegression.register( 'GraphNode', GraphNode );
 
   return inherit( Node, GraphNode, {
     reset: function() {

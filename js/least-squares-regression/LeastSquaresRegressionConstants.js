@@ -10,8 +10,9 @@ define( function( require ) {
 
   // modules
   var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
-  return {
+  var LeastSquaresRegressionConstants = {
 
     // speed for dataPoints to reach the bucket when animated
     ANIMATION_SPEED: 0.001, //  in model units per millisecond;
@@ -78,4 +79,8 @@ define( function( require ) {
     ITEM_HIGHLIGHT_FILL: 'rgb( 236, 255, 245 )'
 
   };
+
+  leastSquaresRegression.register( 'LeastSquaresRegressionConstants', LeastSquaresRegressionConstants );
+
+  return LeastSquaresRegressionConstants;
 } );

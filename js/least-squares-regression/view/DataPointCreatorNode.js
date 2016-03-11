@@ -18,6 +18,7 @@ define( function( require ) {
   var ScreenView = require( 'JOIST/ScreenView' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {Function} addDataPointToModel - A function for adding the created dataPoint to the model
@@ -88,6 +89,8 @@ define( function( require ) {
     // Pass options through to parent.
     this.mutate( options );
   }
+
+  leastSquaresRegression.register( 'DataPointCreatorNode', DataPointCreatorNode );
 
   return inherit( Node, DataPointCreatorNode );
 } );

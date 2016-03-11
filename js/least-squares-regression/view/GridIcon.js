@@ -15,6 +15,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Path = require( 'SCENERY/nodes/Path' );
   var Shape = require( 'KITE/Shape' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    *
@@ -59,6 +60,8 @@ define( function( require ) {
     // Pass options through to the parent class.
     this.mutate( options );
   }
+
+  leastSquaresRegression.register( 'GridIcon', GridIcon );
 
   return inherit( Node, GridIcon );
 } )

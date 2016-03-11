@@ -14,6 +14,7 @@ define( function( require ) {
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {Array.<DataSet>} dataSets
@@ -54,6 +55,8 @@ define( function( require ) {
     node.addChild( textNode );
     return ComboBox.createItem( node, dataSet );
   };
+
+  leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
 
   return inherit( ComboBox, DataSetComboBox );
 } );

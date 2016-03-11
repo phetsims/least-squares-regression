@@ -13,6 +13,7 @@ define( function( require ) {
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var inherit = require( 'PHET_CORE/inherit' );
   var Screen = require( 'JOIST/Screen' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
@@ -36,6 +37,8 @@ define( function( require ) {
       { backgroundColor: LeastSquaresRegressionConstants.BACKGROUND_COLOR }
     );
   }
+
+  leastSquaresRegression.register( 'LeastSquaresRegressionScreen', LeastSquaresRegressionScreen );
 
   return inherit( Screen, LeastSquaresRegressionScreen );
 } );

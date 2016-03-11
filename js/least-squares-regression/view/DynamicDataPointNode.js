@@ -14,6 +14,7 @@ define( function( require ) {
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var SimpleDragHandler = require( 'SCENERY/input/SimpleDragHandler' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {DataPoint} dataPoint
@@ -54,6 +55,8 @@ define( function( require ) {
       }
     } ) );
   }
+
+  leastSquaresRegression.register( 'DynamicDataPointNode', DynamicDataPointNode );
 
   return inherit( DataPointNode, DynamicDataPointNode );
 } );

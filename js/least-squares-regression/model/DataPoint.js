@@ -14,6 +14,7 @@ define( function( require ) {
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {Vector2} initialPosition
@@ -37,6 +38,8 @@ define( function( require ) {
     } );
 
   }
+
+  leastSquaresRegression.register( 'DataPoint', DataPoint );
 
   return inherit( PropertySet, DataPoint, {
 

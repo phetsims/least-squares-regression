@@ -17,6 +17,7 @@ define( function( require ) {
   var Poolable = require( 'PHET_CORE/Poolable' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    *
@@ -57,6 +58,8 @@ define( function( require ) {
     this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
   }
 
+  leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
+  
   inherit( Node, ResidualLineAndSquareNode, {
     /**
      * Update the Line and Square Residual

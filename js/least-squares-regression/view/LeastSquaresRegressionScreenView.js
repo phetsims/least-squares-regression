@@ -36,6 +36,7 @@ define( function( require ) {
   var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
   var TextPushButton = require( 'SUN/buttons/TextPushButton' );
   var Vector2 = require( 'DOT/Vector2' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // strings
   var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
@@ -323,6 +324,8 @@ define( function( require ) {
     }
 
   }
+
+  leastSquaresRegression.register( 'LeastSquaresRegressionScreenView', LeastSquaresRegressionScreenView );
 
   return inherit( ScreenView, LeastSquaresRegressionScreenView, {
 

@@ -13,6 +13,7 @@ define( function( require ) {
   var DataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointNode' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {DataPoint} dataPoint
@@ -30,6 +31,8 @@ define( function( require ) {
 
     DataPointNode.call( this, dataPoint, representation, modelViewTransform );
   }
+
+  leastSquaresRegression.register( 'StaticDataPointNode', StaticDataPointNode );
 
   return inherit( DataPointNode, StaticDataPointNode );
 } );
