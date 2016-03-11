@@ -1,55 +1,59 @@
 {
   "sun": {
-    "sha": "d79f0951f7f1edba84bc09d065fe156fdd4253a4",
+    "sha": "2b83e994039b2d33845d5e51d7735d144c188d97",
     "branch": "master"
   },
   "sherpa": {
-    "sha": "9a3ecfeeef516ec6361af14825f0581165625c44",
+    "sha": "bb68bbbc6e8e3ce98fc37a956f1e19fe8365c107",
     "branch": "master"
   },
   "scenery-phet": {
-    "sha": "f70e41adf396711f3b02f4eb9875516aa63e52ca",
+    "sha": "71a9c7634c1c59de38afc9e277154126fbd83256",
     "branch": "master"
   },
   "scenery": {
-    "sha": "efd8b62cadb8d6c097a329729c70f258005f1d2d",
+    "sha": "b34b4fea76b01c9b36a07c83ed6655930143f054",
     "branch": "master"
   },
   "phetcommon": {
-    "sha": "6ca0bbfdd9437ac7ab9f958ebace561bdc40562d",
+    "sha": "380b1fb5f15d097133bfceaf119d3eaf40a3a2d4",
     "branch": "master"
   },
   "phet-core": {
-    "sha": "4af6a3c97444c15cd863cf6bf80fd6dd377c9d3b",
+    "sha": "c48bf32035dc5a4ed092ad611012fcbdeb5c6351",
     "branch": "master"
   },
   "kite": {
-    "sha": "2607cc05ab62e5797c7b52e75e8f855b408c66d3",
+    "sha": "10ca8bf2b2712307ff528352de8451c0c8afe093",
     "branch": "master"
   },
   "joist": {
-    "sha": "5baa90b412856785fd31804b5d3fb92decc97e93",
+    "sha": "28f510089c0f5312ca58526b10ff063466ebbc5a",
     "branch": "master"
   },
   "dot": {
-    "sha": "78e2054714294cb362f458600d7c96d7c73d74c4",
+    "sha": "da78031b6f080d20bc8346beaa1d37148188371e",
     "branch": "master"
   },
   "chipper": {
-    "sha": "3043a311c4ed1fb390e0dec0c082f7bc206f4d22",
+    "sha": "b3a8a3c24b598badc3b1089aa0eb28c812c47fa0",
     "branch": "master"
   },
   "brand": {
-    "sha": "33811940cbf5fd3ccde635d2e30dba1b4898fc31",
+    "sha": "ac9ccaa74427844b170dcd1582f3e9bb931edef4",
     "branch": "master"
   },
   "axon": {
-    "sha": "2fd2bd6f183edcfca541ae39e85af6e64a34bc81",
+    "sha": "9457f36aec22935c7b5f41a9d0777255dd5d9884",
     "branch": "master"
   },
   "assert": {
-    "sha": "ea1c11c986527af4c8e428b149639e3f11045fe5",
+    "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "master"
+  },
+  "tandem": {
+    "sha": "2441eec6b422cb20e08682da02ab2bf7bf73250c",
+    "branch": "HEAD"
   },
   "least-squares-regression": {
     "sha": "de94665f69cf4182cb5924c37b58e668b2945b2c",
