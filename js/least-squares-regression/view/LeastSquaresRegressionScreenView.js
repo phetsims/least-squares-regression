@@ -224,7 +224,23 @@ define( function( require ) {
         dataPointsLayer.addChild( dynamicDataPointNode );
 
         // Listener for position
-        var positionPropertyListener = function() {
+        var positionPropertyListener = function( position ) {
+          // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
+          if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animating ) {
+
+            if ( !model.graph.isDataPointOnList( addedDataPoint ) )
+            // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
+            {
+              model.graph.addPointAndResiduals( addedDataPoint );
+            }
+          }
+          else {
+            if ( model.graph.isDataPointOnList( addedDataPoint ) ) {
+              // Remove dataPoint from dataPoint on graph and its associated residuals.
+              model.graph.removePointAndResiduals( addedDataPoint );
+            }
+          }
+
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
         };

@@ -113,7 +113,7 @@ define( function( require ) {
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
         thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
         thisModel.dataPoints.forEach( function( dataPoint ) {
-          thisModel.addDataPointListeners( dataPoint );
+          thisModel.addDataPointControlledListener( dataPoint );
         } );
 
       }
@@ -179,7 +179,7 @@ define( function( require ) {
 
       this.dataPoints.push( dataPoint );
 
-      this.addDataPointListeners( dataPoint );
+      this.addDataPointControlledListener( dataPoint );
     },
 
     /**
@@ -187,27 +187,8 @@ define( function( require ) {
      * Useful for dynamical points
      * @param {DataPoint} dataPoint
      */
-    addDataPointListeners: function( dataPoint ) {
+    addDataPointControlledListener: function( dataPoint ) {
       var self = this;
-      dataPoint.positionListener = function( position ) {
-        // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
-        if ( self.graph.isDataPointPositionOverlappingGraph( position ) && !dataPoint.animating ) {
-
-          if ( !self.graph.isDataPointOnList( dataPoint ) )
-          // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
-          {
-            self.graph.addPointAndResiduals( dataPoint );
-          }
-        }
-        else {
-          if ( self.graph.isDataPointOnList( dataPoint ) ) {
-            // Remove dataPoint from dataPoint on graph and its associated residuals.
-            self.graph.removePointAndResiduals( dataPoint );
-          }
-        }
-      };
-
-      dataPoint.positionProperty.link( dataPoint.positionListener );
 
       dataPoint.userControlledListener = function( userControlled ) {
         var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
