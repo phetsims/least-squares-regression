@@ -32,11 +32,8 @@
   "questionMark": {
     "value": "?"
   },
-  "source": {
-    "value": "Source"
-  },
-  "colonPunctuation": {
-    "value": ": "
+  "sourcePattern": {
+    "value": "Source: {0}"
   },
   "rEquals": {
     "value": "r ="
