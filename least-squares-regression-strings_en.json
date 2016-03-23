@@ -59,9 +59,6 @@
   "temperatureFahrenheitLatitude.reference": {
     "value": "Average January temperature in fifty\nmajor US cities compared to their latitudes."
   },
-  "temperatureFahrenheitLatitude.source": {
-    "value": "Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210"
-  },
   "temperatureFahrenheitLongitude.graphTitle": {
     "value": "Temperature (˚F) vs. Longitude"
   },
@@ -73,9 +70,6 @@
   },
   "temperatureFahrenheitLongitude.reference": {
     "value": "Average January temperature in fifty\nmajor US cities compared to their longitudes."
-  },
-  "temperatureFahrenheitLongitude.source": {
-    "value": "Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210"
   },
   "temperatureCelsiusLatitude.graphTitle": {
     "value": "Temperature (˚C) vs. Latitude"
@@ -89,9 +83,6 @@
   "temperatureCelsiusLatitude.reference": {
     "value": "Average January temperature in fifty\nmajor US cities compared to their latitudes."
   },
-  "temperatureCelsiusLatitude.source": {
-    "value": "Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210"
-  },
   "temperatureCelsiusLongitude.graphTitle": {
     "value": "Temperature (˚C) vs. Longitude"
   },
@@ -103,9 +94,6 @@
   },
   "temperatureCelsiusLongitude.reference": {
     "value": "Average January temperature in fifty\nmajor US cities compared to their longitudes."
-  },
-  "temperatureCelsiusLongitude.source": {
-    "value": "Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210"
   },
   "spendingSalary.graphTitle": {
     "value": "Spending vs. Salaries"
@@ -119,9 +107,6 @@
   "spendingSalary.reference": {
     "value": "Average per pupil spending is compared to\naverage teacher salaries in fifty US states in 1986."
   },
-  "spendingSalary.source": {
-    "value": "National Education Association"
-  },
   "wageYear.graphTitle": {
     "value": "Minimum Wage vs. Time"
   },
@@ -133,9 +118,6 @@
   },
   "wageYear.reference": {
     "value": "The value of minimum wage in the US from \n1947-2005, adjusted for inflation."
-  },
-  "wageYear.source": {
-    "value": "U.S. Department of Labor"
   },
   "mortalityYear.graphTitle": {
     "value": "Manatee Mortality vs. Time"
@@ -149,9 +131,6 @@
   "mortalityYear.reference": {
     "value": "Total manatee mortality in Florida from 1974-2004."
   },
-  "mortalityYear.source": {
-    "value": "Florida Fish and Wildlife Conservation Commission"
-  },
   "userYear.graphTitle": {
     "value": "Internet Users vs. Time"
   },
@@ -163,9 +142,6 @@
   },
   "userYear.reference": {
     "value": "Total global internet users from 1990-2010."
-  },
-  "userYear.source": {
-    "value": "World Bank"
   },
   "gasolineYear.graphTitle": {
     "value": "US Gasoline Price vs. Time"
@@ -179,9 +155,6 @@
   "gasolineYear.reference": {
     "value": "Average yearly price of gasoline from\n1979-2014, not adjusted for inflation."
   },
-  "gasolineYear.source": {
-    "value": "The World Almanac and Book of Facts"
-  },
   "lifeTV.graphTitle": {
     "value": "Life Expectancy vs. TVs"
   },
@@ -193,9 +166,6 @@
   },
   "lifeTV.reference": {
     "value": "Life expectancy in 40 countries is compared to\nthe average number of people per TV in that country."
-  },
-  "lifeTV.source": {
-    "value": "The World Almanac and Book of Facts"
   },
   "speedDistance.graphTitle": {
     "value": "Orbital Speed vs. Distance from Sun"
@@ -209,9 +179,6 @@
   "speedDistance.reference": {
     "value": "Planet orbital speed by distance from Sun."
   },
-  "speedDistance.source": {
-    "value": "Wikipedia"
-  },
   "temperatureFahrenheitChirp.graphTitle": {
     "value": "Temperature (˚F) vs. Cricket Chirps"
   },
@@ -223,9 +190,6 @@
   },
   "temperatureFahrenheitChirp.reference": {
     "value": "The number of cricket chirps in a 15 second\nperiod are compared to the temperature at the same time."
-  },
-  "temperatureFahrenheitChirp.source": {
-    "value": "Office for Mathematics, Science, and Technology\nEducation, University of Illinois"
   },
   "temperatureCelsiusChirp.graphTitle": {
     "value": "Temperature (˚C) vs. Cricket Chirps"
@@ -239,9 +203,6 @@
   "temperatureCelsiusChirp.reference": {
     "value": "The number of cricket chirps in a 15 second\nperiod are compared to the temperature at the same time."
   },
-  "temperatureCelsiusChirp.source": {
-    "value": "Office for Mathematics, Science, and Technology\nEducation, University of Illinois"
-  },
   "heightShoe.graphTitle": {
     "value": "Height vs. Shoe Size"
   },
@@ -253,8 +214,5 @@
   },
   "heightShoe.reference": {
     "value": "Shoe size used to predict height."
-  },
-  "heightShoe.source": {
-    "value": "Courtney Pearson, www.statcrunch.com "
   }
 }
