@@ -20,10 +20,10 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var ScreenView = require( 'JOIST/ScreenView' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
-  var sourceString = require( 'string!LEAST_SQUARES_REGRESSION/source' );
-  var colonPunctuationString = require( 'string!LEAST_SQUARES_REGRESSION/colonPunctuation' );
+  var sourcePatternString = require( 'string!LEAST_SQUARES_REGRESSION/sourcePattern' );
 
   /**
    * @param {Property.<DataSet>} selectedDataSetProperty
@@ -98,7 +98,8 @@ define( function( require ) {
     // no need to unlink, present for the lifetime of the sim
     selectedDataSetProperty.link( function( selectedDataSet ) {
       referenceText.text = selectedDataSet.reference;
-      sourceText.text = sourceString + colonPunctuationString + selectedDataSet.source;
+      var formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
+      sourceText.text = formattedSourceString;
       panel.centerX = screenView.layoutBounds.centerX;
       panel.centerY = screenView.layoutBounds.centerY;
       button.centerX = panel.right;
