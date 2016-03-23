@@ -14,6 +14,24 @@ define( function( require ) {
   var Range = require( 'DOT/Range' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
+  // source strings - isolated here, these sources should not be translatable
+  var SOURCES = {
+    TEMPERATURE_CELSIUS_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
+    TEMPERATURE_CELSIUS_LONGITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
+    TEMPERATURE_FARENHEIT_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
+    TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
+    SPENDING_SALARY_SOURCE: 'National Education Association',
+    WAGE_YEAR_SOURCE: 'U.S. Department of Labor',
+    MORTALITY_YEAR_SOURCE: 'Florida Fish and Wildlife Conservation Commission',
+    USER_YEAR_SOURCE: 'World Bank',
+    GASOLINE_YEAR_SOURCE: 'The World Almanac and Book of Facts',
+    LIFE_TV_SOURCE: 'The World Almanac and Book of Facts',
+    SPEED_DISTANCE_SOURCE: 'Wikipedia',
+    TEMPERATURE_FAHRENHEIT_CHIRP_SOURCE: 'Office for Mathematics, Science, and Technology\nEducation, University of Illinois',
+    TEMPERATURE_CELSIUS_CHIRP_SOURCE: 'Office for Mathematics, Science, and Technology\nEducation, University of Illinois',
+    HEIGHT_SHOE_SOURCE: 'Courtney Pearson, www.statcrunch.com'
+  };
+
   // strings
   var custom = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ),
@@ -28,7 +46,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.source' )
+    source: SOURCES.TEMPERATURE_CELSIUS_LATITUDE_SOURCE
   };
 
   var temperatureCelsiusLongitude = {
@@ -36,7 +54,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.source' )
+    source: SOURCES.TEMPERATURE_CELSIUS_LONGITUDE_SOURCE
   };
 
   var temperatureFahrenheitLatitude = {
@@ -44,7 +62,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.source' )
+    source: SOURCES.TEMPERATURE_FARENHEIT_LATITUDE_SOURCE
   };
 
   var temperatureFahrenheitLongitude = {
@@ -52,7 +70,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.source' )
+    source: SOURCES.TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE
   };
 
   var spendingSalary = {
@@ -60,7 +78,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.source' )
+    source: SOURCES.SPENDING_SALARY_SOURCE
   };
 
   var wageYear = {
@@ -68,7 +86,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.source' )
+    source: SOURCES.WAGE_YEAR_SOURCE
   };
 
   var mortalityYear = {
@@ -76,7 +94,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.source' )
+    source: SOURCES.MORTALITY_YEAR_SOURCE
   };
 
   var userYear = {
@@ -84,7 +102,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/userYear.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/userYear.source' )
+    source: SOURCES.USER_YEAR_SOURCE
   };
 
   var gasolineYear = {
@@ -92,7 +110,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.source' )
+    source: SOURCES.GASOLINE_YEAR_SOURCE
   };
 
   var lifeTV = {
@@ -100,7 +118,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.source' )
+    source: SOURCES.LIFE_TV_SOURCE
   };
 
   var speedDistance = {
@@ -108,7 +126,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.source' )
+    source: SOURCES.SPEED_DISTANCE_SOURCE
   };
 
   var temperatureFahrenheitChirp = {
@@ -116,7 +134,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.source' )
+    source: SOURCES.TEMPERATURE_FAHRENHEIT_CHIRP_SOURCE
   };
 
   var temperatureCelsiusChirp = {
@@ -124,7 +142,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.source' )
+    source: SOURCES.TEMPERATURE_CELSIUS_CHIRP_SOURCE
   };
 
   var heightShoe = {
@@ -132,7 +150,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.reference' ),
-    source: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.source' )
+    source: SOURCES.HEIGHT_SHOE_SOURCE
   };
 
   /**
