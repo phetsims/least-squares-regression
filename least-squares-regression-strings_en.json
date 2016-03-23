@@ -249,7 +249,7 @@
     "value": "Shoe Size (US)"
   },
   "heightShoe.yAxisTitle": {
-    "value": " Height (in)"
+    "value": "Height (in)"
   },
   "heightShoe.reference": {
     "value": "Shoe size used to predict height."
