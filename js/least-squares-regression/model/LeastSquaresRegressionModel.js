@@ -71,7 +71,6 @@ define( function( require ) {
     this.bucket = new Bucket( {
       position: BUCKET_POSITION,
       baseColor: '#000080',
-      caption: '',
       size: BUCKET_SIZE,
       invertY: true
     } );
