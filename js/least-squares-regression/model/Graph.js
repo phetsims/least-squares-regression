@@ -455,7 +455,8 @@ define( function( require ) {
         this.getStatistics();
         var xVariance = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
         // the linear fit parameters are not defined when the points are aligned vertically (infinite slope).
-        if ( xVariance === 0 ) {
+        // check for a threshold to prevent https://github.com/phetsims/least-squares-regression/issues/60
+        if ( xVariance < 2e-10 ) {
           isDefined = false;
         }
         else {
