@@ -75,6 +75,10 @@ define( function( require ) {
     // we will add all the residuals in a separate node
     var residualsLayer = new Node();
 
+    // we need to track the best fit residuals in a separate array so that we can toggle their visibility when
+    // the best fit is undefined
+    this.bestFitResiduals = [];
+
     // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an 
     // observable array of Property.<Residual>
     graph.myLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
@@ -113,9 +117,18 @@ define( function( require ) {
         graph.bestFitLineSquaredResidualsVisibleProperty );
       residualsLayer.addChild( residualNode );
 
+      graphNode.bestFitResiduals.push( residualNode );
+
       // Add the removal listener for if and when this residual is removed from the model.
       graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
         if ( removedResidualProperty === addedResidualProperty ) {
+
+          // remove the residualNode from this.bestFitResiduals
+          var index = graphNode.bestFitResiduals.indexOf( residualNode );
+          if( index > -1 ) {
+            graphNode.bestFitResiduals.splice( index, 1 );
+          }
+
           residualNode.dispose();
           residualsLayer.removeChild( residualNode );
         }
@@ -157,6 +170,9 @@ define( function( require ) {
 
     update: function() {
       this.updateBestFitLine();
+
+      // make sure that the best fit residuals are only visible when the best fit line is defined
+      this.updateBestFitResidualsVisible();
     },
     /**
      * Update Best Fit Line
@@ -173,6 +189,16 @@ define( function( require ) {
       else {
         this.bestFitLine.setPoint1( 0, 0 ); // set line in the upper left corner
         this.bestFitLine.setPoint2( 0, 0 ); // of length zero
+      }
+    },
+
+    /**
+     * Make sure that the best fit residuals and squares are only visible if the linear fit is defined.
+     * This visibility is separate from the visibility handled by the control panel
+     */
+    updateBestFitResidualsVisible: function() {
+      for( var i = 0; i < this.bestFitResiduals.length; i++ ) {
+        this.bestFitResiduals[ i ].visible = this.graph.isLinearFitDefined();
       }
     }
 
