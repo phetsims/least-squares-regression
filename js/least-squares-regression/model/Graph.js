@@ -520,8 +520,5 @@ define( function( require ) {
         }
       }
     }
-
-  } )
-    ;
-} )
-;
+  } );
+} );
