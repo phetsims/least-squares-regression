@@ -501,7 +501,15 @@ define( function( require ) {
       else {
         this.getStatistics();
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
-        var pearsonCoefficientCorrelationDenominator = Math.sqrt( ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY) );
+
+        // for very small values, we can end up with a negative number.  In this case, return null so we don't get a
+        // NaN in the numerator.
+        var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY ); 
+        if( number < 0 ) {
+          return null;
+        }
+        var pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
+
         // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
         if ( pearsonCoefficientCorrelationDenominator === 0 ) {
           return null; //
