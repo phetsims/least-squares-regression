@@ -119,6 +119,13 @@ define( function( require ) {
       // Check for the existence of the rValue
       if ( this.graph.isLinearFitDefined() ) {
         var rValue = this.graph.getPearsonCoefficientCorrelation();
+
+        // getPearsonCoefficientCorrelation() will return null if NaN
+        if( rValue === null ) {
+          rValueString = '';
+          return;
+        }
+
         var isNegative = (rValue < 0);
         var signString = isNegative ? minusString : plusString;
         rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
