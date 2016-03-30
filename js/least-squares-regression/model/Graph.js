@@ -503,7 +503,7 @@ define( function( require ) {
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
         // for very small values, we can end up with a negative number.  In this case, return null so we don't get a
-        // NaN in the numerator.
+        // NaN for the coefficient.
         var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY ); 
         if( number < 0 ) {
           return null;
