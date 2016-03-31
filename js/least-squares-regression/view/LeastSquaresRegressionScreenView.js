@@ -232,7 +232,7 @@ define( function( require ) {
             // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
             {
               model.graph.addPointAndResiduals( addedDataPoint );
-            }
+            } 
           }
           else {
             if ( model.graph.isDataPointOnList( addedDataPoint ) ) {
@@ -246,7 +246,10 @@ define( function( require ) {
         };
 
         // Update graph upon a change of position of a dataPoint
-        addedDataPoint.positionProperty.link( positionPropertyListener );
+        // apply observer with a lazyLink so that the dataPoint is not immediately added to the graph, and we 
+        // can all points in bulk later as a performance enhancement, see
+        // https://github.com/phetsims/least-squares-regression/issues/58
+        addedDataPoint.positionProperty.lazyLink( positionPropertyListener );
 
         // Listener for userControlled
         var userControlledPropertyListener = function( userControlled ) {
