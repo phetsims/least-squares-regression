@@ -35,8 +35,8 @@
   "sourcePattern": {
     "value": "Source: {0}"
   },
-  "rEquals": {
-    "value": "r ="
+  "symbol.r": {
+    "value": "r"
   },
   "correlationCoefficient": {
     "value": "Correlation\nCoefficient"
