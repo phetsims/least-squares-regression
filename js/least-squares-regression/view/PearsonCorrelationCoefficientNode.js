@@ -24,11 +24,14 @@ define( function( require ) {
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // string
-  var rEqualsString = require( 'string!LEAST_SQUARES_REGRESSION/rEquals' );
+  var symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
   var pattern_0r_1value = '{0} {1}';
   var plusString = '\u002B'; // we want a large + sign
   var minusString = '\u2212';
   var correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
+
+  // constants
+  var R_EQUALS = StringUtils.format( '{0} =', symbolRString );
 
   /**
    *
@@ -47,7 +50,7 @@ define( function( require ) {
     var maxLabelWidth = 120;
 
     // Create the left hand side of the equation (includes the equal sign)
-    var leftHandSideText = new Text( rEqualsString, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
+    var leftHandSideText = new Text( R_EQUALS, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // Create the right hand side of the equation
     this.rightHandSideText = new Text( '', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
