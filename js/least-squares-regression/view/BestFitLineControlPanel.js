@@ -39,7 +39,6 @@ define( function( require ) {
   function BestFitLineControlPanel( graph, dataPoints, onEvent, options ) {
 
     this.graph = graph;
-    var thisControlPanel = this;
 
     // max length of label text for i18n
     var maxLabelWidth = 120;
@@ -130,15 +129,6 @@ define( function( require ) {
         align: 'left'
       } ),
       options );
-
-    // Handle the comings and goings of  dataPoints.
-    dataPoints.addItemAddedListener( function( addedDataPoint ) {
-
-      addedDataPoint.positionProperty.link( function() {
-        thisControlPanel.updateBestFitLineEquation();
-      } );
-    } );
-
   }
 
   leastSquaresRegression.register( 'BestFitLineControlPanel', BestFitLineControlPanel );
