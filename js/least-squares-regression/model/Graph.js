@@ -496,6 +496,7 @@ define( function( require ) {
      * @returns {null||number}
      */
     getPearsonCoefficientCorrelation: function() {
+
       if ( !this.isLinearFitDefined() ) {
         return null;
       }
