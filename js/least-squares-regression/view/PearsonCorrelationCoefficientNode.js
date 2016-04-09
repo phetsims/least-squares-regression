@@ -126,12 +126,12 @@ define( function( require ) {
         // getPearsonCoefficientCorrelation() will return null if NaN
         if( rValue === null ) {
           rValueString = '';
-          return;
         }
-
-        var isNegative = (rValue < 0);
-        var signString = isNegative ? minusString : plusString;
-        rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
+        else {
+          var isNegative = (rValue < 0);
+          var signString = isNegative ? minusString : plusString;
+          rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
+        }
       }
       else {
         // Set to null if the Pearson Coefficient does not exist
