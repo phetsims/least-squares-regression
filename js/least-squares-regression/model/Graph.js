@@ -512,6 +512,11 @@ define( function( require ) {
         }
         var pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
 
+        // if the pearsonCoefficientCorrelation is less than this value, snap to zero
+        if( pearsonCoefficientCorrelationDenominator < 1E-10 ) {
+          pearsonCoefficientCorrelationDenominator = 0;
+        }
+
         // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
         if ( pearsonCoefficientCorrelationDenominator === 0 ) {
           return null; //
