@@ -504,18 +504,17 @@ define( function( require ) {
         this.getStatistics();
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
-        // for very small values, we can end up with a negative number.  In this case, return null so we don't get a
-        // NaN for the coefficient.
+        if( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
+          pearsonCoefficientCorrelationNumerator = 0;
+        }
+
+        // for very small values, we can end up with a very small or negative number.  In this case, return null so we
+        // don't get a NaN for the coefficient.
         var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY ); 
-        if( number < 0 ) {
+        if( number < 1E-15 ) {
           return null;
         }
         var pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
-
-        // if the pearsonCoefficientCorrelation is less than this value, snap to zero
-        if( pearsonCoefficientCorrelationDenominator < 1E-10 ) {
-          pearsonCoefficientCorrelationDenominator = 0;
-        }
 
         // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
         if ( pearsonCoefficientCorrelationDenominator === 0 ) {

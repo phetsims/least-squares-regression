@@ -123,6 +123,14 @@ define( function( require ) {
       if ( this.graph.isLinearFitDefined() ) {
         var rValue = this.graph.getPearsonCoefficientCorrelation();
 
+        // if the rValue is zero and there are only two points on the graph, return null.  This is to avoid
+        // a precision error for when the points are aligned horizontally and the denominator is non-zero
+        if( rValue === 0 ) {
+          if(this.graph.dataPointsOnGraph.length === 2 ) {
+            rValueString = '';
+          }
+        }
+
         // getPearsonCoefficientCorrelation() will return null if NaN
         if( rValue === null ) {
           rValueString = '';
