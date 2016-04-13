@@ -244,6 +244,7 @@ define( function( require ) {
           // update the control panel readouts and best fit line geometry when position changes
           bestFitLineControlPanel.updateBestFitLineEquation();
           bestFitLineControlPanel.sumOfSquaredResidualsChart.updateWidth();
+          myLineControlPanel.sumOfSquaredResiduals.updateWidth();
           graphNode.update();
           pearsonCorrelationCoefficientNode.update();
         };
