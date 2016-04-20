@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.0-rc.4 Mon Apr 18 2016 16:32:56 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# least-squares-regression 1.1.0 Tue Apr 19 2016 18:53:26 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "5b278256aadd25038557991c6a64e04263392d36",
+    "sha": "5fb790f428900da0294de148559e6540c5e1a16c",
     "branch": "1.1"
   },
   "phet-core": {
