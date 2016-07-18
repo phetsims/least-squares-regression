@@ -11,7 +11,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Range = require( 'DOT/Range' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // source strings - isolated here, these sources should not be translatable
@@ -178,9 +178,9 @@ define( function( require ) {
 
   var DataSet = {};
 
-  DataSet.CUSTOM = createDataSet( custom, new Range( 0, 20 ), new Range( 0, 20 ), [] );
+  DataSet.CUSTOM = createDataSet( custom, new RangeWithValue( 0, 20 ), new RangeWithValue( 0, 20 ), [] );
 
-  DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE = createDataSet( temperatureFahrenheitLongitude, new Range( 0, 80 ), new Range( 0, 140 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE = createDataSet( temperatureFahrenheitLongitude, new RangeWithValue( 0, 80 ), new RangeWithValue( 0, 140 ),
     [
       { x: 88.5, y: 44 },
       { x: 86.8, y: 38 },
@@ -241,7 +241,7 @@ define( function( require ) {
     ] );
 
   // celsius
-  DataSet.TEMPERATURE_CELSIUS_LONGITUDE = createDataSet( temperatureCelsiusLongitude, new Range( -20, 20 ), new Range( 0, 140 ),
+  DataSet.TEMPERATURE_CELSIUS_LONGITUDE = createDataSet( temperatureCelsiusLongitude, new RangeWithValue( -20, 20 ), new RangeWithValue( 0, 140 ),
     [
       { x: 88.5, y: 6.6 },
       { x: 86.8, y: 3.3 },
@@ -301,7 +301,7 @@ define( function( require ) {
       { x: 104.9, y: -10 }
     ] );
 
-  DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE = createDataSet( temperatureFahrenheitLatitude, new Range( 0, 80 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE = createDataSet( temperatureFahrenheitLatitude, new RangeWithValue( 0, 80 ), new RangeWithValue( 0, 60 ),
     [
       { x: 31.2, y: 44 },
       { x: 32.9, y: 38 },
@@ -361,7 +361,7 @@ define( function( require ) {
       { x: 41.2, y: 14 }
     ] );
 // in celsius
-  DataSet.TEMPERATURE_CELSIUS_LATITUDE = createDataSet( temperatureCelsiusLatitude, new Range( -20, 20 ), new Range( 0, 60 ),
+  DataSet.TEMPERATURE_CELSIUS_LATITUDE = createDataSet( temperatureCelsiusLatitude, new RangeWithValue( -20, 20 ), new RangeWithValue( 0, 60 ),
     [
       { x: 31.2, y: 6.6 },
       { x: 32.9, y: 3.3 },
@@ -421,7 +421,7 @@ define( function( require ) {
       { x: 41.2, y: -10 }
     ] );
 
-  DataSet.SPENDING_SALARY = createDataSet( spendingSalary, new Range( 0, 10 ), new Range( 0, 50 ),
+  DataSet.SPENDING_SALARY = createDataSet( spendingSalary, new RangeWithValue( 0, 10 ), new RangeWithValue( 0, 50 ),
     [
       { x: 19.583, y: 3.346 },
       { x: 20.263, y: 3.114 },
@@ -476,7 +476,7 @@ define( function( require ) {
       { x: 25.845, y: 3.766 }
     ] );
 
-  DataSet.WAGE_YEAR = createDataSet( wageYear, new Range( 0, 8 ), new Range( 0, 60 ),
+  DataSet.WAGE_YEAR = createDataSet( wageYear, new RangeWithValue( 0, 8 ), new RangeWithValue( 0, 60 ),
     [
       { x: 0, y: 2.94 },
       { x: 1, y: 2.72 },
@@ -539,7 +539,7 @@ define( function( require ) {
       { x: 58, y: 5.15 }
     ] );
 
-  DataSet.MORTALITY_YEAR = createDataSet( mortalityYear, new Range( 0, 500 ), new Range( 0, 40 ),
+  DataSet.MORTALITY_YEAR = createDataSet( mortalityYear, new RangeWithValue( 0, 500 ), new RangeWithValue( 0, 40 ),
     [
       { x: 1, y: 29 },
       { x: 2, y: 62 },
@@ -573,7 +573,7 @@ define( function( require ) {
       { x: 30, y: 276 }
     ] );
 
-  DataSet.USER_YEAR = createDataSet( userYear, new Range( 0, 2.1 ), new Range( 0, 20 ),
+  DataSet.USER_YEAR = createDataSet( userYear, new RangeWithValue( 0, 2.1 ), new RangeWithValue( 0, 20 ),
     [
       { x: 0, y: 0.002626964881 },
       { x: 1, y: 0.004283257864 },
@@ -598,7 +598,7 @@ define( function( require ) {
       { x: 20, y: 2.020788881 }
     ] );
 
-  DataSet.GASOLINE_YEAR = createDataSet( gasolineYear, new Range( 0, 4 ), new Range( 0, 40 ),
+  DataSet.GASOLINE_YEAR = createDataSet( gasolineYear, new RangeWithValue( 0, 4 ), new RangeWithValue( 0, 40 ),
     [
       { x: 0, y: 0.73 },
       { x: 1, y: 1.01 },
@@ -638,7 +638,7 @@ define( function( require ) {
       { x: 35, y: 3.80 }
     ] );
 
-  DataSet.LIFE_TV = createDataSet( lifeTV, new Range( 0, 80 ), new Range( 0, 600 ),
+  DataSet.LIFE_TV = createDataSet( lifeTV, new RangeWithValue( 0, 80 ), new RangeWithValue( 0, 600 ),
     [
       { x: 4, y: 70.5 },
       { x: 315, y: 53.5 },
@@ -680,7 +680,7 @@ define( function( require ) {
       { x: 29, y: 65 }
     ] );
 
-  DataSet.SPEED_DISTANCE = createDataSet( speedDistance, new Range( 0, 50 ), new Range( 0, 30 ),
+  DataSet.SPEED_DISTANCE = createDataSet( speedDistance, new RangeWithValue( 0, 50 ), new RangeWithValue( 0, 30 ),
     [
       { x: 0.38709893, y: 47.8725 },
       { x: 0.72333199, y: 35.0214 },
@@ -692,7 +692,7 @@ define( function( require ) {
       { x: 30.06896348, y: 5.4778 }
     ] );
 
-  DataSet.TEMPERATURE_FAHRENHEIT_CHIRP = createDataSet( temperatureFahrenheitChirp, new Range( 0, 100 ), new Range( 0, 20 ),
+  DataSet.TEMPERATURE_FAHRENHEIT_CHIRP = createDataSet( temperatureFahrenheitChirp, new RangeWithValue( 0, 100 ), new RangeWithValue( 0, 20 ),
     [
       { x: 20, y: 89 },
       { x: 16, y: 72 },
@@ -712,7 +712,7 @@ define( function( require ) {
     ] );
 
   // celsius
-  DataSet.TEMPERATURE_CELSIUS_CHIRP = createDataSet( temperatureCelsiusChirp, new Range( 0, 40 ), new Range( 0, 20 ),
+  DataSet.TEMPERATURE_CELSIUS_CHIRP = createDataSet( temperatureCelsiusChirp, new RangeWithValue( 0, 40 ), new RangeWithValue( 0, 20 ),
     [
       { x: 20, y: 31.6 },
       { x: 16, y: 22.2 },
@@ -731,7 +731,7 @@ define( function( require ) {
       { x: 14, y: 24.4 }
     ] );
 
-  DataSet.HEIGHT_SHOE = createDataSet( heightShoe, new Range( 0, 85 ), new Range( 0, 16 ),
+  DataSet.HEIGHT_SHOE = createDataSet( heightShoe, new RangeWithValue( 0, 85 ), new RangeWithValue( 0, 16 ),
     [
       { x: 5.5, y: 60 },
       { x: 6, y: 60 },
@@ -828,7 +828,7 @@ define( function( require ) {
       { x: 15, y: 81 }
     ] );
 
-  leastSquaresRegression.register( 'DataSet', DataSet );  
+  leastSquaresRegression.register( 'DataSet', DataSet );
 
   return DataSet;
 

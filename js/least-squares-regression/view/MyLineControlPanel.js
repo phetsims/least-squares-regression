@@ -21,7 +21,7 @@ define( function( require ) {
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Line = require( 'SCENERY/nodes/Line' );
-  var Range = require( 'DOT/Range' );
+  var RangeWithValue = require( 'DOT/RangeWithValue' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
@@ -154,10 +154,10 @@ define( function( require ) {
     } );
 
     // Create two sliders: The aSlider controls the angle of the line and by proxy the slope, the bSlider controls the intercept
-    var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
+    var sliderInterceptRange = new RangeWithValue( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = verticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    var aSlider = verticalSlider( graph.angleProperty, new RangeWithValue( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
     var bSlider = verticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
