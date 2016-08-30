@@ -40,7 +40,8 @@ define( function( require ) {
   var SLIDER_OPTIONS = {
     trackFill: 'black',
     trackSize: new Dimension2( 190, 2 ),
-    thumbSize: new Dimension2( 15, 30 )
+    thumbSize: new Dimension2( 15, 30 ),
+    thumbTouchAreaYDilation: 8
   };
   var TICK_COLOR = 'black';
   var TICK_LENGTH = 10;
