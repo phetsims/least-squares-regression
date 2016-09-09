@@ -15,25 +15,13 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
-  // strings
-  var leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
-
   /**
    * @constructor
    */
   function LeastSquaresRegressionScreen() {
-
-    //If this is a single-screen sim, then no icon is necessary.
-    //If there are multiple screens, then the icon must be provided here.
-    var icon = null;
-
-    Screen.call( this, leastSquaresRegressionTitleString, icon,
-      function() {
-        return new LeastSquaresRegressionModel();
-      },
-      function( model ) {
-        return new LeastSquaresRegressionScreenView( model );
-      },
+    Screen.call( this,
+      function() { return new LeastSquaresRegressionModel(); },
+      function( model ) { return new LeastSquaresRegressionScreenView( model ); },
       { backgroundColor: LeastSquaresRegressionConstants.BACKGROUND_COLOR }
     );
   }
