@@ -30,8 +30,8 @@ define( function( require ) {
    */
   function LeastSquaresRegressionModel() {
 
-    var thisModel = this;
-    PropertySet.call( thisModel, {
+    var self = this;
+    PropertySet.call( self, {
       showGrid: false, // controls the visibility of the graph grid
       selectedDataSet: DataSet.CUSTOM  // dataSet selected by the Combo Box: initially value set on Custom
     } );
@@ -84,35 +84,35 @@ define( function( require ) {
       // saved the position data of CUSTOM if we are going from CUSTOM to another dataSet
       if ( oldSelectedDataSet && oldSelectedDataSet === DataSet.CUSTOM ) {
         // add the current dataPoints on graph to savedCustomDataPoints
-        savedCustomDataPoints = thisModel.graph.dataPointsOnGraph;
+        savedCustomDataPoints = self.graph.dataPointsOnGraph;
       }
 
       // unlink the listeners to dataPoints
       // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
       //  see  https://github.com/phetsims/least-squares-regression/issues/11
-      thisModel.dispose();
+      self.dispose();
 
       // Clear the dataPoints array
-      thisModel.dataPoints.clear();
+      self.dataPoints.clear();
 
       // Clear the residual arrays and the dataPointsOnGraph array
-      thisModel.graph.resetOnChangeOfDataSet();
+      self.graph.resetOnChangeOfDataSet();
 
       // Set the horizontal range, vertical range, and multiplicative factors for the slope and the intercept
-      thisModel.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
+      self.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
       // Populate the dataPoints array
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
         // use the savedCustomDataPoints to populate the dataPoints array
         savedCustomDataPoints.forEach( function( dataPoint ) {
-          thisModel.dataPoints.push( dataPoint );
+          self.dataPoints.push( dataPoint );
         } );
         // Add the Data Points on Graph and all the Residuals
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
-        thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
-        thisModel.dataPoints.forEach( function( dataPoint ) {
-          thisModel.addDataPointControlledListener( dataPoint );
+        self.graph.addDataPointsOnGraphAndResidualsInBulk( self.dataPoints );
+        self.dataPoints.forEach( function( dataPoint ) {
+          self.addDataPointControlledListener( dataPoint );
         } );
 
       }
@@ -121,17 +121,17 @@ define( function( require ) {
         selectedDataSet.dataXY.forEach( function( position ) {
           // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
           // Rescale all the {X,Y} value to the normalized graph bounds
-          var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, thisModel.graph.bounds.minX, thisModel.graph.bounds.maxX, position.x );
-          var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, thisModel.graph.bounds.minY, thisModel.graph.bounds.maxY, position.y );
+          var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, self.graph.bounds.minX, self.graph.bounds.maxX, position.x );
+          var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, self.graph.bounds.minY, self.graph.bounds.maxY, position.y );
           var positionVector = new Vector2( XNormalized, YNormalized );
-          thisModel.dataPoints.push( new DataPoint( positionVector ) );
+          self.dataPoints.push( new DataPoint( positionVector ) );
         } );
         // Add the Data Points on Graph and all the Residuals
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
-        thisModel.graph.addDataPointsOnGraphAndResidualsInBulk( thisModel.dataPoints );
+        self.graph.addDataPointsOnGraphAndResidualsInBulk( self.dataPoints );
       }
       // Since we added the dataPoints in Bulk, let's send a trigger to the view
-      thisModel.trigger( 'DataPointsAdded' );
+      self.trigger( 'DataPointsAdded' );
 
     } );
   }

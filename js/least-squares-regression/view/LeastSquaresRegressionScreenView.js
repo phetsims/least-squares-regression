@@ -80,7 +80,7 @@ define( function( require ) {
 
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
-    var thisView = this;
+    var self = this;
 
     // Bounds of the graph (excluding the axes and labels) in scenery coordinates
     var viewGraphBounds = new Bounds2(
@@ -124,7 +124,7 @@ define( function( require ) {
       baseColor: 'gray',
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       listener: function() {
-        thisView.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
+        self.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
       },
       maxWidth: graphNode.width / 15
     } );
@@ -179,7 +179,7 @@ define( function( require ) {
       // Remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
         graphAxesNode.dispose();
-        thisView.removeChild( graphAxesNode );
+        self.removeChild( graphAxesNode );
       }
 
       // Create and add the GraphAxesNode corresponding to the selected DataSet
@@ -187,7 +187,7 @@ define( function( require ) {
       // GraphAxesNode require a special modelView Transform that is set by the dataSet
       var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
-      thisView.addChild( graphAxesNode );
+      self.addChild( graphAxesNode );
       graphAxesNode.moveToBack(); //
 
       // Update the graphNode (will populate it with the new dataPoints)

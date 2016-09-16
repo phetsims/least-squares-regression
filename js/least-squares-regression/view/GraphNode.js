@@ -27,7 +27,7 @@ define( function( require ) {
    * @constructor
    */
   function GraphNode( graph, viewBounds, modelViewTransform ) {
-    var graphNode = this;
+    var self = this;
 
     this.graph = graph;
     this.viewBounds = viewBounds;
@@ -87,7 +87,7 @@ define( function( require ) {
       var residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
-        graphNode.viewBounds,
+        self.viewBounds,
         modelViewTransform,
         graph.myLineResidualsVisibleProperty,
         graph.myLineSquaredResidualsVisibleProperty );
@@ -111,22 +111,22 @@ define( function( require ) {
       var residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
-        graphNode.viewBounds,
+        self.viewBounds,
         modelViewTransform,
         graph.bestFitLineResidualsVisibleProperty,
         graph.bestFitLineSquaredResidualsVisibleProperty );
       residualsLayer.addChild( residualNode );
 
-      graphNode.bestFitResiduals.push( residualNode );
+      self.bestFitResiduals.push( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
       graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
         if ( removedResidualProperty === addedResidualProperty ) {
 
           // remove the residualNode from this.bestFitResiduals
-          var index = graphNode.bestFitResiduals.indexOf( residualNode );
+          var index = self.bestFitResiduals.indexOf( residualNode );
           if( index > -1 ) {
-            graphNode.bestFitResiduals.splice( index, 1 );
+            self.bestFitResiduals.splice( index, 1 );
           }
 
           residualNode.dispose();
@@ -154,9 +154,9 @@ define( function( require ) {
      */
     function updateMyLine( slope, intercept ) {
       var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
-      graphNode.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
-      graphNode.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
-      graphNode.myLine.clipArea = Shape.bounds( graphNode.viewBounds );
+      self.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
+      self.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
+      self.myLine.clipArea = Shape.bounds( self.viewBounds );
     }
 
   }

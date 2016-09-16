@@ -162,11 +162,11 @@ define( function( require ) {
      * @param {DataPoint} dataPoint
      */
     removeMyLineResidual: function( dataPoint ) {
-      var graph = this;
+      var self = this;
       var myLineResidualsCopy = this.myLineResiduals.getArray();
       myLineResidualsCopy.forEach( function( myLineResidualProperty ) {
         if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
-          graph.myLineResiduals.remove( myLineResidualProperty );
+          self.myLineResiduals.remove( myLineResidualProperty );
         }
       } );
     },
@@ -177,11 +177,11 @@ define( function( require ) {
      * @param {DataPoint} dataPoint
      */
     removeBestFitLineResidual: function( dataPoint ) {
-      var graph = this;
+      var self = this;
       var bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
       bestFitLineResidualsCopy.forEach( function( bestFitLineResidualProperty ) {
         if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
-          graph.bestFitLineResiduals.remove( bestFitLineResidualProperty );
+          self.bestFitLineResiduals.remove( bestFitLineResidualProperty );
         }
       } );
     },
@@ -192,10 +192,10 @@ define( function( require ) {
      * @public
      */
     updateMyLineResiduals: function() {
-      var graph = this;
+      var self = this;
       this.myLineResiduals.forEach( function( residualProperty ) {
         var dataPoint = residualProperty.value.dataPoint;
-        residualProperty.value = new Residual( dataPoint, graph.slope( graph.angle ), graph.intercept );
+        residualProperty.value = new Residual( dataPoint, self.slope( self.angle ), self.intercept );
       } );
     },
 
@@ -219,12 +219,12 @@ define( function( require ) {
      * @param {Array.<DataPoint>} dataPoints
      */
     addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
-      var thisGraph = this;
+      var self = this;
       // for performance reason one should add all the dataPoints on the graph
       // then we can calculate the best Fit Line (only once)
       // and then add all the Residuals.
       dataPoints.forEach( function( dataPoint ) {
-        thisGraph.dataPointsOnGraph.push( dataPoint );
+        self.dataPointsOnGraph.push( dataPoint );
       } );
 
       var mySlope = this.slope( this.angle );
@@ -233,7 +233,7 @@ define( function( require ) {
       // add a 'myLineResidual' for every single dataPoint
       dataPoints.forEach( function( dataPoint ) {
         var myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
-        thisGraph.myLineResiduals.push( new Property( myLineResidual ) );
+        self.myLineResiduals.push( new Property( myLineResidual ) );
       } );
 
       // add a 'best fit Line' residual  for every single dataPoint
@@ -242,7 +242,7 @@ define( function( require ) {
         var linearFitParameters = this.getLinearFit();
         dataPoints.forEach( function( dataPoint ) {
           var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
-          thisGraph.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
+          self.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
         } );
       }
     },

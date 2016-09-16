@@ -40,7 +40,7 @@ define( function( require ) {
     // limit the width of the dialog content for i18n
     var maxContentWidth = this.layoutBounds.width * 2 / 3;
 
-    var screenView = this;
+    var self = this;
 
     var referenceText = new MultiLineText( '', {
       font: LeastSquaresRegressionConstants.REFERENCE_FONT,
@@ -100,8 +100,8 @@ define( function( require ) {
       referenceText.text = selectedDataSet.reference;
       var formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
       sourceText.text = formattedSourceString;
-      panel.centerX = screenView.layoutBounds.centerX;
-      panel.centerY = screenView.layoutBounds.centerY;
+      panel.centerX = self.layoutBounds.centerX;
+      panel.centerY = self.layoutBounds.centerY;
       button.centerX = panel.right;
       button.centerY = panel.top;
     } );
