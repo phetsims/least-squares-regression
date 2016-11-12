@@ -60,17 +60,19 @@ define( function( require ) {
       // distance from the dataPoint current position to its initial position (in the bucket)
       var distance = this.positionProperty.initialValue.distance( this.position );
 
-      var animationTween = new TWEEN.Tween( position ).to( {
-        x: this.positionProperty.initialValue.x,
-        y: this.positionProperty.initialValue.y
-      }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( function() {
-        self.position = new Vector2( position.x, position.y );
-      } ).onComplete( function() {
-        self.animating = false;
-        self.trigger( 'returnedToOrigin' );
-      } );
+      if ( distance > 0 ) {
+        var animationTween = new TWEEN.Tween( position ).to( {
+          x: this.positionProperty.initialValue.x,
+          y: this.positionProperty.initialValue.y
+        }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( function() {
+          self.position = new Vector2( position.x, position.y );
+        } ).onComplete( function() {
+          self.animating = false;
+          self.trigger( 'returnedToOrigin' );
+        } );
 
-      animationTween.start( phet.joist.elapsedTime );
+        animationTween.start( phet.joist.elapsedTime );
+      }
     }
   } );
 } );
