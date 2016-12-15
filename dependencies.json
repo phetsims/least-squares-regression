@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.4-rc.1 Mon Dec 12 2016 16:52:22 GMT-0700 (Mountain Standard Time)",
+  "comment": "# least-squares-regression 1.1.4 Thu Dec 15 2016 14:41:41 GMT-0600 (CST)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -10,7 +10,7 @@
   },
   "brand": {
     "sha": "9bef83455dc884a2fad27d01daf0a811180372e1",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "chipper": {
     "sha": "b3a8a3c24b598badc3b1089aa0eb28c812c47fa0",
@@ -22,14 +22,14 @@
   },
   "joist": {
     "sha": "c21d8b4b1fa660beae821010ad0ecad933c49e3a",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "10ca8bf2b2712307ff528352de8451c0c8afe093",
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "4a3b1ff7f86caddc539f4448efc5d6178e660f44",
+    "sha": "a5f0710229491d3fd1617a16b5c68f71104db638",
     "branch": "1.1"
   },
   "phet-core": {
