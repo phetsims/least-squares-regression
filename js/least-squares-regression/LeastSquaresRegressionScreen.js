@@ -15,7 +15,6 @@ define( function( require ) {
   var Screen = require( 'JOIST/Screen' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var Property = require( 'AXON/Property' );
-  var Color = require( 'SCENERY/util/Color' );
 
   /**
    * @constructor
@@ -24,7 +23,7 @@ define( function( require ) {
     Screen.call( this,
       function() { return new LeastSquaresRegressionModel(); },
       function( model ) { return new LeastSquaresRegressionScreenView( model ); },
-      { backgroundColorProperty: new Property( Color.toColor( LeastSquaresRegressionConstants.BACKGROUND_COLOR ) ) }
+      { backgroundColorProperty: new Property( LeastSquaresRegressionConstants.BACKGROUND_COLOR ) }
     );
   }
 
