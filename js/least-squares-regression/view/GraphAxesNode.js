@@ -455,6 +455,7 @@ define( function ( require ) {
   return inherit( Node, GraphAxesNode, {
     dispose: function () {
       this.disposeGraphAxesNode();
+      Node.prototype.dispose.call( this );
     }
   } );
 } );

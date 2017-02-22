@@ -59,7 +59,7 @@ define( function( require ) {
   }
 
   leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
-  
+
   inherit( Node, ResidualLineAndSquareNode, {
     /**
      * Update the Line and Square Residual
@@ -89,6 +89,7 @@ define( function( require ) {
       this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
     },
 
+    // TODO: A different function name should be chosen, as this overrides Node.dispose
     dispose: function() {
       // unlink listeners
       this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );

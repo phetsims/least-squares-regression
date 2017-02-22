@@ -44,6 +44,7 @@ define( function( require ) {
   return inherit( Node, DataPointNode, {
     dispose: function() {
       this.disposeDataPointNode();
+      Node.prototype.dispose.call( this );
     }
   } );
 } );
