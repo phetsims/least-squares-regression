@@ -79,7 +79,7 @@ define( function( require ) {
     // the best fit is undefined
     this.bestFitResiduals = [];
 
-    // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an 
+    // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an
     // observable array of Property.<Residual>
     graph.myLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
@@ -96,14 +96,14 @@ define( function( require ) {
       // Add the removal listener for if and when this residual is removed from the model.
       graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
         if ( removedResidualProperty === addedResidualProperty ) {
-          residualNode.dispose();
+          residualNode.release();
           residualsLayer.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
       } );
     } );
 
-    // Handle the comings and goings of Best Fit Line Residuals. Recall that graph.bestFitResiduals is an 
+    // Handle the comings and goings of Best Fit Line Residuals. Recall that graph.bestFitResiduals is an
     // observable array of Property.<Residual>
     graph.bestFitLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
@@ -129,7 +129,7 @@ define( function( require ) {
             self.bestFitResiduals.splice( index, 1 );
           }
 
-          residualNode.dispose();
+          residualNode.release();
           residualsLayer.removeChild( residualNode );
         }
       } );

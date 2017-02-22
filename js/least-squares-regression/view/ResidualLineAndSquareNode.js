@@ -89,8 +89,8 @@ define( function( require ) {
       this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
     },
 
-    // TODO: A different function name should be chosen, as this overrides Node.dispose
-    dispose: function() {
+    // Was dispose, see https://github.com/phetsims/scenery/issues/601
+    release: function() {
       // unlink listeners
       this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
       this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
