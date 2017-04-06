@@ -159,7 +159,7 @@ define( function( require ) {
    * @param {Range} yRange
    * @param {Range} xRange
    * @param {Array.<Object>} dataXY - array of object of the form {x: 2, y: 5}
-   * @return {Object} dataSet
+   * @returns {Object} dataSet
    */
   function createDataSet( name, yRange, xRange, dataXY ) {
     var dataSet = {
