@@ -11,10 +11,10 @@ define( function( require ) {
 
   // modules
   var inherit = require( 'PHET_CORE/inherit' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var PropertySet = require( 'AXON/PropertySet' );
   var Vector2 = require( 'DOT/Vector2' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   /**
    * @param {Vector2} initialPosition
@@ -72,6 +72,13 @@ define( function( require ) {
         } );
 
         animationTween.start( phet.joist.elapsedTime );
+      }
+      else {
+        // returned dataPoint to bucket when the distance is zero
+        // no need for animation
+        // see https://github.com/phetsims/least-squares-regression/issues/69
+        self.animating = false;
+        self.trigger( 'returnedToOrigin' );
       }
     }
   } );
