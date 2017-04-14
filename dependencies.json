@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.5 Thu Apr 13 2017 13:43:19 GMT-0600 (MDT)",
+  "comment": "# least-squares-regression 1.1.5 Thu Apr 13 2017 19:30:27 GMT-0600 (MDT)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -10,26 +10,26 @@
   },
   "brand": {
     "sha": "6a3584ad2808371f3484828865db2fa387337f52",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "chipper": {
     "sha": "b3a8a3c24b598badc3b1089aa0eb28c812c47fa0",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "dot": {
     "sha": "da78031b6f080d20bc8346beaa1d37148188371e",
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "c21d8b4b1fa660beae821010ad0ecad933c49e3a",
-    "branch": "HEAD"
+    "sha": "772598e1cf39dffccd46dc1b6e1a4d5a7133d58d",
+    "branch": "least-squares-regression-1.1"
   },
   "kite": {
     "sha": "10ca8bf2b2712307ff528352de8451c0c8afe093",
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "a11c05e3e0b7e5e031e2419f6cf940d84076234e",
+    "sha": "ea7010ec5e1d98388763e1edb720e9a71721cd59",
     "branch": "1.1"
   },
   "phet-core": {
@@ -38,7 +38,7 @@
   },
   "phetcommon": {
     "sha": "96f316aa07913bbfe5bea8798a13e8f27a81b3ef",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "scenery": {
     "sha": "4ab9fc738e721e9e293042205c48a6d31505db98",
