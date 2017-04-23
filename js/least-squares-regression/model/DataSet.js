@@ -18,7 +18,7 @@ define( function( require ) {
   var SOURCES = {
     TEMPERATURE_CELSIUS_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
     TEMPERATURE_CELSIUS_LONGITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
-    TEMPERATURE_FARENHEIT_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
+    TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
     TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
     SPENDING_SALARY_SOURCE: 'National Education Association',
     WAGE_YEAR_SOURCE: 'U.S. Department of Labor',
@@ -62,7 +62,7 @@ define( function( require ) {
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ),
     reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.reference' ),
-    source: SOURCES.TEMPERATURE_FARENHEIT_LATITUDE_SOURCE
+    source: SOURCES.TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE
   };
 
   var temperatureFahrenheitLongitude = {
