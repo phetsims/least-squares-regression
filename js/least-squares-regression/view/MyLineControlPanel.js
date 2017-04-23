@@ -229,8 +229,8 @@ define( function( require ) {
     // Trigger the opacity/non-opacity when checking the myLine checkbox
     graph.myLineVisibleProperty.link( function( enabled ) {
       equationText.visible = enabled;
-      aSlider.pickable = enabled ? true : false; // enable/disable slider
-      bSlider.pickable = enabled ? true : false;// enable/disable slider
+      aSlider.pickable = enabled; // enable/disable slider
+      bSlider.pickable = enabled;// enable/disable slider
       residualsCheckBox.enabled = enabled;
       squaredResidualsCheckBox.enabled = enabled;
       rightAlignedNode.opacity = enabled ? 1 : 0.3;
@@ -258,7 +258,7 @@ define( function( require ) {
   leastSquaresRegression.register( 'MyLineControlPanel', MyLineControlPanel );
 
   return inherit( Panel, MyLineControlPanel, {
-    reset: function(){
+    reset: function() {
       this.sumOfSquaredResiduals.reset();
     }
   } );
