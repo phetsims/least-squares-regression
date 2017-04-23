@@ -55,8 +55,8 @@ define( function( require ) {
    * @param {Object} [options] for slider node.
    * @constructor
    */
-  function verticalSlider( property, range, options ) {
-    var sliderNode = new HSlider( property, range, options );
+  function VerticalSlider( property, range, options ) {
+    HSlider.call( this, property, range, options );
 
     // HSlider does not support a tick that is centered on the track.  We need to use our own tick node here.
     var trackCenterX = SLIDER_OPTIONS.trackSize.width / 2;
@@ -67,14 +67,15 @@ define( function( require ) {
     } );
 
     // add the tick as a child and move it behind the slider thumb
-    sliderNode.addChild( tickNode );
+    this.addChild( tickNode );
     tickNode.moveToBack();
 
     // make vertical slider by rotating it
-    sliderNode.rotate( -Math.PI / 2 );
-
-    return sliderNode;
+    this.rotate( -Math.PI / 2 );
   }
+
+  leastSquaresRegression.register( 'VerticalSlider', VerticalSlider );
+  inherit( HSlider, VerticalSlider );
 
   /**
    *
@@ -158,8 +159,8 @@ define( function( require ) {
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = verticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
-    var bSlider = verticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+    var aSlider = new VerticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
 
     // Create label below the sliders
     var aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
