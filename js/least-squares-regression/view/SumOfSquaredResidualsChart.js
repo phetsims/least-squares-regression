@@ -36,12 +36,12 @@ define( function( require ) {
    * @param {Graph} graph - model of a graph
    * @param {Array.<DataPoint>} dataPoints - an array of DataPoint
    * @param {Function} getSumOfSquaredResiduals -
-   * @param {Function} onEvent - listener function when event is trigger
+   * @param {Emitter} dataPointsAddedEmitter
    * @param {Color} fillColor
    * @param {Property.<boolean>} visibleProperty
    * @constructor
    */
-  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, onEvent, fillColor, visibleProperty, options ) {
+  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, dataPointsAddedEmitter, fillColor, visibleProperty, options ) {
 
     options = _.extend( {
       maxLabelWidth: 150
@@ -104,7 +104,7 @@ define( function( require ) {
     } );
 
     // Trigger an update after all the points have been added in bulk to the model
-    onEvent( 'DataPointsAdded', updateWidth );
+    dataPointsAddedEmitter.addListener( updateWidth );
 
     // Controls the visibility of this node
     // no need to unlink since the chart is present for the lifetime of the sim

@@ -101,16 +101,16 @@ define( function( require ) {
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
+    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
-    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.on.bind( model ), panelOptions );
+    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
     var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
     // Create the Graph Axes, including the tick marks, labels and axis titles
-    var graphAxesNode = new GraphAxesNode( model.selectedDataSet, modelViewTransform, model.showGridProperty );
+    var graphAxesNode = new GraphAxesNode( model.selectedDataSetProperty.value, modelViewTransform, model.showGridProperty );
 
     // Create the dataSet combo box that appears on top of the graph
     // Width of contents limited by width of graphNode for i18n
@@ -217,7 +217,7 @@ define( function( require ) {
     // Handle the comings and goings of dataPoints.
     model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
 
-      if ( model.selectedDataSet === DataSet.CUSTOM ) {
+      if ( model.selectedDataSetProperty.value === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
         // DataPoints are movable
         var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
@@ -226,7 +226,7 @@ define( function( require ) {
         // Listener for position
         var positionPropertyListener = function( position ) {
           // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
-          if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animating ) {
+          if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animatingProperty.value ) {
 
             if ( !model.graph.isDataPointOnList( addedDataPoint ) )
             // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.

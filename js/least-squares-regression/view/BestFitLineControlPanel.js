@@ -32,11 +32,11 @@ define( function( require ) {
   /**
    * @param {Graph} graph - model of the graph
    * @param {Array.<DataPoint>} dataPoints
-   * @param {Function} onEvent - listener function when points have been added to the graph
+   * @param {Emitter} dataPointsAddedEmitter
    * @param {Object} [options]
    * @constructor
    */
-  function BestFitLineControlPanel( graph, dataPoints, onEvent, options ) {
+  function BestFitLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options ) {
 
     this.graph = graph;
 
@@ -52,7 +52,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
-      onEvent,
+      dataPointsAddedEmitter,
       LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.bestFitLineSquaredResidualsVisibleProperty
     );

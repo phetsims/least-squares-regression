@@ -9,14 +9,16 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bucket = require( 'PHETCOMMON/model/Bucket' );
   var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var Dimension2 = require( 'DOT/Dimension2' );
+  var Emitter = require( 'AXON/Emitter' );
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   var inherit = require( 'PHET_CORE/inherit' );
   var ObservableArray = require( 'AXON/ObservableArray' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
@@ -31,10 +33,15 @@ define( function( require ) {
   function LeastSquaresRegressionModel() {
 
     var self = this;
-    PropertySet.call( self, {
-      showGrid: false, // controls the visibility of the graph grid
-      selectedDataSet: DataSet.CUSTOM  // dataSet selected by the Combo Box: initially value set on Custom
-    } );
+
+    // @public {Property.<boolean>} controls the visibility of the graph grid
+    this.showGridProperty = new BooleanProperty( false );
+
+    // @public {Property.<Object>}  dataSet selected by the Combo Box: initially value set on Custom
+    this.selectedDataSetProperty = new Property( DataSet.CUSTOM );
+
+    // @public, sends an event when points are added in bulk
+    this.dataPointsAddedEmitter = new Emitter();
 
     // Array of dataPoints in the model (may not be necessarily on the graph, could be user controlled outside the graph zone or animated)
     this.dataPoints = new ObservableArray(); // @public
@@ -62,8 +69,8 @@ define( function( require ) {
     // Model of the graph that contains all information regarding the composition of the graph
     // @public read-only
     this.graph = new Graph(
-      this.selectedDataSet.xRange,
-      this.selectedDataSet.yRange
+      this.selectedDataSetProperty.value.xRange,
+      this.selectedDataSetProperty.value.yRange
     );
 
     // Bucket model to be filled with dataPoint
@@ -131,17 +138,18 @@ define( function( require ) {
         self.graph.addDataPointsOnGraphAndResidualsInBulk( self.dataPoints );
       }
       // Since we added the dataPoints in Bulk, let's send a trigger to the view
-      self.trigger( 'DataPointsAdded' );
+      self.dataPointsAddedEmitter.emit();
 
     } );
   }
 
   leastSquaresRegression.register( 'LeastSquaresRegressionModel', LeastSquaresRegressionModel );
 
-  return inherit( PropertySet, LeastSquaresRegressionModel, {
+  return inherit( Object, LeastSquaresRegressionModel, {
 
     reset: function() {
-      PropertySet.prototype.reset.call( this );
+      this.showGridProperty.reset();
+      this.selectedDataSetProperty.reset();
       this.dispose();
       this.dataPoints.clear();
       this.graph.reset();

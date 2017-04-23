@@ -80,11 +80,11 @@ define( function( require ) {
    *
    * @param {Graph} graph
    * @param {Array.<DataPoint>} dataPoints
-   * @param {Function} onEvent - listener function when event is trigger
+   * @param {Emitter} dataPointsAddedEmitter
    * @param {Object} [options]
    * @constructor
    */
-  function MyLineControlPanel( graph, dataPoints, onEvent, options ) {
+  function MyLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options ) {
 
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
@@ -192,7 +192,7 @@ define( function( require ) {
       graph,
       dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
-      onEvent,
+      dataPointsAddedEmitter,
       LeastSquaresRegressionConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
       graph.myLineSquaredResidualsVisibleProperty, {
         maxLabelWidth: MAX_WIDTH
@@ -248,7 +248,7 @@ define( function( require ) {
 
     // Trigger an update after all the points have been added in bulk to the model
     // Update the equation text
-    onEvent( 'DataPointsAdded', function() {
+    dataPointsAddedEmitter.addListener( function() {
       updateTextSlope( graph.angle );
       updateTextIntercept( graph.intercept );
     } );
