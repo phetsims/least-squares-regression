@@ -191,7 +191,6 @@ define( function( require ) {
     // Create the barometer chart for the sum of the squares
     this.sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
       graph,
-      dataPoints,
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
       dataPointsAddedEmitter,
       LeastSquaresRegressionConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,

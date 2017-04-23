@@ -34,14 +34,14 @@ define( function( require ) {
 
   /**
    * @param {Graph} graph - model of a graph
-   * @param {Array.<DataPoint>} dataPoints - an array of DataPoint
-   * @param {Function} getSumOfSquaredResiduals -
+   * @param {Function} getSumOfSquaredResiduals
    * @param {Emitter} dataPointsAddedEmitter
    * @param {Color} fillColor
    * @param {Property.<boolean>} visibleProperty
+   * @param {Object} [Options]
    * @constructor
    */
-  function SumOfSquaredResidualsChart( graph, dataPoints, getSumOfSquaredResiduals, dataPointsAddedEmitter, fillColor, visibleProperty, options ) {
+  function SumOfSquaredResidualsChart( graph, getSumOfSquaredResiduals, dataPointsAddedEmitter, fillColor, visibleProperty, options ) {
 
     options = _.extend( {
       maxLabelWidth: 150

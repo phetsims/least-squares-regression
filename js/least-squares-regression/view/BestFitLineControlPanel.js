@@ -50,7 +50,6 @@ define( function( require ) {
     // Create the chart (barometer) displaying the sum of the squares
     this.sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
       graph,
-      dataPoints,
       graph.getBestFitLineSumOfSquaredResiduals.bind( graph ),
       dataPointsAddedEmitter,
       LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR.SUM_OF_SQUARES_COLOR,
@@ -161,7 +160,5 @@ define( function( require ) {
           this.equationText.visible = false;
         }
       }
-    }
-  )
-    ;
+  } );
 } );
