@@ -10,10 +10,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
+  var Emitter = require( 'AXON/Emitter' );
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var PropertySet = require( 'AXON/PropertySet' );
+  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
 
   /**
@@ -22,27 +24,35 @@ define( function( require ) {
    */
   function DataPoint( initialPosition ) {
 
-    PropertySet.call( this, {
+    // @public {Property.<Vector2>} indicates where in model space the center of this data point is.
+    this.positionProperty = new Property( initialPosition );
 
-      // Property that indicates where in model space the center of this data point is.
-      position: initialPosition,
+    // @public {Property.<boolean>}
+    // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by a
+    // view node.
+    this.userControlledProperty = new BooleanProperty( false );
 
-      // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by the a
-      // view node.
-      userControlled: false,
+    // @public read-only {Property.<boolean>}
+    // Flag that indicates whether this element is animating from one location to the bucket.
+    this.animatingProperty = new BooleanProperty( false );
 
-      // Flag that indicates whether this element is animating from one location to the bucket.
-      // @public read-only
-      animating: false
-
-    } );
-
+    // @public
+    this.returnedToOriginEmitter = new Emitter();
   }
 
   leastSquaresRegression.register( 'DataPoint', DataPoint );
 
-  return inherit( PropertySet, DataPoint, {
+  return inherit( Object, DataPoint, {
 
+    /**
+     *  resets all the properties of DataPoint
+     *  @public
+     */
+    reset: function() {
+      this.positionProperty.reset();
+      this.userControlledProperty.reset();
+      this.animatingProperty.reset();
+    },
     /**
      * Function that animates dataPoint back to the bucket.
      * @public
@@ -50,25 +60,25 @@ define( function( require ) {
     animate: function() {
       var self = this;
 
-      this.animating = true;
+      this.animatingProperty.set( true );
 
       var position = {
-        x: this.position.x,
-        y: this.position.y
+        x: this.positionProperty.value.x,
+        y: this.positionProperty.value.y
       };
 
       // distance from the dataPoint current position to its initial position (in the bucket)
-      var distance = this.positionProperty.initialValue.distance( this.position );
+      var distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
 
       if ( distance > 0 ) {
         var animationTween = new TWEEN.Tween( position ).to( {
           x: this.positionProperty.initialValue.x,
           y: this.positionProperty.initialValue.y
         }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( function() {
-          self.position = new Vector2( position.x, position.y );
+          self.positionProperty.set( new Vector2( position.x, position.y ) );
         } ).onComplete( function() {
-          self.animating = false;
-          self.trigger( 'returnedToOrigin' );
+          self.animatingProperty.set( false );
+          self.returnedToOriginEmitter.emit();
         } );
 
         animationTween.start( phet.joist.elapsedTime );
@@ -77,8 +87,8 @@ define( function( require ) {
         // returned dataPoint to bucket when the distance is zero
         // no need for animation
         // see https://github.com/phetsims/least-squares-regression/issues/69
-        self.animating = false;
-        self.trigger( 'returnedToOrigin' );
+        self.animatingProperty.set( false );
+        self.returnedToOriginEmitter.emit();
       }
     }
   } );

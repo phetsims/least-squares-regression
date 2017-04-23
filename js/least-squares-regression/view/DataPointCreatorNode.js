@@ -71,17 +71,17 @@ define( function( require ) {
 
         // Create and add the new model element.
         dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
-        dataPoint.userControlled = true;
+        dataPoint.userControlledProperty.set( true );
         addDataPointToModel( dataPoint );
 
       },
 
       translate: function( translationParams ) {
-        dataPoint.position = dataPoint.position.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
+        dataPoint.positionProperty.value = dataPoint.positionProperty.value.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
       },
 
       end: function( event, trail ) {
-        dataPoint.userControlled = false;
+        dataPoint.userControlledProperty.set( false );
         dataPoint = null;
       }
     } ) );

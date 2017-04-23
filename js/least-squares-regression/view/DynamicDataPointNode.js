@@ -23,7 +23,6 @@ define( function( require ) {
    */
   function DynamicDataPointNode( dataPoint, modelViewTransform ) {
 
-
     // Create the visual representation of the DynamicDataPoint
     var representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
@@ -43,15 +42,15 @@ define( function( require ) {
 
       // Handler that moves the dataPoint in model space.
       start: function( event, trail ) {
-        dataPoint.userControlled = true;
+        dataPoint.userControlledProperty.set( true );
       },
 
       translate: function( args ) {
-        dataPoint.position = modelViewTransform.viewToModelPosition( args.position );
+        dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
       },
 
       end: function( event, trail ) {
-        dataPoint.userControlled = false;
+        dataPoint.userControlledProperty.set( false );
       }
     } ) );
   }

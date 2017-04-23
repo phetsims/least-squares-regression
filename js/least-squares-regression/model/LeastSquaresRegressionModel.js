@@ -182,7 +182,7 @@ define( function( require ) {
     },
 
     /**
-     * Function that adds position listener and user Controlled listnener;
+     * Function that adds position listener and user Controlled listener;
      * Useful for dynamical points
      * @param {DataPoint} dataPoint
      */
@@ -190,7 +190,7 @@ define( function( require ) {
       var self = this;
 
       dataPoint.userControlledListener = function( userControlled ) {
-        var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.position );
+        var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );
         if ( !isOnGraph && !userControlled ) {
           // return the dataPoint to the bucket
           dataPoint.animate();
@@ -202,16 +202,20 @@ define( function( require ) {
 
       // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
       // can be 'put back' into the bucket.
-      dataPoint.on( 'returnedToOrigin', function() {
+
+      dataPoint.returnedToOriginListener = function() {
         self.dataPoints.remove( dataPoint );
 
         dataPoint.positionProperty.unlink( dataPoint.positionListener );
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+      };
+
+      dataPoint.returnedToOriginEmitter.addListener( function() {
+        dataPoint.returnedToOriginListener();
+        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener );
       } );
     }
 
   } );
-
-} )
-;
+} );
 

@@ -341,7 +341,7 @@ define( function( require ) {
     sumOfSquaredResiduals: function( slope, intercept ) {
       var sumOfSquareResiduals = 0;
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
-        var yResidual = (slope * dataPoint.position.x + intercept) - dataPoint.position.y;
+        var yResidual = (slope * dataPoint.positionProperty.value.x + intercept) - dataPoint.positionProperty.value.y;
         sumOfSquareResiduals += yResidual * yResidual;
       } );
       return sumOfSquareResiduals;
@@ -408,19 +408,19 @@ define( function( require ) {
       var arrayLength = dataPointArray.length;
 
       var squaresXX = _.map( dataPointArray, function( dataPoint ) {
-        return dataPoint.position.x * dataPoint.position.x;
+        return dataPoint.positionProperty.value.x * dataPoint.positionProperty.value.x;
       } );
       var squaresXY = _.map( dataPointArray, function( dataPoint ) {
-        return dataPoint.position.x * dataPoint.position.y;
+        return dataPoint.positionProperty.value.x * dataPoint.positionProperty.value.y;
       } );
       var squaresYY = _.map( dataPointArray, function( dataPoint ) {
-        return dataPoint.position.y * dataPoint.position.y;
+        return dataPoint.positionProperty.value.y * dataPoint.positionProperty.value.y;
       } );
       var positionArrayX = _.map( dataPointArray, function( dataPoint ) {
-        return dataPoint.position.x;
+        return dataPoint.positionProperty.value.x;
       } );
       var positionArrayY = _.map( dataPointArray, function( dataPoint ) {
-        return dataPoint.position.y;
+        return dataPoint.positionProperty.value.y;
       } );
 
       function add( memo, num ) {
