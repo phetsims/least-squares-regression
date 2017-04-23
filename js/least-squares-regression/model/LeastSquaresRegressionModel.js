@@ -220,7 +220,6 @@ define( function( require ) {
 
       dataPoint.returnedToOriginEmitter.addListener( function() {
         dataPoint.returnedToOriginListener();
-        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener );
       } );
     }
 

@@ -12,8 +12,11 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var BooleanProperty = require( 'AXON/BooleanProperty' );
   var Bounds2 = require( 'DOT/Bounds2' );
+  var DerivedProperty = require( 'AXON/DerivedProperty' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var NumberProperty = require( 'AXON/NumberProperty' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
   var PropertySet = require( 'AXON/PropertySet' );
@@ -28,37 +31,50 @@ define( function( require ) {
    */
   function Graph( xRange, yRange ) {
 
-    PropertySet.call( this, {
-      angle: 0, // in radians, a proxy for the 'my line' slope.
-      intercept: 0, // in units of the graph bounds
-      myLineVisible: true, //associated Property of My Line CheckBox AND visibility of My Line on the graph
-      bestFitLineVisible: false, ///associated Property of Best Fit Line CheckBox AND visibility of Best Fit Line on the graph
-      myLineShowResiduals: false, //associated Property with Residuals of My Line
-      myLineShowSquaredResiduals: false, //associated Property with Squared Residuals of My Line
-      bestFitLineShowResiduals: false, //associated Property with Residuals of Best Fit Line
-      bestFitLineShowSquaredResiduals: false //associated Property with Squared Residuals of Best Fit Line
-    } );
+    // @public {Property.<number>} in radians, a proxy for the 'my line' slope.
+    this.angleProperty = new NumberProperty( 0 );
 
-    // property that controls the visibility of the Residuals on the graph for My Line
-    this.addDerivedProperty( 'myLineResidualsVisible', [ 'myLineVisible', 'myLineShowResiduals' ],
+    // @public {Property.<number>} in units of the graph bounds
+    this.interceptProperty = new NumberProperty( 0 );
+
+    // @public {Property.<boolean>} visibility of My Line on the graph and associated checkbox
+    this.myLineVisibleProperty = new BooleanProperty( true );
+
+    // @public {Property.<boolean>} visibility of Best Fit Line on the graph and associated checkbox
+    this.bestFitLineVisibleProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>} visibility of Residuals of My Line (checkbox only)
+    this.myLineShowResidualsProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>} visibility of Squared Residuals of My Line (checkbox only)
+    this.myLineShowSquaredResidualsProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>} visibility of Residuals of Best Fit Line (checkbox only)
+    this.bestFitLineShowResidualsProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>} visibility of Squared Residuals of Best Fit Line (checkbox only)
+    this.bestFitLineShowSquaredResidualsProperty = new BooleanProperty( false );
+
+    // @public {Property.<boolean>}  property that controls the visibility of the Residuals on the graph for My Line
+    this.myLineResidualsVisibleProperty = new DerivedProperty( [ this.myLineVisibleProperty, this.myLineShowResidualsProperty ],
       function( myLineVisible, myLineShowResiduals ) {
         return myLineVisible && myLineShowResiduals;
       } );
 
-    // property that controls the visibility of the Square Residuals on the graph for My Line
-    this.addDerivedProperty( 'myLineSquaredResidualsVisible', [ 'myLineVisible', 'myLineShowSquaredResiduals' ],
+    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for My Line
+    this.myLineSquaredResidualsVisibleProperty = new DerivedProperty( [ this.myLineVisibleProperty, this.myLineShowSquaredResidualsProperty ],
       function( myLineVisible, myLineShowSquaredResiduals ) {
         return myLineVisible && myLineShowSquaredResiduals;
       } );
 
-    // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
-    this.addDerivedProperty( 'bestFitLineResidualsVisible', [ 'bestFitLineVisible', 'bestFitLineShowResiduals' ],
+    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+    this.bestFitLineResidualsVisibleProperty = new DerivedProperty( [ this.bestFitLineVisibleProperty, this.bestFitLineShowResidualsProperty ],
       function( bestFitLineVisible, bestFitLineShowResiduals ) {
         return bestFitLineVisible && bestFitLineShowResiduals;
       } );
 
-    // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
-    this.addDerivedProperty( 'bestFitLineSquaredResidualsVisible', [ 'bestFitLineVisible', 'bestFitLineShowSquaredResiduals' ],
+    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+    this.bestFitLineSquaredResidualsVisibleProperty = new DerivedProperty( [ this.bestFitLineVisibleProperty, this.bestFitLineShowSquaredResidualsProperty ],
       function( bestFitLineVisible, bestFitLineShowSquaredResiduals ) {
         return bestFitLineVisible && bestFitLineShowSquaredResiduals;
       } );
@@ -82,12 +98,19 @@ define( function( require ) {
 
   return inherit( PropertySet, Graph, {
     /**
-     * Reset the graph model, reset the visibility of the lines and residuals.
+     * Reset the visibility of the lines and residuals as well as the angle and intercept.
      * Empty out the two residual arrays and the dataPoints on Graph array
      * @public
      */
     reset: function() {
-      PropertySet.prototype.reset.call( this );
+      this.angleProperty.reset();
+      this.interceptProperty.reset();
+      this.myLineVisibleProperty.reset();
+      this.bestFitLineVisibleProperty.reset();
+      this.myLineShowResidualsProperty.reset();
+      this.myLineShowSquaredResidualsProperty.reset();
+      this.bestFitLineShowResidualsProperty.reset();
+      this.bestFitLineShowSquaredResidualsProperty.reset();
       this.dataPointsOnGraph = [];
       this.myLineResiduals.clear();
       this.bestFitLineResiduals.clear();
@@ -105,7 +128,6 @@ define( function( require ) {
 
     /**
      * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor for the slope and intercept
-     * Use to dis
      * @public
      * @param {Range} xRange
      * @param {Range} yRange
@@ -125,7 +147,6 @@ define( function( require ) {
     update: function() {
       this.updateMyLineResiduals();
       this.updateBestFitLineResiduals();
-
     },
     /**
      * Convert the angle of a line (measured from the horizontal x axis) to a slope
@@ -141,7 +162,7 @@ define( function( require ) {
      * @param {DataPoint} dataPoint
      */
     addMyLineResidual: function( dataPoint ) {
-      var myLineResidual = new Residual( dataPoint, this.slope( this.angle ), this.intercept );
+      var myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
       this.myLineResiduals.push( new Property( myLineResidual ) );
     },
     /**
@@ -156,7 +177,7 @@ define( function( require ) {
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
     },
 
-    /*
+    /**
      * Remove the 'My Line' model Residual attached to a dataPoint
      * @private
      * @param {DataPoint} dataPoint
@@ -195,7 +216,7 @@ define( function( require ) {
       var self = this;
       this.myLineResiduals.forEach( function( residualProperty ) {
         var dataPoint = residualProperty.value.dataPoint;
-        residualProperty.value = new Residual( dataPoint, self.slope( self.angle ), self.intercept );
+        residualProperty.value = new Residual( dataPoint, self.slope( self.angleProperty.value ), self.interceptProperty.value );
       } );
     },
 
@@ -227,8 +248,8 @@ define( function( require ) {
         self.dataPointsOnGraph.push( dataPoint );
       } );
 
-      var mySlope = this.slope( this.angle );
-      var myIntercept = this.intercept;
+      var mySlope = this.slope( this.angleProperty.value );
+      var myIntercept = this.interceptProperty.value;
 
       // add a 'myLineResidual' for every single dataPoint
       dataPoints.forEach( function( dataPoint ) {
@@ -355,7 +376,7 @@ define( function( require ) {
      */
     getMyLineSumOfSquaredResiduals: function() {
       if ( this.dataPointsOnGraph.length >= 1 ) {
-        return this.sumOfSquaredResiduals( this.slope( this.angle ), this.intercept );
+        return this.sumOfSquaredResiduals( this.slope( this.angleProperty.value ), this.interceptProperty.value );
       }
       else {
         return 0;
@@ -504,14 +525,14 @@ define( function( require ) {
         this.getStatistics();
         var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
-        if( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
+        if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
           pearsonCoefficientCorrelationNumerator = 0;
         }
 
         // for very small values, we can end up with a very small or negative number.  In this case, return null so we
         // don't get a NaN for the coefficient.
-        var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY ); 
-        if( number < 1E-15 ) {
+        var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY );
+        if ( number < 1E-15 ) {
           return null;
         }
         var pearsonCoefficientCorrelationDenominator = Math.sqrt( number );

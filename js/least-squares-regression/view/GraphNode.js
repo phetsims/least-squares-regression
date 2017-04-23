@@ -37,7 +37,7 @@ define( function( require ) {
 
     // Create 'MyLine'
     // First, get the two points formed by the intersection of the line and the boundary of the graph
-    var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angle ), graph.intercept );
+    var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angleProperty.value ), graph.interceptProperty.value );
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),

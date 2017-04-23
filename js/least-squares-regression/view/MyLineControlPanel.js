@@ -249,8 +249,8 @@ define( function( require ) {
     // Trigger an update after all the points have been added in bulk to the model
     // Update the equation text
     dataPointsAddedEmitter.addListener( function() {
-      updateTextSlope( graph.angle );
-      updateTextIntercept( graph.intercept );
+      updateTextSlope( graph.angleProperty.value );
+      updateTextIntercept( graph.interceptProperty.value );
     } );
 
   }
