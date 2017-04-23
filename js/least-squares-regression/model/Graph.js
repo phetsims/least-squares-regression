@@ -19,7 +19,6 @@ define( function( require ) {
   var NumberProperty = require( 'AXON/NumberProperty' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
-  var PropertySet = require( 'AXON/PropertySet' );
   var Residual = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Residual' );
   var Vector2 = require( 'DOT/Vector2' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
@@ -96,7 +95,7 @@ define( function( require ) {
 
   leastSquaresRegression.register( 'Graph', Graph );
 
-  return inherit( PropertySet, Graph, {
+  return inherit( Property, Graph, {
     /**
      * Reset the visibility of the lines and residuals as well as the angle and intercept.
      * Empty out the two residual arrays and the dataPoints on Graph array
