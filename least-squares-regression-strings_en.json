@@ -99,10 +99,10 @@
     "value": "Average Teacher Salaries (USD) in thousands"
   },
   "spendingSalary.yAxisTitle": {
-    "value": "Average Spending Per Pupil (USD) in thousands"
+    "value": "Average State Expenditure Per Pupil (USD) in thousands"
   },
   "spendingSalary.reference": {
-    "value": "Average per pupil spending is compared to\naverage teacher salaries in fifty US states in 1986."
+    "value": "Average per pupil expenditure in 50 US states is compared to\naverage teacher salaries in those states in 1986."
   },
   "wageYear.graphTitle": {
     "value": "Minimum Wage vs. Time"
@@ -144,7 +144,7 @@
     "value": "US Gasoline Price vs. Time"
   },
   "gasolineYear.xAxisTitle": {
-    "value": "Years Since 1976"
+    "value": "Years Since 1979"
   },
   "gasolineYear.yAxisTitle": {
     "value": "Price per Gallon (USD)"
