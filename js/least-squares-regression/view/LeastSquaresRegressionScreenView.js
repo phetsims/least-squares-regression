@@ -178,8 +178,8 @@ define( function( require ) {
 
       // Remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
-        graphAxesNode.dispose();
         self.removeChild( graphAxesNode );
+        graphAxesNode.dispose();
       }
 
       // Create and add the GraphAxesNode corresponding to the selected DataSet
