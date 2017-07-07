@@ -272,10 +272,10 @@ define( function( require ) {
             // unlink the listeners on removedDataPoint
             removedDataPoint.positionProperty.unlink( positionPropertyListener );
             removedDataPoint.userControlledProperty.unlink( userControlledPropertyListener );
-            dynamicDataPointNode.dispose();
 
             // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( dynamicDataPointNode );
+            dynamicDataPointNode.dispose();
             model.dataPoints.removeItemRemovedListener( removalListener );
           }
         } );
