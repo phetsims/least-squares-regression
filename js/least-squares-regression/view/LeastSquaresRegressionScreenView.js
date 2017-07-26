@@ -370,7 +370,6 @@ define( function( require ) {
       var sourceAndReferenceListener = {
         up: function() {
           sourceAndReferenceNode.removeInputListener( sourceAndReferenceListener );
-          plane.addInputListener( sourceAndReferenceListener );
           sourceAndReferenceNode.detach();
           plane.detach();
         }
