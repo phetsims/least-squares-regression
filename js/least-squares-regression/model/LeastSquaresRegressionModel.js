@@ -156,13 +156,19 @@ define( function( require ) {
     },
 
     /**
-     * Unlink listeners to dataPoint
+     * Unlink listeners to dataPoint. Listeners might have been removed when the data point was removed from the graph,
+     * so check that they are still attached first.
+     * 
      * @private
      */
     dispose: function() {
       this.dataPoints.forEach( function( dataPoint ) {
-        dataPoint.positionProperty.unlink( dataPoint.positionListener );
-        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+        if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
+          dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
+        }
+        if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener ) ) {
+          dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+        }
       } );
     },
 
@@ -209,20 +215,23 @@ define( function( require ) {
       dataPoint.userControlledProperty.link( dataPoint.userControlledListener );
 
       // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
-      // can be 'put back' into the bucket.
-
+      // can be 'put back' into the bucket. Listeners might have been removed when it was removed from the
+      // graph so check to make sure listeners are still attached first.
       dataPoint.returnedToOriginListener = function() {
         self.dataPoints.remove( dataPoint );
 
-        dataPoint.positionProperty.unlink( dataPoint.positionListener );
-        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+        if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
+          dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
+        }
+        if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledProperty ) ) {
+          dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+        }
       };
 
       dataPoint.returnedToOriginEmitter.addListener( function() {
         dataPoint.returnedToOriginListener();
       } );
     }
-
   } );
 } );
 
