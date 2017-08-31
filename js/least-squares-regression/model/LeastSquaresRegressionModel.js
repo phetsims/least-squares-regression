@@ -216,7 +216,7 @@ define( function( require ) {
 
       // The dataPoint will be removed from the model if and when it returns to its origination point. This is how a dataPoint
       // can be 'put back' into the bucket. Listeners might have been removed when it was removed from the
-      // graph so check to make sure listeners are still attached first.
+      // graph so check to make sure listeners are still attached before unlinking.
       dataPoint.returnedToOriginListener = function() {
         self.dataPoints.remove( dataPoint );
 
@@ -226,11 +226,12 @@ define( function( require ) {
         if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledProperty ) ) {
           dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
         }
+        if ( dataPoint.returnedToOriginEmitter.hasListener( dataPoint.returnedToOriginListener ) ) {
+          dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener );
+        }
       };
 
-      dataPoint.returnedToOriginEmitter.addListener( function() {
-        dataPoint.returnedToOriginListener();
-      } );
+      dataPoint.returnedToOriginEmitter.addListener( dataPoint.returnedToOriginListener );
     }
   } );
 } );
