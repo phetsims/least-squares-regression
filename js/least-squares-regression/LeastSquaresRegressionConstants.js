@@ -9,8 +9,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   var LeastSquaresRegressionConstants = {
 

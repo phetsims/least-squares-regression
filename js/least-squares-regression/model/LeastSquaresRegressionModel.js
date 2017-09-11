@@ -17,11 +17,11 @@ define( function( require ) {
   var Emitter = require( 'AXON/Emitter' );
   var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
   var inherit = require( 'PHET_CORE/inherit' );
+  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var ObservableArray = require( 'AXON/ObservableArray' );
   var Property = require( 'AXON/Property' );
   var Util = require( 'DOT/Util' );
   var Vector2 = require( 'DOT/Vector2' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
 
   // constants
   var BUCKET_SIZE = new Dimension2( 100, 55 );

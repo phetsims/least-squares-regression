@@ -11,8 +11,8 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var Range = require( 'DOT/Range' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  var Range = require( 'DOT/Range' );
 
   // source strings - isolated here, these sources should not be translatable
   var SOURCES = {
