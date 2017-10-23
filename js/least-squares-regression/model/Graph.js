@@ -317,7 +317,6 @@ define( function( require ) {
         self.update();
       };
       dataPoint.positionProperty.link( dataPoint.positionUpdateListener );
-
     },
 
     /**
@@ -340,8 +339,9 @@ define( function( require ) {
         this.removeBestFitLineResidual( dataPoint );
       }
       this.update();
-      dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
-
+      if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
+        dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
+      }
     },
     /**
      * Function that removes all the best Fit Line Residuals
