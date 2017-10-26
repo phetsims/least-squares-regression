@@ -119,7 +119,7 @@ define( function( require ) {
     }
   } );
 
-  Poolable.mixin( ResidualLineAndSquareNode, {
+  Poolable.mixInto( ResidualLineAndSquareNode, {
     constructorDuplicateFactory: function( pool ) {
       return function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
         if ( pool.length ) {
