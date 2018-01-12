@@ -177,7 +177,7 @@ define( function( require ) {
     rightAlignedNode.addChild( bSliderText );
     rightAlignedNode.addChild( hStrut );
 
-    // Create three check boxes
+    // Create three checkboxes
     var checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
     var lineCheckbox = Checkbox.createTextCheckbox( myLineString, checkboxTextOptions, graph.myLineVisibleProperty );
     var residualsCheckbox = Checkbox.createTextCheckbox( residualsString, checkboxTextOptions, graph.myLineShowResidualsProperty );

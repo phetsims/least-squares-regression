@@ -1,7 +1,7 @@
 // Copyright 2014-2017, University of Colorado Boulder
 
 /**
- * Accordion Box Node that displays check boxes associated with properties of Best Fit Line
+ * Accordion Box Node that displays checkboxes associated with properties of Best Fit Line
  * This Node also displays the best Fit Line Equation and the sum of Squares Barometer Chart
  *
  * @author Martin Veillette (Berea College)
