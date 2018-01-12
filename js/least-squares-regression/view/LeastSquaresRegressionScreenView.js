@@ -13,7 +13,7 @@ define( function( require ) {
   var Bounds2 = require( 'DOT/Bounds2' );
   var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
   var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
   var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
   var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
@@ -167,7 +167,7 @@ define( function( require ) {
     var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
 
     // Create grid check box with grid icon
-    var gridCheckBox = new CheckBox( new GridIcon(), model.showGridProperty );
+    var gridCheckbox = new Checkbox( new GridIcon(), model.showGridProperty );
 
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
@@ -314,7 +314,7 @@ define( function( require ) {
 
     // Add nodes to the scene graph. Order is irrelevant for the following nodes
     this.addChild( pearsonCorrelationCoefficientNode );
-    this.addChild( gridCheckBox );
+    this.addChild( gridCheckbox );
     this.addChild( eraserButton );
     this.addChild( resetAllButton );
     this.addChild( bestFitLineControlPanel );
@@ -337,8 +337,8 @@ define( function( require ) {
       bestFitLineControlPanel.top = myLineControlPanel.top;
       dataSetComboBox.centerX = viewGraphBounds.centerX;
       dataSetComboBox.top = myLineControlPanel.top;
-      gridCheckBox.left = myLineControlPanel.left + 10;
-      gridCheckBox.top = myLineControlPanel.bottom + 10;
+      gridCheckbox.left = myLineControlPanel.left + 10;
+      gridCheckbox.top = myLineControlPanel.bottom + 10;
       pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
       pearsonCorrelationCoefficientNode.top = bestFitLineControlPanel.bottom + 10;
       sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;

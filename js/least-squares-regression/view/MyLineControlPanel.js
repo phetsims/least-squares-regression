@@ -10,7 +10,7 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
   var HSlider = require( 'SUN/HSlider' );
@@ -178,15 +178,15 @@ define( function( require ) {
     rightAlignedNode.addChild( hStrut );
 
     // Create three check boxes
-    var checkBoxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
-    var lineCheckBox = CheckBox.createTextCheckBox( myLineString, checkBoxTextOptions, graph.myLineVisibleProperty );
-    var residualsCheckBox = CheckBox.createTextCheckBox( residualsString, checkBoxTextOptions, graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox( squaredResidualsString, checkBoxTextOptions, graph.myLineShowSquaredResidualsProperty );
+    var checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
+    var lineCheckbox = Checkbox.createTextCheckbox( myLineString, checkboxTextOptions, graph.myLineVisibleProperty );
+    var residualsCheckbox = Checkbox.createTextCheckbox( residualsString, checkboxTextOptions, graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckbox = Checkbox.createTextCheckbox( squaredResidualsString, checkboxTextOptions, graph.myLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
-    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
-    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 8, 8 );
-    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 8, 8 );
+    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );
+    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, 8 );
+    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, 8 );
 
     // Create the barometer chart for the sum of the squares
     this.sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
@@ -201,17 +201,17 @@ define( function( require ) {
     // assemble all the previous nodes in a vertical box
     var mainBox = new LayoutBox( {
       spacing: 10, children: [
-        lineCheckBox,
+        lineCheckbox,
         rightAlignedNode,
-        residualsCheckBox,
-        squaredResidualsCheckBox,
+        residualsCheckbox,
+        squaredResidualsCheckbox,
         this.sumOfSquaredResiduals
       ], align: 'left'
     } );
 
     // layout the internal nodes of the right Aligned Node
     equationPanel.left = hStrut.right;
-    equationPanel.top = lineCheckBox.bottom;
+    equationPanel.top = lineCheckbox.bottom;
     immutableEquationText.top = equationPanel.bottom + 12;
     immutableEquationText.left = equationPanel.left + 5;
     aSlider.top = immutableEquationText.bottom + 10;
@@ -231,8 +231,8 @@ define( function( require ) {
       equationText.visible = enabled;
       aSlider.pickable = enabled; // enable/disable slider
       bSlider.pickable = enabled;// enable/disable slider
-      residualsCheckBox.enabled = enabled;
-      squaredResidualsCheckBox.enabled = enabled;
+      residualsCheckbox.enabled = enabled;
+      squaredResidualsCheckbox.enabled = enabled;
       rightAlignedNode.opacity = enabled ? 1 : 0.3;
     } );
 

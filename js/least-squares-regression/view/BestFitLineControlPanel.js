@@ -12,7 +12,7 @@ define( function( require ) {
 
   // modules
   var AccordionBox = require( 'SUN/AccordionBox' );
-  var CheckBox = require( 'SUN/CheckBox' );
+  var Checkbox = require( 'SUN/Checkbox' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
@@ -69,29 +69,29 @@ define( function( require ) {
     } );
     this.updateBestFitLineEquation();
 
-    // Create the checkBoxes
-    var lineCheckBox = CheckBox.createTextCheckBox( 
+    // Create the checkboxes
+    var lineCheckbox = Checkbox.createTextCheckbox( 
       bestFitLineString,
       { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
       graph.bestFitLineVisibleProperty
     );
-    var residualsCheckBox = CheckBox.createTextCheckBox(
+    var residualsCheckbox = Checkbox.createTextCheckbox(
       residualsString,
       { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
       graph.bestFitLineShowResidualsProperty
     );
-    var squaredResidualsCheckBox = CheckBox.createTextCheckBox(
+    var squaredResidualsCheckbox = Checkbox.createTextCheckbox(
       squaredResidualsString,
       { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
       graph.bestFitLineShowSquaredResidualsProperty
     );
 
     // Expand the touch Area
-    lineCheckBox.touchArea = lineCheckBox.localBounds.dilatedXY( 8, 8 );
-    residualsCheckBox.touchArea = residualsCheckBox.localBounds.dilatedXY( 8, 8 );
-    squaredResidualsCheckBox.touchArea = squaredResidualsCheckBox.localBounds.dilatedXY( 8, 8 );
+    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );
+    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, 8 );
+    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, 8 );
 
-    // Update the control Panel upon a change of the status of the Best Fit Line CheckBox
+    // Update the control Panel upon a change of the status of the Best Fit Line Checkbox
     // No need to unlink, present for the lifetime of the sim
     graph.bestFitLineVisibleProperty.link( function( enabled ) {
       // Set Equation to invisible if there is less than one point on the graph
@@ -99,8 +99,8 @@ define( function( require ) {
         equationText.visible = enabled;
       }
       equationPanel.opacity = enabled ? 1 : 0.3;
-      residualsCheckBox.enabled = enabled;
-      squaredResidualsCheckBox.enabled = enabled;
+      residualsCheckbox.enabled = enabled;
+      squaredResidualsCheckbox.enabled = enabled;
     } );
 
     // options for the accordion box
@@ -119,10 +119,10 @@ define( function( require ) {
     AccordionBox.call( this, new LayoutBox( {
         spacing: 10,
         children: [
-          lineCheckBox,
+          lineCheckbox,
           new LayoutBox( { children: [ new HStrut( 20 ), equationPanel ], orientation: 'horizontal' } ),
-          residualsCheckBox,
-          squaredResidualsCheckBox,
+          residualsCheckbox,
+          squaredResidualsCheckbox,
           this.sumOfSquaredResidualsChart
         ],
         align: 'left'
