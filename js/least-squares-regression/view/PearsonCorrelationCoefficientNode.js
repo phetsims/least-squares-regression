@@ -15,6 +15,7 @@ define( function( require ) {
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
@@ -26,8 +27,6 @@ define( function( require ) {
   // string
   var symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
   var pattern_0r_1value = '{0} {1}';
-  var plusString = '\u002B'; // we want a large + sign
-  var minusString = '\u2212';
   var correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
 
   // constants
@@ -56,7 +55,7 @@ define( function( require ) {
     this.rightHandSideText = new Text( '', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // calculate the maximum width of the right hand side of the equation
-    var rightHandSideMaxWidth = new Text( plusString + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
+    var rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
     var hStrut = new HStrut( rightHandSideMaxWidth );
 
     hStrut.left = leftHandSideText.right + 5;
@@ -137,7 +136,7 @@ define( function( require ) {
         }
         else {
           var isNegative = (rValue < 0);
-          var signString = isNegative ? minusString : plusString;
+          var signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
           rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
         }
       }

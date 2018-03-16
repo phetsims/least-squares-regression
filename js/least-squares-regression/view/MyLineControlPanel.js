@@ -20,6 +20,7 @@ define( function( require ) {
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Line = require( 'SCENERY/nodes/Line' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Range = require( 'DOT/Range' );
@@ -31,7 +32,6 @@ define( function( require ) {
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
   var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
   var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
-  var plusString = '\u002B'; // we want a large + sign
   var myLineString = require( 'string!LEAST_SQUARES_REGRESSION/myLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
@@ -125,7 +125,7 @@ define( function( require ) {
     var equalText = new Text( '=', blackOptions ); // the '=' sign
     var aText = new Text( aString, boldOptions ); // a number
     var xText = new Text( symbolXString, blackOptions ); // 'x'
-    var signInterceptText = new Text( plusString, blackOptions );// '+'
+    var signInterceptText = new Text( MathSymbols.PLUS, blackOptions );// '+'
     var bText = new Text( bString, boldOptions );// a number
 
     var immutableEquationText = new Node( {

@@ -13,13 +13,12 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Text = require( 'SCENERY/nodes/Text' );
   var Util = require( 'DOT/Util' );
 
   // strings
-  var plusString = '\u002B'; // we want a large + sign
-  var minusString = '\u2212';
   var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
   var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
@@ -79,11 +78,11 @@ define( function( require ) {
 
     // @public
     this.yText = new Text( symbolYString, stringTextOptions ); // 'y'
-    this.equalText = new Text( '=', stringTextOptions ); // the '=' sign
-    this.signSlopeText = new Text( plusString, numericalTextOptions ); // + or -
+    this.equalText = new Text( MathSymbols.EQUAL_TO, stringTextOptions ); // the '=' sign
+    this.signSlopeText = new Text( MathSymbols.PLUS, numericalTextOptions ); // + or -
     this.valueSlopeText = new Text( maxWidthSlopeString, numericalTextOptions ); // a number
     this.xText = new Text( symbolXString, stringTextOptions ); // 'x'
-    this.signInterceptText = new Text( plusString, stringTextOptions );// + or -
+    this.signInterceptText = new Text( MathSymbols.PLUS, stringTextOptions );// + or -
     this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 
     var mutableEquationText = new Node( {
@@ -144,8 +143,8 @@ define( function( require ) {
      */
     numberToString: function( number ) {
       var isNegative = (this.roundNumber( number ) < 0);
-      var signString = isNegative ? minusString : plusString;
-      var optionalSignString = isNegative ? minusString : ' ';
+      var signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
+      var optionalSignString = isNegative ? MathSymbols.MINUS : ' ';
       var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number ) ) );
       var numberString = {
         absoluteNumber: absoluteNumber,
