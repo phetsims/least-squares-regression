@@ -10,12 +10,12 @@ define( function( require ) {
   'use strict';
 
   // modules
+  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
-  var Poolable = require( 'PHET_CORE/Poolable' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
 
@@ -119,17 +119,8 @@ define( function( require ) {
     }
   } );
 
-  Poolable.mixInto( ResidualLineAndSquareNode, {
-    constructorDuplicateFactory: function( pool ) {
-      return function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
-        if ( pool.length ) {
-          return pool.pop().set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
-        }
-        else {
-          return new ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
-        }
-      };
-    }
+  ExperimentalPoolable.mixInto( ResidualLineAndSquareNode, {
+    initialize: ResidualLineAndSquareNode.prototype.set
   } );
 
   return ResidualLineAndSquareNode;
