@@ -10,12 +10,12 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ExperimentalPoolable = require( 'PHET_CORE/ExperimentalPoolable' );
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   var Line = require( 'SCENERY/nodes/Line' );
   var Node = require( 'SCENERY/nodes/Node' );
+  var Poolable = require( 'PHET_CORE/Poolable' );
   var Rectangle = require( 'SCENERY/nodes/Rectangle' );
   var Shape = require( 'KITE/Shape' );
 
@@ -119,7 +119,7 @@ define( function( require ) {
     }
   } );
 
-  ExperimentalPoolable.mixInto( ResidualLineAndSquareNode, {
+  Poolable.mixInto( ResidualLineAndSquareNode, {
     initialize: ResidualLineAndSquareNode.prototype.set
   } );
 
