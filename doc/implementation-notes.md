@@ -28,7 +28,7 @@ responsible for the visual aspects of the dataPoints. Since the dataPoints may b
 dataPointsOnGraph, is defined and contains all the dataPoints that are overlapping with the graph. All statistical
 properties, including residuals, are based on the dataPoints contained in dataPointsOnGraph. The model contains
 two additional Observable Arrays, myLineResiduals, and bestFitLineResiduals. There is not necessarily a one to
-one correspondence between the the number of dataPoints on graph and the number of residuals. Special care must
+one correspondence between the number of dataPoints on graph and the number of residuals. Special care must
 be taken when only one dataPoint is on the graph. All the logic for the residuals is handled in the graph model.
 The ResidualLineAndSquareNode merely handles the view for a line residual and a squared residual.
 
