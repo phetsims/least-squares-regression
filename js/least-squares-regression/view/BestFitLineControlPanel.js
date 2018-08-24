@@ -38,6 +38,12 @@ define( function( require ) {
    */
   function BestFitLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options ) {
 
+    options = _.extend( {
+
+      // AccordionBox options
+      cornerRadius: 3
+    }, options );
+
     this.graph = graph;
 
     // max length of label text for i18n

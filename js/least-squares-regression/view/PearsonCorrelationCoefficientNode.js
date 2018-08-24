@@ -40,6 +40,12 @@ define( function( require ) {
    */
   function PearsonCorrelationCoefficientNode( graph, options ) {
 
+    options = _.extend( {
+
+      // AccordionBox options
+      cornerRadius: 3
+    }, options );
+
     // property of the accordion Box
     this.expandedProperty = new Property( false );
 
