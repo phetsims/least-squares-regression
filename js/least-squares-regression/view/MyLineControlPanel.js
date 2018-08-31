@@ -1,4 +1,4 @@
-// Copyright 2014-2017, University of Colorado Boulder
+// Copyright 2018, University of Colorado Boulder
 
 /**
  * Scenery Node representing a Control Panel with check Boxes and Sliders that controls properties of My Line
@@ -13,19 +13,18 @@ define( function( require ) {
   var Checkbox = require( 'SUN/Checkbox' );
   var Dimension2 = require( 'DOT/Dimension2' );
   var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
-  var HSlider = require( 'SUN/HSlider' );
   var HStrut = require( 'SCENERY/nodes/HStrut' );
   var inherit = require( 'PHET_CORE/inherit' );
   var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Line = require( 'SCENERY/nodes/Line' );
   var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
   var Node = require( 'SCENERY/nodes/Node' );
   var Panel = require( 'SUN/Panel' );
   var Range = require( 'DOT/Range' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
   var Text = require( 'SCENERY/nodes/Text' );
+  var VSlider = require( 'SUN/VSlider' );
 
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
@@ -41,41 +40,10 @@ define( function( require ) {
     trackFill: 'black',
     trackSize: new Dimension2( 190, 2 ),
     thumbSize: new Dimension2( 15, 30 ),
-    thumbTouchAreaYDilation: 8
+    thumbTouchAreaYDilation: 8,
+    majorTickLength: 18
   };
-  var TICK_COLOR = 'black';
-  var TICK_LENGTH = 10;
-  var TICK_WIDTH = 2;
   var MAX_WIDTH = 150;
-
-  /**
-   * Create a vertical slider with a central tick
-   * @param {Property.<number>} property parameter to track.
-   * @param {Range} range - Possible range for property.
-   * @param {Object} [options] for slider node.
-   * @constructor
-   */
-  function VerticalSlider( property, range, options ) {
-    HSlider.call( this, property, range, options );
-
-    // HSlider does not support a tick that is centered on the track.  We need to use our own tick node here.
-    var trackCenterX = SLIDER_OPTIONS.trackSize.width / 2;
-    var tickYOffset = SLIDER_OPTIONS.trackSize.height / 2;
-    var tickNode = new Line( trackCenterX, -TICK_LENGTH, trackCenterX, TICK_LENGTH + tickYOffset, {
-      stroke: TICK_COLOR,
-      lineWidth: TICK_WIDTH
-    } );
-
-    // add the tick as a child and move it behind the slider thumb
-    this.addChild( tickNode );
-    tickNode.moveToBack();
-
-    // make vertical slider by rotating it
-    this.rotate( -Math.PI / 2 );
-  }
-
-  leastSquaresRegression.register( 'VerticalSlider', VerticalSlider );
-  inherit( HSlider, VerticalSlider );
 
   /**
    *
@@ -159,8 +127,10 @@ define( function( require ) {
     var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
     var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = new VerticalSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
-    var bSlider = new VerticalSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+    var aSlider = new VSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    aSlider.addMajorTick( 0 );
+    var bSlider = new VSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+    bSlider.addMajorTick( 0 );
 
     // Create label below the sliders
     var aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
