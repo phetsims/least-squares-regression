@@ -149,9 +149,9 @@ define( function( require ) {
 
     // Create three checkboxes
     var checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
-    var lineCheckbox = Checkbox.createTextCheckbox( myLineString, checkboxTextOptions, graph.myLineVisibleProperty );
-    var residualsCheckbox = Checkbox.createTextCheckbox( residualsString, checkboxTextOptions, graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckbox = Checkbox.createTextCheckbox( squaredResidualsString, checkboxTextOptions, graph.myLineShowSquaredResidualsProperty );
+    var lineCheckbox = new Checkbox( new Text( myLineString, checkboxTextOptions ), graph.myLineVisibleProperty );
+    var residualsCheckbox = new Checkbox( new Text( residualsString, checkboxTextOptions ), graph.myLineShowResidualsProperty );
+    var squaredResidualsCheckbox = new Checkbox( new Text( squaredResidualsString, checkboxTextOptions ), graph.myLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );

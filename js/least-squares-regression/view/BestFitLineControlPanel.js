@@ -76,19 +76,16 @@ define( function( require ) {
     this.updateBestFitLineEquation();
 
     // Create the checkboxes
-    var lineCheckbox = Checkbox.createTextCheckbox( 
-      bestFitLineString,
-      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+    var lineCheckbox = new Checkbox(
+      new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineVisibleProperty
     );
-    var residualsCheckbox = Checkbox.createTextCheckbox(
-      residualsString,
-      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+    var residualsCheckbox = new Checkbox(
+      new Text( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineShowResidualsProperty
     );
-    var squaredResidualsCheckbox = Checkbox.createTextCheckbox(
-      squaredResidualsString,
-      { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth },
+    var squaredResidualsCheckbox = new Checkbox(
+      new Text( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineShowSquaredResidualsProperty
     );
 
