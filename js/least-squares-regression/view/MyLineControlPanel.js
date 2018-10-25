@@ -29,11 +29,11 @@ define( function( require ) {
   // strings
   var aString = require( 'string!LEAST_SQUARES_REGRESSION/a' );
   var bString = require( 'string!LEAST_SQUARES_REGRESSION/b' );
-  var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
-  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
   var myLineString = require( 'string!LEAST_SQUARES_REGRESSION/myLine' );
   var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
   var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
+  var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   // constants
   var SLIDER_OPTIONS = {
