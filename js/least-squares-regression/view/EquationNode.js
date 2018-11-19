@@ -1,4 +1,4 @@
-// Copyright 2014-2017, University of Colorado Boulder
+// Copyright 2014-2018, University of Colorado Boulder
 
 /**
  * Equation Node that renders a text node of a linear equation of the form y = m x + b where m and b are numerical values
