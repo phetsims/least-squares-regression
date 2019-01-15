@@ -35,10 +35,9 @@ define( function( require ) {
 
     ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
       listPosition: 'below',
-      itemYMargin: 2,
-      itemHighlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
+      highlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
-      buttonCornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
+      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
     } );
   }
 
