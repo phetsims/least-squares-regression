@@ -10,6 +10,7 @@ define( function( require ) {
 
   // modules
   var ComboBox = require( 'SUN/ComboBox' );
+  var ComboBoxItem = require( 'SUN/ComboBoxItem' );
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
@@ -37,6 +38,8 @@ define( function( require ) {
       listPosition: 'below',
       highlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
+      xMargin: 14,
+      yMargin: 8,
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
     } );
   }
@@ -45,14 +48,14 @@ define( function( require ) {
    * Creates an item for the combo box.
    * @param {DataSet} dataSet
    * @param {number} maxTextWidth
-   * @returns {*|{node: *, value: *}}
+   * @returns {ComboBoxItem}
    */
   var createItem = function( dataSet, maxTextWidth ) {
     var node = new Node();
     // label
     var textNode = new Text( dataSet.name, { font: LeastSquaresRegressionConstants.TEXT_FONT, maxWidth: maxTextWidth } );
     node.addChild( textNode );
-    return ComboBox.createItem( node, dataSet );
+    return new ComboBoxItem( node, dataSet );
   };
 
   leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
