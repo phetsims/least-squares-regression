@@ -1,4 +1,4 @@
-// Copyright 2014-2017, University of Colorado Boulder
+// Copyright 2014-2019, University of Colorado Boulder
 
 /**
  * Combo box for selecting a dataSet.
@@ -9,40 +9,38 @@ define( function( require ) {
   'use strict';
 
   // modules
-  var ComboBox = require( 'SUN/ComboBox' );
-  var ComboBoxItem = require( 'SUN/ComboBoxItem' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const ComboBox = require( 'SUN/ComboBox' );
+  const ComboBoxItem = require( 'SUN/ComboBoxItem' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
-  /**
-   * @param {Array.<DataSet>} dataSets
-   * @param {Property.<DataSet>} selectedDataSetProperty
-   * @param {Node} dataSetListParent
-   * @param {number} maxTextWidth - max width of text in the combo box
-   * @constructor
-   */
+  class DataSetComboBox extends ComboBox {
 
-  function DataSetComboBox( dataSets, selectedDataSetProperty, dataSetListParent, maxTextWidth ) {
+    /**
+     * @param {Array.<DataSet>} dataSets
+     * @param {Property.<DataSet>} selectedDataSetProperty
+     * @param {Node} dataSetListParent
+     * @param {number} maxTextWidth - max width of text in the combo box
+     * @constructor
+     */
+    constructor( dataSets, selectedDataSetProperty, dataSetListParent, maxTextWidth ) {
 
-    // items
-    var items = [];
-    for ( var i = 0; i < dataSets.length; i++ ) {
-      var dataSet = dataSets[ i ];
-      items[ i ] = createItem( dataSet, maxTextWidth );
+      // {ComboBoxItem[]}
+      const items = dataSets.map( dataSet => createItem( dataSet, maxTextWidth ) );
+
+      super( items, selectedDataSetProperty, dataSetListParent, {
+        listPosition: 'below',
+        highlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
+        buttonLineWidth: 1,
+        xMargin: 14,
+        yMargin: 8,
+        cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
+      } );
     }
-
-    ComboBox.call( this, items, selectedDataSetProperty, dataSetListParent, {
-      listPosition: 'below',
-      highlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
-      buttonLineWidth: 1,
-      xMargin: 14,
-      yMargin: 8,
-      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS
-    } );
   }
+
+  leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
 
   /**
    * Creates an item for the combo box.
@@ -50,15 +48,13 @@ define( function( require ) {
    * @param {number} maxTextWidth
    * @returns {ComboBoxItem}
    */
-  var createItem = function( dataSet, maxTextWidth ) {
-    var node = new Node();
-    // label
-    var textNode = new Text( dataSet.name, { font: LeastSquaresRegressionConstants.TEXT_FONT, maxWidth: maxTextWidth } );
-    node.addChild( textNode );
-    return new ComboBoxItem( node, dataSet );
-  };
+  function createItem( dataSet, maxTextWidth ) {
+    const textNode = new Text( dataSet.name, {
+      font: LeastSquaresRegressionConstants.TEXT_FONT,
+      maxWidth: maxTextWidth
+    } );
+    return new ComboBoxItem( textNode, dataSet );
+  }
 
-  leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
-
-  return inherit( ComboBox, DataSetComboBox );
+  return DataSetComboBox;
 } );
