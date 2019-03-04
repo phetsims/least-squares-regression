@@ -110,8 +110,10 @@ define( function( require ) {
     options = _.extend( {
       buttonXMargin: 10,
       buttonYMargin: 10,
-      buttonTouchAreaXDilation: 16,
-      buttonTouchAreaYDilation: 16,
+      expandCollapseButtonOptions: {
+        touchAreaXDilation: 16,
+        touchAreaYDilation: 16
+      },
       expandedProperty: this.expandedProperty,
       titleNode: new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT, maxWidth: maxLabelWidth } ),
       titleXMargin: 0,

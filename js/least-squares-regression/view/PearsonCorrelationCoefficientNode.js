@@ -90,8 +90,10 @@ define( function( require ) {
     options = _.extend( {
       buttonXMargin: 10,
       buttonYMargin: 10,
-      buttonTouchAreaXDilation: 16,
-      buttonTouchAreaYDilation: 16,
+      expandCollapseButtonOptions: {
+        touchAreaXDilation: 16,
+        touchAreaYDilation: 16
+      },
       expandedProperty: this.expandedProperty,
       titleYMargin: 10,
       titleNode: new MultiLineText( correlationCoefficientString, { font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT, maxWidth: maxLabelWidth } ),
