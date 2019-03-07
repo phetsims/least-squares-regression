@@ -15,8 +15,8 @@ define( function( require ) {
   var inherit = require( 'PHET_CORE/inherit' );
   var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Property = require( 'AXON/Property' );
   var Vector2 = require( 'DOT/Vector2' );
+  var Vector2Property = require( 'DOT/Vector2Property' );
 
   /**
    * @param {Vector2} initialPosition
@@ -24,8 +24,8 @@ define( function( require ) {
    */
   function DataPoint( initialPosition ) {
 
-    // @public {Property.<Vector2>} indicates where in model space the center of this data point is.
-    this.positionProperty = new Property( initialPosition );
+    // @public - indicates where in model space the center of this data point is.
+    this.positionProperty = new Vector2Property( initialPosition );
 
     // @public {Property.<boolean>}
     // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by a
