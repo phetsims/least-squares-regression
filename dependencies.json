@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.12 Fri Mar 08 2019 13:41:35 GMT-0500 (EST)",
+  "comment": "# least-squares-regression 1.1.12 Tue Mar 19 2019 16:56:51 GMT-0400 (EDT)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -10,11 +10,11 @@
   },
   "brand": {
     "sha": "c64b6ef9302aea5aa9a8ca26ce79d542c594fc71",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "chipper": {
-    "sha": "0bc754729521f24e23cb1b4c3b7b3ed9515eaec0",
-    "branch": "HEAD"
+    "sha": "49b859908e81cff0a43d4aab0f9e857707003558",
+    "branch": "least-squares-regression-1.1"
   },
   "dot": {
     "sha": "da78031b6f080d20bc8346beaa1d37148188371e",
@@ -22,14 +22,14 @@
   },
   "joist": {
     "sha": "a1a793f11271cd379804d240b8310d2c22f3d6e8",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "kite": {
     "sha": "10ca8bf2b2712307ff528352de8451c0c8afe093",
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "2e222ce1945c9fc612f25005f28a78e08b60592f",
+    "sha": "93d6ac2eaf11b27fbfe49b09f875bc53018b6a62",
     "branch": "1.1"
   },
   "phet-core": {
@@ -38,6 +38,10 @@
   },
   "phetcommon": {
     "sha": "142cbc8b3dd3870433a3da58e395e73e92be39f1",
+    "branch": "HEAD"
+  },
+  "phetmarks": {
+    "sha": "3fdfece0fe0262594bb06856833b8b16be25deb8",
     "branch": "HEAD"
   },
   "scenery": {
@@ -59,9 +63,5 @@
   "tandem": {
     "sha": "2441eec6b422cb20e08682da02ab2bf7bf73250c",
     "branch": "HEAD"
-  },
-  "phetmarks": {
-    "branch": "master",
-    "sha": "3fdfece0fe0262594bb06856833b8b16be25deb8"
   }
 }
