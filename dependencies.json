@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.13-rc.1 Wed Mar 20 2019 19:26:40 GMT-0400 (EDT)",
+  "comment": "# least-squares-regression 1.1.13-rc.1 Thu Mar 28 2019 12:37:35 GMT-0400 (EDT)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -9,8 +9,8 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "c64b6ef9302aea5aa9a8ca26ce79d542c594fc71",
-    "branch": "HEAD"
+    "sha": "64a1b632b65636074af80f13799293b18d3694db",
+    "branch": "least-squares-regression-1.1"
   },
   "chipper": {
     "sha": "49b859908e81cff0a43d4aab0f9e857707003558",
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "2e3f2d1688f5d1ea722b18393e3d0478abd58446",
+    "sha": "1e79bd8db502044f1c294157d77cd2faaf38367a",
     "branch": "1.1"
   },
   "phet-core": {
