@@ -22,6 +22,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Property = require( 'AXON/Property' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
+  var SunConstants = require( 'SUN/SunConstants' );
   var Text = require( 'SCENERY/nodes/Text' );
 
   // strings
@@ -101,7 +102,7 @@ define( function( require ) {
       if ( graph.isLinearFitDefined() ) {
         equationText.visible = enabled;
       }
-      equationPanel.opacity = enabled ? 1 : 0.3;
+      equationPanel.opacity = enabled ? 1 : SunConstants.DISABLED_OPACITY;
       residualsCheckbox.enabled = enabled;
       squaredResidualsCheckbox.enabled = enabled;
     } );

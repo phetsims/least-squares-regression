@@ -23,6 +23,7 @@ define( function( require ) {
   var Panel = require( 'SUN/Panel' );
   var Range = require( 'DOT/Range' );
   var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
+  var SunConstants = require( 'SUN/SunConstants' );
   var Text = require( 'SCENERY/nodes/Text' );
   var VSlider = require( 'SUN/VSlider' );
 
@@ -203,7 +204,7 @@ define( function( require ) {
       bSlider.pickable = enabled;// enable/disable slider
       residualsCheckbox.enabled = enabled;
       squaredResidualsCheckbox.enabled = enabled;
-      rightAlignedNode.opacity = enabled ? 1 : 0.3;
+      rightAlignedNode.opacity = enabled ? 1 : SunConstants.DISABLED_OPACITY;
     } );
 
     // update the text (slope) of the equation when the aSlider is moving
