@@ -245,7 +245,7 @@ define( function ( require ) {
       }
     }
   }
-  leastSquaresRegression.register( 'GraphAxesNode.XAxisNode', XAxisNode );
+  
   inherit( Node, XAxisNode );
 
 //----------------------------------------------------------------------------------------
