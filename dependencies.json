@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.17 Fri Aug 23 2019 13:57:33 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# least-squares-regression 1.1.17 Mon Sep 09 2019 12:28:21 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -21,15 +21,15 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "ecf9840fd7d70e1d3ce12dd7a2be5b5080fa879d",
-    "branch": "HEAD"
+    "sha": "1673c150e3101027f3f0e853f0f34bd63d84590e",
+    "branch": "least-squares-regression-1.1"
   },
   "kite": {
     "sha": "10ca8bf2b2712307ff528352de8451c0c8afe093",
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "b1cbb24bbbe03f0c5726dc635ad8681e3b0be02c",
+    "sha": "b374aec9ce5f629cf022476d4059b16b1c6080c2",
     "branch": "1.1"
   },
   "phet-core": {
