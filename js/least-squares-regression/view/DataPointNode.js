@@ -6,13 +6,13 @@
  * @author John Blanco
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var Node = require( 'SCENERY/nodes/Node' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const Node = require( 'SCENERY/nodes/Node' );
 
   /**
    * @param {DataPoint} dataPoint

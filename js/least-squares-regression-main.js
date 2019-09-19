@@ -5,16 +5,16 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var LeastSquaresRegressionScreen = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionScreen' );
-  var Sim = require( 'JOIST/Sim' );
-  var SimLauncher = require( 'JOIST/SimLauncher' );
+  const LeastSquaresRegressionScreen = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionScreen' );
+  const Sim = require( 'JOIST/Sim' );
+  const SimLauncher = require( 'JOIST/SimLauncher' );
 
   // strings
-  var leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
+  const leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
 
   var simOptions = {
     credits: {

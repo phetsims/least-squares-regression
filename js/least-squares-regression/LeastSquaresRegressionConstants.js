@@ -5,12 +5,12 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var PhetFont = require( 'SCENERY_PHET/PhetFont' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
   var LeastSquaresRegressionConstants = {
 

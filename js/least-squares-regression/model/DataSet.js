@@ -7,12 +7,12 @@
  * @author Martin Veillette (Berea College)
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var Range = require( 'DOT/Range' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const Range = require( 'DOT/Range' );
 
   // source strings - isolated here, these sources should not be translatable
   var SOURCES = {

@@ -5,41 +5,41 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
-  var BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
-  var Checkbox = require( 'SUN/Checkbox' );
-  var DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
-  var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
-  var DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var DynamicDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DynamicDataPointNode' );
-  var EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
-  var GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
-  var GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
-  var GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
-  var MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
-  var Plane = require( 'SCENERY/nodes/Plane' );
-  var ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
-  var StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
-  var TextPushButton = require( 'SUN/buttons/TextPushButton' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const BestFitLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/BestFitLineControlPanel' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const BucketFront = require( 'SCENERY_PHET/bucket/BucketFront' );
+  const BucketHole = require( 'SCENERY_PHET/bucket/BucketHole' );
+  const Checkbox = require( 'SUN/Checkbox' );
+  const DataPointCreatorNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataPointCreatorNode' );
+  const DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
+  const DataSetComboBox = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DataSetComboBox' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const DynamicDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/DynamicDataPointNode' );
+  const EraserButton = require( 'SCENERY_PHET/buttons/EraserButton' );
+  const GraphAxesNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphAxesNode' );
+  const GraphNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GraphNode' );
+  const GridIcon = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/GridIcon' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const ModelViewTransform2 = require( 'PHETCOMMON/view/ModelViewTransform2' );
+  const MyLineControlPanel = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/MyLineControlPanel' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const PearsonCorrelationCoefficientNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/PearsonCorrelationCoefficientNode' );
+  const Plane = require( 'SCENERY/nodes/Plane' );
+  const ResetAllButton = require( 'SCENERY_PHET/buttons/ResetAllButton' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const SourceAndReferenceNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SourceAndReferenceNode' );
+  const StaticDataPointNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/StaticDataPointNode' );
+  const TextPushButton = require( 'SUN/buttons/TextPushButton' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // strings
-  var questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
+  const questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
 
   // constants
   var GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node

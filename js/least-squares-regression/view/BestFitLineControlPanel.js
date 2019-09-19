@@ -7,28 +7,28 @@
  * @author Martin Veillette (Berea College)
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var Checkbox = require( 'SUN/Checkbox' );
-  var EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
-  var SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
-  var SunConstants = require( 'SUN/SunConstants' );
-  var Text = require( 'SCENERY/nodes/Text' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const Checkbox = require( 'SUN/Checkbox' );
+  const EquationNode = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/EquationNode' );
+  const HStrut = require( 'SCENERY/nodes/HStrut' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const Panel = require( 'SUN/Panel' );
+  const Property = require( 'AXON/Property' );
+  const SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
+  const SunConstants = require( 'SUN/SunConstants' );
+  const Text = require( 'SCENERY/nodes/Text' );
 
   // strings
-  var bestFitLineString = require( 'string!LEAST_SQUARES_REGRESSION/bestFitLine' );
-  var residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
-  var squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
+  const bestFitLineString = require( 'string!LEAST_SQUARES_REGRESSION/bestFitLine' );
+  const residualsString = require( 'string!LEAST_SQUARES_REGRESSION/residuals' );
+  const squaredResidualsString = require( 'string!LEAST_SQUARES_REGRESSION/squaredResiduals' );
 
   /**
    * @param {Graph} graph - model of the graph

@@ -5,29 +5,29 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var AccordionBox = require( 'SUN/AccordionBox' );
-  var HStrut = require( 'SCENERY/nodes/HStrut' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var Property = require( 'AXON/Property' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
+  const AccordionBox = require( 'SUN/AccordionBox' );
+  const HStrut = require( 'SCENERY/nodes/HStrut' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const Property = require( 'AXON/Property' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Util = require( 'DOT/Util' );
 
   // string
-  var symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
+  const symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
   var pattern_0r_1value = '{0} {1}';
-  var correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
+  const correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
 
   // constants
   var R_EQUALS = StringUtils.format( '{0} =', symbolRString );

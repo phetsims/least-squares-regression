@@ -6,21 +6,21 @@
  * @author Martin Veillette (Berea College)
  */
 
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var inherit = require( 'PHET_CORE/inherit' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Text = require( 'SCENERY/nodes/Text' );
-  var Util = require( 'DOT/Util' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Text = require( 'SCENERY/nodes/Text' );
+  const Util = require( 'DOT/Util' );
 
   // strings
-  var symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
-  var symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
+  const symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
+  const symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   /**
    * Scenery Node responsible for laying out the linear equation y = m x + b

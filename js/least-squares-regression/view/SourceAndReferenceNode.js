@@ -5,25 +5,25 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var Bounds2 = require( 'DOT/Bounds2' );
-  var Circle = require( 'SCENERY/nodes/Circle' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
-  var Line = require( 'SCENERY/nodes/Line' );
-  var MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
-  var Node = require( 'SCENERY/nodes/Node' );
-  var Panel = require( 'SUN/Panel' );
-  var ScreenView = require( 'JOIST/ScreenView' );
-  var StringUtils = require( 'PHETCOMMON/util/StringUtils' );
+  const Bounds2 = require( 'DOT/Bounds2' );
+  const Circle = require( 'SCENERY/nodes/Circle' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const Line = require( 'SCENERY/nodes/Line' );
+  const MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
+  const Node = require( 'SCENERY/nodes/Node' );
+  const Panel = require( 'SUN/Panel' );
+  const ScreenView = require( 'JOIST/ScreenView' );
+  const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
 
   // strings
-  var sourcePatternString = require( 'string!LEAST_SQUARES_REGRESSION/sourcePattern' );
+  const sourcePatternString = require( 'string!LEAST_SQUARES_REGRESSION/sourcePattern' );
 
   /**
    * @param {Property.<DataSet>} selectedDataSetProperty

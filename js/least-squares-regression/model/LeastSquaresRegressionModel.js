@@ -5,23 +5,23 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( function( require ) {
+define( require => {
   'use strict';
 
   // modules
-  var BooleanProperty = require( 'AXON/BooleanProperty' );
-  var Bucket = require( 'PHETCOMMON/model/Bucket' );
-  var DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
-  var DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
-  var Dimension2 = require( 'DOT/Dimension2' );
-  var Emitter = require( 'AXON/Emitter' );
-  var Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
-  var inherit = require( 'PHET_CORE/inherit' );
-  var leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  var ObservableArray = require( 'AXON/ObservableArray' );
-  var Property = require( 'AXON/Property' );
-  var Util = require( 'DOT/Util' );
-  var Vector2 = require( 'DOT/Vector2' );
+  const BooleanProperty = require( 'AXON/BooleanProperty' );
+  const Bucket = require( 'PHETCOMMON/model/Bucket' );
+  const DataPoint = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataPoint' );
+  const DataSet = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/DataSet' );
+  const Dimension2 = require( 'DOT/Dimension2' );
+  const Emitter = require( 'AXON/Emitter' );
+  const Graph = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/model/Graph' );
+  const inherit = require( 'PHET_CORE/inherit' );
+  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
+  const ObservableArray = require( 'AXON/ObservableArray' );
+  const Property = require( 'AXON/Property' );
+  const Util = require( 'DOT/Util' );
+  const Vector2 = require( 'DOT/Vector2' );
 
   // constants
   var BUCKET_SIZE = new Dimension2( 100, 55 );
