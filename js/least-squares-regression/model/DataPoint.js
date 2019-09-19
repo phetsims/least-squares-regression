@@ -58,20 +58,20 @@ define( require => {
      * @public
      */
     animate: function() {
-      var self = this;
+      const self = this;
 
       this.animatingProperty.set( true );
 
-      var position = {
+      const position = {
         x: this.positionProperty.value.x,
         y: this.positionProperty.value.y
       };
 
       // distance from the dataPoint current position to its initial position (in the bucket)
-      var distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
+      const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
 
       if ( distance > 0 ) {
-        var animationTween = new TWEEN.Tween( position ).to( {
+        const animationTween = new TWEEN.Tween( position ).to( {
           x: this.positionProperty.initialValue.x,
           y: this.positionProperty.initialValue.y
         }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( function() {

@@ -28,10 +28,10 @@ define( require => {
    */
   function DataPointCreatorNode( addDataPointToModel, modelViewTransform, options ) {
     Node.call( this, { cursor: 'pointer' } );
-    var self = this;
+    const self = this;
 
     // Create the node that the user will click upon to add a model element to the view.
-    var representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
+    const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
       stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
       lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
@@ -43,8 +43,8 @@ define( require => {
     this.touchArea = this.localBounds.dilated( 15 );
     this.mouseArea = this.localBounds.dilated( 5 );
 
-    var parentScreenView = null;
-    var dataPoint;
+    let parentScreenView = null;
+    let dataPoint;
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
     this.addInputListener( new SimpleDragHandler( {
 
@@ -55,7 +55,7 @@ define( require => {
 
         // find the parent screen if not already found by moving up the scene graph
         if ( !parentScreenView ) {
-          var testNode = self;
+          let testNode = self;
           while ( testNode !== null ) {
             if ( testNode instanceof ScreenView ) {
               parentScreenView = testNode;
@@ -67,7 +67,7 @@ define( require => {
         }
 
         // Determine the initial position (set to be one circle radius above the pointer point)
-        var initialPosition = parentScreenView.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
+        const initialPosition = parentScreenView.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
 
         // Create and add the new model element.
         dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );

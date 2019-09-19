@@ -24,13 +24,13 @@ define( require => {
   const sumString = require( 'string!LEAST_SQUARES_REGRESSION/sum' );
 
   // constants
-  var ARROW_LENGTH = 175;
-  var ARROW_HEAD_WIDTH = 4;
-  var ARROW_HEAD_HEIGHT = 6;
-  var RECTANGLE_BAROMETER_HEIGHT = 10;
-  var LINE_WIDTH = 1;
-  var LINE_COLOR = 'black';
-  var FONT = LeastSquaresRegressionConstants.SUM_RESIDUALS_FONT;
+  const ARROW_LENGTH = 175;
+  const ARROW_HEAD_WIDTH = 4;
+  const ARROW_HEAD_HEIGHT = 6;
+  const RECTANGLE_BAROMETER_HEIGHT = 10;
+  const LINE_WIDTH = 1;
+  const LINE_COLOR = 'black';
+  const FONT = LeastSquaresRegressionConstants.SUM_RESIDUALS_FONT;
 
   /**
    * @param {Graph} graph - model of a graph
@@ -50,31 +50,31 @@ define( require => {
     Node.call( this, options );
 
     // The barometer chart is on its side, set width to 1 , will update it momentarily
-    var rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
+    const rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
       fill: fillColor,
       bottom: -LINE_WIDTH,
       left: LINE_WIDTH / 2
     } );
 
     // Create the chart
-    var horizontalArrow = new ArrowNode( 0, 0, ARROW_LENGTH, 0, {
+    const horizontalArrow = new ArrowNode( 0, 0, ARROW_LENGTH, 0, {
       tailWidth: LINE_WIDTH,
       headWidth: ARROW_HEAD_WIDTH,
       headHeight: ARROW_HEAD_HEIGHT
     } );
-    var verticalLine = new Line( 0, 0, 0, -2 * RECTANGLE_BAROMETER_HEIGHT, {
+    const verticalLine = new Line( 0, 0, 0, -2 * RECTANGLE_BAROMETER_HEIGHT, {
       lineWidth: LINE_WIDTH,
       stroke: LINE_COLOR
     } );
 
     // Text for the chart
-    var label = new Text( sumString, {
+    const label = new Text( sumString, {
       font: FONT,
       centerX: horizontalArrow.centerX,
       top: horizontalArrow.bottom + 5,
       maxWidth: options.maxLabelWidth
     } );
-    var zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
+    const zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
     /**
      * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1

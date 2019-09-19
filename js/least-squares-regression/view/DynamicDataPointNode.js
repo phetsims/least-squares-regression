@@ -24,7 +24,7 @@ define( require => {
   function DynamicDataPointNode( dataPoint, modelViewTransform ) {
 
     // Create the visual representation of the DynamicDataPoint
-    var representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
+    const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
       stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
       lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH

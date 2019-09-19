@@ -42,10 +42,10 @@ define( require => {
   const questionMarkString = require( 'string!LEAST_SQUARES_REGRESSION/questionMark' );
 
   // constants
-  var GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node
-  var GRAPH_OFFSET = new Vector2( 10, 0 ); // Offset Vector from the center of the screen
-  var IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
-  var DATA_POINT_CREATOR_OFFSET_POSITIONS = [
+  const GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node
+  const GRAPH_OFFSET = new Vector2( 10, 0 ); // Offset Vector from the center of the screen
+  const IDENTITY_TRANSFORM = ModelViewTransform2.createIdentity();
+  const DATA_POINT_CREATOR_OFFSET_POSITIONS = [
     // Offsets used for initial position of point, relative to bucket hole center. Empirically determined.
     new Vector2( -35, -5 ),
     new Vector2( -25, -9 ),
@@ -80,19 +80,19 @@ define( require => {
 
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
-    var self = this;
+    const self = this;
 
     // Bounds of the graph (excluding the axes and labels) in scenery coordinates
-    var viewGraphBounds = new Bounds2(
+    const viewGraphBounds = new Bounds2(
       this.layoutBounds.centerX - GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
       this.layoutBounds.centerY - GRAPH_BOUNDS.height / 2 + GRAPH_OFFSET.y,
       this.layoutBounds.centerX + GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
       this.layoutBounds.centerY + GRAPH_BOUNDS.height / 2 + GRAPH_OFFSET.y
     );
-    var modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
+    const modelViewTransform = ModelViewTransform2.createRectangleInvertedYMapping( model.graph.bounds, viewGraphBounds );
 
     // Options for the two panels
-    var panelOptions = {
+    const panelOptions = {
       resize: false,
       cornerRadius: LeastSquaresRegressionConstants.CONTROL_PANEL_CORNER_RADIUS,
       fill: LeastSquaresRegressionConstants.CONTROL_PANEL_BACKGROUND_COLOR,
@@ -101,26 +101,26 @@ define( require => {
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    var bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
+    const bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
-    var myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
+    const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
-    var graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
+    const graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
     // Create the Graph Axes, including the tick marks, labels and axis titles
-    var graphAxesNode = new GraphAxesNode( model.selectedDataSetProperty.value, modelViewTransform, model.showGridProperty );
+    let graphAxesNode = new GraphAxesNode( model.selectedDataSetProperty.value, modelViewTransform, model.showGridProperty );
 
     // Create the dataSet combo box that appears on top of the graph
     // Width of contents limited by width of graphNode for i18n
-    var dataSetLabelMaxWidth = graphNode.width / 2;
-    var dataSetListParent = new Node();
-    var dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent, dataSetLabelMaxWidth );
+    const dataSetLabelMaxWidth = graphNode.width / 2;
+    const dataSetListParent = new Node();
+    const dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent, dataSetLabelMaxWidth );
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
-    var sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
-    var sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
+    const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
+    const sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       listener: function() {
@@ -131,16 +131,16 @@ define( require => {
 
 
     // Create the nodes that will be used to layer things visually.
-    var backLayer = new Node();
+    const backLayer = new Node();
     // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
     // all of the point placement graphs in the z-order.
-    var dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
-    var bucketFrontLayer = new Node({ pickable: false } );
+    const dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
+    const bucketFrontLayer = new Node({ pickable: false } );
 
     // Add the bucket view elements
-    var bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
+    const bucketFront = new BucketFront( model.bucket, IDENTITY_TRANSFORM );
     bucketFrontLayer.addChild( bucketFront );
-    var bucketHole = new BucketHole( model.bucket, IDENTITY_TRANSFORM );
+    const bucketHole = new BucketHole( model.bucket, IDENTITY_TRANSFORM );
     backLayer.addChild( bucketHole );
 
     // Add the dataPoint creator nodes. These must be added on the backLayer but after the bucket hole for proper layering.
@@ -154,7 +154,7 @@ define( require => {
     } );
 
     // Create the button that allows the graph to be cleared of all dataPoints.
-    var eraserButton = new EraserButton( {
+    const eraserButton = new EraserButton( {
       right: bucketFront.right - 3,
       top:   bucketFront.bottom + 5,
       iconWidth: 25,
@@ -164,10 +164,10 @@ define( require => {
     } );
 
     // Create the Pearson Correlation coefficient panel
-    var pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
+    const pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
 
     // Create grid checkbox with grid icon
-    var gridCheckbox = new Checkbox( new GridIcon(), model.showGridProperty );
+    const gridCheckbox = new Checkbox( new GridIcon(), model.showGridProperty );
 
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
@@ -183,9 +183,9 @@ define( require => {
       }
 
       // Create and add the GraphAxesNode corresponding to the selected DataSet
-      var dataSetBounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
+      const dataSetBounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
       // GraphAxesNode require a special modelView Transform that is set by the dataSet
-      var modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
+      const modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
       self.addChild( graphAxesNode );
       graphAxesNode.moveToBack(); //
@@ -220,11 +220,11 @@ define( require => {
       if ( model.selectedDataSetProperty.value === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
         // DataPoints are movable
-        var dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
+        const dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( dynamicDataPointNode );
 
         // Listener for position
-        var positionPropertyListener = function( position ) {
+        const positionPropertyListener = function( position ) {
           // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
           if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animatingProperty.value ) {
 
@@ -256,7 +256,7 @@ define( require => {
         addedDataPoint.positionProperty.lazyLink( positionPropertyListener );
 
         // Listener for userControlled
-        var userControlledPropertyListener = function( userControlled ) {
+        const userControlledPropertyListener = function( userControlled ) {
           if ( userControlled ) {
             dynamicDataPointNode.moveToFront();
           }
@@ -284,7 +284,7 @@ define( require => {
       else {
         // Create and add the view representation for this dataPoint.
         // The dataPoints are static (not movable)
-        var staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
+        const staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( staticDataPointNode );
 
         // Add the removal listener for if and when this dataPoint is removed from the model.
@@ -300,7 +300,7 @@ define( require => {
     } );
 
     // Create the 'Reset All' Button at the bottom right, which resets the model and some view elements
-    var resetAllButton = new ResetAllButton( {
+    const resetAllButton = new ResetAllButton( {
       listener: function() {
         model.reset();
         graphNode.reset();
@@ -363,7 +363,7 @@ define( require => {
     updateSourceAndReferenceNodeVisibility: function( sourceAndReferenceNode ) {
       // Renderer must be specified here because the plane is added directly to the scene (instead of to some other node
       // that already has svg renderer)
-      var plane = new Plane( { fill: 'black', opacity: 0.3 } );
+      const plane = new Plane( { fill: 'black', opacity: 0.3 } );
       this.addChild( plane );
       this.addChild( sourceAndReferenceNode );
 

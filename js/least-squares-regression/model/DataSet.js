@@ -15,7 +15,7 @@ define( require => {
   const Range = require( 'DOT/Range' );
 
   // source strings - isolated here, these sources should not be translatable
-  var SOURCES = {
+  const SOURCES = {
     TEMPERATURE_CELSIUS_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
     TEMPERATURE_CELSIUS_LONGITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
     TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE: 'Hand, D.J., et al. (1994) A Handbook of\nSmall Data Sets, London: Chapman & Hall, 208-210',
@@ -33,7 +33,7 @@ define( require => {
   };
 
   // strings
-  var custom = {
+  const custom = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ),
     yAxisTitle: '',
     xAxisTitle: '',
@@ -41,7 +41,7 @@ define( require => {
     source: ''
   };
 
-  var temperatureCelsiusLatitude = {
+  const temperatureCelsiusLatitude = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.xAxisTitle' ),
@@ -49,7 +49,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_CELSIUS_LATITUDE_SOURCE
   };
 
-  var temperatureCelsiusLongitude = {
+  const temperatureCelsiusLongitude = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.xAxisTitle' ),
@@ -57,7 +57,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_CELSIUS_LONGITUDE_SOURCE
   };
 
-  var temperatureFahrenheitLatitude = {
+  const temperatureFahrenheitLatitude = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ),
@@ -65,7 +65,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE
   };
 
-  var temperatureFahrenheitLongitude = {
+  const temperatureFahrenheitLongitude = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.xAxisTitle' ),
@@ -73,7 +73,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE
   };
 
-  var spendingSalary = {
+  const spendingSalary = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.xAxisTitle' ),
@@ -81,7 +81,7 @@ define( require => {
     source: SOURCES.SPENDING_SALARY_SOURCE
   };
 
-  var wageYear = {
+  const wageYear = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.xAxisTitle' ),
@@ -89,7 +89,7 @@ define( require => {
     source: SOURCES.WAGE_YEAR_SOURCE
   };
 
-  var mortalityYear = {
+  const mortalityYear = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.xAxisTitle' ),
@@ -97,7 +97,7 @@ define( require => {
     source: SOURCES.MORTALITY_YEAR_SOURCE
   };
 
-  var userYear = {
+  const userYear = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.xAxisTitle' ),
@@ -105,7 +105,7 @@ define( require => {
     source: SOURCES.USER_YEAR_SOURCE
   };
 
-  var gasolineYear = {
+  const gasolineYear = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.xAxisTitle' ),
@@ -113,7 +113,7 @@ define( require => {
     source: SOURCES.GASOLINE_YEAR_SOURCE
   };
 
-  var lifeTV = {
+  const lifeTV = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.xAxisTitle' ),
@@ -121,7 +121,7 @@ define( require => {
     source: SOURCES.LIFE_TV_SOURCE
   };
 
-  var speedDistance = {
+  const speedDistance = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.xAxisTitle' ),
@@ -129,7 +129,7 @@ define( require => {
     source: SOURCES.SPEED_DISTANCE_SOURCE
   };
 
-  var temperatureFahrenheitChirp = {
+  const temperatureFahrenheitChirp = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.xAxisTitle' ),
@@ -137,7 +137,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_FAHRENHEIT_CHIRP_SOURCE
   };
 
-  var temperatureCelsiusChirp = {
+  const temperatureCelsiusChirp = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.xAxisTitle' ),
@@ -145,7 +145,7 @@ define( require => {
     source: SOURCES.TEMPERATURE_CELSIUS_CHIRP_SOURCE
   };
 
-  var heightShoe = {
+  const heightShoe = {
     graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ),
     yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
     xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.xAxisTitle' ),
@@ -162,7 +162,7 @@ define( require => {
    * @returns {Object} dataSet
    */
   function createDataSet( name, yRange, xRange, dataXY ) {
-    var dataSet = {
+    const dataSet = {
       yRange: yRange,
       xRange: xRange,
       dataXY: dataXY,
@@ -176,7 +176,7 @@ define( require => {
     return dataSet;
   }
 
-  var DataSet = {};
+  const DataSet = {};
 
   DataSet.CUSTOM = createDataSet( custom, new Range( 0, 20 ), new Range( 0, 20 ), [] );
 

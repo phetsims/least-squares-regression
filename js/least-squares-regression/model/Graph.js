@@ -161,7 +161,7 @@ define( require => {
      * @param {DataPoint} dataPoint
      */
     addMyLineResidual: function( dataPoint ) {
-      var myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
+      const myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
       this.myLineResiduals.push( new Property( myLineResidual ) );
     },
     /**
@@ -171,8 +171,8 @@ define( require => {
      */
     addBestFitLineResidual: function( dataPoint ) {
 
-      var linearFitParameters = this.getLinearFit();
-      var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+      const linearFitParameters = this.getLinearFit();
+      const bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
     },
 
@@ -182,8 +182,8 @@ define( require => {
      * @param {DataPoint} dataPoint
      */
     removeMyLineResidual: function( dataPoint ) {
-      var self = this;
-      var myLineResidualsCopy = this.myLineResiduals.getArray();
+      const self = this;
+      const myLineResidualsCopy = this.myLineResiduals.getArray();
       myLineResidualsCopy.forEach( function( myLineResidualProperty ) {
         if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
           self.myLineResiduals.remove( myLineResidualProperty );
@@ -197,8 +197,8 @@ define( require => {
      * @param {DataPoint} dataPoint
      */
     removeBestFitLineResidual: function( dataPoint ) {
-      var self = this;
-      var bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
+      const self = this;
+      const bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
       bestFitLineResidualsCopy.forEach( function( bestFitLineResidualProperty ) {
         if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
           self.bestFitLineResiduals.remove( bestFitLineResidualProperty );
@@ -212,9 +212,9 @@ define( require => {
      * @public
      */
     updateMyLineResiduals: function() {
-      var self = this;
+      const self = this;
       this.myLineResiduals.forEach( function( residualProperty ) {
-        var dataPoint = residualProperty.value.dataPoint;
+        const dataPoint = residualProperty.value.dataPoint;
         residualProperty.value = new Residual( dataPoint, self.slope( self.angleProperty.value ), self.interceptProperty.value );
       } );
     },
@@ -225,9 +225,9 @@ define( require => {
      */
     updateBestFitLineResiduals: function() {
       if ( this.isLinearFitDefined() ) {
-        var linearFitParameters = this.getLinearFit();
+        const linearFitParameters = this.getLinearFit();
         this.bestFitLineResiduals.forEach( function( residualProperty ) {
-          var dataPoint = residualProperty.value.dataPoint;
+          const dataPoint = residualProperty.value.dataPoint;
           residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
         } );
       }
@@ -239,7 +239,7 @@ define( require => {
      * @param {Array.<DataPoint>} dataPoints
      */
     addDataPointsOnGraphAndResidualsInBulk: function( dataPoints ) {
-      var self = this;
+      const self = this;
       // for performance reason one should add all the dataPoints on the graph
       // then we can calculate the best Fit Line (only once)
       // and then add all the Residuals.
@@ -247,21 +247,21 @@ define( require => {
         self.dataPointsOnGraph.push( dataPoint );
       } );
 
-      var mySlope = this.slope( this.angleProperty.value );
-      var myIntercept = this.interceptProperty.value;
+      const mySlope = this.slope( this.angleProperty.value );
+      const myIntercept = this.interceptProperty.value;
 
       // add a 'myLineResidual' for every single dataPoint
       dataPoints.forEach( function( dataPoint ) {
-        var myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
+        const myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
         self.myLineResiduals.push( new Property( myLineResidual ) );
       } );
 
       // add a 'best fit Line' residual  for every single dataPoint
       // unless there is not  inearFit (because there is less than 2 data points on the board for instance)
       if ( this.isLinearFitDefined() ) {
-        var linearFitParameters = this.getLinearFit();
+        const linearFitParameters = this.getLinearFit();
         dataPoints.forEach( function( dataPoint ) {
-          var bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
+          const bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
           self.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
         } );
       }
@@ -274,7 +274,7 @@ define( require => {
      * @returns {boolean}
      */
     isDataPointOnList: function( dataPoint ) {
-      var index = this.dataPointsOnGraph.indexOf( dataPoint );
+      const index = this.dataPointsOnGraph.indexOf( dataPoint );
       return (index !== -1);
     },
 
@@ -294,7 +294,7 @@ define( require => {
      * @param {DataPoint} dataPoint
      */
     addPointAndResiduals: function( dataPoint ) {
-      var self = this;
+      const self = this;
 
       this.dataPointsOnGraph.push( dataPoint );
       this.addMyLineResidual( dataPoint );
@@ -326,7 +326,7 @@ define( require => {
      */
     removePointAndResiduals: function( dataPoint ) {
       assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
-      var index = this.dataPointsOnGraph.indexOf( dataPoint );
+      const index = this.dataPointsOnGraph.indexOf( dataPoint );
       this.dataPointsOnGraph.splice( index, 1 );
 
       this.removeMyLineResidual( dataPoint );
@@ -359,9 +359,9 @@ define( require => {
      * @returns {number} sumOfSquareResiduals
      */
     sumOfSquaredResiduals: function( slope, intercept ) {
-      var sumOfSquareResiduals = 0;
+      let sumOfSquareResiduals = 0;
       this.dataPointsOnGraph.forEach( function( dataPoint ) {
-        var yResidual = (slope * dataPoint.positionProperty.value.x + intercept) - dataPoint.positionProperty.value.y;
+        const yResidual = (slope * dataPoint.positionProperty.value.x + intercept) - dataPoint.positionProperty.value.y;
         sumOfSquareResiduals += yResidual * yResidual;
       } );
       return sumOfSquareResiduals;
@@ -390,7 +390,7 @@ define( require => {
      */
     getBestFitLineSumOfSquaredResiduals: function() {
       if ( this.isLinearFitDefined() ) {
-        var linearFitParameters = this.getLinearFit();
+        const linearFitParameters = this.getLinearFit();
         return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept );
       }
       else {
@@ -407,9 +407,9 @@ define( require => {
      */
     getBoundaryPoints: function( slope, intercept ) {
 
-      var yValueLeft = slope * this.bounds.minX + intercept;
-      var yValueRight = slope * this.bounds.maxX + intercept;
-      var boundaryPoints = {
+      const yValueLeft = slope * this.bounds.minX + intercept;
+      const yValueRight = slope * this.bounds.maxX + intercept;
+      const boundaryPoints = {
         point1: new Vector2( this.bounds.minX, yValueLeft ),
         point2: new Vector2( this.bounds.maxX, yValueRight )
       };
@@ -423,23 +423,23 @@ define( require => {
      */
     getStatistics: function() {
 
-      var dataPointArray = this.dataPointsOnGraph;
+      const dataPointArray = this.dataPointsOnGraph;
       assert && assert( dataPointArray !== null, 'dataPointsOnGraph must contain data' );
-      var arrayLength = dataPointArray.length;
+      const arrayLength = dataPointArray.length;
 
-      var squaresXX = _.map( dataPointArray, function( dataPoint ) {
+      const squaresXX = _.map( dataPointArray, function( dataPoint ) {
         return dataPoint.positionProperty.value.x * dataPoint.positionProperty.value.x;
       } );
-      var squaresXY = _.map( dataPointArray, function( dataPoint ) {
+      const squaresXY = _.map( dataPointArray, function( dataPoint ) {
         return dataPoint.positionProperty.value.x * dataPoint.positionProperty.value.y;
       } );
-      var squaresYY = _.map( dataPointArray, function( dataPoint ) {
+      const squaresYY = _.map( dataPointArray, function( dataPoint ) {
         return dataPoint.positionProperty.value.y * dataPoint.positionProperty.value.y;
       } );
-      var positionArrayX = _.map( dataPointArray, function( dataPoint ) {
+      const positionArrayX = _.map( dataPointArray, function( dataPoint ) {
         return dataPoint.positionProperty.value.x;
       } );
-      var positionArrayY = _.map( dataPointArray, function( dataPoint ) {
+      const positionArrayY = _.map( dataPointArray, function( dataPoint ) {
         return dataPoint.positionProperty.value.y;
       } );
 
@@ -447,11 +447,11 @@ define( require => {
         return memo + num;
       }
 
-      var sumOfSquaresXX = _.reduce( squaresXX, add, 0 );
-      var sumOfSquaresXY = _.reduce( squaresXY, add, 0 );
-      var sumOfSquaresYY = _.reduce( squaresYY, add, 0 );
-      var sumOfX = _.reduce( positionArrayX, add, 0 );
-      var sumOfY = _.reduce( positionArrayY, add, 0 );
+      const sumOfSquaresXX = _.reduce( squaresXX, add, 0 );
+      const sumOfSquaresXY = _.reduce( squaresXY, add, 0 );
+      const sumOfSquaresYY = _.reduce( squaresYY, add, 0 );
+      const sumOfX = _.reduce( positionArrayX, add, 0 );
+      const sumOfY = _.reduce( positionArrayY, add, 0 );
 
       this.averageOfSumOfSquaresXX = sumOfSquaresXX / arrayLength;
       this.averageOfSumOfSquaresXY = sumOfSquaresXY / arrayLength;
@@ -466,14 +466,14 @@ define( require => {
      * @returns {boolean}
      */
     isLinearFitDefined: function() {
-      var isDefined;
+      let isDefined;
       // you can't have a linear fit with less than 2 data points
       if ( this.dataPointsOnGraph.length < 2 ) {
         isDefined = false;
       }
       else {
         this.getStatistics();
-        var xVariance = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+        const xVariance = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
         // the linear fit parameters are not defined when the points are aligned vertically (infinite slope).
         // check for a threshold to prevent https://github.com/phetsims/least-squares-regression/issues/60
         if ( xVariance < 2e-10 ) {
@@ -494,12 +494,12 @@ define( require => {
      */
     getLinearFit: function() {
       this.getStatistics();
-      var slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
-      var slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
-      var slope = slopeNumerator / slopeDenominator;
-      var intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
+      const slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
+      const slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+      const slope = slopeNumerator / slopeDenominator;
+      const intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-      var fitParameters = {
+      const fitParameters = {
         slope: slope,
         intercept: intercept
       };
@@ -522,7 +522,7 @@ define( require => {
       }
       else {
         this.getStatistics();
-        var pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
+        let pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
         if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
           pearsonCoefficientCorrelationNumerator = 0;
@@ -530,18 +530,18 @@ define( require => {
 
         // for very small values, we can end up with a very small or negative number.  In this case, return null so we
         // don't get a NaN for the coefficient.
-        var number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY );
+        const number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY );
         if ( number < 1E-15 ) {
           return null;
         }
-        var pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
+        const pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
 
         // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
         if ( pearsonCoefficientCorrelationDenominator === 0 ) {
           return null; //
         }
         else {
-          var pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+          const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
           return pearsonCoefficientCorrelation;
         }
       }

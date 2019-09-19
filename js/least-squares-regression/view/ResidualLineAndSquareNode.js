@@ -32,7 +32,7 @@ define( require => {
   function ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
     Node.call( this );
 
-    var self = this;
+    const self = this;
 
     // create line and square residual with nominal values, will set the correct value later
     this.squareResidual = new Rectangle( 0, 0, 1, 1 );
@@ -65,8 +65,8 @@ define( require => {
      * Update the Line and Square Residual
      */
     updateLineAndSquare: function() {
-      var point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
-      var point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
+      const point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
+      const point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
 
       // Update line residual
       this.lineResidual.setPoint1( point1 );
@@ -75,14 +75,14 @@ define( require => {
       this.lineResidual.clipArea = Shape.bounds( this.viewBounds );
 
       // Update square residual
-      var top = Math.min( point1.y, point2.y );
-      var height = Math.abs( point1.y - point2.y );
+      const top = Math.min( point1.y, point2.y );
+      const height = Math.abs( point1.y - point2.y );
       // we want a square
-      var width = height;
+      const width = height;
 
       // the square residual can be on the left or on the right of point1 (the dataPoint position)
       // however the square residual should not overlap with the y = m x + b line:
-      var left = ( this.residualProperty.value.isSquaredResidualToTheLeft ) ? point1.x - width : point1.x;
+      const left = ( this.residualProperty.value.isSquaredResidualToTheLeft ) ? point1.x - width : point1.x;
 
       this.squareResidual.setRect( left, top, width, height );
       // the squareResidual should not show outside the graph.

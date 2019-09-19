@@ -27,10 +27,10 @@ define( require => {
     this.dataPoint = dataPoint;
 
     // find the vertical position of the line following y = slope* x + intercept;
-    var yValue = slope * dataPoint.positionProperty.value.x + intercept;
+    const yValue = slope * dataPoint.positionProperty.value.x + intercept;
 
     // The vertical displacement is positive if the datePoint is above the line and negative if below
-    var verticalDisplacement = dataPoint.positionProperty.value.y - yValue;
+    const verticalDisplacement = dataPoint.positionProperty.value.y - yValue;
 
     // @public read-only
     this.point1 = new Vector2( dataPoint.positionProperty.value.x, dataPoint.positionProperty.value.y );  // position of dataPoint

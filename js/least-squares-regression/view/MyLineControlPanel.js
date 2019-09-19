@@ -37,14 +37,14 @@ define( require => {
   const symbolYString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.y' );
 
   // constants
-  var SLIDER_OPTIONS = {
+  const SLIDER_OPTIONS = {
     trackFill: 'black',
     trackSize: new Dimension2( 190, 2 ),
     thumbSize: new Dimension2( 15, 30 ),
     thumbTouchAreaYDilation: 8,
     majorTickLength: 18
   };
-  var MAX_WIDTH = 150;
+  const MAX_WIDTH = 150;
 
   /**
    *
@@ -59,15 +59,15 @@ define( require => {
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
     // max width determined empirically, and there are 6 elements that make up the equation node
-    var equationCharacterMaxWidth = MAX_WIDTH / 6;
-    var equationText = new EquationNode( { maxCharacterWidth: equationCharacterMaxWidth } );
+    const equationCharacterMaxWidth = MAX_WIDTH / 6;
+    const equationText = new EquationNode( { maxCharacterWidth: equationCharacterMaxWidth } );
 
     /**
      * Function that updates the value of the current slope (based on the angle of the line)
      * @param {number} angle
      */
     function updateTextSlope( angle ) {
-      var slope = graph.slope( angle );
+      const slope = graph.slope( angle );
       equationText.setSlopeText( slope * graph.slopeFactor );
     }
 
@@ -83,21 +83,21 @@ define( require => {
     updateTextSlope( 0 );
 
     // Create an immutable equation y = a x + b
-    var blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black', maxWidth: equationCharacterMaxWidth };
-    var boldOptions = {
+    const blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black', maxWidth: equationCharacterMaxWidth };
+    const boldOptions = {
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
       maxWidth: equationCharacterMaxWidth
     };
 
-    var yText = new Text( symbolYString, blackOptions ); // 'y'
-    var equalText = new Text( '=', blackOptions ); // the '=' sign
-    var aText = new Text( aString, boldOptions ); // a number
-    var xText = new Text( symbolXString, blackOptions ); // 'x'
-    var signInterceptText = new Text( MathSymbols.PLUS, blackOptions );// '+'
-    var bText = new Text( bString, boldOptions );// a number
+    const yText = new Text( symbolYString, blackOptions ); // 'y'
+    const equalText = new Text( '=', blackOptions ); // the '=' sign
+    const aText = new Text( aString, boldOptions ); // a number
+    const xText = new Text( symbolXString, blackOptions ); // 'x'
+    const signInterceptText = new Text( MathSymbols.PLUS, blackOptions );// '+'
+    const bText = new Text( bString, boldOptions );// a number
 
-    var immutableEquationText = new Node( {
+    const immutableEquationText = new Node( {
       children: [
         yText,
         equalText,
@@ -117,7 +117,7 @@ define( require => {
     bText.center = equationText.valueInterceptText.center;
 
     // create the equation panel with white background
-    var equationPanel = new Panel( equationText, {
+    const equationPanel = new Panel( equationText, {
       fill: 'white',
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
@@ -125,21 +125,21 @@ define( require => {
     } );
 
     // Create two sliders: The aSlider controls the angle of the line and by proxy the slope, the bSlider controls the intercept
-    var sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
-    var maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
+    const sliderInterceptRange = new Range( -1.5 * graph.bounds.maxY, 1.5 * graph.bounds.maxY );
+    const maxSlope = 10; // determines the maximum slope (using the graph bounds as reference, i.e. the unit square)
 
-    var aSlider = new VSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
+    const aSlider = new VSlider( graph.angleProperty, new Range( -Math.atan( maxSlope ), Math.atan( maxSlope ) ), SLIDER_OPTIONS );
     aSlider.addMajorTick( 0 );
-    var bSlider = new VSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
+    const bSlider = new VSlider( graph.interceptProperty, sliderInterceptRange, SLIDER_OPTIONS );
     bSlider.addMajorTick( 0 );
 
     // Create label below the sliders
-    var aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
-    var bSliderText = new Text( bString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const bSliderText = new Text( bString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
-    var rightAlignedNode = new Node();
-    var hStrut = new HStrut( 20 );
+    const rightAlignedNode = new Node();
+    const hStrut = new HStrut( 20 );
     rightAlignedNode.addChild( equationPanel );
     rightAlignedNode.addChild( immutableEquationText );
     rightAlignedNode.addChild( aSlider );
@@ -149,10 +149,10 @@ define( require => {
     rightAlignedNode.addChild( hStrut );
 
     // Create three checkboxes
-    var checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
-    var lineCheckbox = new Checkbox( new Text( myLineString, checkboxTextOptions ), graph.myLineVisibleProperty );
-    var residualsCheckbox = new Checkbox( new Text( residualsString, checkboxTextOptions ), graph.myLineShowResidualsProperty );
-    var squaredResidualsCheckbox = new Checkbox( new Text( squaredResidualsString, checkboxTextOptions ), graph.myLineShowSquaredResidualsProperty );
+    const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
+    const lineCheckbox = new Checkbox( new Text( myLineString, checkboxTextOptions ), graph.myLineVisibleProperty );
+    const residualsCheckbox = new Checkbox( new Text( residualsString, checkboxTextOptions ), graph.myLineShowResidualsProperty );
+    const squaredResidualsCheckbox = new Checkbox( new Text( squaredResidualsString, checkboxTextOptions ), graph.myLineShowSquaredResidualsProperty );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );
@@ -170,7 +170,7 @@ define( require => {
       } );
 
     // assemble all the previous nodes in a vertical box
-    var mainBox = new LayoutBox( {
+    const mainBox = new LayoutBox( {
       spacing: 10, children: [
         lineCheckbox,
         rightAlignedNode,

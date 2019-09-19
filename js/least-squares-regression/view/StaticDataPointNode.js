@@ -23,7 +23,7 @@ define( require => {
   function StaticDataPointNode( dataPoint, modelViewTransform ) {
 
     // Create and add  visual representation of the dataPoint
-    var representation = new Circle( LeastSquaresRegressionConstants.STATIC_DATA_POINT_RADIUS, {
+    const representation = new Circle( LeastSquaresRegressionConstants.STATIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.STATIC_DATA_POINT_FILL,
       stroke: LeastSquaresRegressionConstants.STATIC_DATA_POINT_STROKE,
       lineWidth: LeastSquaresRegressionConstants.STATIC_DATA_POINT_LINE_WIDTH

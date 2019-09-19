@@ -16,7 +16,7 @@ define( require => {
   // strings
   const leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
 
-  var simOptions = {
+  const simOptions = {
     credits: {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Martin Veillette',
@@ -26,7 +26,7 @@ define( require => {
   };
 
   SimLauncher.launch( function() {
-    var sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
+    const sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
     sim.start();
   } );
 } );

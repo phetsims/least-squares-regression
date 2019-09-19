@@ -40,8 +40,8 @@ define( require => {
 
     // options for the text elements of the equation
 
-    var numericalTextOptions; // font and fill options for numerical strings , i.e.  '- 9.54'
-    var stringTextOptions; // font and fill options for 'pure' strings, eg. 'y'
+    let numericalTextOptions; // font and fill options for numerical strings , i.e.  '- 9.54'
+    let stringTextOptions; // font and fill options for 'pure' strings, eg. 'y'
 
     switch( options.mode ) {
       case  'myLine' :
@@ -66,13 +66,13 @@ define( require => {
 
     // use the widest possible numbers for laying out the equation
 
-    var maxWidthSlopeString = '0.';
-    for ( var i = 0; i < options.maxDecimalPlaces; i++ ) {
+    let maxWidthSlopeString = '0.';
+    for ( let i = 0; i < options.maxDecimalPlaces; i++ ) {
       maxWidthSlopeString = maxWidthSlopeString + '0';
     }
 
-    var maxWidthInterceptString = '0.';
-    for ( var j = 0; j < options.maxDecimalPlaces; j++ ) {
+    let maxWidthInterceptString = '0.';
+    for ( let j = 0; j < options.maxDecimalPlaces; j++ ) {
       maxWidthInterceptString = maxWidthInterceptString + '0';
     }
 
@@ -85,7 +85,7 @@ define( require => {
     this.signInterceptText = new Text( MathSymbols.PLUS, stringTextOptions );// + or -
     this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 
-    var mutableEquationText = new Node( {
+    const mutableEquationText = new Node( {
       children: [
         this.yText,
         this.equalText,
@@ -142,11 +142,11 @@ define( require => {
      * @returns {{absoluteNumber: number, optionalSign: string, sign: string}}
      */
     numberToString: function( number ) {
-      var isNegative = (this.roundNumber( number ) < 0);
-      var signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
-      var optionalSignString = isNegative ? MathSymbols.MINUS : ' ';
-      var absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number ) ) );
-      var numberString = {
+      const isNegative = (this.roundNumber( number ) < 0);
+      const signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
+      const optionalSignString = isNegative ? MathSymbols.MINUS : ' ';
+      const absoluteNumber = this.roundNumber( Math.abs( this.roundNumber( number ) ) );
+      const numberString = {
         absoluteNumber: absoluteNumber,
         optionalSign: optionalSignString,
         sign: signString
@@ -162,7 +162,7 @@ define( require => {
      * @returns {number}
      */
     roundNumber: function( number ) {
-      var roundedNumber;
+      let roundedNumber;
       if ( Math.abs( number ) < 10 ) {
         roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces ); // eg. 9.99, 0.01 if this.options.maxDecimalPlaces=2
       }

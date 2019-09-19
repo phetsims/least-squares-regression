@@ -22,10 +22,10 @@ define( require => {
    */
   function DataPointNode( dataPoint, representation, modelViewTransform ) {
     Node.call( this, { cursor: 'pointer', children: [ representation ] } );
-    var self = this;
+    const self = this;
 
     // Create a listener to the position of the dataPoint
-    var centerPositionListener = function ( position ) {
+    const centerPositionListener = function ( position ) {
       self.center = modelViewTransform.modelToViewPosition( position );
     };
 

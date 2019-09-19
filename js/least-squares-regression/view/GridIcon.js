@@ -36,8 +36,8 @@ define( require => {
       gridFill: null
     }, options );
 
-    var bounds = new Bounds2( 0, 0, options.columns * options.cellLength, options.rows * options.cellLength );
-    var gridShape = new Shape();
+    const bounds = new Bounds2( 0, 0, options.columns * options.cellLength, options.rows * options.cellLength );
+    const gridShape = new Shape();
 
     // Create the vertical lines
     for ( var i = bounds.minX + options.cellLength; i < bounds.maxX; i += options.cellLength ) {
@@ -49,7 +49,7 @@ define( require => {
       gridShape.moveTo( bounds.minX, i ).horizontalLineTo( bounds.maxY );
     }
 
-    var gridPath = new Path( gridShape, {
+    const gridPath = new Path( gridShape, {
       stroke: options.gridStroke,
       lineWidth: options.gridLineWidth,
       fill: options.gridFill

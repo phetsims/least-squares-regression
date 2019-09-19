@@ -27,7 +27,7 @@ define( require => {
    * @constructor
    */
   function GraphNode( graph, viewBounds, modelViewTransform ) {
-    var self = this;
+    const self = this;
 
     this.graph = graph;
     this.viewBounds = viewBounds;
@@ -37,7 +37,7 @@ define( require => {
 
     // Create 'MyLine'
     // First, get the two points formed by the intersection of the line and the boundary of the graph
-    var myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angleProperty.value ), graph.interceptProperty.value );
+    const myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angleProperty.value ), graph.interceptProperty.value );
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
@@ -53,8 +53,8 @@ define( require => {
     } );
 
     if ( graph.isLinearFitDefined() ) {
-      var linearFitParameters = graph.getLinearFit();
-      var bestFitLineBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+      const linearFitParameters = graph.getLinearFit();
+      const bestFitLineBoundaryPoints = graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
       this.bestFitLine = new Line(
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point1 ),
         modelViewTransform.modelToViewPosition( bestFitLineBoundaryPoints.point2 ),
@@ -67,13 +67,13 @@ define( require => {
     // Update 'MyLine' and update 'MyLine' Residuals upon of change of angle (a proxy for the slope), or intercept
     // No need to unlink, listener is present for the lifetime of the sim
     Property.multilink( [ graph.angleProperty, graph.interceptProperty ], function( angle, intercept ) {
-      var slope = graph.slope( angle );
+      const slope = graph.slope( angle );
       updateMyLine( slope, intercept );
       graph.updateMyLineResiduals();
     } );
 
     // we will add all the residuals in a separate node
-    var residualsLayer = new Node();
+    const residualsLayer = new Node();
 
     // we need to track the best fit residuals in a separate array so that we can toggle their visibility when
     // the best fit is undefined
@@ -84,7 +84,7 @@ define( require => {
     graph.myLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
-      var residualNode = ResidualLineAndSquareNode.createFromPool(
+      const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
         self.viewBounds,
@@ -108,7 +108,7 @@ define( require => {
     graph.bestFitLineResiduals.addItemAddedListener( function( addedResidualProperty ) {
 
       // Create and add the view representation for this residual.
-      var residualNode = ResidualLineAndSquareNode.createFromPool(
+      const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
         self.viewBounds,
@@ -124,7 +124,7 @@ define( require => {
         if ( removedResidualProperty === addedResidualProperty ) {
 
           // remove the residualNode from this.bestFitResiduals
-          var index = self.bestFitResiduals.indexOf( residualNode );
+          const index = self.bestFitResiduals.indexOf( residualNode );
           if( index > -1 ) {
             self.bestFitResiduals.splice( index, 1 );
           }
@@ -153,7 +153,7 @@ define( require => {
      * @param {number} intercept
      */
     function updateMyLine( slope, intercept ) {
-      var boundaryPoints = graph.getBoundaryPoints( slope, intercept );
+      const boundaryPoints = graph.getBoundaryPoints( slope, intercept );
       self.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
       self.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
       self.myLine.clipArea = Shape.bounds( self.viewBounds );
@@ -180,8 +180,8 @@ define( require => {
      */
     updateBestFitLine: function() {
       if ( this.graph.isLinearFitDefined() ) {
-        var linearFitParameters = this.graph.getLinearFit();
-        var boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
+        const linearFitParameters = this.graph.getLinearFit();
+        const boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
         this.bestFitLine.setPoint1( this.modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
         this.bestFitLine.setPoint2( this.modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
         this.bestFitLine.clipArea = Shape.bounds( this.viewBounds );
@@ -197,7 +197,7 @@ define( require => {
      * This visibility is separate from the visibility handled by the control panel
      */
     updateBestFitResidualsVisible: function() {
-      for( var i = 0; i < this.bestFitResiduals.length; i++ ) {
+      for( let i = 0; i < this.bestFitResiduals.length; i++ ) {
         this.bestFitResiduals[ i ].visible = this.graph.isLinearFitDefined();
       }
     }

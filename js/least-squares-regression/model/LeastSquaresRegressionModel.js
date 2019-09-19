@@ -24,15 +24,15 @@ define( require => {
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
-  var BUCKET_SIZE = new Dimension2( 100, 55 );
-  var BUCKET_POSITION = new Vector2( 120, 480 );
+  const BUCKET_SIZE = new Dimension2( 100, 55 );
+  const BUCKET_POSITION = new Vector2( 120, 480 );
 
   /**
    * @constructor
    */
   function LeastSquaresRegressionModel() {
 
-    var self = this;
+    const self = this;
 
     // @public {Property.<boolean>} controls the visibility of the graph grid
     this.showGridProperty = new BooleanProperty( false );
@@ -83,7 +83,7 @@ define( require => {
     } );
 
     // array for the CUSTOM dataPoints
-    var savedCustomDataPoints = []; // {Array.<DataPoints>} 
+    let savedCustomDataPoints = []; // {Array.<DataPoints>} 
 
     // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
     this.selectedDataSetProperty.link( function( selectedDataSet, oldSelectedDataSet ) {
@@ -128,9 +128,9 @@ define( require => {
         selectedDataSet.dataXY.forEach( function( position ) {
           // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
           // Rescale all the {X,Y} value to the normalized graph bounds
-          var XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, self.graph.bounds.minX, self.graph.bounds.maxX, position.x );
-          var YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, self.graph.bounds.minY, self.graph.bounds.maxY, position.y );
-          var positionVector = new Vector2( XNormalized, YNormalized );
+          const XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, self.graph.bounds.minX, self.graph.bounds.maxX, position.x );
+          const YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, self.graph.bounds.minY, self.graph.bounds.maxY, position.y );
+          const positionVector = new Vector2( XNormalized, YNormalized );
           self.dataPoints.push( new DataPoint( positionVector ) );
         } );
         // Add the Data Points on Graph and all the Residuals
@@ -201,10 +201,10 @@ define( require => {
      * @param {DataPoint} dataPoint
      */
     addDataPointControlledListener: function( dataPoint ) {
-      var self = this;
+      const self = this;
 
       dataPoint.userControlledListener = function( userControlled ) {
-        var isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );
+        const isOnGraph = self.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );
         if ( !isOnGraph && !userControlled ) {
           // return the dataPoint to the bucket
           dataPoint.animate();

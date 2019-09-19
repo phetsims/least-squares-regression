@@ -12,7 +12,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const PhetFont = require( 'SCENERY_PHET/PhetFont' );
 
-  var LeastSquaresRegressionConstants = {
+  const LeastSquaresRegressionConstants = {
 
     // speed for dataPoints to reach the bucket when animated
     ANIMATION_SPEED: 0.001, //  in model units per millisecond;

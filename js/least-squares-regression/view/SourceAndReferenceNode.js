@@ -38,26 +38,26 @@ define( require => {
     ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
     // limit the width of the dialog content for i18n
-    var maxContentWidth = this.layoutBounds.width * 2 / 3;
+    const maxContentWidth = this.layoutBounds.width * 2 / 3;
 
-    var self = this;
+    const self = this;
 
-    var referenceText = new MultiLineText( '', {
+    const referenceText = new MultiLineText( '', {
       font: LeastSquaresRegressionConstants.REFERENCE_FONT,
       align: 'left'
     } );
-    var sourceText = new MultiLineText( '', { font: LeastSquaresRegressionConstants.SOURCE_FONT, align: 'left' } );
+    const sourceText = new MultiLineText( '', { font: LeastSquaresRegressionConstants.SOURCE_FONT, align: 'left' } );
 
-    var children = [
+    const children = [
       referenceText,
       sourceText
     ];
 
     // Create the content box
-    var content = new LayoutBox( { align: 'left', spacing: 10, children: children, maxWidth: maxContentWidth } );
+    const content = new LayoutBox( { align: 'left', spacing: 10, children: children, maxWidth: maxContentWidth } );
 
     // Create the panel that contains the source and reference
-    var panel = new Panel( content, {
+    const panel = new Panel( content, {
       centerX: this.layoutBounds.centerX,
       centerY: this.layoutBounds.centerY,
       xMargin: 20,
@@ -68,24 +68,24 @@ define( require => {
 
     // Create the 'Closed Button" in the upper right corner with a circle and a cross inside it.
     // The button is not hooked to any listener since the closing of this node is handled in the main screenView
-    var buttonSize = 15;
-    var buttonLineWidth = 2;
-    var circle = new Circle( buttonSize, {
+    const buttonSize = 15;
+    const buttonLineWidth = 2;
+    const circle = new Circle( buttonSize, {
       fill: 'black',
       stroke: 'white',
       lineWidth: buttonLineWidth,
       centerX: 0,
       centerY: 0
     } );
-    var l = buttonSize / 3;
-    var upSlopeLine = new Line( l, l, -l, -l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
-    var downwardSlopeLine = new Line( l, -l, -l, l, {
+    const l = buttonSize / 3;
+    const upSlopeLine = new Line( l, l, -l, -l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    const downwardSlopeLine = new Line( l, -l, -l, l, {
       stroke: 'white',
       lineWidth: buttonLineWidth,
       centerX: 0,
       centerY: 0
     } );
-    var button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
+    const button = new Node( { children: [ circle, upSlopeLine, downwardSlopeLine ] } );
 
     // Add a cursor when hovering (see https://github.com/phetsims/least-squares-regression/issues/10)
     button.cursor = 'pointer';
@@ -98,7 +98,7 @@ define( require => {
     // no need to unlink, present for the lifetime of the sim
     selectedDataSetProperty.link( function( selectedDataSet ) {
       referenceText.text = selectedDataSet.reference;
-      var formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
+      const formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
       sourceText.text = formattedSourceString;
       panel.centerX = self.layoutBounds.centerX;
       panel.centerY = self.layoutBounds.centerY;

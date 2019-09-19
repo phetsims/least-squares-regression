@@ -26,11 +26,11 @@ define( require => {
 
   // string
   const symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
-  var pattern_0r_1value = '{0} {1}';
+  const pattern_0r_1value = '{0} {1}';
   const correlationCoefficientString = require( 'string!LEAST_SQUARES_REGRESSION/correlationCoefficient' );
 
   // constants
-  var R_EQUALS = StringUtils.format( '{0} =', symbolRString );
+  const R_EQUALS = StringUtils.format( '{0} =', symbolRString );
 
   /**
    *
@@ -52,23 +52,23 @@ define( require => {
     this.graph = graph;
 
     // restrict width of labels for i18n
-    var maxLabelWidth = 120;
+    const maxLabelWidth = 120;
 
     // Create the left hand side of the equation (includes the equal sign)
-    var leftHandSideText = new Text( R_EQUALS, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
+    const leftHandSideText = new Text( R_EQUALS, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // Create the right hand side of the equation
     this.rightHandSideText = new Text( '', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
 
     // calculate the maximum width of the right hand side of the equation
-    var rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
-    var hStrut = new HStrut( rightHandSideMaxWidth );
+    const rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
+    const hStrut = new HStrut( rightHandSideMaxWidth );
 
     hStrut.left = leftHandSideText.right + 5;
     this.rightHandSideText.left = leftHandSideText.right + 5;
 
     // Create the equation
-    var equation = new Node( {
+    const equation = new Node( {
       children: [
         leftHandSideText,
         hStrut,
@@ -78,7 +78,7 @@ define( require => {
     } );
 
     // Create the panel that holds the equation
-    var mutableEquationPanel = new Panel( equation, {
+    const mutableEquationPanel = new Panel( equation, {
       fill: LeastSquaresRegressionConstants.GRAPH_BACKGROUND_COLOR,
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
@@ -125,10 +125,10 @@ define( require => {
      * @public
      */
     update: function() {
-      var rValueString;
+      let rValueString;
       // Check for the existence of the rValue
       if ( this.graph.isLinearFitDefined() ) {
-        var rValue = this.graph.getPearsonCoefficientCorrelation();
+        const rValue = this.graph.getPearsonCoefficientCorrelation();
 
         // if the rValue is zero and there are only two points on the graph, return null.  This is to avoid
         // a precision error for when the points are aligned horizontally and the denominator is non-zero
@@ -143,8 +143,8 @@ define( require => {
           rValueString = '';
         }
         else {
-          var isNegative = (rValue < 0);
-          var signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
+          const isNegative = (rValue < 0);
+          const signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
           rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
         }
       }

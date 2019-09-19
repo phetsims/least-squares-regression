@@ -48,7 +48,7 @@ define( require => {
     this.graph = graph;
 
     // max length of label text for i18n
-    var maxLabelWidth = 120;
+    const maxLabelWidth = 120;
 
 
     // property of the accordion Box
@@ -65,10 +65,10 @@ define( require => {
 
     // Create the 'Best Fit Line' equation
     // initial values set the spacing, the correct values for the slope and the intercept will be updated below
-    var equationText = new EquationNode( { mode: 'bestFitLine' } );
+    const equationText = new EquationNode( { mode: 'bestFitLine' } );
     equationText.visible = false;
     this.equationText = equationText;
-    var equationPanel = new Panel( equationText, {
+    const equationPanel = new Panel( equationText, {
       fill: 'white',
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
@@ -77,15 +77,15 @@ define( require => {
     this.updateBestFitLineEquation();
 
     // Create the checkboxes
-    var lineCheckbox = new Checkbox(
+    const lineCheckbox = new Checkbox(
       new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineVisibleProperty
     );
-    var residualsCheckbox = new Checkbox(
+    const residualsCheckbox = new Checkbox(
       new Text( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineShowResidualsProperty
     );
-    var squaredResidualsCheckbox = new Checkbox(
+    const squaredResidualsCheckbox = new Checkbox(
       new Text( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
       graph.bestFitLineShowSquaredResidualsProperty
     );
@@ -155,7 +155,7 @@ define( require => {
        */
       updateBestFitLineEquation: function() {
         if ( this.graph.isLinearFitDefined() ) {
-          var linearFitParameters = this.graph.getLinearFit();
+          const linearFitParameters = this.graph.getLinearFit();
           this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
           this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor + this.graph.interceptOffset );
           if ( this.graph.bestFitLineVisibleProperty.value ) {
