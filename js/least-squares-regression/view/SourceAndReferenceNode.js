@@ -78,7 +78,12 @@ define( require => {
       centerY: 0
     } );
     const l = buttonSize / 3;
-    const upSlopeLine = new Line( l, l, -l, -l, { stroke: 'white', lineWidth: buttonLineWidth, centerX: 0, centerY: 0 } );
+    const upSlopeLine = new Line( l, l, -l, -l, {
+      stroke: 'white',
+      lineWidth: buttonLineWidth,
+      centerX: 0,
+      centerY: 0
+    } );
     const downwardSlopeLine = new Line( l, -l, -l, l, {
       stroke: 'white',
       lineWidth: buttonLineWidth,
@@ -107,7 +112,7 @@ define( require => {
     } );
   }
 
-  leastSquaresRegression.register( 'SourceAndReferenceNode', SourceAndReferenceNode );  
+  leastSquaresRegression.register( 'SourceAndReferenceNode', SourceAndReferenceNode );
 
   return inherit( ScreenView, SourceAndReferenceNode );
 } );
