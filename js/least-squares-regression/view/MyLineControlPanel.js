@@ -149,7 +149,7 @@ define( require => {
     rightAlignedNode.addChild( hStrut );
 
     // Create three checkboxes
-    const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: MAX_WIDTH };
+    const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: MAX_WIDTH };
     const lineCheckbox = new Checkbox( new Text( myLineString, checkboxTextOptions ), graph.myLineVisibleProperty );
     const residualsCheckbox = new Checkbox( new Text( residualsString, checkboxTextOptions ), graph.myLineShowResidualsProperty );
     const squaredResidualsCheckbox = new Checkbox( new Text( squaredResidualsString, checkboxTextOptions ), graph.myLineShowSquaredResidualsProperty );

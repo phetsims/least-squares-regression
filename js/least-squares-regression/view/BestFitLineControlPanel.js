@@ -78,15 +78,24 @@ define( require => {
 
     // Create the checkboxes
     const lineCheckbox = new Checkbox(
-      new Text( bestFitLineString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
+      new Text( bestFitLineString, {
+        font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT,
+        maxWidth: maxLabelWidth
+      } ),
       graph.bestFitLineVisibleProperty
     );
     const residualsCheckbox = new Checkbox(
-      new Text( residualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
+      new Text( residualsString, {
+        font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT,
+        maxWidth: maxLabelWidth
+      } ),
       graph.bestFitLineShowResidualsProperty
     );
     const squaredResidualsCheckbox = new Checkbox(
-      new Text( squaredResidualsString, { font: LeastSquaresRegressionConstants.CHECK_BOX_TEXT_FONT, maxWidth: maxLabelWidth } ),
+      new Text( squaredResidualsString, {
+        font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT,
+        maxWidth: maxLabelWidth
+      } ),
       graph.bestFitLineShowSquaredResidualsProperty
     );
 
