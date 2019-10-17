@@ -19,6 +19,7 @@ define( require => {
   const LayoutBox = require( 'SCENERY/nodes/LayoutBox' );
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
+  const merge = require( 'PHET_CORE/merge' );
   const Panel = require( 'SUN/Panel' );
   const Property = require( 'AXON/Property' );
   const SumOfSquaredResidualsChart = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/view/SumOfSquaredResidualsChart' );
@@ -39,7 +40,7 @@ define( require => {
    */
   function BestFitLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // AccordionBox options
       cornerRadius: 3
@@ -117,7 +118,7 @@ define( require => {
     } );
 
     // options for the accordion box
-    options = _.extend( {
+    options = merge( {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandCollapseButtonOptions: {

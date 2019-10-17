@@ -14,6 +14,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
   const Util = require( 'DOT/Util' );
@@ -30,7 +31,7 @@ define( require => {
   function EquationNode( options ) {
     Node.call( this );
 
-    options = _.extend( {
+    options = merge( {
       maxDecimalPlaces: 2,  // maximum of number of decimal places on slope and intercept
       mode: 'myLine',  // valid options are 'myLine' and 'bestFitLine',
       maxCharacterWidth: 25

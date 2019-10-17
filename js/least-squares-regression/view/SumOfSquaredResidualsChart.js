@@ -15,6 +15,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   const Line = require( 'SCENERY/nodes/Line' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Property = require( 'AXON/Property' );
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
@@ -43,7 +44,7 @@ define( require => {
    */
   function SumOfSquaredResidualsChart( graph, getSumOfSquaredResiduals, dataPointsAddedEmitter, fillColor, visibleProperty, options ) {
 
-    options = _.extend( {
+    options = merge( {
       maxLabelWidth: 150
     }, options );
 

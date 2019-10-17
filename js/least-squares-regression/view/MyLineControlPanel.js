@@ -19,6 +19,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
   const Range = require( 'DOT/Range' );
@@ -134,8 +135,8 @@ define( require => {
     bSlider.addMajorTick( 0 );
 
     // Create label below the sliders
-    const aSliderText = new Text( aString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
-    const bSliderText = new Text( bString, _.extend( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const aSliderText = new Text( aString, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const bSliderText = new Text( bString, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     const rightAlignedNode = new Node();

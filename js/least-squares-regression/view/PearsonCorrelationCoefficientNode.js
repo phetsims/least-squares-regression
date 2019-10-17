@@ -16,6 +16,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const LeastSquaresRegressionConstants = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionConstants' );
   const MathSymbols = require( 'SCENERY_PHET/MathSymbols' );
+  const merge = require( 'PHET_CORE/merge' );
   const MultiLineText = require( 'SCENERY_PHET/MultiLineText' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Panel = require( 'SUN/Panel' );
@@ -40,7 +41,7 @@ define( require => {
    */
   function PearsonCorrelationCoefficientNode( graph, options ) {
 
-    options = _.extend( {
+    options = merge( {
 
       // AccordionBox options
       cornerRadius: 3
@@ -87,7 +88,7 @@ define( require => {
     } );
 
     // Options for the Accordion Box
-    options = _.extend( {
+    options = merge( {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandCollapseButtonOptions: {
