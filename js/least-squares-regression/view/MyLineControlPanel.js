@@ -40,8 +40,8 @@ define( require => {
   // constants
   const SLIDER_OPTIONS = {
     trackFill: 'black',
-    trackSize: new Dimension2( 190, 2 ),
-    thumbSize: new Dimension2( 15, 30 ),
+    trackSize: new Dimension2( 2, 190 ),
+    thumbSize: new Dimension2( 30, 15 ),
     thumbTouchAreaYDilation: 8,
     majorTickLength: 18
   };
@@ -84,7 +84,11 @@ define( require => {
     updateTextSlope( 0 );
 
     // Create an immutable equation y = a x + b
-    const blackOptions = { font: LeastSquaresRegressionConstants.TEXT_FONT, fill: 'black', maxWidth: equationCharacterMaxWidth };
+    const blackOptions = {
+      font: LeastSquaresRegressionConstants.TEXT_FONT,
+      fill: 'black',
+      maxWidth: equationCharacterMaxWidth
+    };
     const boldOptions = {
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
