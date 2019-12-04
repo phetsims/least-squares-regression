@@ -42,7 +42,7 @@ define( require => {
     trackFill: 'black',
     trackSize: new Dimension2( 2, 190 ),
     thumbSize: new Dimension2( 30, 15 ),
-    thumbTouchAreaYDilation: 8,
+    thumbTouchAreaXDilation: 8,
     majorTickLength: 18
   };
   const MAX_WIDTH = 150;
