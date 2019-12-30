@@ -23,7 +23,7 @@ define( require => {
   const Property = require( 'AXON/Property' );
   const StringUtils = require( 'PHETCOMMON/util/StringUtils' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // string
   const symbolRString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.r' );
@@ -146,7 +146,7 @@ define( require => {
         else {
           const isNegative = (rValue < 0);
           const signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
-          rValueString = StringUtils.format( pattern_0r_1value, signString, Util.toFixed( Math.abs( rValue ), 2 ) );
+          rValueString = StringUtils.format( pattern_0r_1value, signString, Utils.toFixed( Math.abs( rValue ), 2 ) );
         }
       }
       else {

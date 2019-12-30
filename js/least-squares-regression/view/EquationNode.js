@@ -17,7 +17,7 @@ define( require => {
   const merge = require( 'PHET_CORE/merge' );
   const Node = require( 'SCENERY/nodes/Node' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
 
   // strings
   const symbolXString = require( 'string!LEAST_SQUARES_REGRESSION/symbol.x' );
@@ -165,13 +165,13 @@ define( require => {
     roundNumber: function( number ) {
       let roundedNumber;
       if ( Math.abs( number ) < 10 ) {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces ); // eg. 9.99, 0.01 if this.options.maxDecimalPlaces=2
+        roundedNumber = Utils.toFixed( number, this.options.maxDecimalPlaces ); // eg. 9.99, 0.01 if this.options.maxDecimalPlaces=2
       }
       else if ( Math.abs( number ) < 100 ) {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 1 ); // eg. 10.1, 99.9
+        roundedNumber = Utils.toFixed( number, this.options.maxDecimalPlaces - 1 ); // eg. 10.1, 99.9
       }
       else {
-        roundedNumber = Util.toFixed( number, this.options.maxDecimalPlaces - 2 );// 100, 1000, 10000, 99999
+        roundedNumber = Utils.toFixed( number, this.options.maxDecimalPlaces - 2 );// 100, 1000, 10000, 99999
       }
       return roundedNumber;
     }

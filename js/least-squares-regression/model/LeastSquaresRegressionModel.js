@@ -20,7 +20,7 @@ define( require => {
   const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
   const ObservableArray = require( 'AXON/ObservableArray' );
   const Property = require( 'AXON/Property' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   // constants
@@ -128,8 +128,8 @@ define( require => {
         selectedDataSet.dataXY.forEach( function( position ) {
           // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
           // Rescale all the {X,Y} value to the normalized graph bounds
-          const XNormalized = Util.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, self.graph.bounds.minX, self.graph.bounds.maxX, position.x );
-          const YNormalized = Util.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, self.graph.bounds.minY, self.graph.bounds.maxY, position.y );
+          const XNormalized = Utils.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, self.graph.bounds.minX, self.graph.bounds.maxX, position.x );
+          const YNormalized = Utils.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, self.graph.bounds.minY, self.graph.bounds.maxY, position.y );
           const positionVector = new Vector2( XNormalized, YNormalized );
           self.dataPoints.push( new DataPoint( positionVector ) );
         } );

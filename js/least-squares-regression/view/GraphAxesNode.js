@@ -20,7 +20,7 @@ define( function ( require ) {
   const Rectangle = require( 'SCENERY/nodes/Rectangle' );
   const Shape = require( 'KITE/Shape' );
   const Text = require( 'SCENERY/nodes/Text' );
-  const Util = require( 'DOT/Util' );
+  const Utils = require( 'DOT/Utils' );
   const Vector2 = require( 'DOT/Vector2' );
 
   //----------------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ define( function ( require ) {
 
       if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
-        this.addChild( new MajorTickNode( x, y, Util.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
+        this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
       }
       else {
         // minor tick
@@ -281,7 +281,7 @@ define( function ( require ) {
       const y = modelViewTransform.modelToViewY( modelY );
       if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % (tickSeparation.minorTicksPerMajor) < SMALL_EPSILON ) {
         // major tick
-        this.addChild( new MajorTickNode( x, y, Util.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
+        this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
       }
       else {
         // minor tick
