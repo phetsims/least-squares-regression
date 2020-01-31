@@ -33,8 +33,66 @@ define( require => {
   };
 
   // strings
+  const custom_graphTitleString = require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLatitude_graphTitleString = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLatitude_yAxisTitleString = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLatitude_xAxisTitleString = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLatitude_referenceString = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.reference' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLongitude_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLongitude_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLongitude_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusLongitude_reference = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.reference' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLatitude_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLatitude_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLatitude_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLatitude_reference = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.reference' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLongitude_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLongitude_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLongitude_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitLongitude_reference = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.reference' ); // eslint-disable-line string-require-statement-match
+  const spendingSalary_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const spendingSalary_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const spendingSalary_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const spendingSalary_reference = require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.reference' ); // eslint-disable-line string-require-statement-match
+  const wageYear_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/wageYear.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const wageYear_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/wageYear.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const wageYear_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/wageYear.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const wageYear_reference = require( 'string!LEAST_SQUARES_REGRESSION/wageYear.reference' ); // eslint-disable-line string-require-statement-match
+  const mortalityYear_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const mortalityYear_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const mortalityYear_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const mortalityYear_reference = require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.reference' ); // eslint-disable-line string-require-statement-match
+  const userYear_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/userYear.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const userYear_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/userYear.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const userYear_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/userYear.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const userYear_reference = require( 'string!LEAST_SQUARES_REGRESSION/userYear.reference' ); // eslint-disable-line string-require-statement-match
+  const gasolineYear_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const gasolineYear_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const gasolineYear_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const gasolineYear_reference = require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.reference' ); // eslint-disable-line string-require-statement-match
+  const lifeTV_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const lifeTV_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const lifeTV_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const lifeTV_reference = require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.reference' ); // eslint-disable-line string-require-statement-match
+  const speedDistance_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const speedDistance_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const speedDistance_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const speedDistance_reference = require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitChirp_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitChirp_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitChirp_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureFahrenheitChirp_reference = require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.reference' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusChirp_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusChirp_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusChirp_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const temperatureCelsiusChirp_reference = require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.reference' ); // eslint-disable-line string-require-statement-match
+  const heightShoe_graphTitle = require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ); // eslint-disable-line string-require-statement-match
+  const heightShoe_yAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const heightShoe_xAxisTitle = require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.xAxisTitle' ); // eslint-disable-line string-require-statement-match
+  const heightShoe_reference = require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.reference' ); // eslint-disable-line string-require-statement-match
+
   const custom = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/custom.graphTitle' ),
+    graphTitle: custom_graphTitleString,
     yAxisTitle: '',
     xAxisTitle: '',
     reference: '',
@@ -42,114 +100,114 @@ define( require => {
   };
 
   const temperatureCelsiusLatitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLatitude.reference' ),
+    graphTitle: temperatureCelsiusLatitude_graphTitleString,
+    yAxisTitle: temperatureCelsiusLatitude_yAxisTitleString,
+    xAxisTitle: temperatureCelsiusLatitude_xAxisTitleString,
+    reference: temperatureCelsiusLatitude_referenceString,
     source: SOURCES.TEMPERATURE_CELSIUS_LATITUDE_SOURCE
   };
 
   const temperatureCelsiusLongitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusLongitude.reference' ),
+    graphTitle: temperatureCelsiusLongitude_graphTitle,
+    yAxisTitle: temperatureCelsiusLongitude_yAxisTitle,
+    xAxisTitle: temperatureCelsiusLongitude_xAxisTitle,
+    reference: temperatureCelsiusLongitude_reference,
     source: SOURCES.TEMPERATURE_CELSIUS_LONGITUDE_SOURCE
   };
 
   const temperatureFahrenheitLatitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLatitude.reference' ),
+    graphTitle: temperatureFahrenheitLatitude_graphTitle,
+    yAxisTitle: temperatureFahrenheitLatitude_yAxisTitle,
+    xAxisTitle: temperatureFahrenheitLatitude_xAxisTitle,
+    reference: temperatureFahrenheitLatitude_reference,
     source: SOURCES.TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE
   };
 
   const temperatureFahrenheitLongitude = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitLongitude.reference' ),
+    graphTitle: temperatureFahrenheitLongitude_graphTitle,
+    yAxisTitle: temperatureFahrenheitLongitude_yAxisTitle,
+    xAxisTitle: temperatureFahrenheitLongitude_xAxisTitle,
+    reference: temperatureFahrenheitLongitude_reference,
     source: SOURCES.TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE
   };
 
   const spendingSalary = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/spendingSalary.reference' ),
+    graphTitle: spendingSalary_graphTitle,
+    yAxisTitle: spendingSalary_yAxisTitle,
+    xAxisTitle: spendingSalary_xAxisTitle,
+    reference: spendingSalary_reference,
     source: SOURCES.SPENDING_SALARY_SOURCE
   };
 
   const wageYear = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/wageYear.reference' ),
+    graphTitle: wageYear_graphTitle,
+    yAxisTitle: wageYear_yAxisTitle,
+    xAxisTitle: wageYear_xAxisTitle,
+    reference: wageYear_reference,
     source: SOURCES.WAGE_YEAR_SOURCE
   };
 
   const mortalityYear = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/mortalityYear.reference' ),
+    graphTitle: mortalityYear_graphTitle,
+    yAxisTitle: mortalityYear_yAxisTitle,
+    xAxisTitle: mortalityYear_xAxisTitle,
+    reference: mortalityYear_reference,
     source: SOURCES.MORTALITY_YEAR_SOURCE
   };
 
   const userYear = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/userYear.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/userYear.reference' ),
+    graphTitle: userYear_graphTitle,
+    yAxisTitle: userYear_yAxisTitle,
+    xAxisTitle: userYear_xAxisTitle,
+    reference: userYear_reference,
     source: SOURCES.USER_YEAR_SOURCE
   };
 
   const gasolineYear = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/gasolineYear.reference' ),
+    graphTitle: gasolineYear_graphTitle,
+    yAxisTitle: gasolineYear_yAxisTitle,
+    xAxisTitle: gasolineYear_xAxisTitle,
+    reference: gasolineYear_reference,
     source: SOURCES.GASOLINE_YEAR_SOURCE
   };
 
   const lifeTV = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/lifeTV.reference' ),
+    graphTitle: lifeTV_graphTitle,
+    yAxisTitle: lifeTV_yAxisTitle,
+    xAxisTitle: lifeTV_xAxisTitle,
+    reference: lifeTV_reference,
     source: SOURCES.LIFE_TV_SOURCE
   };
 
   const speedDistance = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/speedDistance.reference' ),
+    graphTitle: speedDistance_graphTitle,
+    yAxisTitle: speedDistance_yAxisTitle,
+    xAxisTitle: speedDistance_xAxisTitle,
+    reference: speedDistance_reference,
     source: SOURCES.SPEED_DISTANCE_SOURCE
   };
 
   const temperatureFahrenheitChirp = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureFahrenheitChirp.reference' ),
+    graphTitle: temperatureFahrenheitChirp_graphTitle,
+    yAxisTitle: temperatureFahrenheitChirp_yAxisTitle,
+    xAxisTitle: temperatureFahrenheitChirp_xAxisTitle,
+    reference: temperatureFahrenheitChirp_reference,
     source: SOURCES.TEMPERATURE_FAHRENHEIT_CHIRP_SOURCE
   };
 
   const temperatureCelsiusChirp = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/temperatureCelsiusChirp.reference' ),
+    graphTitle: temperatureCelsiusChirp_graphTitle,
+    yAxisTitle: temperatureCelsiusChirp_yAxisTitle,
+    xAxisTitle: temperatureCelsiusChirp_xAxisTitle,
+    reference: temperatureCelsiusChirp_reference,
     source: SOURCES.TEMPERATURE_CELSIUS_CHIRP_SOURCE
   };
 
   const heightShoe = {
-    graphTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.graphTitle' ),
-    yAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.yAxisTitle' ),
-    xAxisTitle: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.xAxisTitle' ),
-    reference: require( 'string!LEAST_SQUARES_REGRESSION/heightShoe.reference' ),
+    graphTitle: heightShoe_graphTitle,
+    yAxisTitle: heightShoe_yAxisTitle,
+    xAxisTitle: heightShoe_xAxisTitle,
+    reference: heightShoe_reference,
     source: SOURCES.HEIGHT_SHOE_SOURCE
   };
 
