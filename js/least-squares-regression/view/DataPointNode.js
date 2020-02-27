@@ -6,45 +6,41 @@
  * @author John Blanco
  * @author Martin Veillette (Berea College)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const inherit = require( 'PHET_CORE/inherit' );
-  const leastSquaresRegression = require( 'LEAST_SQUARES_REGRESSION/leastSquaresRegression' );
-  const Node = require( 'SCENERY/nodes/Node' );
+import inherit from '../../../../phet-core/js/inherit.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import leastSquaresRegression from '../../leastSquaresRegression.js';
 
-  /**
-   * @param {DataPoint} dataPoint
-   * @param {Node} representation
-   * @param {ModelViewTransform2} modelViewTransform
-   * @constructor
-   */
-  function DataPointNode( dataPoint, representation, modelViewTransform ) {
-    Node.call( this, { cursor: 'pointer', children: [ representation ] } );
-    const self = this;
+/**
+ * @param {DataPoint} dataPoint
+ * @param {Node} representation
+ * @param {ModelViewTransform2} modelViewTransform
+ * @constructor
+ */
+function DataPointNode( dataPoint, representation, modelViewTransform ) {
+  Node.call( this, { cursor: 'pointer', children: [ representation ] } );
+  const self = this;
 
-    // Create a listener to the position of the dataPoint
-    const centerPositionListener = function ( position ) {
-      self.center = modelViewTransform.modelToViewPosition( position );
-    };
+  // Create a listener to the position of the dataPoint
+  const centerPositionListener = function( position ) {
+    self.center = modelViewTransform.modelToViewPosition( position );
+  };
 
-    // Move this node as the model representation moves
-    dataPoint.positionProperty.link( centerPositionListener );
+  // Move this node as the model representation moves
+  dataPoint.positionProperty.link( centerPositionListener );
 
-    // @private: just for dispose.  Named based on the type name so it won't have a name collision with parent/child ones
-    this.disposeDataPointNode = function () {
-      dataPoint.positionProperty.unlink( centerPositionListener );
-    };
+  // @private: just for dispose.  Named based on the type name so it won't have a name collision with parent/child ones
+  this.disposeDataPointNode = function() {
+    dataPoint.positionProperty.unlink( centerPositionListener );
+  };
 
+}
+
+leastSquaresRegression.register( 'DataPointNode', DataPointNode );
+
+export default inherit( Node, DataPointNode, {
+  dispose: function() {
+    this.disposeDataPointNode();
+    Node.prototype.dispose.call( this );
   }
-
-  leastSquaresRegression.register( 'DataPointNode', DataPointNode );
-
-  return inherit( Node, DataPointNode, {
-    dispose: function() {
-      this.disposeDataPointNode();
-      Node.prototype.dispose.call( this );
-    }
-  } );
 } );

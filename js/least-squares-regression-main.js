@@ -5,28 +5,24 @@
  *
  * @author Martin Veillette (Berea College)
  */
-define( require => {
-  'use strict';
 
-  // modules
-  const LeastSquaresRegressionScreen = require( 'LEAST_SQUARES_REGRESSION/least-squares-regression/LeastSquaresRegressionScreen' );
-  const Sim = require( 'JOIST/Sim' );
-  const SimLauncher = require( 'JOIST/SimLauncher' );
+import Sim from '../../joist/js/Sim.js';
+import SimLauncher from '../../joist/js/SimLauncher.js';
+import leastSquaresRegressionStrings from './least-squares-regression-strings.js';
+import LeastSquaresRegressionScreen from './least-squares-regression/LeastSquaresRegressionScreen.js';
 
-  // strings
-  const leastSquaresRegressionTitleString = require( 'string!LEAST_SQUARES_REGRESSION/least-squares-regression.title' );
+const leastSquaresRegressionTitleString = leastSquaresRegressionStrings[ 'least-squares-regression' ].title;
 
-  const simOptions = {
-    credits: {
-      leadDesign: 'Amanda McGarry',
-      softwareDevelopment: 'Martin Veillette',
-      team: 'Trish Loeblein, Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Bryan Yoelin'
-    }
-  };
+const simOptions = {
+  credits: {
+    leadDesign: 'Amanda McGarry',
+    softwareDevelopment: 'Martin Veillette',
+    team: 'Trish Loeblein, Ariel Paul, Kathy Perkins',
+    qualityAssurance: 'Steele Dalton, Bryan Yoelin'
+  }
+};
 
-  SimLauncher.launch( function() {
-    const sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
-    sim.start();
-  } );
+SimLauncher.launch( function() {
+  const sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
+  sim.start();
 } );
