@@ -17,7 +17,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import SunConstants from '../../../../sun/js/SunConstants.js';
-import leastSquaresRegressionStrings from '../../least-squares-regression-strings.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import EquationNode from './EquationNode.js';

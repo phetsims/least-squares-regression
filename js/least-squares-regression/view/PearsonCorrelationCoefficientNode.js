@@ -19,7 +19,7 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import leastSquaresRegressionStrings from '../../least-squares-regression-strings.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 

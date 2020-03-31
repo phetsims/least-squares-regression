@@ -8,7 +8,7 @@
  */
 
 import Range from '../../../../dot/js/Range.js';
-import leastSquaresRegressionStrings from '../../least-squares-regression-strings.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 
 // source strings - isolated here, these sources should not be translatable

@@ -8,7 +8,7 @@
 
 import Sim from '../../joist/js/Sim.js';
 import SimLauncher from '../../joist/js/SimLauncher.js';
-import leastSquaresRegressionStrings from './least-squares-regression-strings.js';
+import leastSquaresRegressionStrings from './leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionScreen from './least-squares-regression/LeastSquaresRegressionScreen.js';
 
 const leastSquaresRegressionTitleString = leastSquaresRegressionStrings[ 'least-squares-regression' ].title;
