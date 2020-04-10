@@ -172,13 +172,16 @@ function MyLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options 
 
   // assemble all the previous nodes in a vertical box
   const mainBox = new LayoutBox( {
-    spacing: 10, children: [
+    spacing: 10,
+    children: [
       lineCheckbox,
       rightAlignedNode,
       residualsCheckbox,
       squaredResidualsCheckbox,
       this.sumOfSquaredResiduals
-    ], align: 'left'
+    ],
+    align: 'left',
+    excludeInvisibleChildrenFromBounds: false
   } );
 
   // layout the internal nodes of the right Aligned Node

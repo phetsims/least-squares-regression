@@ -140,6 +140,7 @@ function BestFitLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, opt
         squaredResidualsCheckbox,
         this.sumOfSquaredResidualsChart
       ],
+      excludeInvisibleChildrenFromBounds: false,
       align: 'left'
     } ),
     options );
