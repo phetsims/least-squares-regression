@@ -160,7 +160,7 @@ function GraphNode( graph, viewBounds, modelViewTransform ) {
 
 leastSquaresRegression.register( 'GraphNode', GraphNode );
 
-export default inherit( Node, GraphNode, {
+inherit( Node, GraphNode, {
   reset: function() {
     this.updateBestFitLine();
   },
@@ -200,3 +200,5 @@ export default inherit( Node, GraphNode, {
   }
 
 } );
+
+export default GraphNode;

@@ -114,7 +114,7 @@ function PearsonCorrelationCoefficientNode( graph, options ) {
 
 leastSquaresRegression.register( 'PearsonCorrelationCoefficientNode', PearsonCorrelationCoefficientNode );
 
-export default inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
+inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
   reset: function() {
     // Close the accordion Box
     this.expandedProperty.reset();
@@ -158,3 +158,5 @@ export default inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
     this.rightHandSideText.text = rValueString;
   }
 } );
+
+export default PearsonCorrelationCoefficientNode;

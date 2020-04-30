@@ -346,7 +346,7 @@ function LeastSquaresRegressionScreenView( model ) {
 
 leastSquaresRegression.register( 'LeastSquaresRegressionScreenView', LeastSquaresRegressionScreenView );
 
-export default inherit( ScreenView, LeastSquaresRegressionScreenView, {
+inherit( ScreenView, LeastSquaresRegressionScreenView, {
 
   /**
    * This is taken from MoleculesAndLightScreenView with modifications.
@@ -377,3 +377,5 @@ export default inherit( ScreenView, LeastSquaresRegressionScreenView, {
 
   }
 } );
+
+export default LeastSquaresRegressionScreenView;

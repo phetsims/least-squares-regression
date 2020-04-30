@@ -148,7 +148,7 @@ function BestFitLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, opt
 
 leastSquaresRegression.register( 'BestFitLineControlPanel', BestFitLineControlPanel );
 
-export default inherit( AccordionBox, BestFitLineControlPanel, {
+inherit( AccordionBox, BestFitLineControlPanel, {
   /**
    * Reset
    * @public
@@ -177,3 +177,5 @@ export default inherit( AccordionBox, BestFitLineControlPanel, {
     }
   }
 } );
+
+export default BestFitLineControlPanel;

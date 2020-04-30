@@ -119,8 +119,10 @@ function SumOfSquaredResidualsChart( graph, getSumOfSquaredResiduals, dataPoints
 
 leastSquaresRegression.register( 'SumOfSquaredResidualsChart', SumOfSquaredResidualsChart );
 
-export default inherit( Node, SumOfSquaredResidualsChart, {
+inherit( Node, SumOfSquaredResidualsChart, {
   reset: function() {
     this.updateWidth();
   }
 } );
+
+export default SumOfSquaredResidualsChart;

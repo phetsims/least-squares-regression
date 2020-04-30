@@ -115,7 +115,7 @@ function EquationNode( options ) {
 
 leastSquaresRegression.register( 'EquationNode', EquationNode );
 
-export default inherit( Node, EquationNode, {
+inherit( Node, EquationNode, {
   /**
    * Set the text of the slope and its accompanying sign
    * @public
@@ -176,3 +176,5 @@ export default inherit( Node, EquationNode, {
     return roundedNumber;
   }
 } );
+
+export default EquationNode;

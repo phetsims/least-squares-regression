@@ -232,8 +232,10 @@ function MyLineControlPanel( graph, dataPoints, dataPointsAddedEmitter, options 
 
 leastSquaresRegression.register( 'MyLineControlPanel', MyLineControlPanel );
 
-export default inherit( Panel, MyLineControlPanel, {
+inherit( Panel, MyLineControlPanel, {
   reset: function() {
     this.sumOfSquaredResiduals.reset();
   }
 } );
+
+export default MyLineControlPanel;

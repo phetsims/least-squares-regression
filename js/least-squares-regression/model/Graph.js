@@ -92,7 +92,7 @@ function Graph( xRange, yRange ) {
 
 leastSquaresRegression.register( 'Graph', Graph );
 
-export default inherit( Object, Graph, {
+inherit( Object, Graph, {
   /**
    * Reset the visibility of the lines and residuals as well as the angle and intercept.
    * Empty out the two residual arrays and the dataPoints on Graph array
@@ -544,3 +544,5 @@ export default inherit( Object, Graph, {
     }
   }
 } );
+
+export default Graph;

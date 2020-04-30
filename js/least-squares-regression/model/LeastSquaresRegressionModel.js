@@ -142,7 +142,7 @@ function LeastSquaresRegressionModel() {
 
 leastSquaresRegression.register( 'LeastSquaresRegressionModel', LeastSquaresRegressionModel );
 
-export default inherit( Object, LeastSquaresRegressionModel, {
+inherit( Object, LeastSquaresRegressionModel, {
 
   reset: function() {
     this.showGridProperty.reset();
@@ -231,3 +231,5 @@ export default inherit( Object, LeastSquaresRegressionModel, {
     dataPoint.returnedToOriginEmitter.addListener( dataPoint.returnedToOriginListener );
   }
 } );
+
+export default LeastSquaresRegressionModel;

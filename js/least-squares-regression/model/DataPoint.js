@@ -39,7 +39,7 @@ function DataPoint( initialPosition ) {
 
 leastSquaresRegression.register( 'DataPoint', DataPoint );
 
-export default inherit( Object, DataPoint, {
+inherit( Object, DataPoint, {
 
   /**
    *  resets all the properties of DataPoint
@@ -89,3 +89,5 @@ export default inherit( Object, DataPoint, {
     }
   }
 } );
+
+export default DataPoint;

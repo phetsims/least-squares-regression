@@ -38,9 +38,11 @@ function DataPointNode( dataPoint, representation, modelViewTransform ) {
 
 leastSquaresRegression.register( 'DataPointNode', DataPointNode );
 
-export default inherit( Node, DataPointNode, {
+inherit( Node, DataPointNode, {
   dispose: function() {
     this.disposeDataPointNode();
     Node.prototype.dispose.call( this );
   }
 } );
+
+export default DataPointNode;
