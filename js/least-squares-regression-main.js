@@ -7,7 +7,7 @@
  */
 
 import Sim from '../../joist/js/Sim.js';
-import SimLauncher from '../../joist/js/SimLauncher.js';
+import simLauncher from '../../joist/js/simLauncher.js';
 import leastSquaresRegressionStrings from './leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionScreen from './least-squares-regression/LeastSquaresRegressionScreen.js';
 
@@ -22,7 +22,7 @@ const simOptions = {
   }
 };
 
-SimLauncher.launch( function() {
+simLauncher.launch( function() {
   const sim = new Sim( leastSquaresRegressionTitleString, [ new LeastSquaresRegressionScreen() ], simOptions );
   sim.start();
 } );
