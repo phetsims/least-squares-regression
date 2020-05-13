@@ -215,9 +215,9 @@ function XAxisNode( dataSet, modelViewTransform ) {
   Node.call( this );
 
   // horizontal line
-  const tailLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
-  const tipLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
-  const lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
+  const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
+  const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
+  const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
     fill: AXIS_COLOR,
     stroke: 'black'
   } );
@@ -259,9 +259,9 @@ function YAxisNode( dataSet, modelViewTransform ) {
   Node.call( this );
 
   // vertical line
-  const tailLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.min - AXIS_EXTENT ) );
-  const tipLocation = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.max + AXIS_EXTENT ) );
-  const lineNode = new Line( tailLocation.x, tailLocation.y, tipLocation.x, tipLocation.y, {
+  const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.min - AXIS_EXTENT ) );
+  const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.max + AXIS_EXTENT ) );
+  const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
     fill: AXIS_COLOR,
     stroke: 'black'
   } );

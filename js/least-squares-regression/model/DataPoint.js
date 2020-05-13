@@ -30,7 +30,7 @@ function DataPoint( initialPosition ) {
   this.userControlledProperty = new BooleanProperty( false );
 
   // @public read-only {Property.<boolean>}
-  // Flag that indicates whether this element is animating from one location to the bucket.
+  // Flag that indicates whether this element is animating from one position to the bucket.
   this.animatingProperty = new BooleanProperty( false );
 
   // @public
