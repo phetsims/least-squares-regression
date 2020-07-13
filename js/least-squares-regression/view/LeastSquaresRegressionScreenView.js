@@ -20,8 +20,8 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 import BestFitLineControlPanel from './BestFitLineControlPanel.js';
@@ -75,7 +75,7 @@ const DATA_POINT_CREATOR_OFFSET_POSITIONS = [
  */
 function LeastSquaresRegressionScreenView( model ) {
 
-  ScreenView.call( this, { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
+  ScreenView.call( this );
 
   const self = this;
 
