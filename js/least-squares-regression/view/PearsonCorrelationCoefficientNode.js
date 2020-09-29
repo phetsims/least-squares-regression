@@ -6,9 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
@@ -19,115 +17,106 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
 // string
-const symbolRString = leastSquaresRegressionStrings.symbol.r;
 const pattern_0r_1value = '{0} {1}';
-const correlationCoefficientString = leastSquaresRegressionStrings.correlationCoefficient;
 
 // constants
-const R_EQUALS = StringUtils.format( '{0} =', symbolRString );
+const R_EQUALS = StringUtils.format( '{0} =', leastSquaresRegressionStrings.symbol.r );
+const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
-/**
- *
- * @param {Graph} graph
- * @param {Object} [options]
- * @constructor
- */
-function PearsonCorrelationCoefficientNode( graph, options ) {
-
-  options = merge( {
-
-    // AccordionBox options
-    cornerRadius: 3
-  }, options );
-
-  // property of the accordion Box
-  this.expandedProperty = new Property( false );
-
-  this.graph = graph;
-
-  // restrict width of labels for i18n
-  const maxLabelWidth = 120;
-
-  // Create the left hand side of the equation (includes the equal sign)
-  const leftHandSideText = new Text( R_EQUALS, { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
-
-  // Create the right hand side of the equation
-  this.rightHandSideText = new Text( '', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } );
-
-  // calculate the maximum width of the right hand side of the equation
-  const rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT } ).width;
-  const hStrut = new HStrut( rightHandSideMaxWidth );
-
-  hStrut.left = leftHandSideText.right + 5;
-  this.rightHandSideText.left = leftHandSideText.right + 5;
-
-  // Create the equation
-  const equation = new Node( {
-    children: [
-      leftHandSideText,
-      hStrut,
-      this.rightHandSideText
-    ],
-    maxWidth: maxLabelWidth
-  } );
-
-  // Create the panel that holds the equation
-  const mutableEquationPanel = new Panel( equation, {
-    fill: LeastSquaresRegressionConstants.GRAPH_BACKGROUND_COLOR,
-    cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
-    stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
-    resize: false,
-    xMargin: 10
-  } );
-
-  // Options for the Accordion Box
-  options = merge( {
-    buttonXMargin: 10,
-    buttonYMargin: 10,
-    expandCollapseButtonOptions: {
-      touchAreaXDilation: 16,
-      touchAreaYDilation: 16
-    },
-    expandedProperty: this.expandedProperty,
-    titleYMargin: 10,
-    titleNode: new MultiLineText( correlationCoefficientString, {
-      font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-      maxWidth: maxLabelWidth
-    } ),
-    titleAlignY: 'top',
-    contentXMargin: 10,
-    contentYMargin: 10
-  }, options );
-
-  // Add the panel to the Accordion Box
-  AccordionBox.call( this, new LayoutBox( {
-      children: [ new HStrut( 180 ), mutableEquationPanel ],
-      orientation: 'vertical'
-    } ),
-    options );
-}
-
-leastSquaresRegression.register( 'PearsonCorrelationCoefficientNode', PearsonCorrelationCoefficientNode );
-
-inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
-  reset: function() {
-    // Close the accordion Box
-    this.expandedProperty.reset();
-    // Update the text of the equation
-    this.update();
-  },
+class PearsonCorrelationCoefficientNode extends AccordionBox {
 
   /**
-   * Update the value of the right hand side of  the equation
+   * @param {Graph} graph
+   * @param {Object} [options]
+   */
+  constructor( graph, options ) {
+
+    // Options for the Accordion Box
+    options = merge( {
+      cornerRadius: 3,
+      buttonXMargin: 10,
+      buttonYMargin: 10,
+      expandCollapseButtonOptions: {
+        touchAreaXDilation: 16,
+        touchAreaYDilation: 16
+      },
+      titleYMargin: 10,
+      titleNode: new MultiLineText( leastSquaresRegressionStrings.correlationCoefficient, {
+        font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
+        maxWidth: MAX_LABEL_WIDTH
+      } ),
+      titleAlignY: 'top',
+      contentXMargin: 10,
+      contentYMargin: 10
+    }, options );
+
+    const textOptions = { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT };
+
+    // Create the left hand side of the equation (includes the equal sign)
+    const leftHandSideText = new Text( R_EQUALS, textOptions );
+
+    // Create the right hand side of the equation
+    const rightHandSideText = new Text( '', textOptions );
+
+    // calculate the maximum width of the right hand side of the equation
+    const rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', textOptions ).width;
+    const hStrut = new HStrut( rightHandSideMaxWidth );
+
+    hStrut.left = leftHandSideText.right + 5;
+    rightHandSideText.left = leftHandSideText.right + 5;
+
+    // Create the equation
+    const equation = new Node( {
+      children: [
+        leftHandSideText,
+        hStrut,
+        rightHandSideText
+      ],
+      maxWidth: MAX_LABEL_WIDTH
+    } );
+
+    // Create the panel that holds the equation
+    const mutableEquationPanel = new Panel( equation, {
+      fill: LeastSquaresRegressionConstants.GRAPH_BACKGROUND_COLOR,
+      cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
+      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
+      resize: false,
+      xMargin: 10
+    } );
+
+    const content = new LayoutBox( {
+      children: [ new HStrut( 180 ), mutableEquationPanel ],
+      orientation: 'vertical'
+    } );
+
+    super( content, options );
+
+    // @private
+    this.graph = graph;
+    this.rightHandSideText = rightHandSideText;
+  }
+
+  /**
+   * @public
+   * @override
+   */
+  reset() {
+    this.update();
+    super.reset();
+  }
+
+  /**
+   * Updates the value of the right hand side of the equation.
    * @public
    */
-  update: function() {
+  update() {
     let rValueString;
+
     // Check for the existence of the rValue
     if ( this.graph.isLinearFitDefined() ) {
       const rValue = this.graph.getPearsonCoefficientCorrelation();
@@ -151,12 +140,15 @@ inherit( AccordionBox, PearsonCorrelationCoefficientNode, {
       }
     }
     else {
+
       // Set to null if the Pearson Coefficient does not exist
       rValueString = '';
     }
+
     // Update the text on the right Hand side of the equation
     this.rightHandSideText.text = rValueString;
   }
-} );
+}
 
+leastSquaresRegression.register( 'PearsonCorrelationCoefficientNode', PearsonCorrelationCoefficientNode );
 export default PearsonCorrelationCoefficientNode;
