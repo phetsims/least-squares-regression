@@ -1,5 +1,6 @@
 // Copyright 2014-2020, University of Colorado Boulder
 
+//TODO rename to CorrelationCoefficientAccordionBox
 /**
  * A Scenery node that shows the Pearson correlation coefficient in an equation form
  *
