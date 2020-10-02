@@ -12,7 +12,7 @@
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import ObservableArray from '../../../../axon/js/ObservableArray.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -80,8 +80,8 @@ function Graph( xRange, yRange ) {
   this.bounds = new Bounds2( 0, 0, 1, 1 );
 
   // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
-  this.myLineResiduals = new ObservableArray(); // @public
-  this.bestFitLineResiduals = new ObservableArray(); // @public
+  this.myLineResiduals = createObservableArray(); // @public
+  this.bestFitLineResiduals = createObservableArray(); // @public
 
   // array of the dataPoints that are overlapping the graph.
   this.dataPointsOnGraph = [];  // @public read-only
