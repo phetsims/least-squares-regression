@@ -180,7 +180,7 @@ inherit( Object, Graph, {
    */
   removeMyLineResidual: function( dataPoint ) {
     const self = this;
-    const myLineResidualsCopy = this.myLineResiduals.getArray();
+    const myLineResidualsCopy = this.myLineResiduals.slice();
     myLineResidualsCopy.forEach( function( myLineResidualProperty ) {
       if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
         self.myLineResiduals.remove( myLineResidualProperty );
