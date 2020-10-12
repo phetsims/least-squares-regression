@@ -195,7 +195,7 @@ inherit( Object, Graph, {
    */
   removeBestFitLineResidual: function( dataPoint ) {
     const self = this;
-    const bestFitLineResidualsCopy = this.bestFitLineResiduals.getArray();
+    const bestFitLineResidualsCopy = this.bestFitLineResiduals.slice();
     bestFitLineResidualsCopy.forEach( function( bestFitLineResidualProperty ) {
       if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
         self.bestFitLineResiduals.remove( bestFitLineResidualProperty );
