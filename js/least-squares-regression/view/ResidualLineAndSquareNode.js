@@ -8,7 +8,6 @@
  */
 
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import Poolable from '../../../../phet-core/js/Poolable.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -16,52 +15,47 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-/**
- *
- * @param {Property.<Residual>} residualProperty
- * @param {Object} lineColor - Object that defines all color properties of residual, squared residuals, line, etc.
- * @param {Bounds2} viewBounds
- * @param {ModelViewTransform2} modelViewTransform
- * @param {Property.<boolean>} lineVisibilityProperty
- * @param {Property.<boolean>} squareVisibilityProperty
- * @constructor
- */
-function ResidualLineAndSquareNode( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
-  Node.call( this );
+class ResidualLineAndSquareNode extends Node {
+  /**
+   * @param {Property.<Residual>} residualProperty
+   * @param {Object} lineColor - Object that defines all color properties of residual, squared residuals, line, etc.
+   * @param {Bounds2} viewBounds
+   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<boolean>} lineVisibilityProperty
+   * @param {Property.<boolean>} squareVisibilityProperty
+   */
+  constructor( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+    super();
 
-  const self = this;
+    // create line and square residual with nominal values, will set the correct value later
+    this.squareResidual = new Rectangle( 0, 0, 1, 1 );
+    this.lineResidual = new Line( 0, 0, 1, 1, {
+      lineWidth: LeastSquaresRegressionConstants.RESIDUAL_LINE_WIDTH
+    } );
 
-  // create line and square residual with nominal values, will set the correct value later
-  this.squareResidual = new Rectangle( 0, 0, 1, 1 );
-  this.lineResidual = new Line( 0, 0, 1, 1, {
-    lineWidth: LeastSquaresRegressionConstants.RESIDUAL_LINE_WIDTH
-  } );
+    // Add the square residual and line residual
+    this.addChild( this.squareResidual );
+    this.addChild( this.lineResidual );
 
-  // Add the square residual and line residual
-  this.addChild( this.squareResidual );
-  this.addChild( this.lineResidual );
+    // Add listeners
+    this.lineVisibilityPropertyListener = visible => {
+      this.lineResidual.visible = visible;
+    };
 
-  // Add listeners
-  this.lineVisibilityPropertyListener = function( visible ) {
-    self.lineResidual.visible = visible;
-  };
+    this.squareVisibilityPropertyListener = visible => {
+      this.squareResidual.visible = visible;
+    };
 
-  this.squareVisibilityPropertyListener = function( visible ) {
-    self.squareResidual.visible = visible;
-  };
+    this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
 
-  this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
+    this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+  }
 
-  this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
-}
-
-leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
-
-inherit( Node, ResidualLineAndSquareNode, {
   /**
    * Update the Line and Square Residual
+   * @public
    */
-  updateLineAndSquare: function() {
+  updateLineAndSquare() {
     const point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
     const point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
 
@@ -84,19 +78,33 @@ inherit( Node, ResidualLineAndSquareNode, {
     this.squareResidual.setRect( left, top, width, height );
     // the squareResidual should not show outside the graph.
     this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
-  },
+  }
 
-  // Was dispose, see https://github.com/phetsims/scenery/issues/601
-  release: function() {
+  /**
+   * Was dispose, see https://github.com/phetsims/scenery/issues/601
+   * @public
+   */
+  release() {
     // unlink listeners
     this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
     this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
     this.residualProperty.unlink( this.updateLineAndSquareListener );
 
     this.freeToPool(); // will throw ResidualLineAndSquareNode into the pool
-  },
+  }
 
-  set: function( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+  /**
+   * @public
+   *
+   * @param {Property.<Residual>} residualProperty
+   * @param {ColorDef} lineColor
+   * @param {Bounds2} viewBounds
+   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<boolean>} lineVisibilityProperty
+   * @param {Property.<boolean>} squareVisibilityProperty
+   * @returns {ResidualLineAndSquareNode}
+   */
+  set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
     this.lineVisibilityProperty = lineVisibilityProperty;
     this.squareVisibilityProperty = squareVisibilityProperty;
     this.residualProperty = residualProperty;
@@ -114,7 +122,9 @@ inherit( Node, ResidualLineAndSquareNode, {
 
     return this; // for chaining
   }
-} );
+}
+
+leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
 
 Poolable.mixInto( ResidualLineAndSquareNode, {
   initialize: ResidualLineAndSquareNode.prototype.set

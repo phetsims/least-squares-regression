@@ -200,7 +200,7 @@ class MyLineControlPanel extends Panel {
     super( mainBox, options );
 
     // Trigger the opacity/non-opacity when checking the myLine checkbox
-    graph.myLineVisibleProperty.link( function( enabled ) {
+    graph.myLineVisibleProperty.link( enabled => {
       equationText.visible = enabled;
       aSlider.pickable = enabled; // enable/disable slider
       bSlider.pickable = enabled;// enable/disable slider
@@ -210,18 +210,18 @@ class MyLineControlPanel extends Panel {
     } );
 
     // update the text (slope) of the equation when the aSlider is moving
-    graph.angleProperty.link( function( angle ) {
+    graph.angleProperty.link( angle => {
       updateTextSlope( angle );
     } );
 
     // update the text (intercept) of the equation when the bSlider is moving
-    graph.interceptProperty.link( function( intercept ) {
+    graph.interceptProperty.link( intercept => {
       updateTextIntercept( intercept );
     } );
 
     // Trigger an update after all the points have been added in bulk to the model
     // Update the equation text
-    dataPointsAddedEmitter.addListener( function() {
+    dataPointsAddedEmitter.addListener( () => {
       updateTextSlope( graph.angleProperty.value );
       updateTextIntercept( graph.interceptProperty.value );
     } );

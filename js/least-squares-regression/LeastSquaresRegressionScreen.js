@@ -15,8 +15,8 @@ import LeastSquaresRegressionScreenView from './view/LeastSquaresRegressionScree
 class LeastSquaresRegressionScreen extends Screen {
   constructor() {
     super(
-      function() { return new LeastSquaresRegressionModel(); },
-      function( model ) { return new LeastSquaresRegressionScreenView( model ); },
+      () => new LeastSquaresRegressionModel(),
+      model => new LeastSquaresRegressionScreenView( model ),
       { backgroundColorProperty: new Property( LeastSquaresRegressionConstants.BACKGROUND_COLOR ) }
     );
   }

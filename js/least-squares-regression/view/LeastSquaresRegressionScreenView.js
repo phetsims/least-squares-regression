@@ -17,8 +17,8 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
-import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
+import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -77,8 +77,6 @@ class LeastSquaresRegressionScreenView extends ScreenView {
 
     super();
 
-    const self = this;
-
     // Bounds of the graph (excluding the axes and labels) in scenery coordinates
     const viewGraphBounds = new Bounds2(
       this.layoutBounds.centerX - GRAPH_BOUNDS.width / 2 + GRAPH_OFFSET.x,
@@ -120,8 +118,8 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     const sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-      listener: function() {
-        self.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
+      listener: () => {
+        this.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
       },
       maxWidth: graphNode.width / 15
     } );
@@ -140,7 +138,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     backLayer.addChild( bucketHole );
 
     // Add the dataPoint creator nodes. These must be added on the backLayer but after the bucket hole for proper layering.
-    DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( function( offset ) {
+    DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( offset => {
       backLayer.addChild( new DataPointCreatorNode(
         model.addUserCreatedDataPoint.bind( model ),
         modelViewTransform, {
@@ -154,7 +152,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
       right: bucketFront.right - 3,
       top: bucketFront.bottom + 5,
       iconWidth: 25,
-      listener: function() {
+      listener: () => {
         model.returnAllDataPointsToBucket();
       }
     } );
@@ -170,11 +168,11 @@ class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Link the comboBox selectedDataSet to the Scene Graph
     // No need to unlink, listener is present for the lifetime of the sim
-    model.selectedDataSetProperty.link( function( selectedDataSet ) {
+    model.selectedDataSetProperty.link( selectedDataSet => {
 
       // Remove graphAxesNode from the scene graph if it exists
       if ( graphAxesNode ) {
-        self.removeChild( graphAxesNode );
+        this.removeChild( graphAxesNode );
         graphAxesNode.dispose();
       }
 
@@ -183,7 +181,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
       // GraphAxesNode require a special modelView Transform that is set by the dataSet
       const modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
-      self.addChild( graphAxesNode );
+      this.addChild( graphAxesNode );
       graphAxesNode.moveToBack(); //
 
       // Update the graphNode (will populate it with the new dataPoints)
@@ -211,7 +209,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     } );
 
     // Handle the comings and goings of dataPoints.
-    model.dataPoints.addItemAddedListener( function( addedDataPoint ) {
+    model.dataPoints.addItemAddedListener( addedDataPoint => {
 
       if ( model.selectedDataSetProperty.value === DataSet.CUSTOM ) {
         // Create and add the view representation for this dataPoint.
@@ -220,7 +218,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
         dataPointsLayer.addChild( dynamicDataPointNode );
 
         // Listener for position
-        const positionPropertyListener = function( position ) {
+        const positionPropertyListener = position => {
           // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
           if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animatingProperty.value ) {
 
@@ -252,7 +250,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
         addedDataPoint.positionProperty.lazyLink( positionPropertyListener );
 
         // Listener for userControlled
-        const userControlledPropertyListener = function( userControlled ) {
+        const userControlledPropertyListener = userControlled => {
           if ( userControlled ) {
             dynamicDataPointNode.moveToFront();
           }
@@ -297,7 +295,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Create the 'Reset All' Button at the bottom right, which resets the model and some view elements
     const resetAllButton = new ResetAllButton( {
-      listener: function() {
+      listener: () => {
         model.reset();
         graphNode.reset();
         pearsonCorrelationCoefficientNode.reset();
@@ -360,7 +358,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     this.addChild( sourceAndReferenceNode );
 
     var sourceAndReferenceListener = {
-      up: function() {
+      up: () => {
         sourceAndReferenceNode.removeInputListener( sourceAndReferenceListener );
         sourceAndReferenceNode.detach();
         plane.detach();

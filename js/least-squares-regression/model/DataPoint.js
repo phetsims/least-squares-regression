@@ -11,52 +11,45 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-/**
- * @param {Vector2} initialPosition
- * @constructor
- */
-function DataPoint( initialPosition ) {
+class DataPoint {
+  /**
+   * @param {Vector2} initialPosition
+   */
+  constructor( initialPosition ) {
 
-  // @public - indicates where in model space the center of this data point is.
-  this.positionProperty = new Vector2Property( initialPosition );
+    // @public - indicates where in model space the center of this data point is.
+    this.positionProperty = new Vector2Property( initialPosition );
 
-  // @public {Property.<boolean>}
-  // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by a
-  // view node.
-  this.userControlledProperty = new BooleanProperty( false );
+    // @public {Property.<boolean>}
+    // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by a
+    // view node.
+    this.userControlledProperty = new BooleanProperty( false );
 
-  // @public read-only {Property.<boolean>}
-  // Flag that indicates whether this element is animating from one position to the bucket.
-  this.animatingProperty = new BooleanProperty( false );
+    // @public read-only {Property.<boolean>}
+    // Flag that indicates whether this element is animating from one position to the bucket.
+    this.animatingProperty = new BooleanProperty( false );
 
-  // @public
-  this.returnedToOriginEmitter = new Emitter();
-}
-
-leastSquaresRegression.register( 'DataPoint', DataPoint );
-
-inherit( Object, DataPoint, {
+    // @public
+    this.returnedToOriginEmitter = new Emitter();
+  }
 
   /**
    *  resets all the properties of DataPoint
    *  @public
    */
-  reset: function() {
+  reset() {
     this.positionProperty.reset();
     this.userControlledProperty.reset();
     this.animatingProperty.reset();
-  },
+  }
   /**
    * Function that animates dataPoint back to the bucket.
    * @public
    */
-  animate: function() {
-    const self = this;
-
+  animate() {
     this.animatingProperty.set( true );
 
     const position = {
@@ -71,11 +64,11 @@ inherit( Object, DataPoint, {
       const animationTween = new TWEEN.Tween( position ).to( {
         x: this.positionProperty.initialValue.x,
         y: this.positionProperty.initialValue.y
-      }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( function() {
-        self.positionProperty.set( new Vector2( position.x, position.y ) );
-      } ).onComplete( function() {
-        self.animatingProperty.set( false );
-        self.returnedToOriginEmitter.emit();
+      }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( () => {
+        this.positionProperty.set( new Vector2( position.x, position.y ) );
+      } ).onComplete( () => {
+        this.animatingProperty.set( false );
+        this.returnedToOriginEmitter.emit();
       } );
 
       animationTween.start( phet.joist.elapsedTime );
@@ -84,10 +77,12 @@ inherit( Object, DataPoint, {
       // returned dataPoint to bucket when the distance is zero
       // no need for animation
       // see https://github.com/phetsims/least-squares-regression/issues/69
-      self.animatingProperty.set( false );
-      self.returnedToOriginEmitter.emit();
+      this.animatingProperty.set( false );
+      this.returnedToOriginEmitter.emit();
     }
   }
-} );
+}
+
+leastSquaresRegression.register( 'DataPoint', DataPoint );
 
 export default DataPoint;

@@ -8,8 +8,8 @@
  */
 
 import Range from '../../../../dot/js/Range.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 
 // source strings - isolated here, these sources should not be translatable
 const SOURCES = {

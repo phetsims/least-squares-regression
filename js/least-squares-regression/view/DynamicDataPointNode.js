@@ -6,53 +6,52 @@
  * @author Martin Veillette (Berea College)
  */
 
-import inherit from '../../../../phet-core/js/inherit.js';
 import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPointNode from './DataPointNode.js';
 
-/**
- * @param {DataPoint} dataPoint
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function DynamicDataPointNode( dataPoint, modelViewTransform ) {
+class DynamicDataPointNode extends DataPointNode {
+  /**
+   * @param {DataPoint} dataPoint
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataPoint, modelViewTransform ) {
 
-  // Create the visual representation of the DynamicDataPoint
-  const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
-    fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
-    stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
-    lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
-  } );
+    // Create the visual representation of the DynamicDataPoint
+    const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
+      fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
+      stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
+      lineWidth: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_LINE_WIDTH
+    } );
 
-  DataPointNode.call( this, dataPoint, representation, modelViewTransform );
+    super( dataPoint, representation, modelViewTransform );
 
-  // Expand the touch area
-  this.touchArea = this.localBounds.dilatedXY( 15, 15 );
+    // Expand the touch area
+    this.touchArea = this.localBounds.dilatedXY( 15, 15 );
 
-  // Add the listener that will allow the user to drag the dataPoint around.
-  this.addInputListener( new SimpleDragHandler( {
-    // Allow moving a finger (touch) across a node to pick it up.
-    allowTouchSnag: true,
+    // Add the listener that will allow the user to drag the dataPoint around.
+    this.addInputListener( new SimpleDragHandler( {
+      // Allow moving a finger (touch) across a node to pick it up.
+      allowTouchSnag: true,
 
-    // Handler that moves the dataPoint in model space.
-    start: function( event, trail ) {
-      dataPoint.userControlledProperty.set( true );
-    },
+      // Handler that moves the dataPoint in model space.
+      start: ( event, trail ) => {
+        dataPoint.userControlledProperty.set( true );
+      },
 
-    translate: function( args ) {
-      dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
-    },
+      translate: args => {
+        dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
+      },
 
-    end: function( event, trail ) {
-      dataPoint.userControlledProperty.set( false );
-    }
-  } ) );
+      end: ( event, trail ) => {
+        dataPoint.userControlledProperty.set( false );
+      }
+    } ) );
+  }
 }
 
 leastSquaresRegression.register( 'DynamicDataPointNode', DynamicDataPointNode );
 
-inherit( DataPointNode, DynamicDataPointNode );
 export default DynamicDataPointNode;

@@ -22,12 +22,10 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 const sourcePatternString = leastSquaresRegressionStrings.sourcePattern;
 
 class SourceAndReferenceNode extends ScreenView {
-
   /**
    * @param {Property.<DataSet>} selectedDataSetProperty
    */
   constructor( selectedDataSetProperty ) {
-
     /*
      * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
      * directly to the scene, instead of to some other node that already has svg renderer.
@@ -36,8 +34,6 @@ class SourceAndReferenceNode extends ScreenView {
 
     // limit the width of the dialog content for i18n
     const maxContentWidth = this.layoutBounds.width * 2 / 3;
-
-    const self = this;
 
     const referenceText = new MultiLineText( '', {
       font: LeastSquaresRegressionConstants.REFERENCE_FONT,
@@ -98,12 +94,12 @@ class SourceAndReferenceNode extends ScreenView {
 
     // Update the content of this node and the layout.
     // no need to unlink, present for the lifetime of the sim
-    selectedDataSetProperty.link( function( selectedDataSet ) {
+    selectedDataSetProperty.link( selectedDataSet => {
       referenceText.text = selectedDataSet.reference;
       const formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
       sourceText.text = formattedSourceString;
-      panel.centerX = self.layoutBounds.centerX;
-      panel.centerY = self.layoutBounds.centerY;
+      panel.centerX = this.layoutBounds.centerX;
+      panel.centerY = this.layoutBounds.centerY;
       button.centerX = panel.right;
       button.centerY = panel.top;
     } );

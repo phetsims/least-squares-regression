@@ -30,7 +30,6 @@ const R_EQUALS = StringUtils.format( '{0} =', leastSquaresRegressionStrings.symb
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
 class PearsonCorrelationCoefficientNode extends AccordionBox {
-
   /**
    * @param {Graph} graph
    * @param {Object} [options]

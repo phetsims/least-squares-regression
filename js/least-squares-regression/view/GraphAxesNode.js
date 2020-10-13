@@ -10,7 +10,6 @@
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
-import inherit from '../../../../phet-core/js/inherit.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
@@ -57,36 +56,46 @@ const MINUS_SIGN_WIDTH = new Text( MathSymbols.MINUS, { font: MAJOR_TICK_FONT } 
 
 const SMALL_EPSILON = 0.0000001; // for equalEpsilon check
 
-/**
- * Function responsible for laying out the ticks of the graph, the axis titles and the grid
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @param {Property.<boolean>} showGridProperty
- * @constructor
- */
-function GraphAxesNode( dataSet, modelViewTransform, showGridProperty ) {
+class GraphAxesNode extends Node {
+  /**
+   * Function responsible for laying out the ticks of the graph, the axis titles and the grid
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   * @param {Property.<boolean>} showGridProperty
+   */
+  constructor( dataSet, modelViewTransform, showGridProperty ) {
 
-  const gridNode = new GridNode( dataSet, modelViewTransform );
-  const showGridPropertyObserver = function( visible ) {
-    gridNode.visible = visible;
-  };
+    const gridNode = new GridNode( dataSet, modelViewTransform );
+    const showGridPropertyObserver = visible => {
+      gridNode.visible = visible;
+    };
 
-  showGridProperty.link( showGridPropertyObserver );
+    showGridProperty.link( showGridPropertyObserver );
 
-  Node.call( this, {
-    children: [
-      new BackgroundNode( dataSet, modelViewTransform ),
-      gridNode,
-      new XAxisNode( dataSet, modelViewTransform ),
-      new YAxisNode( dataSet, modelViewTransform ),
-      new XLabelNode( dataSet, modelViewTransform ),
-      new YLabelNode( dataSet, modelViewTransform )
-    ]
-  } );
+    super( {
+      children: [
+        new BackgroundNode( dataSet, modelViewTransform ),
+        gridNode,
+        new XAxisNode( dataSet, modelViewTransform ),
+        new YAxisNode( dataSet, modelViewTransform ),
+        new XLabelNode( dataSet, modelViewTransform ),
+        new YLabelNode( dataSet, modelViewTransform )
+      ]
+    } );
 
-  this.disposeGraphAxesNode = function() {
-    showGridProperty.unlink( showGridPropertyObserver );
-  };
+    this.disposeGraphAxesNode = () => {
+      showGridProperty.unlink( showGridPropertyObserver );
+    };
+  }
+
+  /**
+   * Releases references
+   * @public
+   */
+  dispose() {
+    this.disposeGraphAxesNode();
+    super.dispose();
+  }
 }
 
 leastSquaresRegression.register( 'GraphAxesNode', GraphAxesNode );
@@ -95,55 +104,55 @@ leastSquaresRegression.register( 'GraphAxesNode', GraphAxesNode );
 // major tick with label, orientation is vertical or horizontal
 //----------------------------------------------------------------------------------------
 
-// Tick is placed at (x,y) and is either vertical or horizontal.
-function MajorTickNode( x, y, value, isVertical ) {
+class MajorTickNode extends Node {
+  // Tick is placed at (x,y) and is either vertical or horizontal.
+  constructor( x, y, value, isVertical ) {
 
-  Node.call( this );
+    super();
 
-  // tick line
-  const tickLineNode = new Path( isVertical ?
-                                 Shape.lineSegment( x, y - MAJOR_TICK_LENGTH, x, y + MAJOR_TICK_LENGTH ) :
-                                 Shape.lineSegment( x - MAJOR_TICK_LENGTH, y, x + MAJOR_TICK_LENGTH, y ), {
-    stroke: MAJOR_TICK_COLOR,
-    lineWidth: MAJOR_TICK_LINE_WIDTH
-  } );
-  this.addChild( tickLineNode );
+    // tick line
+    const tickLineNode = new Path( isVertical ?
+                                   Shape.lineSegment( x, y - MAJOR_TICK_LENGTH, x, y + MAJOR_TICK_LENGTH ) :
+                                   Shape.lineSegment( x - MAJOR_TICK_LENGTH, y, x + MAJOR_TICK_LENGTH, y ), {
+      stroke: MAJOR_TICK_COLOR,
+      lineWidth: MAJOR_TICK_LINE_WIDTH
+    } );
+    this.addChild( tickLineNode );
 
-  // tick label
-  const tickLabelNode = new Text( value, { font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR } );
-  this.addChild( tickLabelNode );
+    // tick label
+    const tickLabelNode = new Text( value, { font: MAJOR_TICK_FONT, fill: MAJOR_TICK_COLOR } );
+    this.addChild( tickLabelNode );
 
-  // label position
-  if ( isVertical ) {
-    // center label under line, compensate for minus sign
-    const signXOffset = ( value < 0 ) ? -( MINUS_SIGN_WIDTH / 2 ) : 0;
-    tickLabelNode.left = tickLineNode.centerX - ( tickLabelNode.width / 2 ) + signXOffset;
-    tickLabelNode.top = tickLineNode.bottom + TICK_LABEL_SPACING;
-  }
-  else {
-    // center label to left of line
-    tickLabelNode.right = tickLineNode.left - TICK_LABEL_SPACING;
-    tickLabelNode.centerY = tickLineNode.centerY;
+    // label position
+    if ( isVertical ) {
+      // center label under line, compensate for minus sign
+      const signXOffset = ( value < 0 ) ? -( MINUS_SIGN_WIDTH / 2 ) : 0;
+      tickLabelNode.left = tickLineNode.centerX - ( tickLabelNode.width / 2 ) + signXOffset;
+      tickLabelNode.top = tickLineNode.bottom + TICK_LABEL_SPACING;
+    }
+    else {
+      // center label to left of line
+      tickLabelNode.right = tickLineNode.left - TICK_LABEL_SPACING;
+      tickLabelNode.centerY = tickLineNode.centerY;
+    }
   }
 }
-
-inherit( Node, MajorTickNode );
 
 //----------------------------------------------------------------------------------------
 // minor tick mark, no label, orientation is vertical or horizontal
 //----------------------------------------------------------------------------------------
 
-// Tick is placed at (x,y) and is either vertical or horizontal
-function MinorTickNode( x, y, isVertical ) {
-  Path.call( this, isVertical ?
-                   Shape.lineSegment( x, y - MINOR_TICK_LENGTH, x, y + MINOR_TICK_LENGTH ) :
-                   Shape.lineSegment( x - MINOR_TICK_LENGTH, y, x + MINOR_TICK_LENGTH, y ), {
-    lineWidth: MINOR_TICK_LINE_WIDTH,
-    stroke: MINOR_TICK_COLOR
-  } );
+class MinorTickNode extends Path {
+  // Tick is placed at (x,y) and is either vertical or horizontal
+  constructor( x, y, isVertical ) {
+    super( isVertical ?
+                     Shape.lineSegment( x, y - MINOR_TICK_LENGTH, x, y + MINOR_TICK_LENGTH ) :
+                     Shape.lineSegment( x - MINOR_TICK_LENGTH, y, x + MINOR_TICK_LENGTH, y ), {
+      lineWidth: MINOR_TICK_LINE_WIDTH,
+      stroke: MINOR_TICK_COLOR
+    } );
+  }
 }
-
-inherit( Path, MinorTickNode );
 
 //--------------
 // Tick Spacing for major and minor ticks
@@ -205,253 +214,241 @@ function tickSpacing( range ) {
 // x-axis (horizontal)
 //----------------------------------------------------------------------------------------
 
-/**
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function XAxisNode( dataSet, modelViewTransform ) {
+class XAxisNode extends Node {
+  /**
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform ) {
 
-  Node.call( this );
+    super();
 
-  // horizontal line
-  const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
-  const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
-  const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
-    fill: AXIS_COLOR,
-    stroke: 'black'
-  } );
-  this.addChild( lineNode );
+    // horizontal line
+    const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min - AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
+    const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.max + AXIS_EXTENT ), modelViewTransform.modelToViewY( dataSet.yRange.min ) );
+    const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
+      fill: AXIS_COLOR,
+      stroke: 'black'
+    } );
+    this.addChild( lineNode );
 
-  // ticks
-  const tickSeparation = tickSpacing( dataSet.xRange );
-  const numberOfTicks = tickSeparation.numberOfTicks;
+    // ticks
+    const tickSeparation = tickSpacing( dataSet.xRange );
+    const numberOfTicks = tickSeparation.numberOfTicks;
 
-  for ( let i = 0; i < numberOfTicks; i++ ) {
-    const modelX = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
-    const x = modelViewTransform.modelToViewX( modelX );
-    const y = modelViewTransform.modelToViewY( dataSet.yRange.min );
+    for ( let i = 0; i < numberOfTicks; i++ ) {
+      const modelX = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
+      const x = modelViewTransform.modelToViewX( modelX );
+      const y = modelViewTransform.modelToViewY( dataSet.yRange.min );
 
-    if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % ( tickSeparation.minorTicksPerMajor ) < SMALL_EPSILON ) {
-      // major tick
-      this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
-    }
-    else {
-      // minor tick
-      this.addChild( new MinorTickNode( x, y, true ) );
+      if ( Math.abs( modelX / tickSeparation.minorTickSpacing ) % ( tickSeparation.minorTicksPerMajor ) < SMALL_EPSILON ) {
+        // major tick
+        this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelX, tickSeparation.decimalPlaces ), true ) );
+      }
+      else {
+        // minor tick
+        this.addChild( new MinorTickNode( x, y, true ) );
+      }
     }
   }
 }
-
-inherit( Node, XAxisNode );
 
 //----------------------------------------------------------------------------------------
 //   y-axis (vertical)
 //----------------------------------------------------------------------------------------
 
-/***
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function YAxisNode( dataSet, modelViewTransform ) {
+class YAxisNode extends Node {
+  /***
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform ) {
 
-  Node.call( this );
+    super();
 
-  // vertical line
-  const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.min - AXIS_EXTENT ) );
-  const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.max + AXIS_EXTENT ) );
-  const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
-    fill: AXIS_COLOR,
-    stroke: 'black'
-  } );
-  this.addChild( lineNode );
+    // vertical line
+    const tailPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.min - AXIS_EXTENT ) );
+    const tipPosition = new Vector2( modelViewTransform.modelToViewX( dataSet.xRange.min ), modelViewTransform.modelToViewY( dataSet.yRange.max + AXIS_EXTENT ) );
+    const lineNode = new Line( tailPosition.x, tailPosition.y, tipPosition.x, tipPosition.y, {
+      fill: AXIS_COLOR,
+      stroke: 'black'
+    } );
+    this.addChild( lineNode );
 
-  // ticks
-  const tickSeparation = tickSpacing( dataSet.yRange );
-  const numberOfTicks = tickSeparation.numberOfTicks;
+    // ticks
+    const tickSeparation = tickSpacing( dataSet.yRange );
+    const numberOfTicks = tickSeparation.numberOfTicks;
 
-  for ( let i = 0; i < numberOfTicks; i++ ) {
-    const modelY = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
+    for ( let i = 0; i < numberOfTicks; i++ ) {
+      const modelY = tickSeparation.tickStartPosition + tickSeparation.minorTickSpacing * i;
 
-    const x = modelViewTransform.modelToViewX( dataSet.xRange.min );
-    const y = modelViewTransform.modelToViewY( modelY );
-    if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % ( tickSeparation.minorTicksPerMajor ) < SMALL_EPSILON ) {
-      // major tick
-      this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
+      const x = modelViewTransform.modelToViewX( dataSet.xRange.min );
+      const y = modelViewTransform.modelToViewY( modelY );
+      if ( Math.abs( modelY / tickSeparation.minorTickSpacing ) % ( tickSeparation.minorTicksPerMajor ) < SMALL_EPSILON ) {
+        // major tick
+        this.addChild( new MajorTickNode( x, y, Utils.toFixed( modelY, tickSeparation.decimalPlaces ), false ) );
+      }
+      else {
+        // minor tick
+        this.addChild( new MinorTickNode( x, y, false ) );
+      }
     }
-    else {
-      // minor tick
-      this.addChild( new MinorTickNode( x, y, false ) );
-    }
+
   }
-
 }
-
-inherit( Node, YAxisNode );
 
 //----------------------------------------------------------------------------------------
 //  X label
 //----------------------------------------------------------------------------------------
 
-/**
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function XLabelNode( dataSet, modelViewTransform, options ) {
+class XLabelNode extends Node {
+  /**
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform, options ) {
 
-  Node.call( this, options );
+    super( options );
 
-  const centerX = modelViewTransform.modelToViewX( ( dataSet.xRange.min + dataSet.xRange.max ) / 2 );
-  const bottom = modelViewTransform.modelToViewY( dataSet.yRange.min );
-  const xLabelNode = new Text( dataSet.xAxisTitle, {
-    font: AXIS_LABEL_FONT,
-    fill: AXIS_LABEL_COLOR,
-    centerX: centerX,
-    bottom: bottom + 50,
-    maxWidth: MAX_LABEL_WIDTH
-  } );
-  this.addChild( xLabelNode );
+    const centerX = modelViewTransform.modelToViewX( ( dataSet.xRange.min + dataSet.xRange.max ) / 2 );
+    const bottom = modelViewTransform.modelToViewY( dataSet.yRange.min );
+    const xLabelNode = new Text( dataSet.xAxisTitle, {
+      font: AXIS_LABEL_FONT,
+      fill: AXIS_LABEL_COLOR,
+      centerX: centerX,
+      bottom: bottom + 50,
+      maxWidth: MAX_LABEL_WIDTH
+    } );
+    this.addChild( xLabelNode );
+  }
 }
-
-inherit( Node, XLabelNode );
 
 //----------------------------------------------------------------------------------------
 //  Y label
 //----------------------------------------------------------------------------------------
 
-/**
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function YLabelNode( dataSet, modelViewTransform ) {
+class YLabelNode extends Node {
+  /**
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform ) {
 
-  Node.call( this );
+    super();
 
-  const centerY = modelViewTransform.modelToViewY( ( dataSet.yRange.min + dataSet.yRange.max ) / 2 );
-  const left = modelViewTransform.modelToViewX( dataSet.xRange.min );
-  const yLabelNode = new Text( dataSet.yAxisTitle, {
-    font: AXIS_LABEL_FONT,
-    fill: AXIS_LABEL_COLOR,
-    centerY: centerY,
-    left: left - 50,
-    maxWidth: MAX_LABEL_WIDTH,
-    rotation: -Math.PI / 2
-  } );
-  this.addChild( yLabelNode );
+    const centerY = modelViewTransform.modelToViewY( ( dataSet.yRange.min + dataSet.yRange.max ) / 2 );
+    const left = modelViewTransform.modelToViewX( dataSet.xRange.min );
+    const yLabelNode = new Text( dataSet.yAxisTitle, {
+      font: AXIS_LABEL_FONT,
+      fill: AXIS_LABEL_COLOR,
+      centerY: centerY,
+      left: left - 50,
+      maxWidth: MAX_LABEL_WIDTH,
+      rotation: -Math.PI / 2
+    } );
+    this.addChild( yLabelNode );
 
+  }
 }
-
-inherit( Node, YLabelNode );
 
 //----------------------------------------------------------------------------------------
 //  2D Background
 //----------------------------------------------------------------------------------------
 
-/**
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function BackgroundNode( dataSet, modelViewTransform ) {
-  Node.call( this );
+class BackgroundNode extends Node {
+  /**
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform ) {
+    super();
 
-  const backgroundNode = new Rectangle(
-    modelViewTransform.modelToViewX( dataSet.xRange.min ),
-    modelViewTransform.modelToViewY( dataSet.yRange.max ),
-    modelViewTransform.modelToViewDeltaX( dataSet.xRange.getLength() ),
-    modelViewTransform.modelToViewDeltaY( -dataSet.yRange.getLength() ),
-    { fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE } );
-  this.addChild( backgroundNode );
+    const backgroundNode = new Rectangle(
+      modelViewTransform.modelToViewX( dataSet.xRange.min ),
+      modelViewTransform.modelToViewY( dataSet.yRange.max ),
+      modelViewTransform.modelToViewDeltaX( dataSet.xRange.getLength() ),
+      modelViewTransform.modelToViewDeltaY( -dataSet.yRange.getLength() ),
+      { fill: GRID_BACKGROUND_FILL, lineWidth: GRID_BACKGROUND_LINE_WIDTH, stroke: GRID_BACKGROUND_STROKE } );
+    this.addChild( backgroundNode );
+  }
 }
-
-inherit( Node, BackgroundNode );
 
 //----------------------------------------------------------------------------------------
 //   2D grid
 //----------------------------------------------------------------------------------------
 
-/**
- * @param {DataSet} dataSet
- * @param {ModelViewTransform2} modelViewTransform
- * @constructor
- */
-function GridNode( dataSet, modelViewTransform ) {
-  Node.call( this );
+class GridNode extends Node {
+  /**
+   * @param {DataSet} dataSet
+   * @param {ModelViewTransform2} modelViewTransform
+   */
+  constructor( dataSet, modelViewTransform ) {
+    super();
 
-  // horizontal grid lines, one line for each unit of grid spacing
-  const horizontalGridLinesNode = new Node();
-  this.addChild( horizontalGridLinesNode );
-  const tickYSeparation = tickSpacing( dataSet.yRange );
-  const numberOfHorizontalGridLines = tickYSeparation.numberOfTicks;
+    // horizontal grid lines, one line for each unit of grid spacing
+    const horizontalGridLinesNode = new Node();
+    this.addChild( horizontalGridLinesNode );
+    const tickYSeparation = tickSpacing( dataSet.yRange );
+    const numberOfHorizontalGridLines = tickYSeparation.numberOfTicks;
 
-  const majorGridLinesShape = new Shape();
-  const minorGridLinesShape = new Shape();
+    const majorGridLinesShape = new Shape();
+    const minorGridLinesShape = new Shape();
 
-  const minX = dataSet.xRange.min;
-  const maxX = dataSet.xRange.max;
-  for ( let i = 0; i < numberOfHorizontalGridLines; i++ ) {
-    const modelY = tickYSeparation.tickStartPosition + tickYSeparation.minorTickSpacing * i;
-    if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
-      const yOffset = modelY;
-      const isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % ( tickYSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
-      if ( isMajorX ) {
-        majorGridLinesShape.moveTo( minX, yOffset )
-          .horizontalLineTo( maxX );
-      }
-      else {
-        minorGridLinesShape.moveTo( minX, yOffset )
-          .horizontalLineTo( maxX );
-      }
-    }
-  }
-
-  // vertical grid lines, one line for each unit of grid spacing
-  const verticalGridLinesNode = new Node();
-  this.addChild( verticalGridLinesNode );
-  const tickXSeparation = tickSpacing( dataSet.xRange );
-  const numberOfVerticalGridLines = tickXSeparation.numberOfTicks;
-  const minY = dataSet.yRange.max; // yes, swap min and max
-  const maxY = dataSet.yRange.min;
-  for ( let j = 0; j < numberOfVerticalGridLines; j++ ) {
-    const modelX = tickXSeparation.tickStartPosition + tickXSeparation.minorTickSpacing * j;
-    if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
-      const xOffset = modelX;
-      const isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % ( tickXSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
-      if ( isMajorY ) {
-        majorGridLinesShape.moveTo( xOffset, minY )
-          .verticalLineTo( maxY );
-      }
-      else {
-        minorGridLinesShape.moveTo( xOffset, minY )
-          .verticalLineTo( maxY );
+    const minX = dataSet.xRange.min;
+    const maxX = dataSet.xRange.max;
+    for ( let i = 0; i < numberOfHorizontalGridLines; i++ ) {
+      const modelY = tickYSeparation.tickStartPosition + tickYSeparation.minorTickSpacing * i;
+      if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
+        const yOffset = modelY;
+        const isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % ( tickYSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
+        if ( isMajorX ) {
+          majorGridLinesShape.moveTo( minX, yOffset )
+            .horizontalLineTo( maxX );
+        }
+        else {
+          minorGridLinesShape.moveTo( minX, yOffset )
+            .horizontalLineTo( maxX );
+        }
       }
     }
+
+    // vertical grid lines, one line for each unit of grid spacing
+    const verticalGridLinesNode = new Node();
+    this.addChild( verticalGridLinesNode );
+    const tickXSeparation = tickSpacing( dataSet.xRange );
+    const numberOfVerticalGridLines = tickXSeparation.numberOfTicks;
+    const minY = dataSet.yRange.max; // yes, swap min and max
+    const maxY = dataSet.yRange.min;
+    for ( let j = 0; j < numberOfVerticalGridLines; j++ ) {
+      const modelX = tickXSeparation.tickStartPosition + tickXSeparation.minorTickSpacing * j;
+      if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
+        const xOffset = modelX;
+        const isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % ( tickXSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
+        if ( isMajorY ) {
+          majorGridLinesShape.moveTo( xOffset, minY )
+            .verticalLineTo( maxY );
+        }
+        else {
+          minorGridLinesShape.moveTo( xOffset, minY )
+            .verticalLineTo( maxY );
+        }
+      }
+    }
+
+    const majorGridLinesPath = new Path( modelViewTransform.modelToViewShape( majorGridLinesShape ), {
+      lineWidth: MAJOR_GRID_LINE_WIDTH,
+      stroke: MAJOR_GRID_LINE_COLOR
+    } );
+    const minorGridLinesPath = new Path( modelViewTransform.modelToViewShape( minorGridLinesShape ), {
+      lineWidth: MINOR_GRID_LINE_WIDTH,
+      stroke: MINOR_GRID_LINE_COLOR
+    } );
+
+    this.addChild( majorGridLinesPath );
+    this.addChild( minorGridLinesPath );
   }
-
-  const majorGridLinesPath = new Path( modelViewTransform.modelToViewShape( majorGridLinesShape ), {
-    lineWidth: MAJOR_GRID_LINE_WIDTH,
-    stroke: MAJOR_GRID_LINE_COLOR
-  } );
-  const minorGridLinesPath = new Path( modelViewTransform.modelToViewShape( minorGridLinesShape ), {
-    lineWidth: MINOR_GRID_LINE_WIDTH,
-    stroke: MINOR_GRID_LINE_COLOR
-  } );
-
-  this.addChild( majorGridLinesPath );
-  this.addChild( minorGridLinesPath );
 }
-
-inherit( Node, GridNode );
 
 //----------------------------------------------------------------------------------------
 
-inherit( Node, GraphAxesNode, {
-  dispose: function() {
-    this.disposeGraphAxesNode();
-    Node.prototype.dispose.call( this );
-  }
-} );
 export default GraphAxesNode;
