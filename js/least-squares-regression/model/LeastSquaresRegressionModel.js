@@ -209,7 +209,9 @@ class LeastSquaresRegressionModel {
     // can be 'put back' into the bucket. Listeners might have been removed when it was removed from the
     // graph so check to make sure listeners are still attached before unlinking.
     dataPoint.returnedToOriginListener = () => {
-      this.dataPoints.remove( dataPoint );
+      if (this.dataPoints.includes( dataPoint )) {
+        this.dataPoints.remove( dataPoint );
+      }
 
       if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
         dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
