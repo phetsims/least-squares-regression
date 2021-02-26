@@ -17,8 +17,8 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Plane from '../../../../scenery/js/nodes/Plane.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
+import Checkbox from '../../../../sun/js/Checkbox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -222,9 +222,8 @@ class LeastSquaresRegressionScreenView extends ScreenView {
           // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
           if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animatingProperty.value ) {
 
-            if ( !model.graph.isDataPointOnList( addedDataPoint ) )
-              // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
-            {
+            // Add dataPoint to the array of dataPoint on graph as well as the associated residuals.
+            if ( !model.graph.isDataPointOnList( addedDataPoint ) ) {
               model.graph.addPointAndResiduals( addedDataPoint );
             }
           }
