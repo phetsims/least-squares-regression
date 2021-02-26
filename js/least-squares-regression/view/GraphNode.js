@@ -172,6 +172,7 @@ class GraphNode extends Node {
     // make sure that the best fit residuals are only visible when the best fit line is defined
     this.updateBestFitResidualsVisible();
   }
+
   /**
    * Update Best Fit Line
    * @private

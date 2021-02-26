@@ -132,6 +132,7 @@ class Graph {
     this.updateMyLineResiduals();
     this.updateBestFitLineResiduals();
   }
+
   /**
    * Convert the angle of a line (measured from the horizontal x axis) to a slope
    * @public read-only
@@ -140,6 +141,7 @@ class Graph {
   slope( angle ) {
     return Math.tan( angle ) * this.bounds.height / this.bounds.width;
   }
+
   /**
    * Add a 'My Line' model Residual to a dataPoint
    * @private
@@ -149,6 +151,7 @@ class Graph {
     const myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
     this.myLineResiduals.push( new Property( myLineResidual ) );
   }
+
   /**
    * Add a 'Best Fit Line' model Residual to a dataPoint
    * @private
@@ -214,6 +217,7 @@ class Graph {
       } );
     }
   }
+
   /**
    * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
    * This is done for performance reason.

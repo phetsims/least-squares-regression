@@ -146,8 +146,8 @@ class MinorTickNode extends Path {
   // Tick is placed at (x,y) and is either vertical or horizontal
   constructor( x, y, isVertical ) {
     super( isVertical ?
-                     Shape.lineSegment( x, y - MINOR_TICK_LENGTH, x, y + MINOR_TICK_LENGTH ) :
-                     Shape.lineSegment( x - MINOR_TICK_LENGTH, y, x + MINOR_TICK_LENGTH, y ), {
+           Shape.lineSegment( x, y - MINOR_TICK_LENGTH, x, y + MINOR_TICK_LENGTH ) :
+           Shape.lineSegment( x - MINOR_TICK_LENGTH, y, x + MINOR_TICK_LENGTH, y ), {
       lineWidth: MINOR_TICK_LINE_WIDTH,
       stroke: MINOR_TICK_COLOR
     } );

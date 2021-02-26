@@ -45,6 +45,7 @@ class DataPoint {
     this.userControlledProperty.reset();
     this.animatingProperty.reset();
   }
+
   /**
    * Function that animates dataPoint back to the bucket.
    * @public
