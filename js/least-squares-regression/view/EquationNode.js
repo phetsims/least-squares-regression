@@ -40,7 +40,7 @@ class EquationNode extends Node {
     let stringTextOptions; // font and fill options for 'pure' strings, eg. 'y'
 
     switch( options.mode ) {
-      case  'myLine' :
+      case  'myLine':
         numericalTextOptions = {
           font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
           fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
