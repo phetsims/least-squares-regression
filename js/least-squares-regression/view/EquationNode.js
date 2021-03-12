@@ -68,12 +68,12 @@ class EquationNode extends Node {
 
     let maxWidthSlopeString = '0.';
     for ( let i = 0; i < options.maxDecimalPlaces; i++ ) {
-      maxWidthSlopeString = maxWidthSlopeString + '0';
+      maxWidthSlopeString = `${maxWidthSlopeString}0`;
     }
 
     let maxWidthInterceptString = '0.';
     for ( let j = 0; j < options.maxDecimalPlaces; j++ ) {
-      maxWidthInterceptString = maxWidthInterceptString + '0';
+      maxWidthInterceptString = `${maxWidthInterceptString}0`;
     }
 
     // @public

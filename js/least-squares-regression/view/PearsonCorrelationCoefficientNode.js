@@ -64,7 +64,7 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
     const rightHandSideText = new Text( '', textOptions );
 
     // calculate the maximum width of the right hand side of the equation
-    const rightHandSideMaxWidth = new Text( MathSymbols.PLUS + ' 0.00', textOptions ).width;
+    const rightHandSideMaxWidth = new Text( `${MathSymbols.PLUS} 0.00`, textOptions ).width;
     const hStrut = new HStrut( rightHandSideMaxWidth );
 
     hStrut.left = leftHandSideText.right + 5;
