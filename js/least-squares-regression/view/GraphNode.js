@@ -128,7 +128,7 @@ class GraphNode extends Node {
       this.bestFitResiduals.push( residualNode );
 
       // Add the removal listener for if and when this residual is removed from the model.
-      graph.bestFitLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
+      graph.bestFitLineResiduals.addItemRemovedListener( removedResidualProperty => {
         if ( removedResidualProperty === addedResidualProperty ) {
 
           // remove the residualNode from this.bestFitResiduals
