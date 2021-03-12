@@ -356,7 +356,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     this.addChild( plane );
     this.addChild( sourceAndReferenceNode );
 
-    var sourceAndReferenceListener = {
+    const sourceAndReferenceListener = {
       up: () => {
         sourceAndReferenceNode.removeInputListener( sourceAndReferenceListener );
         sourceAndReferenceNode.detach();

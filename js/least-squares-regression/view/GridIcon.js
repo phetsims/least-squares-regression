@@ -36,12 +36,12 @@ class GridIcon extends Node {
     const gridShape = new Shape();
 
     // Create the vertical lines
-    for ( var i = bounds.minX + options.cellLength; i < bounds.maxX; i += options.cellLength ) {
+    for ( let i = bounds.minX + options.cellLength; i < bounds.maxX; i += options.cellLength ) {
       gridShape.moveTo( i, bounds.minY ).verticalLineTo( bounds.maxX );
     }
 
     // Create the horizontal lines
-    for ( i = bounds.minY + options.cellLength; i < bounds.maxY; i += options.cellLength ) {
+    for ( let i = bounds.minY + options.cellLength; i < bounds.maxY; i += options.cellLength ) {
       gridShape.moveTo( bounds.minX, i ).horizontalLineTo( bounds.maxY );
     }
 
