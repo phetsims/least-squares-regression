@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.1.20 Mon May 10 2021 15:39:58 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# least-squares-regression 1.1.21-rc.1 Fri May 14 2021 06:01:56 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "7d27130a4d27da15aa7f8a21bbfb9245288c1b44",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "dca419ac92e7635c08f5af220685681d8f3457e1",
+    "sha": "857efecf63b29f2e0bce9e6cfd3ae694e6303bd2",
     "branch": "1.1"
   },
   "phet-core": {
@@ -46,7 +46,7 @@
   },
   "scenery": {
     "sha": "78734ea2b658c549f6c961b9b99e309ef8ef26be",
-    "branch": "least-squares-regression-1.1"
+    "branch": "HEAD"
   },
   "scenery-phet": {
     "sha": "fc6b5d163f58789bdd0cff18f9cbb6fc7ae1a013",
