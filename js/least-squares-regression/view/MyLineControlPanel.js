@@ -14,9 +14,9 @@ import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
 import VSlider from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
@@ -206,7 +206,7 @@ class MyLineControlPanel extends Panel {
       bSlider.pickable = enabled;// enable/disable slider
       residualsCheckbox.enabled = enabled;
       squaredResidualsCheckbox.enabled = enabled;
-      rightAlignedNode.opacity = enabled ? 1 : SunConstants.DISABLED_OPACITY;
+      rightAlignedNode.opacity = enabled ? 1 : SceneryConstants.DISABLED_OPACITY;
     } );
 
     // update the text (slope) of the equation when the aSlider is moving

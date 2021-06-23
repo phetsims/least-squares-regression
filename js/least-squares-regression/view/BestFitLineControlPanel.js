@@ -12,10 +12,10 @@ import merge from '../../../../phet-core/js/merge.js';
 import HStrut from '../../../../scenery/js/nodes/HStrut.js';
 import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
+import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import SunConstants from '../../../../sun/js/SunConstants.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -108,7 +108,7 @@ class BestFitLineControlPanel extends AccordionBox {
       if ( graph.isLinearFitDefined() ) {
         equationText.visible = enabled;
       }
-      equationPanel.opacity = enabled ? 1 : SunConstants.DISABLED_OPACITY;
+      equationPanel.opacity = enabled ? 1 : SceneryConstants.DISABLED_OPACITY;
       residualsCheckbox.enabled = enabled;
       squaredResidualsCheckbox.enabled = enabled;
     } );
