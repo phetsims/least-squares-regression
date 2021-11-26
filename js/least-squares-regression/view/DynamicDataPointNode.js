@@ -6,8 +6,8 @@
  * @author Martin Veillette (Berea College)
  */
 
-import SimpleDragHandler from '../../../../scenery/js/input/SimpleDragHandler.js';
-import Circle from '../../../../scenery/js/nodes/Circle.js';
+import { SimpleDragHandler } from '../../../../scenery/js/imports.js';
+import { Circle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPointNode from './DataPointNode.js';

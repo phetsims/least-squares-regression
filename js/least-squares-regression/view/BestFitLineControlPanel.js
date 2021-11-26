@@ -9,10 +9,10 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import HStrut from '../../../../scenery/js/nodes/HStrut.js';
-import LayoutBox from '../../../../scenery/js/nodes/LayoutBox.js';
-import Text from '../../../../scenery/js/nodes/Text.js';
-import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
+import { HStrut } from '../../../../scenery/js/imports.js';
+import { LayoutBox } from '../../../../scenery/js/imports.js';
+import { Text } from '../../../../scenery/js/imports.js';
+import { SceneryConstants } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';

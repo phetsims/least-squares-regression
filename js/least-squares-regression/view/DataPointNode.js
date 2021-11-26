@@ -7,7 +7,7 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Node from '../../../../scenery/js/nodes/Node.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 
 class DataPointNode extends Node {

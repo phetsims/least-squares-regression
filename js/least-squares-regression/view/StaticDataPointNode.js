@@ -6,7 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Circle from '../../../../scenery/js/nodes/Circle.js';
+import { Circle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPointNode from './DataPointNode.js';
