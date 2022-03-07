@@ -45,7 +45,7 @@ class DynamicDataPointNode extends DataPointNode {
         dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
       },
 
-      end: ( event, trail ) => {
+      end: () => {
         dataPoint.userControlledProperty.set( false );
       }
     } ) );

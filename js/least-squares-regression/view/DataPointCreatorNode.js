@@ -75,7 +75,7 @@ class DataPointCreatorNode extends Node {
         dataPoint.positionProperty.value = dataPoint.positionProperty.value.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
       },
 
-      end: ( event, trail ) => {
+      end: () => {
         dataPoint.userControlledProperty.set( false );
         dataPoint = null;
       }
