@@ -6,7 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import merge from '../../../../phet-core/js/merge.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { Line } from '../../../../scenery/js/imports.js';
@@ -95,7 +95,7 @@ class SumOfSquaredResidualsChart extends Node {
 
     // The barometer width is adjustable
     // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
-    Property.multilink( [ graph.angleProperty, graph.interceptProperty ], ( angle, intercept ) => {
+    Multilink.multilink( [ graph.angleProperty, graph.interceptProperty ], ( angle, intercept ) => {
       updateWidth();
     } );
 

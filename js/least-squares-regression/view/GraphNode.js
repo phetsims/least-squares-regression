@@ -7,7 +7,7 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Property from '../../../../axon/js/Property.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { Line } from '../../../../scenery/js/imports.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -74,7 +74,7 @@ class GraphNode extends Node {
 
     // Update 'MyLine' and update 'MyLine' Residuals upon of change of angle (a proxy for the slope), or intercept
     // No need to unlink, listener is present for the lifetime of the sim
-    Property.multilink( [ graph.angleProperty, graph.interceptProperty ], ( angle, intercept ) => {
+    Multilink.multilink( [ graph.angleProperty, graph.interceptProperty ], ( angle, intercept ) => {
       const slope = graph.slope( angle );
       updateMyLine( slope, intercept );
       graph.updateMyLineResiduals();
