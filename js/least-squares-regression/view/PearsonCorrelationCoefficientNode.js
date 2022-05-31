@@ -12,10 +12,7 @@ import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
-import { HStrut } from '../../../../scenery/js/imports.js';
-import { LayoutBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { HStrut, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -89,9 +86,8 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
       xMargin: 10
     } );
 
-    const content = new LayoutBox( {
-      children: [ new HStrut( 180 ), mutableEquationPanel ],
-      orientation: 'vertical'
+    const content = new VBox( {
+      children: [ new HStrut( 180 ), mutableEquationPanel ]
     } );
 
     super( content, options );

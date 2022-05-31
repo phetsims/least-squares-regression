@@ -10,10 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
-import { Circle } from '../../../../scenery/js/imports.js';
-import { LayoutBox } from '../../../../scenery/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
@@ -47,7 +44,7 @@ class SourceAndReferenceNode extends ScreenView {
     ];
 
     // Create the content box
-    const content = new LayoutBox( { align: 'left', spacing: 10, children: children, maxWidth: maxContentWidth } );
+    const content = new VBox( { align: 'left', spacing: 10, children: children, maxWidth: maxContentWidth } );
 
     // Create the panel that contains the source and reference
     const panel = new Panel( content, {

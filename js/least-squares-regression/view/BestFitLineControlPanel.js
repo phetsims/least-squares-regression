@@ -9,10 +9,7 @@
  */
 
 import merge from '../../../../phet-core/js/merge.js';
-import { HStrut } from '../../../../scenery/js/imports.js';
-import { LayoutBox } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { SceneryConstants } from '../../../../scenery/js/imports.js';
+import { HBox, HStrut, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -113,11 +110,11 @@ class BestFitLineControlPanel extends AccordionBox {
       squaredResidualsCheckbox.enabled = enabled;
     } );
 
-    const content = new LayoutBox( {
+    const content = new VBox( {
       spacing: 10,
       children: [
         lineCheckbox,
-        new LayoutBox( { children: [ new HStrut( 20 ), equationPanel ], orientation: 'horizontal' } ),
+        new HBox( { children: [ new HStrut( 20 ), equationPanel ] } ),
         residualsCheckbox,
         squaredResidualsCheckbox,
         sumOfSquaredResidualsChart

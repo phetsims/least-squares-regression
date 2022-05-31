@@ -10,11 +10,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { HStrut } from '../../../../scenery/js/imports.js';
-import { LayoutBox } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import { SceneryConstants } from '../../../../scenery/js/imports.js';
+import { HStrut, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VSlider from '../../../../sun/js/VSlider.js';
@@ -170,7 +166,7 @@ class MyLineControlPanel extends Panel {
       } );
 
     // assemble all the previous nodes in a vertical box
-    const mainBox = new LayoutBox( {
+    const mainBox = new VBox( {
       spacing: 10,
       children: [
         lineCheckbox,
