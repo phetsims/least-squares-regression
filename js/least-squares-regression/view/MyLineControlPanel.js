@@ -1,4 +1,4 @@
-// Copyright 2014-2021, University of Colorado Boulder
+// Copyright 2014-2022, University of Colorado Boulder
 
 /**
  * Scenery Node representing a Control Panel with check Boxes and Sliders that controls properties of My Line
