@@ -80,18 +80,9 @@ class BestFitLineControlPanel extends AccordionBox {
     };
 
     // Create the checkboxes
-    const lineCheckbox = new Checkbox(
-      new Text( bestFitLineString, textOptions ),
-      graph.bestFitLineVisibleProperty
-    );
-    const residualsCheckbox = new Checkbox(
-      new Text( residualsString, textOptions ),
-      graph.bestFitLineShowResidualsProperty
-    );
-    const squaredResidualsCheckbox = new Checkbox(
-      new Text( squaredResidualsString, textOptions ),
-      graph.bestFitLineShowSquaredResidualsProperty
-    );
+    const lineCheckbox = new Checkbox( graph.bestFitLineVisibleProperty, new Text( bestFitLineString, textOptions ) );
+    const residualsCheckbox = new Checkbox( graph.bestFitLineShowResidualsProperty, new Text( residualsString, textOptions ) );
+    const squaredResidualsCheckbox = new Checkbox( graph.bestFitLineShowSquaredResidualsProperty, new Text( squaredResidualsString, textOptions ) );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );

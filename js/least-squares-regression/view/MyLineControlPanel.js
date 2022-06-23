@@ -146,9 +146,9 @@ class MyLineControlPanel extends Panel {
 
     // Create three checkboxes
     const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: MAX_WIDTH };
-    const lineCheckbox = new Checkbox( new Text( myLineString, checkboxTextOptions ), graph.myLineVisibleProperty );
-    const residualsCheckbox = new Checkbox( new Text( residualsString, checkboxTextOptions ), graph.myLineShowResidualsProperty );
-    const squaredResidualsCheckbox = new Checkbox( new Text( squaredResidualsString, checkboxTextOptions ), graph.myLineShowSquaredResidualsProperty );
+    const lineCheckbox = new Checkbox( graph.myLineVisibleProperty, new Text( myLineString, checkboxTextOptions ) );
+    const residualsCheckbox = new Checkbox( graph.myLineShowResidualsProperty, new Text( residualsString, checkboxTextOptions ) );
+    const squaredResidualsCheckbox = new Checkbox( graph.myLineShowSquaredResidualsProperty, new Text( squaredResidualsString, checkboxTextOptions ) );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );

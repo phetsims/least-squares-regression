@@ -161,7 +161,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     const pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
 
     // Create grid checkbox with grid icon
-    const gridCheckbox = new Checkbox( new GridIcon(), model.showGridProperty );
+    const gridCheckbox = new Checkbox( model.showGridProperty, new GridIcon() );
 
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
