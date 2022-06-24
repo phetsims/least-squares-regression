@@ -111,7 +111,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     // Width of contents limited by width of graphNode for i18n
     const dataSetLabelMaxWidth = graphNode.width / 2;
     const dataSetListParent = new Node();
-    const dataSetComboBox = new DataSetComboBox( model.dataSets, model.selectedDataSetProperty, dataSetListParent, dataSetLabelMaxWidth );
+    const dataSetComboBox = new DataSetComboBox( model.selectedDataSetProperty, model.dataSets, dataSetListParent, dataSetLabelMaxWidth );
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );

@@ -15,18 +15,18 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 class DataSetComboBox extends ComboBox {
 
   /**
-   * @param {Array.<DataSet>} dataSets
    * @param {Property.<DataSet>} selectedDataSetProperty
+   * @param {Array.<DataSet>} dataSets
    * @param {Node} dataSetListParent
    * @param {number} maxTextWidth - max width of text in the combo box
    * @constructor
    */
-  constructor( dataSets, selectedDataSetProperty, dataSetListParent, maxTextWidth ) {
+  constructor( selectedDataSetProperty, dataSets, dataSetListParent, maxTextWidth ) {
 
     // {ComboBoxItem[]}
     const items = dataSets.map( dataSet => createItem( dataSet, maxTextWidth ) );
 
-    super( items, selectedDataSetProperty, dataSetListParent, {
+    super( selectedDataSetProperty, items, dataSetListParent, {
       listPosition: 'below',
       highlightFill: LeastSquaresRegressionConstants.ITEM_HIGHLIGHT_FILL,
       buttonLineWidth: 1,
