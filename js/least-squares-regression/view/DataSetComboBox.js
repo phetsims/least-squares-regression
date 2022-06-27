@@ -8,7 +8,6 @@
 
 import { Text } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
-import ComboBoxItem from '../../../../sun/js/ComboBoxItem.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
@@ -50,7 +49,7 @@ function createItem( dataSet, maxTextWidth ) {
     font: LeastSquaresRegressionConstants.TEXT_FONT,
     maxWidth: maxTextWidth
   } );
-  return new ComboBoxItem( textNode, dataSet );
+  return { value: dataSet, node: textNode };
 }
 
 export default DataSetComboBox;
