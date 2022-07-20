@@ -9,8 +9,7 @@
 
 import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Line, Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import ResidualLineAndSquareNode from './ResidualLineAndSquareNode.js';

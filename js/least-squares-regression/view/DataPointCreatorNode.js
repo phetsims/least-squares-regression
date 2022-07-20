@@ -9,9 +9,7 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
-import { SimpleDragHandler } from '../../../../scenery/js/imports.js';
-import { Circle } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Circle, Node, SimpleDragHandler } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';

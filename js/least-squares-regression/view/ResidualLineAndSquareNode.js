@@ -9,9 +9,7 @@
 
 import { Shape } from '../../../../kite/js/imports.js';
 import Poolable from '../../../../phet-core/js/Poolable.js';
-import { Line } from '../../../../scenery/js/imports.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 

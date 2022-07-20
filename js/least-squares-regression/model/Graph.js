@@ -10,10 +10,10 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import createObservableArray from '../../../../axon/js/createObservableArray.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
