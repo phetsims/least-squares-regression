@@ -9,9 +9,9 @@
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import LeastSquaresRegressionScreen from './least-squares-regression/LeastSquaresRegressionScreen.js';
-import leastSquaresRegressionStrings from './leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from './LeastSquaresRegressionStrings.js';
 
-const leastSquaresRegressionTitleStringProperty = leastSquaresRegressionStrings[ 'least-squares-regression' ].titleStringProperty;
+const leastSquaresRegressionTitleStringProperty = LeastSquaresRegressionStrings[ 'least-squares-regression' ].titleStringProperty;
 
 const simOptions = {
   credits: {

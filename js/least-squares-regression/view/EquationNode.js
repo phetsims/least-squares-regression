@@ -11,11 +11,11 @@ import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { Node, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-const symbolXString = leastSquaresRegressionStrings.symbol.x;
-const symbolYString = leastSquaresRegressionStrings.symbol.y;
+const symbolXString = LeastSquaresRegressionStrings.symbol.x;
+const symbolYString = LeastSquaresRegressionStrings.symbol.y;
 
 class EquationNode extends Node {
   /**

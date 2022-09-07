@@ -13,10 +13,10 @@ import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
 import { Circle, Line, Node, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-const sourcePatternString = leastSquaresRegressionStrings.sourcePattern;
+const sourcePatternString = LeastSquaresRegressionStrings.sourcePattern;
 
 class SourceAndReferenceNode extends ScreenView {
   /**

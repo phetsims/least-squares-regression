@@ -14,7 +14,7 @@ import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
@@ -22,9 +22,9 @@ import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 // constants
 const MAX_LABEL_WIDTH = 120; // max length of label text for i18n
 
-const bestFitLineString = leastSquaresRegressionStrings.bestFitLine;
-const residualsString = leastSquaresRegressionStrings.residuals;
-const squaredResidualsString = leastSquaresRegressionStrings.squaredResiduals;
+const bestFitLineString = LeastSquaresRegressionStrings.bestFitLine;
+const residualsString = LeastSquaresRegressionStrings.residuals;
+const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
 
 class BestFitLineControlPanel extends AccordionBox {
 

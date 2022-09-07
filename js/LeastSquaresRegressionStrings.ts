@@ -187,8 +187,8 @@ type StringsType = {
   }
 };
 
-const leastSquaresRegressionStrings = getStringModule( 'LEAST_SQUARES_REGRESSION' ) as StringsType;
+const LeastSquaresRegressionStrings = getStringModule( 'LEAST_SQUARES_REGRESSION' ) as StringsType;
 
-leastSquaresRegression.register( 'leastSquaresRegressionStrings', leastSquaresRegressionStrings );
+leastSquaresRegression.register( 'LeastSquaresRegressionStrings', LeastSquaresRegressionStrings );
 
-export default leastSquaresRegressionStrings;
+export default LeastSquaresRegressionStrings;

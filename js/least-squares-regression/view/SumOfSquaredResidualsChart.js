@@ -11,10 +11,10 @@ import merge from '../../../../phet-core/js/merge.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-const sumString = leastSquaresRegressionStrings.sum;
+const sumString = LeastSquaresRegressionStrings.sum;
 
 // constants
 const ARROW_LENGTH = 175;

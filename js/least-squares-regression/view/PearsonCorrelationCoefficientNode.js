@@ -16,14 +16,14 @@ import { HStrut, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
 // string
 const pattern_0r_1value = '{0} {1}';
 
 // constants
-const R_EQUALS = StringUtils.format( '{0} =', leastSquaresRegressionStrings.symbol.r );
+const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symbol.r );
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
 class PearsonCorrelationCoefficientNode extends AccordionBox {
@@ -43,7 +43,7 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
         touchAreaYDilation: 16
       },
       titleYMargin: 10,
-      titleNode: new MultiLineText( leastSquaresRegressionStrings.correlationCoefficient, {
+      titleNode: new MultiLineText( LeastSquaresRegressionStrings.correlationCoefficient, {
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
         maxWidth: MAX_LABEL_WIDTH
       } ),

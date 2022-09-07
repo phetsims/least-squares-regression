@@ -19,7 +19,7 @@ import { Node, Plane } from '../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 import BestFitLineControlPanel from './BestFitLineControlPanel.js';
@@ -34,7 +34,7 @@ import PearsonCorrelationCoefficientNode from './PearsonCorrelationCoefficientNo
 import SourceAndReferenceNode from './SourceAndReferenceNode.js';
 import StaticDataPointNode from './StaticDataPointNode.js';
 
-const questionMarkString = leastSquaresRegressionStrings.questionMark;
+const questionMarkString = LeastSquaresRegressionStrings.questionMark;
 
 // constants
 const GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node

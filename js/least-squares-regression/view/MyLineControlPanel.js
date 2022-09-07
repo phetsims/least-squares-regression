@@ -15,18 +15,18 @@ import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import VSlider from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import leastSquaresRegressionStrings from '../../leastSquaresRegressionStrings.js';
+import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
-const aString = leastSquaresRegressionStrings.a;
-const bString = leastSquaresRegressionStrings.b;
-const myLineString = leastSquaresRegressionStrings.myLine;
-const residualsString = leastSquaresRegressionStrings.residuals;
-const squaredResidualsString = leastSquaresRegressionStrings.squaredResiduals;
-const symbolXString = leastSquaresRegressionStrings.symbol.x;
-const symbolYString = leastSquaresRegressionStrings.symbol.y;
+const aString = LeastSquaresRegressionStrings.a;
+const bString = LeastSquaresRegressionStrings.b;
+const myLineString = LeastSquaresRegressionStrings.myLine;
+const residualsString = LeastSquaresRegressionStrings.residuals;
+const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
+const symbolXString = LeastSquaresRegressionStrings.symbol.x;
+const symbolYString = LeastSquaresRegressionStrings.symbol.y;
 
 // constants
 const SLIDER_OPTIONS = {
