@@ -15,9 +15,9 @@ import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
 import { Node, Plane } from '../../../../scenery/js/imports.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
-import Checkbox from '../../../../sun/js/Checkbox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -28,7 +28,6 @@ import DataSetComboBox from './DataSetComboBox.js';
 import DynamicDataPointNode from './DynamicDataPointNode.js';
 import GraphAxesNode from './GraphAxesNode.js';
 import GraphNode from './GraphNode.js';
-import GridIcon from './GridIcon.js';
 import MyLineControlPanel from './MyLineControlPanel.js';
 import PearsonCorrelationCoefficientNode from './PearsonCorrelationCoefficientNode.js';
 import SourceAndReferenceNode from './SourceAndReferenceNode.js';
@@ -160,7 +159,10 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     const pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
 
     // Create grid checkbox with grid icon
-    const gridCheckbox = new Checkbox( model.showGridProperty, new GridIcon() );
+    const gridCheckbox = new GridCheckbox( model.showGridProperty, {
+      gridSize: 48,
+      gridStroke: LeastSquaresRegressionConstants.MAJOR_GRID_STROKE_COLOR
+    } );
 
     // Add the graphAxesNode
     this.addChild( graphAxesNode );
