@@ -162,7 +162,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     const gridCheckbox = new GridCheckbox( model.showGridProperty, {
       spacing: 10,
       iconOptions: {
-        iconSize: 48,
+        size: 48,
         stroke: LeastSquaresRegressionConstants.MAJOR_GRID_STROKE_COLOR
       }
     } );
