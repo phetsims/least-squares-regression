@@ -56,7 +56,7 @@ class SourceAndReferenceNode extends ScreenView {
       stroke: 'black'
     } );
 
-    // Create the 'Closed Button" in the upper right corner with a circle and a cross inside it.
+    // Create the 'Closed Button' in the upper right corner with a circle and a cross inside it.
     // The button is not hooked to any listener since the closing of this node is handled in the main screenView
     const buttonSize = 15;
     const buttonLineWidth = 2;

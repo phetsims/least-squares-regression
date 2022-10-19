@@ -125,7 +125,7 @@ class Graph {
   }
 
   /**
-   * Update the model Residuals for 'My Line" and 'Best Fit Line'
+   * Update the model Residuals for 'My Line' and 'Best Fit Line'
    * @private
    */
   update() {
@@ -242,7 +242,7 @@ class Graph {
     } );
 
     // add a 'best fit Line' residual  for every single dataPoint
-    // unless there is not  inearFit (because there is less than 2 data points on the board for instance)
+    // unless there is not  linearFit (because there is less than 2 data points on the board for instance)
     if ( this.isLinearFitDefined() ) {
       const linearFitParameters = this.getLinearFit();
       dataPoints.forEach( dataPoint => {

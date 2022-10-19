@@ -174,7 +174,7 @@ class LeastSquaresRegressionModel {
   }
 
   /**
-   * Function for adding new dataPoints to this model when the user creates them, generally by clicking on some
+   * Function for adding new dataPoints to this model when the user creates them, generally by clicking on
    * some sort of creator node.
    * @public
    * @param {DataPoint} dataPoint

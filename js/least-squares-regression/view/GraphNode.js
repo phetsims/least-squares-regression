@@ -146,7 +146,7 @@ class GraphNode extends Node {
     graph.myLineVisibleProperty.linkAttribute( this.myLine, 'visible' );
     graph.bestFitLineVisibleProperty.linkAttribute( this.bestFitLine, 'visible' );
 
-    // Add the residuaslLayer
+    // Add the residualsLayer
     this.addChild( residualsLayer );
 
     // Add the two lines to this Node
