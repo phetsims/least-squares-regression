@@ -92,9 +92,9 @@ class SourceAndReferenceNode extends ScreenView {
     // Update the content of this node and the layout.
     // no need to unlink, present for the lifetime of the sim
     selectedDataSetProperty.link( selectedDataSet => {
-      referenceText.text = selectedDataSet.reference;
+      referenceText.string = selectedDataSet.reference;
       const formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
-      sourceText.text = formattedSourceString;
+      sourceText.string = formattedSourceString;
       panel.centerX = this.layoutBounds.centerX;
       panel.centerY = this.layoutBounds.centerY;
       button.centerX = panel.right;
