@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "1ef5e7917bac5152b1e852a1f1d68634101d4ab9",
+    "sha": "8e3f2bf432c1725de7134c1c0cabb1de9b1c9ccd",
     "branch": "1.1"
   },
   "phet-core": {
@@ -37,7 +37,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "d8c2d10ebc7cd2bde877ba8b18f4ad026f1cb0f7",
+    "sha": "fe1cf1a1a62be4136f8e72b78b40544cdc9b01f5",
     "branch": "HEAD"
   },
   "phetmarks": {
