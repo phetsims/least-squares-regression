@@ -117,8 +117,8 @@ class EquationNode extends Node {
    * @param {number} slope
    */
   setSlopeText( slope ) {
-    this.signSlopeText.text = this.numberToString( slope ).optionalSign;
-    this.valueSlopeText.text = this.numberToString( slope ).absoluteNumber;
+    this.signSlopeText.string = this.numberToString( slope ).optionalSign;
+    this.valueSlopeText.string = this.numberToString( slope ).absoluteNumber;
   }
 
   /**
@@ -127,8 +127,8 @@ class EquationNode extends Node {
    * @param {number} intercept
    */
   setInterceptText( intercept ) {
-    this.signInterceptText.text = this.numberToString( intercept ).sign;
-    this.valueInterceptText.text = this.numberToString( intercept ).absoluteNumber;
+    this.signInterceptText.string = this.numberToString( intercept ).sign;
+    this.valueInterceptText.string = this.numberToString( intercept ).absoluteNumber;
   }
 
   /**

@@ -142,7 +142,7 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
     }
 
     // Update the text on the right Hand side of the equation
-    this.rightHandSideText.text = rValueString;
+    this.rightHandSideText.string = rValueString;
   }
 }
 
