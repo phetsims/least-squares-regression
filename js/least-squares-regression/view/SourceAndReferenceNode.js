@@ -9,8 +9,7 @@
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
-import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
-import { Circle, Line, Node, VBox } from '../../../../scenery/js/imports.js';
+import { Circle, Line, Node, RichText, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
@@ -32,11 +31,16 @@ class SourceAndReferenceNode extends ScreenView {
     // limit the width of the dialog content for i18n
     const maxContentWidth = this.layoutBounds.width * 2 / 3;
 
-    const referenceText = new MultiLineText( '', {
+    const referenceText = new RichText( '', {
       font: LeastSquaresRegressionConstants.REFERENCE_FONT,
+      replaceNewlines: true,
       align: 'left'
     } );
-    const sourceText = new MultiLineText( '', { font: LeastSquaresRegressionConstants.SOURCE_FONT, align: 'left' } );
+    const sourceText = new RichText( '', {
+      font: LeastSquaresRegressionConstants.SOURCE_FONT,
+      replaceNewlines: true,
+      align: 'left'
+    } );
 
     const children = [
       referenceText,

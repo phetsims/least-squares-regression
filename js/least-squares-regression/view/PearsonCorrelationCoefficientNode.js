@@ -11,8 +11,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import merge from '../../../../phet-core/js/merge.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import MultiLineText from '../../../../scenery-phet/js/MultiLineText.js';
-import { HStrut, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HStrut, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
 import AccordionBox from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -43,7 +42,9 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
         touchAreaYDilation: 16
       },
       titleYMargin: 10,
-      titleNode: new MultiLineText( LeastSquaresRegressionStrings.correlationCoefficient, {
+      titleNode: new RichText( LeastSquaresRegressionStrings.correlationCoefficient, {
+        replaceNewlines: true,
+        align: 'center',
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
         maxWidth: MAX_LABEL_WIDTH
       } ),
