@@ -45,11 +45,13 @@ leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
  * @returns {ComboBoxItem}
  */
 function createItem( dataSet, maxTextWidth ) {
-  const textNode = new Text( dataSet.name, {
-    font: LeastSquaresRegressionConstants.TEXT_FONT,
-    maxWidth: maxTextWidth
-  } );
-  return { value: dataSet, node: textNode };
+  return {
+    value: dataSet,
+    createNode: () => new Text( dataSet.name, {
+      font: LeastSquaresRegressionConstants.TEXT_FONT,
+      maxWidth: maxTextWidth
+    } )
+  };
 }
 
 export default DataSetComboBox;
