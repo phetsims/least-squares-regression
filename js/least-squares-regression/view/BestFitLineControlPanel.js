@@ -1,6 +1,6 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
-//TODO rename to BestFitLineAccordionBox
+//TODO rename to BestFitLineAccordionBox https://github.com/phetsims/tasks/issues/1129
 /**
  * Accordion Box Node that displays checkboxes associated with properties of Best Fit Line
  * This Node also displays the best Fit Line Equation and the sum of Squares Barometer Chart

@@ -1,6 +1,6 @@
 // Copyright 2014-2023, University of Colorado Boulder
 
-//TODO rename to CorrelationCoefficientAccordionBox
+//TODO rename to CorrelationCoefficientAccordionBox https://github.com/phetsims/tasks/issues/1129
 /**
  * A Scenery node that shows the Pearson correlation coefficient in an equation form
  *
