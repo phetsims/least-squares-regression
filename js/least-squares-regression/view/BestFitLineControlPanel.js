@@ -1,6 +1,6 @@
 // Copyright 2014-2023, University of Colorado Boulder
 
-//TODO rename to BestFitLineAccordionBox https://github.com/phetsims/tasks/issues/1129
+//TODO https://github.com/phetsims/least-squares-regression/issues/85 rename to BestFitLineAccordionBox
 /**
  * Accordion Box Node that displays checkboxes associated with properties of Best Fit Line
  * This Node also displays the best Fit Line Equation and the sum of Squares Barometer Chart

@@ -1,6 +1,6 @@
 // Copyright 2014-2023, University of Colorado Boulder
 
-//TODO rename to CorrelationCoefficientAccordionBox https://github.com/phetsims/tasks/issues/1129
+//TODO https://github.com/phetsims/least-squares-regression/issues/85 rename to CorrelationCoefficientAccordionBox
 /**
  * A Scenery node that shows the Pearson correlation coefficient in an equation form
  *
