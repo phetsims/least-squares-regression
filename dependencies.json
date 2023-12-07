@@ -13,7 +13,7 @@
     "branch": "HEAD"
   },
   "chipper": {
-    "sha": "74a88e5648b22920a1228486f469d0f28d9f7099",
+    "sha": "09599ff5afd3c2f392acb591cb93d5a6e589a3fb",
     "branch": "HEAD"
   },
   "dot": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "859d887a8a08924d6dc023bfa9af9a6736e0eeb0",
+    "sha": "f4674c16181f38d1b5400505b3f06398f199ac77",
     "branch": "1.1"
   },
   "phet-core": {
