@@ -26,6 +26,9 @@ class SourceAndReferenceNode extends ScreenView {
      * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
      * directly to the scene, instead of to some other node that already has svg renderer.
      */
+    // A PhET wide decision was made to not update custom layout bounds even if they do not match the
+    // default layout bounds in ScreenView. Do not change these bounds as changes could break or disturb
+    // any phet-io instrumention. https://github.com/phetsims/phet-io/issues/1939
     super( { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
     // limit the width of the dialog content for i18n
