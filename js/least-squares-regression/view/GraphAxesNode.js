@@ -192,7 +192,7 @@ function tickSpacing( range ) {
   const tickStartPosition = Math.ceil( range.min / minorTickSpacing ) * minorTickSpacing; // {number} position of the first tick
   const tickStopPosition = Math.floor( range.max / minorTickSpacing ) * minorTickSpacing; // {number} position of the last tick
   const numberOfTicks = ( tickStopPosition - tickStartPosition ) / minorTickSpacing + 1; // number of ticks
-  const decimalPlaces = majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1; // the precision of ticks (for text purposes)
+  const decimalPlaces = Utils.roundSymmetric( majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1 ); // the precision of ticks (for text purposes)
 
   const tickSeparation = {
     majorTickSpacing: majorTickSpacing,
