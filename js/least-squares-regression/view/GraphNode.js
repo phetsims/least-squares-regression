@@ -1,4 +1,4 @@
-// Copyright 2014-2022, University of Colorado Boulder
+// Copyright 2014-2024, University of Colorado Boulder
 
 /**
  * View representation of a Graph. Responsible for the view of 'MyLine', 'BestFitLine'
