@@ -99,7 +99,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     // Create the "My Line" Control Panel (located to the left of the graph)
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPoints, model.dataPointsAddedEmitter, panelOptions );
 
-    // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals snackType
+    // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
     const graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
     // Create the Graph Axes, including the tick marks, labels and axis titles
@@ -216,7 +216,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     model.dataPoints.addItemAddedListener( addedDataPoint => {
 
       if ( model.selectedDataSetProperty.value === DataSet.CUSTOM ) {
-        // Create and add the view snackType for this dataPoint.
+        // Create and add the view representation for this dataPoint.
         // DataPoints are movable
         const dynamicDataPointNode = new DynamicDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( dynamicDataPointNode );
@@ -270,7 +270,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
             removedDataPoint.positionProperty.unlink( positionPropertyListener );
             removedDataPoint.userControlledProperty.unlink( userControlledPropertyListener );
 
-            // remove the snackType of the dataPoint from the scene graph
+            // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( dynamicDataPointNode );
             dynamicDataPointNode.dispose();
             model.dataPoints.removeItemRemovedListener( removalListener );
@@ -279,7 +279,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
       }
       // For all other DataSets than CUSTOM, the dataPoints are static
       else {
-        // Create and add the view snackType for this dataPoint.
+        // Create and add the view representation for this dataPoint.
         // The dataPoints are static (not movable)
         const staticDataPointNode = new StaticDataPointNode( addedDataPoint, modelViewTransform );
         dataPointsLayer.addChild( staticDataPointNode );
@@ -287,7 +287,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
         // Add the removal listener for if and when this dataPoint is removed from the model.
         model.dataPoints.addItemRemovedListener( function removalListener( removedDataPoint ) {
           if ( removedDataPoint === addedDataPoint ) {
-            // remove the snackType of the dataPoint from the scene graph
+            // remove the representation of the dataPoint from the scene graph
             dataPointsLayer.removeChild( staticDataPointNode );
             staticDataPointNode.dispose();
             model.dataPoints.removeItemRemovedListener( removalListener );
