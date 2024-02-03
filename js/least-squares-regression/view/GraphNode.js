@@ -1,7 +1,7 @@
 // Copyright 2014-2022, University of Colorado Boulder
 
 /**
- * View representation of a Graph. Responsible for the view of 'MyLine', 'BestFitLine'
+ * View snackType of a Graph. Responsible for the view of 'MyLine', 'BestFitLine'
  * and the residuals on the graph. The view of the dataPoints is handled in the main ScreenView
  *
  * @author Martin Veillette (Berea College)
@@ -90,7 +90,7 @@ class GraphNode extends Node {
     // observable array of Property.<Residual>
     graph.myLineResiduals.addItemAddedListener( addedResidualProperty => {
 
-      // Create and add the view representation for this residual.
+      // Create and add the view snackType for this residual.
       const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
@@ -114,7 +114,7 @@ class GraphNode extends Node {
     // observable array of Property.<Residual>
     graph.bestFitLineResiduals.addItemAddedListener( addedResidualProperty => {
 
-      // Create and add the view representation for this residual.
+      // Create and add the view snackType for this residual.
       const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,

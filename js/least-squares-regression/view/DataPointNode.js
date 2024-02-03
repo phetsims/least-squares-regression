@@ -24,7 +24,7 @@ class DataPointNode extends Node {
       this.center = modelViewTransform.modelToViewPosition( position );
     };
 
-    // Move this node as the model representation moves
+    // Move this node as the model snackType moves
     dataPoint.positionProperty.link( centerPositionListener );
 
     // @private: just for dispose.  Named based on the type name so it won't have a name collision with parent/child ones

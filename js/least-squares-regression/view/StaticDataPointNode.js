@@ -18,7 +18,7 @@ class StaticDataPointNode extends DataPointNode {
    */
   constructor( dataPoint, modelViewTransform ) {
 
-    // Create and add  visual representation of the dataPoint
+    // Create and add  visual snackType of the dataPoint
     const representation = new Circle( LeastSquaresRegressionConstants.STATIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.STATIC_DATA_POINT_FILL,
       stroke: LeastSquaresRegressionConstants.STATIC_DATA_POINT_STROKE,

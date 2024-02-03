@@ -18,7 +18,7 @@ class DynamicDataPointNode extends DataPointNode {
    */
   constructor( dataPoint, modelViewTransform ) {
 
-    // Create the visual representation of the DynamicDataPoint
+    // Create the visual snackType of the DynamicDataPoint
     const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
       fill: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_FILL,
       stroke: LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_STROKE,
