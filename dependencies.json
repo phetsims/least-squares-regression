@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "34ded969b81a12bac8227e87c459a2f90ac8aa21",
+    "sha": "734459ddf2d6ea4993a8e6c849bf55152f709142",
     "branch": "1.1"
   },
   "phet-core": {
@@ -45,7 +45,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "5f82642940beb27f2efb7cb31cf5618cbdc97702",
+    "sha": "2161705576405ee7034f06402965e2e553ca99c0",
     "branch": "HEAD"
   },
   "scenery-phet": {
