@@ -32,7 +32,7 @@
         ],
         "parserOptions": {
           "project": [
-            "../least-squares-regression/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
