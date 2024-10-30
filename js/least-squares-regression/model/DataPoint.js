@@ -14,6 +14,8 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
+/* global TWEEN */
+
 class DataPoint {
   /**
    * @param {Vector2} initialPosition
