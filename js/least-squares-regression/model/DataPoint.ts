@@ -11,10 +11,10 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
-
-/* global TWEEN */
 
 export default class DataPoint {
 
@@ -60,37 +60,26 @@ export default class DataPoint {
   public animate(): void {
     this.animatingProperty.set( true );
 
-    const position = {
-      x: this.positionProperty.value.x,
-      y: this.positionProperty.value.y
-    };
-
-    // distance from the dataPoint current position to its initial position (in the bucket)
     const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
 
     if ( distance > 0 ) {
+      const animation = new Animation( {
+        targets: [ {
+          property: this.positionProperty,
+          to: this.positionProperty.initialValue,
+          easing: Easing.CUBIC_IN
+        } ],
+        duration: distance / LeastSquaresRegressionConstants.ANIMATION_SPEED / 1000
+      } );
 
-      // TODO https://github.com/phetsims/least-squares-regression/issues/94 Use twixt?
-      const animationTween = new TWEEN.Tween( position )
-        .to( {
-          x: this.positionProperty.initialValue.x,
-          y: this.positionProperty.initialValue.y
-        }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED )
-        .easing( TWEEN.Easing.Cubic.In )
-        .onUpdate( () => {
-          this.positionProperty.set( new Vector2( position.x, position.y ) );
-        } )
-        .onComplete( () => {
-          this.animatingProperty.set( false );
-          this.returnedToOriginEmitter.emit();
-        } );
-
-      animationTween.start( phet.joist.elapsedTime );
+      animation.endedEmitter.addListener( () => {
+        this.animatingProperty.set( false );
+        this.returnedToOriginEmitter.emit();
+      } );
+      animation.start();
     }
     else {
-      // returned dataPoint to bucket when the distance is zero
-      // no need for animation
-      // see https://github.com/phetsims/least-squares-regression/issues/69
+      // If the distance is zero, no animation is needed
       this.animatingProperty.set( false );
       this.returnedToOriginEmitter.emit();
     }
