@@ -210,15 +210,15 @@ const heightShoe = {
 export default class DataSet {
 
   public constructor(
-    private readonly specs: { graphTitle: string; yAxisTitle: string; xAxisTitle: string; reference: string; source: string }, // TODO: better name https://github.com/phetsims/least-squares-regression/issues/94
+    config: { graphTitle: string; yAxisTitle: string; xAxisTitle: string; reference: string; source: string },
     public readonly yRange: Range,
     public readonly xRange: Range,
     public readonly dataXY: Array<{ x: number; y: number }>,
-    public readonly name = specs.graphTitle,
-    public readonly yAxisTitle: string = specs.yAxisTitle,
-    public readonly xAxisTitle: string = specs.xAxisTitle,
-    public readonly reference: string = specs.reference,
-    public readonly source: string = specs.source
+    public readonly name = config.graphTitle,
+    public readonly yAxisTitle: string = config.yAxisTitle,
+    public readonly xAxisTitle: string = config.xAxisTitle,
+    public readonly reference: string = config.reference,
+    public readonly source: string = config.source
   ) {}
 
   public static readonly CUSTOM = new DataSet( custom, new Range( 0, 20 ), new Range( 0, 20 ), [] );

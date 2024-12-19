@@ -16,7 +16,6 @@ import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
-import DataPoint from '../model/DataPoint.js';
 import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
@@ -38,13 +37,11 @@ export default class BestFitLineControlPanel extends AccordionBox {
 
   /**
    * @param graph - Model of the graph
-   * @param dataPoints - Array of data points
    * @param dataPointsAddedEmitter - Emitter that signals when data points are added in bulk
    * @param providedOptions - Optional customization options
    */
   public constructor(
     private readonly graph: Graph,
-    dataPoints: DataPoint[],  // TODO: unused? https://github.com/phetsims/least-squares-regression/issues/94
     dataPointsAddedEmitter: Emitter,
     providedOptions?: AccordionBoxOptions
   ) {

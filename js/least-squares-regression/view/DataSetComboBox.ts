@@ -8,7 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import { Node, Text } from '../../../../scenery/js/imports.js';
-import ComboBox, { ComboBoxItem, ComboBoxOptions } from '../../../../sun/js/ComboBox.js';
+import ComboBox, { ComboBoxItem } from '../../../../sun/js/ComboBox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
@@ -20,14 +20,12 @@ export default class DataSetComboBox extends ComboBox<DataSet> {
    * @param dataSets - Array of DataSets to populate the combo box.
    * @param dataSetListParent - The parent node for the combo box list.
    * @param maxTextWidth - Maximum width of text in the combo box items.
-   * @param providedOptions - Optional customization options.
    */
   public constructor(
     selectedDataSetProperty: Property<DataSet>,
     dataSets: DataSet[],
     dataSetListParent: Node,
-    maxTextWidth: number,
-    providedOptions?: ComboBoxOptions // TODO: delete unused, see https://github.com/phetsims/least-squares-regression/issues/94
+    maxTextWidth: number
   ) {
     // Create the ComboBoxItem array by mapping DataSets to ComboBoxItems
     const items = dataSets.map( dataSet => createItem( dataSet, maxTextWidth ) );

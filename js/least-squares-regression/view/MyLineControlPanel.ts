@@ -19,7 +19,6 @@ import VSlider from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
-import DataPoint from '../model/DataPoint.js';
 import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
@@ -45,8 +44,7 @@ const MAX_WIDTH = 150;
 export default class MyLineControlPanel extends Panel {
   public readonly sumOfSquaredResiduals: SumOfSquaredResidualsChart;
 
-  // TODO: unused param, see https://github.com/phetsims/least-squares-regression/issues/94
-  public constructor( graph: Graph, dataPoints: DataPoint[], dataPointsAddedEmitter: Emitter, options: IntentionalAny ) {
+  public constructor( graph: Graph, dataPointsAddedEmitter: Emitter, options: IntentionalAny ) {
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
     // max width determined empirically, and there are 6 elements that make up the equation node

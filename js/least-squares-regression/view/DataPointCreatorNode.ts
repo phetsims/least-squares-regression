@@ -20,12 +20,12 @@ export default class DataPointCreatorNode extends Node {
   /**
    * @param addDataPointToModel - A function for adding the created DataPoint to the model.
    * @param modelViewTransform - The ModelViewTransform2 instance for coordinate transformations.
-   * @param options - Optional customization options.
+   * @param providedOptions - Optional customization options.
    */
   public constructor(
     addDataPointToModel: ( dataPoint: DataPoint ) => void,
     modelViewTransform: ModelViewTransform2,
-    options?: NodeOptions // TODO: rename to providedOptions https://github.com/phetsims/least-squares-regression/issues/94
+    providedOptions?: NodeOptions
   ) {
     super( { cursor: 'pointer' } );
 
@@ -87,7 +87,7 @@ export default class DataPointCreatorNode extends Node {
     } ) );
 
     // Pass options through to parent.
-    this.mutate( options );
+    this.mutate( providedOptions );
   }
 }
 

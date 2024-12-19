@@ -86,7 +86,7 @@ export default class ResidualLineAndSquareNode extends Node {
   }
 
   /**
-   * Was dispose, see https://github.com/phetsims/scenery/issues/601
+   * This used to be dispose() before we switched to Poolable, see https://github.com/phetsims/scenery/issues/601
    */
   public release(): void {
     // unlink listeners

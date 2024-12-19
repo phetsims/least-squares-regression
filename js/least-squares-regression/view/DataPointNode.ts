@@ -16,11 +16,6 @@ import DataPoint from '../model/DataPoint.js';
 export default class DataPointNode extends Node {
 
   /**
-   * A function to dispose of the DataPointNode's listeners.
-   */
-  private readonly disposeDataPointNode: () => void;
-
-  /**
    * @param dataPoint - The DataPoint model instance.
    * @param representation - The visual representation Node of the DataPoint.
    * @param modelViewTransform - The ModelViewTransform2 instance for coordinate transformations.
@@ -40,18 +35,9 @@ export default class DataPointNode extends Node {
     // Move this node as the model representation moves
     dataPoint.positionProperty.link( centerPositionListener );
 
-    // TODO: use disposeEmitter, see https://github.com/phetsims/least-squares-regression/issues/94
-    this.disposeDataPointNode = () => {
+    this.disposeEmitter.addListener( () => {
       dataPoint.positionProperty.unlink( centerPositionListener );
-    };
-  }
-
-  /**
-   * Releases references and listeners to prevent memory leaks.
-   */
-  public override dispose(): void {
-    this.disposeDataPointNode();
-    super.dispose();
+    } );
   }
 }
 

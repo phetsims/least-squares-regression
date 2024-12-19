@@ -26,7 +26,7 @@ type SelfOptions = {
 type EquationNodeOptions = SelfOptions & NodeOptions;
 
 // TODO: Better name, see https://github.com/phetsims/least-squares-regression/issues/94
-type NumberString = {
+type NumberStringData = {
   absoluteNumber: string;
   optionalSign: string;
   sign: string;
@@ -163,7 +163,7 @@ export default class EquationNode extends Node {
    * @param number - The number to convert.
    * @returns An object containing the absolute number string, optional sign, and sign.
    */
-  private numberToString( number: number ): NumberString {
+  private numberToString( number: number ): NumberStringData {
     const isNegative = parseFloat( this.roundNumber( number ) ) < 0;
     const signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
     const optionalSignString = isNegative ? MathSymbols.MINUS : ' ';
