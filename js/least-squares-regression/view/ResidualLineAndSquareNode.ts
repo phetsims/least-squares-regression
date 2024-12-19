@@ -11,7 +11,6 @@ import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Poolable from '../../../../phet-core/js/Poolable.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -26,7 +25,7 @@ export default class ResidualLineAndSquareNode extends Node {
   private readonly updateLineAndSquareListener: () => void;
 
   public constructor( private residualProperty: Property<Residual>,
-                      lineColor: IntentionalAny, // TODO: Object that defines all color properties of residual, squared residuals, line, etc. See https://github.com/phetsims/least-squares-regression/issues/94
+                      lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string },
                       private viewBounds: Bounds2,
                       private modelViewTransform: ModelViewTransform2,
                       private lineVisibilityProperty: Property<boolean>,
@@ -98,7 +97,7 @@ export default class ResidualLineAndSquareNode extends Node {
     this.freeToPool(); // will throw ResidualLineAndSquareNode into the pool
   }
 
-  public set( residualProperty: Property<Residual>, lineColor: IntentionalAny, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: Property<boolean>, squareVisibilityProperty: Property<boolean> ): ResidualLineAndSquareNode {
+  public set( residualProperty: Property<Residual>, lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string }, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: Property<boolean>, squareVisibilityProperty: Property<boolean> ): ResidualLineAndSquareNode {
     this.lineVisibilityProperty = lineVisibilityProperty;
     this.squareVisibilityProperty = squareVisibilityProperty;
     this.residualProperty = residualProperty;
