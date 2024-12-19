@@ -13,7 +13,6 @@ import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Bucket from '../../../../phetcommon/js/model/Bucket.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
@@ -39,7 +38,7 @@ export default class LeastSquaresRegressionModel {
   public readonly dataPoints: ObservableArray<DataPoint>;
 
   // Various data sets that populate the Combo Box
-  public readonly dataSets: IntentionalAny[];
+  public readonly dataSets: DataSet[];
 
   // Model of the graph containing all information regarding graph composition
   public readonly graph: Graph;

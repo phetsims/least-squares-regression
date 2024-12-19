@@ -12,7 +12,6 @@ import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { Line, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
@@ -149,7 +148,15 @@ class MinorTickNode extends Path {
 //--------------
 // Tick Spacing for major and minor ticks
 //--------------
-function tickSpacing( range: Range ): IntentionalAny {
+function tickSpacing( range: Range ): {
+  majorTickSpacing: number;
+  minorTickSpacing: number;
+  minorTicksPerMajor: number;
+  tickStartPosition: number;
+  tickStopPosition: number;
+  numberOfTicks: number;
+  decimalPlaces: number;
+} {
   const width = range.max - range.min;
   const logOfWidth = Math.log( width ) / Math.LN10; // polyfill for Math.log10(width)
   const exponent = Math.floor( logOfWidth ); // width = mantissa*10^exponent

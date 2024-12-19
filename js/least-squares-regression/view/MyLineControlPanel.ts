@@ -10,11 +10,10 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
-import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HStrut, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
-import Panel from '../../../../sun/js/Panel.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import VSlider from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
@@ -44,7 +43,7 @@ const MAX_WIDTH = 150;
 export default class MyLineControlPanel extends Panel {
   public readonly sumOfSquaredResiduals: SumOfSquaredResidualsChart;
 
-  public constructor( graph: Graph, dataPointsAddedEmitter: Emitter, options: IntentionalAny ) {
+  public constructor( graph: Graph, dataPointsAddedEmitter: Emitter, options: PanelOptions ) {
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
     // max width determined empirically, and there are 6 elements that make up the equation node

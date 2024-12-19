@@ -10,6 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
@@ -17,6 +18,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
 import { Node, Plane } from '../../../../scenery/js/imports.js';
+import { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
@@ -24,13 +26,13 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 import DataSet from '../model/DataSet.js';
 import LeastSquaresRegressionModel from '../model/LeastSquaresRegressionModel.js';
 import BestFitLineAccordionBox from './BestFitLineAccordionBox.js';
+import CorrelationCoefficientAccordionBox from './CorrelationCoefficientAccordionBox.js';
 import DataPointCreatorNode from './DataPointCreatorNode.js';
 import DataSetComboBox from './DataSetComboBox.js';
 import DynamicDataPointNode from './DynamicDataPointNode.js';
 import GraphAxesNode from './GraphAxesNode.js';
 import GraphNode from './GraphNode.js';
 import MyLineControlPanel from './MyLineControlPanel.js';
-import CorrelationCoefficientAccordionBox from './CorrelationCoefficientAccordionBox.js';
 import SourceAndReferenceNode from './SourceAndReferenceNode.js';
 import StaticDataPointNode from './StaticDataPointNode.js';
 
@@ -84,15 +86,15 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Options for the two panels
     const panelOptions = {
-      resize: false,
       cornerRadius: LeastSquaresRegressionConstants.CONTROL_PANEL_CORNER_RADIUS,
       fill: LeastSquaresRegressionConstants.CONTROL_PANEL_BACKGROUND_COLOR,
-      align: 'left',
       xMargin: 10,
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    const bestFitLineAccordionBox = new BestFitLineAccordionBox( model.graph, model.dataPointsAddedEmitter, panelOptions );
+    const bestFitLineAccordionBox = new BestFitLineAccordionBox( model.graph, model.dataPointsAddedEmitter, combineOptions<AccordionBoxOptions>( {
+      resize: false
+    }, panelOptions ) );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
