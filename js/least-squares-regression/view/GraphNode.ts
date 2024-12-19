@@ -87,8 +87,7 @@ export default class GraphNode extends Node {
     graph.myLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
-      // @ts-expect-error from Poolable mixin
-      const residualNode = ResidualLineAndSquareNode.createFromPool(
+      const residualNode = ResidualLineAndSquareNode.pool.create(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
         this.viewBounds,
@@ -100,7 +99,7 @@ export default class GraphNode extends Node {
       // Add the removal listener for if and when this residual is removed from the model.
       graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
         if ( removedResidualProperty === addedResidualProperty ) {
-          residualNode.release();
+          residualNode.freeToPool();
           residualsLayer.removeChild( residualNode );
           graph.myLineResiduals.removeItemRemovedListener( removalListener );
         }
@@ -112,8 +111,7 @@ export default class GraphNode extends Node {
     graph.bestFitLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
-      // @ts-expect-error from Poolable mixin
-      const residualNode = ResidualLineAndSquareNode.createFromPool(
+      const residualNode = ResidualLineAndSquareNode.pool.create(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
         this.viewBounds,
@@ -134,7 +132,7 @@ export default class GraphNode extends Node {
             this.bestFitResiduals.splice( index, 1 );
           }
 
-          residualNode.release();
+          residualNode.freeToPool();
           residualsLayer.removeChild( residualNode );
         }
       } );

@@ -8,9 +8,10 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import Poolable from '../../../../phet-core/js/Poolable.js';
+import Pool from '../../../../phet-core/js/Pool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -28,8 +29,8 @@ export default class ResidualLineAndSquareNode extends Node {
                       lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string },
                       private viewBounds: Bounds2,
                       private modelViewTransform: ModelViewTransform2,
-                      private lineVisibilityProperty: Property<boolean>,
-                      private squareVisibilityProperty: Property<boolean> ) {
+                      private lineVisibilityProperty: TReadOnlyProperty<boolean>,
+                      private squareVisibilityProperty: TReadOnlyProperty<boolean> ) {
     super();
 
     // create line and square residual with nominal values, will set the correct value later
@@ -53,7 +54,7 @@ export default class ResidualLineAndSquareNode extends Node {
 
     this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
 
-    this.set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+    this.initialize( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
   }
 
   /**
@@ -84,20 +85,19 @@ export default class ResidualLineAndSquareNode extends Node {
     this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
   }
 
-  /**
-   * This used to be dispose() before we switched to Poolable, see https://github.com/phetsims/scenery/issues/601
-   */
-  public release(): void {
+  public freeToPool(): void {
+
     // unlink listeners
     this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
     this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
     this.residualProperty.unlink( this.updateLineAndSquareListener );
 
-    // @ts-expect-error TODO: https://github.com/phetsims/least-squares-regression/issues/94
-    this.freeToPool(); // will throw ResidualLineAndSquareNode into the pool
+    // TypeScript doesn't need to know that we're using this for different types. When it is "active", it will be
+    // the correct type.
+    ResidualLineAndSquareNode.pool.freeToPool( this );
   }
 
-  public set( residualProperty: Property<Residual>, lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string }, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: Property<boolean>, squareVisibilityProperty: Property<boolean> ): ResidualLineAndSquareNode {
+  public initialize( residualProperty: Property<Residual>, lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string }, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: TReadOnlyProperty<boolean>, squareVisibilityProperty: TReadOnlyProperty<boolean> ): ResidualLineAndSquareNode {
     this.lineVisibilityProperty = lineVisibilityProperty;
     this.squareVisibilityProperty = squareVisibilityProperty;
     this.residualProperty = residualProperty;
@@ -115,10 +115,10 @@ export default class ResidualLineAndSquareNode extends Node {
 
     return this; // for chaining
   }
+
+  public static readonly pool = new Pool( ResidualLineAndSquareNode, {
+    initialize: ResidualLineAndSquareNode.prototype.initialize
+  } );
 }
 
 leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
-
-Poolable.mixInto( ResidualLineAndSquareNode, {
-  initialize: ResidualLineAndSquareNode.prototype.set
-} );
