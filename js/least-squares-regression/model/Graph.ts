@@ -54,18 +54,15 @@ export default class Graph {
   // Array of dataPoints currently on the graph
   public dataPointsOnGraph: DataPoint[];
 
-  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
   // Graph domain ranges
   public xRange!: Range;
   public yRange!: Range;
 
-  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
   // Factors for slope and intercept conversions
   public slopeFactor!: number;
   public interceptFactor!: number;
   public interceptOffset!: number;
 
-  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
   // Statistical fields
   private averageOfSumOfSquaresXX!: number;
   private averageOfSumOfSquaresXY!: number;
@@ -427,24 +424,19 @@ export default class Graph {
    * Determine if a best fit line can be defined (at least two points and no vertical alignment).
    */
   public isLinearFitDefined(): boolean {
-    let isDefined;
+
     // you can't have a linear fit with less than 2 data points
     if ( this.dataPointsOnGraph.length < 2 ) {
-      isDefined = false;
+      return false;
     }
     else {
       this.getStatistics();
       const xVariance = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
+
       // the linear fit parameters are not defined when the points are aligned vertically (infinite slope).
       // check for a threshold to prevent https://github.com/phetsims/least-squares-regression/issues/60
-      if ( xVariance < 2e-10 ) {
-        isDefined = false;
-      }
-      else {
-        isDefined = true;
-      }
+      return xVariance >= 2e-10;
     }
-    return isDefined;
   }
 
   /**
