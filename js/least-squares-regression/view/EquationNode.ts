@@ -31,8 +31,6 @@ type NumberStringData = {
   sign: string;
 };
 
-// TODO: Replace SimpleDragHandler? see , see https://github.com/phetsims/least-squares-regression/issues/94
-
 export default class EquationNode extends Node {
 
   // Public Text nodes
