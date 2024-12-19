@@ -14,7 +14,7 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 import DataPoint from '../model/DataPoint.js';
 import DataPointNode from './DataPointNode.js';
 
-class DynamicDataPointNode extends DataPointNode {
+export default class DynamicDataPointNode extends DataPointNode {
 
   public constructor( dataPoint: DataPoint, modelViewTransform: ModelViewTransform2 ) {
 
@@ -52,5 +52,3 @@ class DynamicDataPointNode extends DataPointNode {
 }
 
 leastSquaresRegression.register( 'DynamicDataPointNode', DynamicDataPointNode );
-
-export default DynamicDataPointNode;

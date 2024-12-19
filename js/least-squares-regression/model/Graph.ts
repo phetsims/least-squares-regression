@@ -25,7 +25,7 @@ import Residual from './Residual.js';
 /**
  * Graph model for handling data points, residuals, and statistics related to lines of best fit.
  */
-class Graph {
+export default class Graph {
 
   // Public Properties controlling visibility and line parameters
   public readonly angleProperty: NumberProperty; // in radians, a proxy for the 'my line' slope.
@@ -505,5 +505,3 @@ class Graph {
 }
 
 leastSquaresRegression.register( 'Graph', Graph );
-
-export default Graph;

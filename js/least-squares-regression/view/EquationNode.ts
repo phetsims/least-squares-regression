@@ -34,7 +34,7 @@ type NumberString = {
 
 // TODO: Replace SimpleDragHandler? see , see https://github.com/phetsims/least-squares-regression/issues/94
 
-class EquationNode extends Node {
+export default class EquationNode extends Node {
 
   // Public Text nodes
   public readonly yText: Text;
@@ -197,5 +197,3 @@ class EquationNode extends Node {
 }
 
 leastSquaresRegression.register( 'EquationNode', EquationNode );
-
-export default EquationNode;

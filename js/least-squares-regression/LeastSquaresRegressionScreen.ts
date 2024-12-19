@@ -13,7 +13,7 @@ import LeastSquaresRegressionConstants from './LeastSquaresRegressionConstants.j
 import LeastSquaresRegressionModel from './model/LeastSquaresRegressionModel.js';
 import LeastSquaresRegressionScreenView from './view/LeastSquaresRegressionScreenView.js';
 
-class LeastSquaresRegressionScreen extends Screen<LeastSquaresRegressionModel, LeastSquaresRegressionScreenView> {
+export default class LeastSquaresRegressionScreen extends Screen<LeastSquaresRegressionModel, LeastSquaresRegressionScreenView> {
   public constructor() {
     super(
       () => new LeastSquaresRegressionModel(),
@@ -26,4 +26,3 @@ class LeastSquaresRegressionScreen extends Screen<LeastSquaresRegressionModel, L
 }
 
 leastSquaresRegression.register( 'LeastSquaresRegressionScreen', LeastSquaresRegressionScreen );
-export default LeastSquaresRegressionScreen;

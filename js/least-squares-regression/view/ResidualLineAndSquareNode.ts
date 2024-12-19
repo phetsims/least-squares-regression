@@ -18,7 +18,7 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Residual from '../model/Residual.js';
 
-class ResidualLineAndSquareNode extends Node {
+export default class ResidualLineAndSquareNode extends Node {
   private readonly squareResidual: Rectangle;
   private readonly lineResidual: Line;
   private readonly lineVisibilityPropertyListener: ( visible: boolean ) => void;
@@ -123,5 +123,3 @@ leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSqu
 Poolable.mixInto( ResidualLineAndSquareNode, {
   initialize: ResidualLineAndSquareNode.prototype.set
 } );
-
-export default ResidualLineAndSquareNode;

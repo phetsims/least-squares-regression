@@ -26,7 +26,7 @@ const pattern_0r_1value = '{0} {1}';
 const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symbol.r );
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
-class PearsonCorrelationCoefficientNode extends AccordionBox {
+export default class PearsonCorrelationCoefficientNode extends AccordionBox {
   private readonly rightHandSideText: Text;
 
   public constructor( private readonly graph: Graph, options?: AccordionBoxOptions ) {
@@ -140,4 +140,3 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
 }
 
 leastSquaresRegression.register( 'PearsonCorrelationCoefficientNode', PearsonCorrelationCoefficientNode );
-export default PearsonCorrelationCoefficientNode;

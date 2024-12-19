@@ -14,7 +14,7 @@ import DataPoint from './DataPoint.js';
 /**
  * Represents a residual between a data point and a line (either 'My Line' or 'Best Fit Line').
  */
-class Residual {
+export default class Residual {
 
   /**
    * Position of the dataPoint.
@@ -56,5 +56,3 @@ class Residual {
 }
 
 leastSquaresRegression.register( 'Residual', Residual );
-
-export default Residual;

@@ -15,7 +15,7 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';
 
-class DataPointCreatorNode extends Node {
+export default class DataPointCreatorNode extends Node {
 
   /**
    * @param addDataPointToModel - A function for adding the created DataPoint to the model.
@@ -92,5 +92,3 @@ class DataPointCreatorNode extends Node {
 }
 
 leastSquaresRegression.register( 'DataPointCreatorNode', DataPointCreatorNode );
-
-export default DataPointCreatorNode;

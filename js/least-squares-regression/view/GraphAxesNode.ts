@@ -57,7 +57,7 @@ const MINUS_SIGN_WIDTH = new Text( MathSymbols.MINUS, { font: MAJOR_TICK_FONT } 
 
 const SMALL_EPSILON = 0.0000001; // for equalEpsilon check
 
-class GraphAxesNode extends Node {
+export default class GraphAxesNode extends Node {
   /**
    * Function responsible for laying out the ticks of the graph, the axis titles and the grid
    * @param dataSet
@@ -413,7 +413,3 @@ class GridNode extends Node {
     this.addChild( minorGridLinesPath );
   }
 }
-
-//----------------------------------------------------------------------------------------
-
-export default GraphAxesNode;

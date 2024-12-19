@@ -14,11 +14,8 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-// TODO https://github.com/phetsims/least-squares-regression/issues/94 is this global needed?
-// TODO https://github.com/phetsims/least-squares-regression/issues/94 Use twixt?
 /* global TWEEN */
 
-// TODO: export default on all, see https://github.com/phetsims/least-squares-regression/issues/94
 export default class DataPoint {
 
   // Indicates where in model space the center of this data point is.
@@ -73,6 +70,8 @@ export default class DataPoint {
     const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
 
     if ( distance > 0 ) {
+
+      // TODO https://github.com/phetsims/least-squares-regression/issues/94 Use twixt?
       const animationTween = new TWEEN.Tween( position )
         .to( {
           x: this.positionProperty.initialValue.x,

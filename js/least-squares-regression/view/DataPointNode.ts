@@ -13,7 +13,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from '../model/DataPoint.js';
 
-class DataPointNode extends Node {
+export default class DataPointNode extends Node {
 
   /**
    * A function to dispose of the DataPointNode's listeners.
@@ -56,5 +56,3 @@ class DataPointNode extends Node {
 }
 
 leastSquaresRegression.register( 'DataPointNode', DataPointNode );
-
-export default DataPointNode;

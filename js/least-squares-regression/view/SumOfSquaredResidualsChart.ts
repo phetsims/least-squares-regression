@@ -27,7 +27,7 @@ const LINE_WIDTH = 1;
 const LINE_COLOR = 'black';
 const FONT = LeastSquaresRegressionConstants.SUM_RESIDUALS_FONT;
 
-class SumOfSquaredResidualsChart extends Node {
+export default class SumOfSquaredResidualsChart extends Node {
   public readonly updateWidth: () => void;
 
   public constructor( graph: Graph, getSumOfSquaredResiduals: () => number, dataPointsAddedEmitter: Emitter, fillColor: Color | string, visibleProperty: TReadOnlyProperty<boolean> ) {
@@ -112,5 +112,3 @@ class SumOfSquaredResidualsChart extends Node {
 }
 
 leastSquaresRegression.register( 'SumOfSquaredResidualsChart', SumOfSquaredResidualsChart );
-
-export default SumOfSquaredResidualsChart;

@@ -17,7 +17,7 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 import Graph from '../model/Graph.js';
 import ResidualLineAndSquareNode from './ResidualLineAndSquareNode.js';
 
-class GraphNode extends Node {
+export default class GraphNode extends Node {
   private readonly myLine: Line;
   private readonly bestFitLine: Line;
   private readonly bestFitResiduals: Node[];
@@ -195,5 +195,3 @@ class GraphNode extends Node {
 }
 
 leastSquaresRegression.register( 'GraphNode', GraphNode );
-
-export default GraphNode;

@@ -13,7 +13,7 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 
-class DataSetComboBox extends ComboBox<DataSet> {
+export default class DataSetComboBox extends ComboBox<DataSet> {
 
   /**
    * @param selectedDataSetProperty - The property that holds the currently selected DataSet.
@@ -57,4 +57,3 @@ function createItem( dataSet: DataSet, maxTextWidth: number ): ComboBoxItem<Data
     } )
   };
 }
-export default DataSetComboBox;

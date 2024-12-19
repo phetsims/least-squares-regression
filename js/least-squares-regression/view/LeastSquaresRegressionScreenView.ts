@@ -67,7 +67,7 @@ const DATA_POINT_CREATOR_OFFSET_POSITIONS = [
   new Vector2( -0, 15 )
 ];
 
-class LeastSquaresRegressionScreenView extends ScreenView {
+export default class LeastSquaresRegressionScreenView extends ScreenView {
 
   public constructor( model: LeastSquaresRegressionModel ) {
 
@@ -371,4 +371,3 @@ class LeastSquaresRegressionScreenView extends ScreenView {
 }
 
 leastSquaresRegression.register( 'LeastSquaresRegressionScreenView', LeastSquaresRegressionScreenView );
-export default LeastSquaresRegressionScreenView;

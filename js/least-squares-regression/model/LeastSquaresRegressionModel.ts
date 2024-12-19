@@ -24,7 +24,7 @@ import Graph from './Graph.js';
 const BUCKET_SIZE = new Dimension2( 100, 55 );
 const BUCKET_POSITION = new Vector2( 120, 480 );
 
-class LeastSquaresRegressionModel {
+export default class LeastSquaresRegressionModel {
 
   // Controls the visibility of the graph grid
   public readonly showGridProperty: Property<boolean>;
@@ -248,5 +248,3 @@ class LeastSquaresRegressionModel {
 }
 
 leastSquaresRegression.register( 'LeastSquaresRegressionModel', LeastSquaresRegressionModel );
-
-export default LeastSquaresRegressionModel;

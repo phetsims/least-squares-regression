@@ -42,7 +42,7 @@ const SLIDER_OPTIONS = {
 };
 const MAX_WIDTH = 150;
 
-class MyLineControlPanel extends Panel {
+export default class MyLineControlPanel extends Panel {
   public readonly sumOfSquaredResiduals: SumOfSquaredResidualsChart;
 
   // TODO: unused param, see https://github.com/phetsims/least-squares-regression/issues/94
@@ -227,4 +227,3 @@ class MyLineControlPanel extends Panel {
 }
 
 leastSquaresRegression.register( 'MyLineControlPanel', MyLineControlPanel );
-export default MyLineControlPanel;

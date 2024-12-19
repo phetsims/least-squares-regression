@@ -19,7 +19,7 @@ import DataSet from '../model/DataSet.js';
 
 const sourcePatternString = LeastSquaresRegressionStrings.sourcePattern;
 
-class SourceAndReferenceNode extends ScreenView {
+export default class SourceAndReferenceNode extends ScreenView {
 
   public constructor( selectedDataSetProperty: TReadOnlyProperty<DataSet> ) {
     /*
@@ -111,4 +111,3 @@ class SourceAndReferenceNode extends ScreenView {
 }
 
 leastSquaresRegression.register( 'SourceAndReferenceNode', SourceAndReferenceNode );
-export default SourceAndReferenceNode;
