@@ -1,43 +1,56 @@
-// Copyright 2014-2023, University of Colorado Boulder
+// Copyright 2014-2024, University of Colorado Boulder
 
-//TODO https://github.com/phetsims/least-squares-regression/issues/85 rename to BestFitLineAccordionBox
 /**
- * Accordion Box Node that displays checkboxes associated with properties of Best Fit Line
- * This Node also displays the best Fit Line Equation and the sum of Squares Barometer Chart
+ * Accordion Box Node that displays checkboxes associated with properties of Best Fit Line.
+ * This Node also displays the Best Fit Line Equation and the Sum of Squares Barometer Chart.
  *
  * @author Martin Veillette (Berea College)
  */
 
-import merge from '../../../../phet-core/js/merge.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, HStrut, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataPoint from '../model/DataPoint.js';
+import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
-// constants
-const MAX_LABEL_WIDTH = 120; // max length of label text for i18n
+/**
+ * Maximum width for label text to accommodate internationalization.
+ */
+const MAX_LABEL_WIDTH = 120;
 
+// String constants from localization
 const bestFitLineString = LeastSquaresRegressionStrings.bestFitLine;
 const residualsString = LeastSquaresRegressionStrings.residuals;
 const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
 
 class BestFitLineControlPanel extends AccordionBox {
 
-  /**
-   * @param {Graph} graph - model of the graph
-   * @param {Array.<DataPoint>} dataPoints
-   * @param {Emitter} dataPointsAddedEmitter
-   * @param {Object} [options]
-   */
-  constructor( graph, dataPoints, dataPointsAddedEmitter, options ) {
+  private readonly equationText: EquationNode;
+  public readonly sumOfSquaredResidualsChart: SumOfSquaredResidualsChart;
 
-    // options for the accordion box
-    options = merge( {
+  /**
+   * @param graph - Model of the graph
+   * @param dataPoints - Array of data points
+   * @param dataPointsAddedEmitter - Emitter that signals when data points are added in bulk
+   * @param providedOptions - Optional customization options
+   */
+  public constructor(
+    private readonly graph: Graph,
+    dataPoints: DataPoint[],  // TODO: unused? https://github.com/phetsims/least-squares-regression/issues/94
+    dataPointsAddedEmitter: Emitter,
+    providedOptions?: AccordionBoxOptions
+  ) {
+
+    // Merge provided options with default options
+    const options = combineOptions<AccordionBoxOptions>( {
       cornerRadius: 3,
       buttonXMargin: 10,
       buttonYMargin: 10,
@@ -52,7 +65,7 @@ class BestFitLineControlPanel extends AccordionBox {
       titleXMargin: 0,
       contentXMargin: 10,
       contentYMargin: 10
-    }, options );
+    }, providedOptions );
 
     // Create the chart (barometer) displaying the sum of the squares
     const sumOfSquaredResidualsChart = new SumOfSquaredResidualsChart(
@@ -67,6 +80,8 @@ class BestFitLineControlPanel extends AccordionBox {
     // initial values set the spacing, the correct values for the slope and the intercept will be updated below
     const equationText = new EquationNode( { mode: 'bestFitLine' } );
     equationText.visible = false;
+
+    // Create a Panel to contain the Equation Node
     const equationPanel = new Panel( equationText, {
       fill: 'white',
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
@@ -74,13 +89,18 @@ class BestFitLineControlPanel extends AccordionBox {
       resize: false
     } );
 
+    // Text options for checkboxes
     const textOptions = {
       font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT,
       maxWidth: MAX_LABEL_WIDTH
     };
 
     // Create the checkboxes
-    const lineCheckbox = new Checkbox( graph.bestFitLineVisibleProperty, new Text( bestFitLineString, textOptions ) );
+    const lineCheckbox = new Checkbox(
+      graph.bestFitLineVisibleProperty,
+      new Text( bestFitLineString, textOptions )
+    );
+
     const residualsCheckbox = new Checkbox( graph.bestFitLineShowResidualsProperty, new Text( residualsString, textOptions ) );
     const squaredResidualsCheckbox = new Checkbox( graph.bestFitLineShowSquaredResidualsProperty, new Text( squaredResidualsString, textOptions ) );
 
@@ -116,32 +136,31 @@ class BestFitLineControlPanel extends AccordionBox {
 
     super( content, options );
 
-    // @private
-    this.graph = graph;
     this.equationText = equationText;
     this.sumOfSquaredResidualsChart = sumOfSquaredResidualsChart;
 
+    // Update the Best Fit Line Equation initially
     this.updateBestFitLineEquation();
   }
 
   /**
-   * @public
-   * @override
+   * Resets the control panel to its original state.
    */
-  reset() {
+  public override reset(): void {
     this.sumOfSquaredResidualsChart.reset();
     super.reset();
   }
 
   /**
-   * Update the text of the best Fit Line Equation
-   * @public
+   * Updates the text of the Best Fit Line Equation based on the current linear fit parameters.
    */
-  updateBestFitLineEquation() {
+  public updateBestFitLineEquation(): void {
     if ( this.graph.isLinearFitDefined() ) {
       const linearFitParameters = this.graph.getLinearFit();
       this.equationText.setSlopeText( linearFitParameters.slope * this.graph.slopeFactor );
       this.equationText.setInterceptText( linearFitParameters.intercept * this.graph.interceptFactor + this.graph.interceptOffset );
+
+      // Ensure the equation is visible if the Best Fit Line is enabled
       if ( this.graph.bestFitLineVisibleProperty.value ) {
         this.equationText.visible = true;
       }
@@ -153,4 +172,5 @@ class BestFitLineControlPanel extends AccordionBox {
 }
 
 leastSquaresRegression.register( 'BestFitLineControlPanel', BestFitLineControlPanel );
+
 export default BestFitLineControlPanel;

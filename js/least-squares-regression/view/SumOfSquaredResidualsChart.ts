@@ -6,13 +6,15 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import merge from '../../../../phet-core/js/merge.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import Graph from '../model/Graph.js';
 
 const sumString = LeastSquaresRegressionStrings.sum;
 
@@ -26,21 +28,11 @@ const LINE_COLOR = 'black';
 const FONT = LeastSquaresRegressionConstants.SUM_RESIDUALS_FONT;
 
 class SumOfSquaredResidualsChart extends Node {
-  /**
-   * @param {Graph} graph - model of a graph
-   * @param {Function} getSumOfSquaredResiduals
-   * @param {Emitter} dataPointsAddedEmitter
-   * @param {Color} fillColor
-   * @param {Property.<boolean>} visibleProperty
-   * @param {Object} [Options]
-   */
-  constructor( graph, getSumOfSquaredResiduals, dataPointsAddedEmitter, fillColor, visibleProperty, options ) {
+  public readonly updateWidth: () => void;
 
-    options = merge( {
-      maxLabelWidth: 150
-    }, options );
+  public constructor( graph: Graph, getSumOfSquaredResiduals: () => number, dataPointsAddedEmitter: Emitter, fillColor: Color | string, visibleProperty: TReadOnlyProperty<boolean> ) {
 
-    super( options );
+    super();
 
     // The barometer chart is on its side, set width to 1 , will update it momentarily
     const rectangleBarometer = new Rectangle( 0, 0, 1, RECTANGLE_BAROMETER_HEIGHT, {
@@ -65,16 +57,14 @@ class SumOfSquaredResidualsChart extends Node {
       font: FONT,
       centerX: horizontalArrow.centerX,
       top: horizontalArrow.bottom + 5,
-      maxWidth: options.maxLabelWidth
+      maxWidth: 150
     } );
     const zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
     /**
      * For an input value ranging from 0 to infinity, the tanh function will return a value ranging between 0 and 1
-     * @param {number} x
-     * @returns {number}
      */
-    function tanh( x ) {
+    function tanh( x: number ): number {
       // this (particular) definition of hyperbolic tan function will work well for large positive x values
       return ( 1 - Math.exp( -2 * x ) ) / ( 1 + Math.exp( -2 * x ) );
     }
@@ -82,7 +72,7 @@ class SumOfSquaredResidualsChart extends Node {
     /**
      * Update the width of the rectangular Barometer
      */
-    function updateWidth() {
+    function updateWidth(): void {
       // the width of the barometer is a non-linear. we use the tanh function to map an infinite range to a finite range
       // Note that tanh(0.5)=0.46. i.e  approximately 1/2;
       // We want that a sum of squared residuals of 1/8 the area of the visible graph yields a width that reaches
@@ -115,9 +105,8 @@ class SumOfSquaredResidualsChart extends Node {
 
   /**
    * Resets values to their original state
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.updateWidth();
   }
 }

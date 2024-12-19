@@ -14,45 +14,54 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
+// TODO https://github.com/phetsims/least-squares-regression/issues/94 is this global needed?
+// TODO https://github.com/phetsims/least-squares-regression/issues/94 Use twixt?
 /* global TWEEN */
 
-class DataPoint {
+// TODO: export default on all, see https://github.com/phetsims/least-squares-regression/issues/94
+export default class DataPoint {
+
+  // Indicates where in model space the center of this data point is.
+  public readonly positionProperty: Vector2Property;
+
+  // Flag that tracks whether the user is dragging this data point around.
+  public readonly userControlledProperty: BooleanProperty;
+
+  // Flag that indicates whether this element is animating from one position back to the bucket.
+  public readonly animatingProperty: BooleanProperty;
+
+  // Emitter that fires when the data point has returned to its origin.
+  public readonly returnedToOriginEmitter: Emitter;
+
+  // TODO https://github.com/phetsims/least-squares-regression/issues/94 should this be in the subtype?
+  public positionUpdateListener?: () => void;
+  public userControlledListener?: ( userControlled: boolean ) => void;
+  public returnedToOriginListener?: () => void;
+
   /**
-   * @param {Vector2} initialPosition
+   * @param initialPosition - the initial position of the DataPoint in model space
    */
-  constructor( initialPosition ) {
+  public constructor( initialPosition: Vector2 ) {
 
-    // @public - indicates where in model space the center of this data point is.
     this.positionProperty = new Vector2Property( initialPosition );
-
-    // @public {Property.<boolean>}
-    // Flag that tracks whether the user is dragging this data point around. Should be set externally, generally by a
-    // view node.
     this.userControlledProperty = new BooleanProperty( false );
-
-    // @public read-only {Property.<boolean>}
-    // Flag that indicates whether this element is animating from one position to the bucket.
     this.animatingProperty = new BooleanProperty( false );
-
-    // @public
     this.returnedToOriginEmitter = new Emitter();
   }
 
   /**
-   *  resets all the properties of DataPoint
-   *  @public
+   * Resets all the properties of DataPoint.
    */
-  reset() {
+  public reset(): void {
     this.positionProperty.reset();
     this.userControlledProperty.reset();
     this.animatingProperty.reset();
   }
 
   /**
-   * Function that animates dataPoint back to the bucket.
-   * @public
+   * Function that animates the DataPoint back to the bucket.
    */
-  animate() {
+  public animate(): void {
     this.animatingProperty.set( true );
 
     const position = {
@@ -64,15 +73,19 @@ class DataPoint {
     const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
 
     if ( distance > 0 ) {
-      const animationTween = new TWEEN.Tween( position ).to( {
-        x: this.positionProperty.initialValue.x,
-        y: this.positionProperty.initialValue.y
-      }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED ).easing( TWEEN.Easing.Cubic.In ).onUpdate( () => {
-        this.positionProperty.set( new Vector2( position.x, position.y ) );
-      } ).onComplete( () => {
-        this.animatingProperty.set( false );
-        this.returnedToOriginEmitter.emit();
-      } );
+      const animationTween = new TWEEN.Tween( position )
+        .to( {
+          x: this.positionProperty.initialValue.x,
+          y: this.positionProperty.initialValue.y
+        }, distance / LeastSquaresRegressionConstants.ANIMATION_SPEED )
+        .easing( TWEEN.Easing.Cubic.In )
+        .onUpdate( () => {
+          this.positionProperty.set( new Vector2( position.x, position.y ) );
+        } )
+        .onComplete( () => {
+          this.animatingProperty.set( false );
+          this.returnedToOriginEmitter.emit();
+        } );
 
       animationTween.start( phet.joist.elapsedTime );
     }
@@ -87,5 +100,3 @@ class DataPoint {
 }
 
 leastSquaresRegression.register( 'DataPoint', DataPoint );
-
-export default DataPoint;

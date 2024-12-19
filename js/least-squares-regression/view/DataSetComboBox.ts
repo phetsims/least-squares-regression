@@ -1,28 +1,35 @@
-// Copyright 2014-2023, University of Colorado Boulder
+// Copyright 2014-2024, University of Colorado Boulder
 
 /**
- * Combo box for selecting a dataSet.
+ * Combo box for selecting a DataSet.
  *
  * @author Martin Veillette (Berea College)
  */
 
-import { Text } from '../../../../scenery/js/imports.js';
-import ComboBox from '../../../../sun/js/ComboBox.js';
+import Property from '../../../../axon/js/Property.js';
+import { Node, Text } from '../../../../scenery/js/imports.js';
+import ComboBox, { ComboBoxItem, ComboBoxOptions } from '../../../../sun/js/ComboBox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataSet from '../model/DataSet.js';
 
-class DataSetComboBox extends ComboBox {
+class DataSetComboBox extends ComboBox<DataSet> {
 
   /**
-   * @param {Property.<DataSet>} selectedDataSetProperty
-   * @param {Array.<DataSet>} dataSets
-   * @param {Node} dataSetListParent
-   * @param {number} maxTextWidth - max width of text in the combo box
-   * @constructor
+   * @param selectedDataSetProperty - The property that holds the currently selected DataSet.
+   * @param dataSets - Array of DataSets to populate the combo box.
+   * @param dataSetListParent - The parent node for the combo box list.
+   * @param maxTextWidth - Maximum width of text in the combo box items.
+   * @param providedOptions - Optional customization options.
    */
-  constructor( selectedDataSetProperty, dataSets, dataSetListParent, maxTextWidth ) {
-
-    // {ComboBoxItem[]}
+  public constructor(
+    selectedDataSetProperty: Property<DataSet>,
+    dataSets: DataSet[],
+    dataSetListParent: Node,
+    maxTextWidth: number,
+    providedOptions?: ComboBoxOptions // TODO: delete unused, see https://github.com/phetsims/least-squares-regression/issues/94
+  ) {
+    // Create the ComboBoxItem array by mapping DataSets to ComboBoxItems
     const items = dataSets.map( dataSet => createItem( dataSet, maxTextWidth ) );
 
     super( selectedDataSetProperty, items, dataSetListParent, {
@@ -40,11 +47,8 @@ leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
 
 /**
  * Creates an item for the combo box.
- * @param {DataSet} dataSet
- * @param {number} maxTextWidth
- * @returns {ComboBoxItem}
  */
-function createItem( dataSet, maxTextWidth ) {
+function createItem( dataSet: DataSet, maxTextWidth: number ): ComboBoxItem<DataSet> {
   return {
     value: dataSet,
     createNode: () => new Text( dataSet.name, {
@@ -53,5 +57,4 @@ function createItem( dataSet, maxTextWidth ) {
     } )
   };
 }
-
 export default DataSetComboBox;

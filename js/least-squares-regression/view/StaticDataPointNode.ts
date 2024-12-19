@@ -6,17 +6,16 @@
  * @author Martin Veillette (Berea College)
  */
 
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Circle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataPoint from '../model/DataPoint.js';
 import DataPointNode from './DataPointNode.js';
 
 class StaticDataPointNode extends DataPointNode {
-  /**
-   * @param {DataPoint} dataPoint
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataPoint, modelViewTransform ) {
+
+  public constructor( dataPoint: DataPoint, modelViewTransform: ModelViewTransform2 ) {
 
     // Create and add  visual representation of the dataPoint
     const representation = new Circle( LeastSquaresRegressionConstants.STATIC_DATA_POINT_RADIUS, {

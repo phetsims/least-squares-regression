@@ -1,18 +1,19 @@
 // Copyright 2014-2024, University of Colorado Boulder
 
 /**
- * Contains all of the model logic for the screen LeastSquaresRegressionScreen.
+ * Contains all the model logic for the screen LeastSquaresRegressionScreen.
  *
  * @author Martin Veillette (Berea College)
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import createObservableArray from '../../../../axon/js/createObservableArray.js';
+import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import Bucket from '../../../../phetcommon/js/model/Bucket.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
@@ -24,48 +25,60 @@ const BUCKET_SIZE = new Dimension2( 100, 55 );
 const BUCKET_POSITION = new Vector2( 120, 480 );
 
 class LeastSquaresRegressionModel {
-  constructor() {
 
-    // @public {Property.<boolean>} controls the visibility of the graph grid
+  // Controls the visibility of the graph grid
+  public readonly showGridProperty: Property<boolean>;
+
+  // DataSet selected by the Combo Box
+  public readonly selectedDataSetProperty: Property<DataSet>;
+
+  // Sends an event when points are added in bulk
+  public readonly dataPointsAddedEmitter: Emitter;
+
+  // Array of dataPoints (may be on or off the graph)
+  public readonly dataPoints: ObservableArray<DataPoint>;
+
+  // Various data sets that populate the Combo Box
+  public readonly dataSets: IntentionalAny[];
+
+  // Model of the graph containing all information regarding graph composition
+  public readonly graph: Graph;
+
+  // Bucket model
+  public readonly bucket: Bucket;
+
+  public constructor() {
     this.showGridProperty = new BooleanProperty( false );
-
-    // @public {Property.<Object>}  dataSet selected by the Combo Box: initially value set on Custom
     this.selectedDataSetProperty = new Property( DataSet.CUSTOM );
-
-    // @public, sends an event when points are added in bulk
     this.dataPointsAddedEmitter = new Emitter();
 
-    // Array of dataPoints in the model (may not be necessarily on the graph, could be user controlled outside the graph zone or animated)
-    this.dataPoints = createObservableArray(); // @public
+    // Create an observable array for data points
+    this.dataPoints = createObservableArray<DataPoint>();
 
-    // The various data Sets that populates the Combo Box
-    // @public read-only
-    this.dataSets = [];
-    this.dataSets.push( DataSet.CUSTOM );
-    this.dataSets.push( DataSet.HEIGHT_SHOE );
-    this.dataSets.push( DataSet.SPENDING_SALARY );
-    this.dataSets.push( DataSet.MORTALITY_YEAR );
-    this.dataSets.push( DataSet.WAGE_YEAR );
-    this.dataSets.push( DataSet.USER_YEAR );
-    this.dataSets.push( DataSet.GASOLINE_YEAR );
-    this.dataSets.push( DataSet.LIFE_TV );
-    this.dataSets.push( DataSet.SPEED_DISTANCE );
-    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_CHIRP );
-    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE );
-    this.dataSets.push( DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE );
-    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_CHIRP );
-    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LONGITUDE );
-    this.dataSets.push( DataSet.TEMPERATURE_CELSIUS_LATITUDE );
+    // Populate dataSets
+    this.dataSets = [
+      DataSet.CUSTOM,
+      DataSet.HEIGHT_SHOE,
+      DataSet.SPENDING_SALARY,
+      DataSet.MORTALITY_YEAR,
+      DataSet.WAGE_YEAR,
+      DataSet.USER_YEAR,
+      DataSet.GASOLINE_YEAR,
+      DataSet.LIFE_TV,
+      DataSet.SPEED_DISTANCE,
+      DataSet.TEMPERATURE_FAHRENHEIT_CHIRP,
+      DataSet.TEMPERATURE_FAHRENHEIT_LONGITUDE,
+      DataSet.TEMPERATURE_FAHRENHEIT_LATITUDE,
+      DataSet.TEMPERATURE_CELSIUS_CHIRP,
+      DataSet.TEMPERATURE_CELSIUS_LONGITUDE,
+      DataSet.TEMPERATURE_CELSIUS_LATITUDE
+    ];
 
-    // Model of the graph that contains all information regarding the composition of the graph
-    // @public read-only
     this.graph = new Graph(
       this.selectedDataSetProperty.value.xRange,
       this.selectedDataSetProperty.value.yRange
     );
 
-    // Bucket model to be filled with dataPoint
-    // @public read-only
     this.bucket = new Bucket( {
       position: BUCKET_POSITION,
       baseColor: '#000080',
@@ -73,15 +86,13 @@ class LeastSquaresRegressionModel {
       invertY: true
     } );
 
-    // array for the CUSTOM dataPoints
-    let savedCustomDataPoints = []; // {Array.<DataPoints>}
+    let savedCustomDataPoints: DataPoint[] = [];
 
     // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
     this.selectedDataSetProperty.link( ( selectedDataSet, oldSelectedDataSet ) => {
 
       // saved the position data of CUSTOM if we are going from CUSTOM to another dataSet
       if ( oldSelectedDataSet && oldSelectedDataSet === DataSet.CUSTOM ) {
-        // add the current dataPoints on graph to savedCustomDataPoints
         savedCustomDataPoints = this.graph.dataPointsOnGraph;
       }
 
@@ -102,6 +113,7 @@ class LeastSquaresRegressionModel {
       // Populate the dataPoints array
 
       if ( selectedDataSet === DataSet.CUSTOM ) {
+
         // use the savedCustomDataPoints to populate the dataPoints array
         savedCustomDataPoints.forEach( dataPoint => {
           this.dataPoints.push( dataPoint );
@@ -112,15 +124,27 @@ class LeastSquaresRegressionModel {
         this.dataPoints.forEach( dataPoint => {
           this.addDataPointControlledListener( dataPoint );
         } );
-
       }
       else {
-        // Populate the dataPoints array with the new SelectedDataSet
+        // Populate from selectedDataSet dataXY
         selectedDataSet.dataXY.forEach( position => {
+
           // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
           // Rescale all the {X,Y} value to the normalized graph bounds
-          const XNormalized = Utils.linear( selectedDataSet.xRange.min, selectedDataSet.xRange.max, this.graph.bounds.minX, this.graph.bounds.maxX, position.x );
-          const YNormalized = Utils.linear( selectedDataSet.yRange.min, selectedDataSet.yRange.max, this.graph.bounds.minY, this.graph.bounds.maxY, position.y );
+          const XNormalized = Utils.linear(
+            selectedDataSet.xRange.min,
+            selectedDataSet.xRange.max,
+            this.graph.bounds.minX,
+            this.graph.bounds.maxX,
+            position.x
+          );
+          const YNormalized = Utils.linear(
+            selectedDataSet.yRange.min,
+            selectedDataSet.yRange.max,
+            this.graph.bounds.minY,
+            this.graph.bounds.maxY,
+            position.y
+          );
           const positionVector = new Vector2( XNormalized, YNormalized );
           this.dataPoints.push( new DataPoint( positionVector ) );
         } );
@@ -130,15 +154,13 @@ class LeastSquaresRegressionModel {
       }
       // Since we added the dataPoints in Bulk, let's send a trigger to the view
       this.dataPointsAddedEmitter.emit();
-
     } );
   }
 
   /**
    * Resets values to their original state
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.showGridProperty.reset();
     this.selectedDataSetProperty.reset();
     this.dispose();
@@ -149,25 +171,22 @@ class LeastSquaresRegressionModel {
   /**
    * Unlink listeners to dataPoint. Listeners might have been removed when the data point was removed from the graph,
    * so check that they are still attached first.
-   *
-   * @private
    */
-  dispose() {
+  private dispose(): void {
     this.dataPoints.forEach( dataPoint => {
-      if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
-        dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
+      if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener! ) ) {
+        dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener! );
       }
-      if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener ) ) {
-        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
+      if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener! ) ) {
+        dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener! );
       }
     } );
   }
 
   /**
-   * Function that animates all the dataPoints
-   * @public
+   * Animates all the dataPoints back to the bucket
    */
-  returnAllDataPointsToBucket() {
+  public returnAllDataPointsToBucket(): void {
     this.dataPoints.forEach( dataPoint => {
       dataPoint.animate();
     } );
@@ -176,25 +195,20 @@ class LeastSquaresRegressionModel {
   /**
    * Function for adding new dataPoints to this model when the user creates them, generally by clicking on
    * some sort of creator node.
-   * @public
-   * @param {DataPoint} dataPoint
    */
-  addUserCreatedDataPoint( dataPoint ) {
-
+  // TODO: Find all IntentionalAny, see https://github.com/phetsims/least-squares-regression/issues/94
+  public addUserCreatedDataPoint( dataPoint: DataPoint ): void {
     this.dataPoints.push( dataPoint );
-
     this.addDataPointControlledListener( dataPoint );
   }
 
   /**
    * Function that adds position listener and user Controlled listener;
    * Useful for dynamical points
-   * @public
-   *
-   * @param {DataPoint} dataPoint
    */
-  addDataPointControlledListener( dataPoint ) {
-    dataPoint.userControlledListener = userControlled => {
+  public addDataPointControlledListener( dataPoint: DataPoint ): void {
+
+    dataPoint.userControlledListener = ( userControlled: boolean ) => {
       const isOnGraph = this.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );
       if ( !isOnGraph && !userControlled ) {
         // return the dataPoint to the bucket
@@ -213,14 +227,19 @@ class LeastSquaresRegressionModel {
         this.dataPoints.remove( dataPoint );
       }
 
-      if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
+      if ( dataPoint.positionProperty && dataPoint.positionUpdateListener &&
+           dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
         dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
       }
-      if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledProperty ) ) {
+
+      if ( dataPoint.userControlledProperty && dataPoint.userControlledListener &&
+           dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener ) ) {
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
       }
-      if ( dataPoint.returnedToOriginEmitter.hasListener( dataPoint.returnedToOriginListener ) ) {
-        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener );
+
+      if ( dataPoint.returnedToOriginEmitter &&
+           dataPoint.returnedToOriginEmitter.hasListener( dataPoint.returnedToOriginListener! ) ) {
+        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener! );
       }
     };
 

@@ -7,13 +7,18 @@
  * @author Martin Veillette (Berea College)
  */
 
+import TProperty from '../../../../axon/js/TProperty.js';
+import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { Line, Node, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataSet from '../model/DataSet.js';
 
 //----------------------------------------------------------------------------------------
 // constants
@@ -55,14 +60,14 @@ const SMALL_EPSILON = 0.0000001; // for equalEpsilon check
 class GraphAxesNode extends Node {
   /**
    * Function responsible for laying out the ticks of the graph, the axis titles and the grid
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property.<boolean>} showGridProperty
+   * @param dataSet
+   * @param modelViewTransform
+   * @param showGridProperty
    */
-  constructor( dataSet, modelViewTransform, showGridProperty ) {
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2, showGridProperty: TProperty<boolean> ) {
 
     const gridNode = new GridNode( dataSet, modelViewTransform );
-    const showGridPropertyObserver = visible => {
+    const showGridPropertyObserver = ( visible: boolean ) => {
       gridNode.visible = visible;
     };
 
@@ -79,18 +84,9 @@ class GraphAxesNode extends Node {
       ]
     } );
 
-    this.disposeGraphAxesNode = () => {
+    this.disposeEmitter.addListener( () => {
       showGridProperty.unlink( showGridPropertyObserver );
-    };
-  }
-
-  /**
-   * Releases references
-   * @public
-   */
-  dispose() {
-    this.disposeGraphAxesNode();
-    super.dispose();
+    } );
   }
 }
 
@@ -102,7 +98,7 @@ leastSquaresRegression.register( 'GraphAxesNode', GraphAxesNode );
 
 class MajorTickNode extends Node {
   // Tick is placed at (x,y) and is either vertical or horizontal.
-  constructor( x, y, value, isVertical ) {
+  public constructor( x: number, y: number, value: string, isVertical: boolean ) {
 
     super();
 
@@ -122,7 +118,7 @@ class MajorTickNode extends Node {
     // label position
     if ( isVertical ) {
       // center label under line, compensate for minus sign
-      const signXOffset = ( value < 0 ) ? -( MINUS_SIGN_WIDTH / 2 ) : 0;
+      const signXOffset = ( parseFloat( value ) < 0 ) ? -( MINUS_SIGN_WIDTH / 2 ) : 0;
       tickLabelNode.left = tickLineNode.centerX - ( tickLabelNode.width / 2 ) + signXOffset;
       tickLabelNode.top = tickLineNode.bottom + TICK_LABEL_SPACING;
     }
@@ -140,7 +136,7 @@ class MajorTickNode extends Node {
 
 class MinorTickNode extends Path {
   // Tick is placed at (x,y) and is either vertical or horizontal
-  constructor( x, y, isVertical ) {
+  public constructor( x: number, y: number, isVertical: boolean ) {
     super( isVertical ?
            Shape.lineSegment( x, y - MINOR_TICK_LENGTH, x, y + MINOR_TICK_LENGTH ) :
            Shape.lineSegment( x - MINOR_TICK_LENGTH, y, x + MINOR_TICK_LENGTH, y ), {
@@ -153,13 +149,7 @@ class MinorTickNode extends Path {
 //--------------
 // Tick Spacing for major and minor ticks
 //--------------
-
-/**
- *
- * @param {Range} range
- * @constructor
- */
-function tickSpacing( range ) {
+function tickSpacing( range: Range ): IntentionalAny {
   const width = range.max - range.min;
   const logOfWidth = Math.log( width ) / Math.LN10; // polyfill for Math.log10(width)
   const exponent = Math.floor( logOfWidth ); // width = mantissa*10^exponent
@@ -211,11 +201,7 @@ function tickSpacing( range ) {
 //----------------------------------------------------------------------------------------
 
 class XAxisNode extends Node {
-  /**
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform ) {
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
 
     super();
 
@@ -254,11 +240,7 @@ class XAxisNode extends Node {
 //----------------------------------------------------------------------------------------
 
 class YAxisNode extends Node {
-  /***
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform ) {
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
 
     super();
 
@@ -298,11 +280,8 @@ class YAxisNode extends Node {
 //----------------------------------------------------------------------------------------
 
 class XLabelNode extends Node {
-  /**
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform, options ) {
+
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2, options?: NodeOptions ) {
 
     super( options );
 
@@ -324,11 +303,8 @@ class XLabelNode extends Node {
 //----------------------------------------------------------------------------------------
 
 class YLabelNode extends Node {
-  /**
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform ) {
+
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
 
     super();
 
@@ -352,11 +328,7 @@ class YLabelNode extends Node {
 //----------------------------------------------------------------------------------------
 
 class BackgroundNode extends Node {
-  /**
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform ) {
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
     super();
 
     const backgroundNode = new Rectangle(
@@ -374,11 +346,8 @@ class BackgroundNode extends Node {
 //----------------------------------------------------------------------------------------
 
 class GridNode extends Node {
-  /**
-   * @param {DataSet} dataSet
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataSet, modelViewTransform ) {
+
+  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
     super();
 
     // horizontal grid lines, one line for each unit of grid spacing

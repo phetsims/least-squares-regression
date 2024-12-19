@@ -8,27 +8,25 @@
  */
 
 import Multilink from '../../../../axon/js/Multilink.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import Graph from '../model/Graph.js';
 import ResidualLineAndSquareNode from './ResidualLineAndSquareNode.js';
 
 class GraphNode extends Node {
-  /**
-   * @param {Graph} graph
-   * @param {Bounds2} viewBounds
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( graph, viewBounds, modelViewTransform ) {
+  private readonly myLine: Line;
+  private readonly bestFitLine: Line;
+  private readonly bestFitResiduals: Node[];
+
+  public constructor( public readonly graph: Graph,
+                      public readonly viewBounds: Bounds2,
+                      public readonly modelViewTransform: ModelViewTransform2 ) {
 
     super();
-
-    const self = this;
-
-    this.graph = graph;
-    this.viewBounds = viewBounds;
-    this.modelViewTransform = modelViewTransform;
 
     // Create 'MyLine'
     // First, get the two points formed by the intersection of the line and the boundary of the graph
@@ -61,10 +59,8 @@ class GraphNode extends Node {
 
     /**
      * Update 'My Line'
-     * @param {number} slope
-     * @param {number} intercept
      */
-    const updateMyLine = ( slope, intercept ) => {
+    const updateMyLine = ( slope: number, intercept: number ) => {
       const boundaryPoints = graph.getBoundaryPoints( slope, intercept );
       this.myLine.setPoint1( modelViewTransform.modelToViewPosition( boundaryPoints.point1 ) );
       this.myLine.setPoint2( modelViewTransform.modelToViewPosition( boundaryPoints.point2 ) );
@@ -91,6 +87,7 @@ class GraphNode extends Node {
     graph.myLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
+      // @ts-expect-error from Poolable mixin
       const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
@@ -115,6 +112,7 @@ class GraphNode extends Node {
     graph.bestFitLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
+      // @ts-expect-error from Poolable mixin
       const residualNode = ResidualLineAndSquareNode.createFromPool(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
@@ -131,9 +129,9 @@ class GraphNode extends Node {
         if ( removedResidualProperty === addedResidualProperty ) {
 
           // remove the residualNode from this.bestFitResiduals
-          const index = self.bestFitResiduals.indexOf( residualNode );
+          const index = this.bestFitResiduals.indexOf( residualNode );
           if ( index > -1 ) {
-            self.bestFitResiduals.splice( index, 1 );
+            this.bestFitResiduals.splice( index, 1 );
           }
 
           residualNode.release();
@@ -156,16 +154,12 @@ class GraphNode extends Node {
 
   /**
    * Resets values to their original state
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.updateBestFitLine();
   }
 
-  /**
-   * @public
-   */
-  update() {
+  public update(): void {
     this.updateBestFitLine();
 
     // make sure that the best fit residuals are only visible when the best fit line is defined
@@ -174,9 +168,8 @@ class GraphNode extends Node {
 
   /**
    * Update Best Fit Line
-   * @private
    */
-  updateBestFitLine() {
+  private updateBestFitLine(): void {
     if ( this.graph.isLinearFitDefined() ) {
       const linearFitParameters = this.graph.getLinearFit();
       const boundaryPoints = this.graph.getBoundaryPoints( linearFitParameters.slope, linearFitParameters.intercept );
@@ -193,9 +186,8 @@ class GraphNode extends Node {
   /**
    * Make sure that the best fit residuals and squares are only visible if the linear fit is defined.
    * This visibility is separate from the visibility handled by the control panel
-   * @public
    */
-  updateBestFitResidualsVisible() {
+  public updateBestFitResidualsVisible(): void {
     for ( let i = 0; i < this.bestFitResiduals.length; i++ ) {
       this.bestFitResiduals[ i ].visible = this.graph.isLinearFitDefined();
     }

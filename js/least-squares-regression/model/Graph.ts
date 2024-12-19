@@ -10,72 +10,108 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import createObservableArray from '../../../../axon/js/createObservableArray.js';
+import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import DataPoint from './DataPoint.js';
 import Residual from './Residual.js';
 
+/**
+ * Graph model for handling data points, residuals, and statistics related to lines of best fit.
+ */
 class Graph {
-  /**
-   * @param {Range} xRange
-   * @param {Range} yRange
-   */
-  constructor( xRange, yRange ) {
 
-    // @public {Property.<number>} in radians, a proxy for the 'my line' slope.
+  // Public Properties controlling visibility and line parameters
+  public readonly angleProperty: NumberProperty; // in radians, a proxy for the 'my line' slope.
+  public readonly interceptProperty: NumberProperty; // in graph units
+  public readonly myLineVisibleProperty: BooleanProperty; // visibility of My Line on the graph and associated checkbox
+  public readonly bestFitLineVisibleProperty: BooleanProperty; // visibility of Best Fit Line on the graph and associated checkbox
+  public readonly myLineShowResidualsProperty: BooleanProperty; // visibility of Residuals of My Line (checkbox only)
+  public readonly myLineShowSquaredResidualsProperty: BooleanProperty; // visibility of Squared Residuals of My Line (checkbox only)
+  public readonly bestFitLineShowResidualsProperty: BooleanProperty; // visibility of Residuals of Best Fit Line (checkbox only)
+  public readonly bestFitLineShowSquaredResidualsProperty: BooleanProperty; // visibility of Squared Residuals of Best Fit Line (checkbox only)
+
+  // DerivedProperties controlling visibility of residuals based on multiple factors
+  public readonly myLineResidualsVisibleProperty: TReadOnlyProperty<boolean>; // property that controls the visibility of the Residuals on the graph for My Line
+  public readonly myLineSquaredResidualsVisibleProperty: TReadOnlyProperty<boolean>; // property that controls the visibility of the Square Residuals on the graph for My Line
+  public readonly bestFitLineResidualsVisibleProperty: TReadOnlyProperty<boolean>; // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+  public readonly bestFitLineSquaredResidualsVisibleProperty: TReadOnlyProperty<boolean>; // property that controls the visibility of the Square Residuals on the graph for Best Fit Line
+
+  // Bounds for the graph in model coordinates, it is a unit square. This remains the same for all DataSets
+  public readonly bounds: Bounds2;
+
+  // Observable arrays for residuals
+  // Each entry is a Property<Residual>.
+  public readonly myLineResiduals: ObservableArray<Property<Residual>>;
+  public readonly bestFitLineResiduals: ObservableArray<Property<Residual>>;
+
+  // Array of dataPoints currently on the graph
+  public dataPointsOnGraph: DataPoint[];
+
+  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
+  // Graph domain ranges
+  public xRange!: Range;
+  public yRange!: Range;
+
+  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
+  // Factors for slope and intercept conversions
+  public slopeFactor!: number;
+  public interceptFactor!: number;
+  public interceptOffset!: number;
+
+  // TODO: https://github.com/phetsims/least-squares-regression/issues/94 when are these assigned?
+  // Statistical fields
+  private averageOfSumOfSquaresXX!: number;
+  private averageOfSumOfSquaresXY!: number;
+  private averageOfSumOfSquaresYY!: number;
+  private averageOfSumOfX!: number;
+  private averageOfSumOfY!: number;
+
+  public constructor( xRange: Range, yRange: Range ) {
+
     this.angleProperty = new NumberProperty( 0 );
-
-    // @public {Property.<number>} in units of the graph bounds
     this.interceptProperty = new NumberProperty( 0 );
-
-    // @public {Property.<boolean>} visibility of My Line on the graph and associated checkbox
     this.myLineVisibleProperty = new BooleanProperty( true );
-
-    // @public {Property.<boolean>} visibility of Best Fit Line on the graph and associated checkbox
     this.bestFitLineVisibleProperty = new BooleanProperty( false );
-
-    // @public {Property.<boolean>} visibility of Residuals of My Line (checkbox only)
     this.myLineShowResidualsProperty = new BooleanProperty( false );
-
-    // @public {Property.<boolean>} visibility of Squared Residuals of My Line (checkbox only)
     this.myLineShowSquaredResidualsProperty = new BooleanProperty( false );
-
-    // @public {Property.<boolean>} visibility of Residuals of Best Fit Line (checkbox only)
     this.bestFitLineShowResidualsProperty = new BooleanProperty( false );
-
-    // @public {Property.<boolean>} visibility of Squared Residuals of Best Fit Line (checkbox only)
     this.bestFitLineShowSquaredResidualsProperty = new BooleanProperty( false );
 
-    // @public {Property.<boolean>}  property that controls the visibility of the Residuals on the graph for My Line
-    this.myLineResidualsVisibleProperty = new DerivedProperty( [ this.myLineVisibleProperty, this.myLineShowResidualsProperty ],
-      ( myLineVisible, myLineShowResiduals ) => myLineVisible && myLineShowResiduals );
+    this.myLineResidualsVisibleProperty = new DerivedProperty(
+      [ this.myLineVisibleProperty, this.myLineShowResidualsProperty ],
+      ( myLineVisible, myLineShowResiduals ) => myLineVisible && myLineShowResiduals
+    );
 
-    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for My Line
-    this.myLineSquaredResidualsVisibleProperty = new DerivedProperty( [ this.myLineVisibleProperty, this.myLineShowSquaredResidualsProperty ],
-      ( myLineVisible, myLineShowSquaredResiduals ) => myLineVisible && myLineShowSquaredResiduals );
+    this.myLineSquaredResidualsVisibleProperty = new DerivedProperty(
+      [ this.myLineVisibleProperty, this.myLineShowSquaredResidualsProperty ],
+      ( myLineVisible, myLineShowSquaredResiduals ) => myLineVisible && myLineShowSquaredResiduals
+    );
 
-    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for Best Fit Line
-    this.bestFitLineResidualsVisibleProperty = new DerivedProperty( [ this.bestFitLineVisibleProperty, this.bestFitLineShowResidualsProperty ],
-      ( bestFitLineVisible, bestFitLineShowResiduals ) => bestFitLineVisible && bestFitLineShowResiduals );
+    this.bestFitLineResidualsVisibleProperty = new DerivedProperty(
+      [ this.bestFitLineVisibleProperty, this.bestFitLineShowResidualsProperty ],
+      ( bestFitLineVisible, bestFitLineShowResiduals ) => bestFitLineVisible && bestFitLineShowResiduals
+    );
 
-    // @public {Property.<boolean>} property that controls the visibility of the Square Residuals on the graph for Best Fit Line
-    this.bestFitLineSquaredResidualsVisibleProperty = new DerivedProperty( [ this.bestFitLineVisibleProperty, this.bestFitLineShowSquaredResidualsProperty ],
-      ( bestFitLineVisible, bestFitLineShowSquaredResiduals ) => bestFitLineVisible && bestFitLineShowSquaredResiduals );
+    this.bestFitLineSquaredResidualsVisibleProperty = new DerivedProperty(
+      [ this.bestFitLineVisibleProperty, this.bestFitLineShowSquaredResidualsProperty ],
+      ( bestFitLineVisible, bestFitLineShowSquaredResiduals ) => bestFitLineVisible && bestFitLineShowSquaredResiduals
+    );
 
-    // Bounds for the graph in model coordinates, it is a unit square. This remains the same for all DataSets
-    // @public read-only
     this.bounds = new Bounds2( 0, 0, 1, 1 );
 
     // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
-    this.myLineResiduals = createObservableArray(); // @public
-    this.bestFitLineResiduals = createObservableArray(); // @public
+    this.myLineResiduals = createObservableArray<Property<Residual>>();
+    this.bestFitLineResiduals = createObservableArray<Property<Residual>>();
 
     // array of the dataPoints that are overlapping the graph.
-    this.dataPointsOnGraph = [];  // @public read-only
+    this.dataPointsOnGraph = [];
 
     // set the domain of the graphs (for future use by the equation Node and the graph Axes)
     this.setGraphDomain( xRange, yRange );
@@ -84,9 +120,8 @@ class Graph {
   /**
    * Reset the visibility of the lines and residuals as well as the angle and intercept.
    * Empty out the two residual arrays and the dataPoints on Graph array
-   * @public
    */
-  reset() {
+  public reset(): void {
     this.angleProperty.reset();
     this.interceptProperty.reset();
     this.myLineVisibleProperty.reset();
@@ -101,75 +136,62 @@ class Graph {
   }
 
   /**
-   * Empty out the two residual arrays and the dataPoints on Graph array
-   * @public
+   * Empty out the two residual arrays and the dataPointsOnGraph array.
    */
-  resetOnChangeOfDataSet() {
+  public resetOnChangeOfDataSet(): void {
     this.dataPointsOnGraph = [];
     this.myLineResiduals.clear();
     this.bestFitLineResiduals.clear();
   }
 
   /**
-   * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor for the slope and intercept
-   * @public
-   * @param {Range} xRange
-   * @param {Range} yRange
+   * Sets the horizontal and vertical graph domain of dataSets and the corresponding multiplicative factor
+   * for the slope and intercept.
    */
-  setGraphDomain( xRange, yRange ) {
-    this.xRange = xRange; // @public
-    this.yRange = yRange; // @public
-    this.slopeFactor = ( yRange.max - yRange.min ) / ( xRange.max - xRange.min ) / ( this.bounds.height / this.bounds.width );// @public
-    this.interceptFactor = ( yRange.max - yRange.min ) / this.bounds.height; // @public
-    this.interceptOffset = ( yRange.min ); // @public
+  public setGraphDomain( xRange: Range, yRange: Range ): void {
+    this.xRange = xRange;
+    this.yRange = yRange;
+    this.slopeFactor = ( yRange.max - yRange.min ) / ( xRange.max - xRange.min ) / ( this.bounds.height / this.bounds.width );
+    this.interceptFactor = ( yRange.max - yRange.min ) / this.bounds.height;
+    this.interceptOffset = ( yRange.min );
   }
 
   /**
-   * Update the model Residuals for 'My Line' and 'Best Fit Line'
-   * @private
+   * Update the model Residuals for 'My Line' and 'Best Fit Line'.
    */
-  update() {
+  private update(): void {
     this.updateMyLineResiduals();
     this.updateBestFitLineResiduals();
   }
 
   /**
-   * Convert the angle of a line (measured from the horizontal x axis) to a slope
-   * @public read-only
-   * @param {number} angle
+   * Convert the angle of a line (measured from the horizontal x axis) to a slope.
    */
-  slope( angle ) {
+  public slope( angle: number ): number {
     return Math.tan( angle ) * this.bounds.height / this.bounds.width;
   }
 
   /**
-   * Add a 'My Line' model Residual to a dataPoint
-   * @private
-   * @param {DataPoint} dataPoint
+   * Add a 'My Line' model Residual to a dataPoint.
    */
-  addMyLineResidual( dataPoint ) {
+  private addMyLineResidual( dataPoint: DataPoint ): void {
     const myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
     this.myLineResiduals.push( new Property( myLineResidual ) );
   }
 
   /**
-   * Add a 'Best Fit Line' model Residual to a dataPoint
-   * @private
-   * @param {DataPoint} dataPoint
+   * Add a 'Best Fit Line' model Residual to a dataPoint.
    */
-  addBestFitLineResidual( dataPoint ) {
-
+  private addBestFitLineResidual( dataPoint: DataPoint ): void {
     const linearFitParameters = this.getLinearFit();
     const bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
     this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
   }
 
   /**
-   * Remove the 'My Line' model Residual attached to a dataPoint
-   * @private
-   * @param {DataPoint} dataPoint
+   * Remove the 'My Line' model Residual attached to a dataPoint.
    */
-  removeMyLineResidual( dataPoint ) {
+  private removeMyLineResidual( dataPoint: DataPoint ): void {
     const myLineResidualsCopy = this.myLineResiduals.slice();
     myLineResidualsCopy.forEach( myLineResidualProperty => {
       if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
@@ -179,11 +201,9 @@ class Graph {
   }
 
   /**
-   * Remove a 'Best Fit Line' model Residual attached to a dataPoint
-   * @private
-   * @param {DataPoint} dataPoint
+   * Remove a 'Best Fit Line' model Residual attached to a dataPoint.
    */
-  removeBestFitLineResidual( dataPoint ) {
+  private removeBestFitLineResidual( dataPoint: DataPoint ): void {
     const bestFitLineResidualsCopy = this.bestFitLineResiduals.slice();
     bestFitLineResidualsCopy.forEach( bestFitLineResidualProperty => {
       if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
@@ -195,9 +215,8 @@ class Graph {
   /**
    * Update all 'My Line' model Residuals
    * (Necessary to update when the slope and the intercept of 'My Line' are modified)
-   * @public
    */
-  updateMyLineResiduals() {
+  public updateMyLineResiduals(): void {
     this.myLineResiduals.forEach( residualProperty => {
       const dataPoint = residualProperty.value.dataPoint;
       residualProperty.value = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
@@ -205,10 +224,9 @@ class Graph {
   }
 
   /**
-   * Update all 'My Best Fit Line' model Residuals
-   * @private
+   * Update all 'Best Fit Line' model Residuals.
    */
-  updateBestFitLineResiduals() {
+  private updateBestFitLineResiduals(): void {
     if ( this.isLinearFitDefined() ) {
       const linearFitParameters = this.getLinearFit();
       this.bestFitLineResiduals.forEach( residualProperty => {
@@ -219,12 +237,9 @@ class Graph {
   }
 
   /**
-   * Add Data Points on Graph in bulk such that no update is triggered throughout the process.
-   * This is done for performance reason.
-   * @public (accessed by LeastSquareRegressionModel)
-   * @param {Array.<DataPoint>} dataPoints
+   * Add Data Points on Graph in bulk, for performance reasons.
    */
-  addDataPointsOnGraphAndResidualsInBulk( dataPoints ) {
+  public addDataPointsOnGraphAndResidualsInBulk( dataPoints: DataPoint[] ): void {
     // for performance reason one should add all the dataPoints on the graph
     // then we can calculate the best Fit Line (only once)
     // and then add all the Residuals.
@@ -254,31 +269,23 @@ class Graph {
 
   /**
    * Function that returns true if the dataPoint is on the array.
-   * @private
-   * @param {DataPoint} dataPoint
-   * @returns {boolean}
    */
-  isDataPointOnList( dataPoint ) {
+  public isDataPointOnList( dataPoint: DataPoint ): boolean {
     const index = this.dataPointsOnGraph.indexOf( dataPoint );
     return ( index !== -1 );
   }
 
   /**
-   * Function that determines if the Position of a Data Point is within the visual bounds of the graph
-   * @private
-   * @param {Vector2} position
-   * @returns {boolean}
+   * Function that determines if the Position of a Data Point is within the visual bounds of the graph.
    */
-  isDataPointPositionOverlappingGraph( position ) {
+  public isDataPointPositionOverlappingGraph( position: Vector2 ): boolean {
     return this.bounds.containsPoint( position );
   }
 
   /**
-   * Add the dataPoint top the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals
-   * @public (accessed by LeastSquareRegressionModel)
-   * @param {DataPoint} dataPoint
+   * Add the dataPoint to the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals.
    */
-  addPointAndResiduals( dataPoint ) {
+  public addPointAndResiduals( dataPoint: DataPoint & { positionUpdateListener?: () => void } ): void {
     this.dataPointsOnGraph.push( dataPoint );
     this.addMyLineResidual( dataPoint );
 
@@ -304,10 +311,8 @@ class Graph {
 
   /**
    * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
-   * @public (accessed by LeastSquareRegressionModel)
-   * @param {DataPoint} dataPoint
    */
-  removePointAndResiduals( dataPoint ) {
+  public removePointAndResiduals( dataPoint: DataPoint ): void {
     assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
     const index = this.dataPointsOnGraph.indexOf( dataPoint );
     this.dataPointsOnGraph.splice( index, 1 );
@@ -321,28 +326,24 @@ class Graph {
     else {
       this.removeBestFitLineResidual( dataPoint );
     }
+
     this.update();
-    if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
+    if ( dataPoint.positionUpdateListener && dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
       dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
     }
   }
 
   /**
-   * Function that removes all the best Fit Line Residuals
-   * @private
+   * Function that removes all the best Fit Line Residuals.
    */
-  removeBestFitLineResiduals() {
+  private removeBestFitLineResiduals(): void {
     this.bestFitLineResiduals.clear();
   }
 
   /**
    * Function that returns the sum of squared residuals of all the dataPoints on the list (compared with a line with a slope and intercept)
-   * @private
-   * @param {number} slope
-   * @param {number} intercept
-   * @returns {number} sumOfSquareResiduals
    */
-  sumOfSquaredResiduals( slope, intercept ) {
+  private sumOfSquaredResiduals( slope: number, intercept: number ): number {
     let sumOfSquareResiduals = 0;
     this.dataPointsOnGraph.forEach( dataPoint => {
       const yResidual = ( slope * dataPoint.positionProperty.value.x + intercept ) - dataPoint.positionProperty.value.y;
@@ -354,10 +355,8 @@ class Graph {
   /**
    * Function that returns the sum of squared residuals of 'My Line'
    * The sum of squared residual is zero if there are less than one dataPoint on the graph.
-   * @public read-only
-   * @returns {number} sumOfSquareResiduals
    */
-  getMyLineSumOfSquaredResiduals() {
+  public getMyLineSumOfSquaredResiduals(): number {
     if ( this.dataPointsOnGraph.length >= 1 ) {
       return this.sumOfSquaredResiduals( this.slope( this.angleProperty.value ), this.interceptProperty.value );
     }
@@ -369,10 +368,8 @@ class Graph {
   /**
    * Function that returns the sum of squared residuals of 'Best Fit Line'
    * The sum of squared residual is zero if there are less than two dataPoints on the graph
-   * @public read-only
-   * @returns {number} sumOfSquareResiduals
    */
-  getBestFitLineSumOfSquaredResiduals() {
+  public getBestFitLineSumOfSquaredResiduals(): number {
     if ( this.isLinearFitDefined() ) {
       const linearFitParameters = this.getLinearFit();
       return this.sumOfSquaredResiduals( linearFitParameters.slope, linearFitParameters.intercept );
@@ -384,29 +381,21 @@ class Graph {
 
   /**
    * Returns an array of two points that crosses the left and the right hand side of the graph bounds
-   * @public read-only
-   * @param {number} slope
-   * @param {number} intercept
-   * @returns {{point1: Vector2, point2: Vector2}}
    */
-  getBoundaryPoints( slope, intercept ) {
-
+  public getBoundaryPoints( slope: number, intercept: number ): { point1: Vector2; point2: Vector2 } {
     const yValueLeft = slope * this.bounds.minX + intercept;
     const yValueRight = slope * this.bounds.maxX + intercept;
     const boundaryPoints = {
       point1: new Vector2( this.bounds.minX, yValueLeft ),
       point2: new Vector2( this.bounds.maxX, yValueRight )
     };
-
     return boundaryPoints;
   }
 
   /**
    * Function that updates statistical properties of the dataPoints on the graph.
-   * @private
    */
-  getStatistics() {
-
+  private getStatistics(): void {
     const dataPointArray = this.dataPointsOnGraph;
     assert && assert( dataPointArray !== null, 'dataPointsOnGraph must contain data' );
     const arrayLength = dataPointArray.length;
@@ -417,7 +406,7 @@ class Graph {
     const positionArrayX = _.map( dataPointArray, dataPoint => dataPoint.positionProperty.value.x );
     const positionArrayY = _.map( dataPointArray, dataPoint => dataPoint.positionProperty.value.y );
 
-    function add( memo, num ) {
+    function add( memo: number, num: number ): number {
       return memo + num;
     }
 
@@ -435,11 +424,9 @@ class Graph {
   }
 
   /**
-   * Function that determines if a best fit line fit exists
-   * @public read-only
-   * @returns {boolean}
+   * Determine if a best fit line can be defined (at least two points and no vertical alignment).
    */
-  isLinearFitDefined() {
+  public isLinearFitDefined(): boolean {
     let isDefined;
     // you can't have a linear fit with less than 2 data points
     if ( this.dataPointsOnGraph.length < 2 ) {
@@ -463,10 +450,8 @@ class Graph {
   /**
    * Function that returns the 'best fit line' parameters, i.e. slope and intercept of the dataPoints on the graph.
    * It would be wise to check if isLinearFitDefined() is true before calling this function.
-   * @public read-only
-   * @returns {{slope: number, intercept: number}}
    */
-  getLinearFit() {
+  public getLinearFit(): { slope: number; intercept: number } {
     this.getStatistics();
     const slopeNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
     const slopeDenominator = this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX;
@@ -486,37 +471,34 @@ class Graph {
    * For two dataPoints and more, the Pearson coefficient ranges from -1 to 1.
    * Note that the Pearson Coefficient Correlation is an intrinsic property of a set of DataPoint
    * See http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
-   * @public read-only
-   * @returns {null||number}
    */
-  getPearsonCoefficientCorrelation() {
-
+  public getPearsonCoefficientCorrelation(): number | null {
     if ( !this.isLinearFitDefined() ) {
       return null;
     }
     else {
-      this.getStatistics();
+    this.getStatistics();
       let pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
-      if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
-        pearsonCoefficientCorrelationNumerator = 0;
-      }
+    if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
+      pearsonCoefficientCorrelationNumerator = 0;
+    }
 
       // for very small values, we can end up with a very small or negative number.  In this case, return null so we
       // don't get a NaN for the coefficient.
       const number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY );
-      if ( number < 1E-15 ) {
-        return null;
-      }
-      const pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
+    if ( number < 1E-15 ) {
+      return null;
+    }
+    const pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
 
       // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
-      if ( pearsonCoefficientCorrelationDenominator === 0 ) {
+    if ( pearsonCoefficientCorrelationDenominator === 0 ) {
         return null; //
-      }
+    }
       else {
-        const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-        return pearsonCoefficientCorrelation;
+    const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+    return pearsonCoefficientCorrelation;
       }
     }
   }

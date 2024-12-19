@@ -7,22 +7,30 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Property from '../../../../axon/js/Property.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Poolable from '../../../../phet-core/js/Poolable.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import Residual from '../model/Residual.js';
 
 class ResidualLineAndSquareNode extends Node {
-  /**
-   * @param {Property.<Residual>} residualProperty
-   * @param {Object} lineColor - Object that defines all color properties of residual, squared residuals, line, etc.
-   * @param {Bounds2} viewBounds
-   * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property.<boolean>} lineVisibilityProperty
-   * @param {Property.<boolean>} squareVisibilityProperty
-   */
-  constructor( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+  private readonly squareResidual: Rectangle;
+  private readonly lineResidual: Line;
+  private readonly lineVisibilityPropertyListener: ( visible: boolean ) => void;
+  private readonly squareVisibilityPropertyListener: ( visible: boolean ) => void;
+  private readonly updateLineAndSquareListener: () => void;
+
+  public constructor( private residualProperty: Property<Residual>,
+                      lineColor: IntentionalAny, // TODO: Object that defines all color properties of residual, squared residuals, line, etc. See https://github.com/phetsims/least-squares-regression/issues/94
+                      private viewBounds: Bounds2,
+                      private modelViewTransform: ModelViewTransform2,
+                      private lineVisibilityProperty: Property<boolean>,
+                      private squareVisibilityProperty: Property<boolean> ) {
     super();
 
     // create line and square residual with nominal values, will set the correct value later
@@ -51,9 +59,8 @@ class ResidualLineAndSquareNode extends Node {
 
   /**
    * Update the Line and Square Residual
-   * @public
    */
-  updateLineAndSquare() {
+  public updateLineAndSquare(): void {
     const point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
     const point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
 
@@ -80,29 +87,18 @@ class ResidualLineAndSquareNode extends Node {
 
   /**
    * Was dispose, see https://github.com/phetsims/scenery/issues/601
-   * @public
    */
-  release() {
+  public release(): void {
     // unlink listeners
     this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
     this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
     this.residualProperty.unlink( this.updateLineAndSquareListener );
 
+    // @ts-expect-error TODO: https://github.com/phetsims/least-squares-regression/issues/94
     this.freeToPool(); // will throw ResidualLineAndSquareNode into the pool
   }
 
-  /**
-   * @public
-   *
-   * @param {Property.<Residual>} residualProperty
-   * @param {ColorDef} lineColor
-   * @param {Bounds2} viewBounds
-   * @param {ModelViewTransform2} modelViewTransform
-   * @param {Property.<boolean>} lineVisibilityProperty
-   * @param {Property.<boolean>} squareVisibilityProperty
-   * @returns {ResidualLineAndSquareNode}
-   */
-  set( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty ) {
+  public set( residualProperty: Property<Residual>, lineColor: IntentionalAny, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: Property<boolean>, squareVisibilityProperty: Property<boolean> ): ResidualLineAndSquareNode {
     this.lineVisibilityProperty = lineVisibilityProperty;
     this.squareVisibilityProperty = squareVisibilityProperty;
     this.residualProperty = residualProperty;

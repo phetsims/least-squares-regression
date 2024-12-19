@@ -1,4 +1,4 @@
-// Copyright 2014-2020, University of Colorado Boulder
+// Copyright 2014-2024, University of Colorado Boulder
 
 /**
  * Type that defines a residual and a square residual.
@@ -9,30 +9,48 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import DataPoint from './DataPoint.js';
 
+/**
+ * Represents a residual between a data point and a line (either 'My Line' or 'Best Fit Line').
+ */
 class Residual {
-  /**
-   * @param {DataPoint} dataPoint
-   * @param {number} slope
-   * @param {number} intercept
-   */
-  constructor( dataPoint, slope, intercept ) {
 
-    // store the dataPoint to be able to identify residual node
+  /**
+   * Position of the dataPoint.
+   */
+  public readonly point1: Vector2;
+
+  /**
+   * Position on the line corresponding to the dataPoint's x-coordinate.
+   */
+  public readonly point2: Vector2;
+
+  /**
+   * Indicates if the squared residual is to the left of the line.
+   */
+  public readonly isSquaredResidualToTheLeft: boolean;
+
+  public constructor(
+    public readonly dataPoint: DataPoint,
+    slope: number, intercept: number ) {
+
+    // Store the dataPoint to be able to identify residual node.
     this.dataPoint = dataPoint;
 
-    // find the vertical position of the line following y = slope* x + intercept;
+    // Calculate the y-value on the line corresponding to the dataPoint's x-coordinate.
     const yValue = slope * dataPoint.positionProperty.value.x + intercept;
 
-    // The vertical displacement is positive if the datePoint is above the line and negative if below
+    // Calculate the vertical displacement: positive if above the line, negative if below.
     const verticalDisplacement = dataPoint.positionProperty.value.y - yValue;
 
-    // @public read-only
-    this.point1 = new Vector2( dataPoint.positionProperty.value.x, dataPoint.positionProperty.value.y );  // position of dataPoint
-    this.point2 = new Vector2( dataPoint.positionProperty.value.x, yValue );   // position of the point on the line
+    // Position of the dataPoint.
+    this.point1 = new Vector2( dataPoint.positionProperty.value.x, dataPoint.positionProperty.value.y );
 
-    // the square residual should not overlap the line
-    // @public read-only
+    // Position on the line corresponding to the dataPoint's x-coordinate.
+    this.point2 = new Vector2( dataPoint.positionProperty.value.x, yValue );
+
+    // Determine if the squared residual is to the left of the line.
     this.isSquaredResidualToTheLeft = ( slope * verticalDisplacement > 0 );
   }
 }

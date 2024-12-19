@@ -22,6 +22,7 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
+import LeastSquaresRegressionModel from '../model/LeastSquaresRegressionModel.js';
 import BestFitLineControlPanel from './BestFitLineControlPanel.js';
 import DataPointCreatorNode from './DataPointCreatorNode.js';
 import DataSetComboBox from './DataSetComboBox.js';
@@ -68,10 +69,7 @@ const DATA_POINT_CREATOR_OFFSET_POSITIONS = [
 
 class LeastSquaresRegressionScreenView extends ScreenView {
 
-  /**
-   * @param {LeastSquaresRegressionModel} model
-   */
-  constructor( model ) {
+  public constructor( model: LeastSquaresRegressionModel ) {
 
     super();
 
@@ -112,7 +110,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     const dataSetComboBox = new DataSetComboBox( model.selectedDataSetProperty, model.dataSets, dataSetListParent, dataSetLabelMaxWidth );
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
-    const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty, this.layoutBounds );
+    const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty );
     const sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
       baseColor: 'gray',
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
@@ -125,7 +123,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
     // Create the nodes that will be used to layer things visually.
     const backLayer = new Node();
     // Create the layer where the points will be placed. They are maintained in a separate layer so that they are over
-    // all of the point placement graphs in the z-order.
+    // all the point placement graphs in the z-order.
     const dataPointsLayer = new Node( { layerSplit: true } ); // Force the moving dataPoint into a separate layer for performance reasons.
     const bucketFrontLayer = new Node( { pickable: false } );
 
@@ -222,7 +220,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
         dataPointsLayer.addChild( dynamicDataPointNode );
 
         // Listener for position
-        const positionPropertyListener = position => {
+        const positionPropertyListener = ( position: Vector2 ) => {
           // Check if the point is not animated and is overlapping with the graph before adding on the list of graph data Points
           if ( model.graph.isDataPointPositionOverlappingGraph( position ) && !addedDataPoint.animatingProperty.value ) {
 
@@ -253,7 +251,7 @@ class LeastSquaresRegressionScreenView extends ScreenView {
         addedDataPoint.positionProperty.lazyLink( positionPropertyListener );
 
         // Listener for userControlled
-        const userControlledPropertyListener = userControlled => {
+        const userControlledPropertyListener = ( userControlled: boolean ) => {
           if ( userControlled ) {
             dynamicDataPointNode.moveToFront();
           }
@@ -349,10 +347,9 @@ class LeastSquaresRegressionScreenView extends ScreenView {
    * Update the Source and Reference 'Dialog-like' Node visibility.  This node has behavior which is identical to the about dialog
    * window, and this code is heavily borrowed from AboutDialog.js.
    *
-   * @param {SourceAndReferenceNode} sourceAndReferenceNode - The SourceAndReferenceNode whose visibility should be updated.
-   * @private
+   * @param sourceAndReferenceNode - The SourceAndReferenceNode whose visibility should be updated.
    */
-  updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode ) {
+  private updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode: SourceAndReferenceNode ): void {
 
     // Renderer must be specified here because the plane is added directly to the scene (instead of to some other node
     // that already has svg renderer)

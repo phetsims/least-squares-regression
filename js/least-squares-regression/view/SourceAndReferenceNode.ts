@@ -6,6 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
@@ -14,14 +15,13 @@ import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataSet from '../model/DataSet.js';
 
 const sourcePatternString = LeastSquaresRegressionStrings.sourcePattern;
 
 class SourceAndReferenceNode extends ScreenView {
-  /**
-   * @param {Property.<DataSet>} selectedDataSetProperty
-   */
-  constructor( selectedDataSetProperty ) {
+
+  public constructor( selectedDataSetProperty: TReadOnlyProperty<DataSet> ) {
     /*
      * Use ScreenView, to help center and scale content. Renderer must be specified here because the window is added
      * directly to the scene, instead of to some other node that already has svg renderer.

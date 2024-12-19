@@ -6,9 +6,11 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Emitter from '../../../../axon/js/Emitter.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HStrut, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
@@ -17,6 +19,8 @@ import VSlider from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataPoint from '../model/DataPoint.js';
+import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
@@ -39,15 +43,10 @@ const SLIDER_OPTIONS = {
 const MAX_WIDTH = 150;
 
 class MyLineControlPanel extends Panel {
-  /**
-   *
-   * @param {Graph} graph
-   * @param {Array.<DataPoint>} dataPoints
-   * @param {Emitter} dataPointsAddedEmitter
-   * @param {Object} [options]
-   */
-  constructor( graph, dataPoints, dataPointsAddedEmitter, options ) {
+  public readonly sumOfSquaredResiduals: SumOfSquaredResidualsChart;
 
+  // TODO: unused param, see https://github.com/phetsims/least-squares-regression/issues/94
+  public constructor( graph: Graph, dataPoints: DataPoint[], dataPointsAddedEmitter: Emitter, options: IntentionalAny ) {
 
     // Create a mutable equation y = {1} x + {2} , the slope and intercept are updated later
     // max width determined empirically, and there are 6 elements that make up the equation node
@@ -56,18 +55,16 @@ class MyLineControlPanel extends Panel {
 
     /**
      * Function that updates the value of the current slope (based on the angle of the line)
-     * @param {number} angle
      */
-    function updateTextSlope( angle ) {
+    function updateTextSlope( angle: number ): void {
       const slope = graph.slope( angle );
       equationText.setSlopeText( slope * graph.slopeFactor );
     }
 
     /**
      * Function that updates the value of the intercept
-     * @param {number} intercept
      */
-    function updateTextIntercept( intercept ) {
+    function updateTextIntercept( intercept: number ): void {
       equationText.setInterceptText( intercept * graph.interceptFactor + graph.interceptOffset );
     }
 
@@ -161,9 +158,8 @@ class MyLineControlPanel extends Panel {
       graph.getMyLineSumOfSquaredResiduals.bind( graph ),
       dataPointsAddedEmitter,
       LeastSquaresRegressionConstants.MY_LINE_COLOR.SUM_OF_SQUARES_COLOR,
-      graph.myLineSquaredResidualsVisibleProperty, {
-        maxLabelWidth: MAX_WIDTH
-      } );
+      graph.myLineSquaredResidualsVisibleProperty
+    );
 
     // assemble all the previous nodes in a vertical box
     const mainBox = new VBox( {
@@ -222,12 +218,10 @@ class MyLineControlPanel extends Panel {
       updateTextIntercept( graph.interceptProperty.value );
     } );
 
-    // @private
     this.sumOfSquaredResiduals = sumOfSquaredResiduals;
   }
 
-  // @public
-  reset() {
+  public reset(): void {
     this.sumOfSquaredResiduals.reset();
   }
 }

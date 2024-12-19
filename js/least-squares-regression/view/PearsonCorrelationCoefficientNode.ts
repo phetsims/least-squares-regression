@@ -8,15 +8,16 @@
  */
 
 import Utils from '../../../../dot/js/Utils.js';
-import merge from '../../../../phet-core/js/merge.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HStrut, Node, RichText, Text, VBox } from '../../../../scenery/js/imports.js';
-import AccordionBox from '../../../../sun/js/AccordionBox.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import Graph from '../model/Graph.js';
 
 // string
 const pattern_0r_1value = '{0} {1}';
@@ -26,14 +27,12 @@ const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symb
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
 class PearsonCorrelationCoefficientNode extends AccordionBox {
-  /**
-   * @param {Graph} graph
-   * @param {Object} [options]
-   */
-  constructor( graph, options ) {
+  private readonly rightHandSideText: Text;
+
+  public constructor( private readonly graph: Graph, options?: AccordionBoxOptions ) {
 
     // Options for the Accordion Box
-    options = merge( {
+    options = combineOptions<AccordionBoxOptions>( {
       cornerRadius: 3,
       buttonXMargin: 10,
       buttonYMargin: 10,
@@ -93,25 +92,18 @@ class PearsonCorrelationCoefficientNode extends AccordionBox {
 
     super( content, options );
 
-    // @private
-    this.graph = graph;
     this.rightHandSideText = rightHandSideText;
   }
 
-  /**
-   * @public
-   * @override
-   */
-  reset() {
+  public override reset(): void {
     this.update();
     super.reset();
   }
 
   /**
    * Updates the value of the right hand side of the equation.
-   * @public
    */
-  update() {
+  public update(): void {
     let rValueString;
 
     // Check for the existence of the rValue

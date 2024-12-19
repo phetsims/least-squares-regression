@@ -6,17 +6,17 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Circle, SimpleDragHandler } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
+import DataPoint from '../model/DataPoint.js';
 import DataPointNode from './DataPointNode.js';
 
 class DynamicDataPointNode extends DataPointNode {
-  /**
-   * @param {DataPoint} dataPoint
-   * @param {ModelViewTransform2} modelViewTransform
-   */
-  constructor( dataPoint, modelViewTransform ) {
+
+  public constructor( dataPoint: DataPoint, modelViewTransform: ModelViewTransform2 ) {
 
     // Create the visual representation of the DynamicDataPoint
     const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
@@ -36,11 +36,11 @@ class DynamicDataPointNode extends DataPointNode {
       allowTouchSnag: true,
 
       // Handler that moves the dataPoint in model space.
-      start: ( event, trail ) => {
+      start: () => {
         dataPoint.userControlledProperty.set( true );
       },
 
-      translate: args => {
+      translate: ( args: { delta: Vector2; oldPosition: Vector2; position: Vector2 } ) => {
         dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
       },
 

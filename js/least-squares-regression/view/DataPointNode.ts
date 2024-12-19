@@ -7,37 +7,49 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Vector2 from '../../../../dot/js/Vector2.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
+import DataPoint from '../model/DataPoint.js';
 
 class DataPointNode extends Node {
+
   /**
-   * @param {DataPoint} dataPoint
-   * @param {Node} representation
-   * @param {ModelViewTransform2} modelViewTransform
+   * A function to dispose of the DataPointNode's listeners.
    */
-  constructor( dataPoint, representation, modelViewTransform ) {
+  private readonly disposeDataPointNode: () => void;
+
+  /**
+   * @param dataPoint - The DataPoint model instance.
+   * @param representation - The visual representation Node of the DataPoint.
+   * @param modelViewTransform - The ModelViewTransform2 instance for coordinate transformations.
+   */
+  public constructor(
+    dataPoint: DataPoint,
+    representation: Node,
+    modelViewTransform: ModelViewTransform2
+  ) {
     super( { cursor: 'pointer', children: [ representation ] } );
 
     // Create a listener to the position of the dataPoint
-    const centerPositionListener = position => {
+    const centerPositionListener = ( position: Vector2 ) => {
       this.center = modelViewTransform.modelToViewPosition( position );
     };
 
     // Move this node as the model representation moves
     dataPoint.positionProperty.link( centerPositionListener );
 
-    // @private: just for dispose.  Named based on the type name so it won't have a name collision with parent/child ones
+    // TODO: use disposeEmitter, see https://github.com/phetsims/least-squares-regression/issues/94
     this.disposeDataPointNode = () => {
       dataPoint.positionProperty.unlink( centerPositionListener );
     };
   }
 
   /**
-   * Releases references
-   * @public
+   * Releases references and listeners to prevent memory leaks.
    */
-  dispose() {
+  public override dispose(): void {
     this.disposeDataPointNode();
     super.dispose();
   }
