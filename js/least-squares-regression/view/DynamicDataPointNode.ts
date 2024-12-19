@@ -6,17 +6,19 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Vector2 from '../../../../dot/js/Vector2.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Circle, SimpleDragHandler } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';
 import DataPointNode from './DataPointNode.js';
 
 export default class DynamicDataPointNode extends DataPointNode {
+  public readonly dragListener: DragListener;
 
-  public constructor( dataPoint: DataPoint, modelViewTransform: ModelViewTransform2 ) {
+  public constructor(
+
+    public readonly dataPoint: DataPoint, modelViewTransform: ModelViewTransform2 ) {
 
     // Create the visual representation of the DynamicDataPoint
     const representation = new Circle( LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS, {
@@ -31,7 +33,10 @@ export default class DynamicDataPointNode extends DataPointNode {
     this.touchArea = this.localBounds.dilatedXY( 15, 15 );
 
     // Add the listener that will allow the user to drag the dataPoint around.
-    this.addInputListener( new SimpleDragHandler( {
+    this.dragListener = new DragListener( {
+      transform: modelViewTransform,
+      positionProperty: dataPoint.positionProperty,
+
       // Allow moving a finger (touch) across a node to pick it up.
       allowTouchSnag: true,
 
@@ -39,15 +44,11 @@ export default class DynamicDataPointNode extends DataPointNode {
       start: () => {
         dataPoint.userControlledProperty.set( true );
       },
-
-      translate: ( args: { delta: Vector2; oldPosition: Vector2; position: Vector2 } ) => {
-        dataPoint.positionProperty.value = modelViewTransform.viewToModelPosition( args.position );
-      },
-
       end: () => {
         dataPoint.userControlledProperty.set( false );
       }
-    } ) );
+    } );
+    this.addInputListener( this.dragListener );
   }
 }
 

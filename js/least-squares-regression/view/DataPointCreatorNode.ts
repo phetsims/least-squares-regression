@@ -7,13 +7,12 @@
  * @author Martin Veillette (Berea College)
  */
 
-import Vector2 from '../../../../dot/js/Vector2.js';
-import ScreenView from '../../../../joist/js/ScreenView.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Circle, Node, NodeOptions, SceneryEvent, SimpleDragHandler } from '../../../../scenery/js/imports.js';
+import { Circle, DragListener, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';
+import DynamicDataPointNode from './DynamicDataPointNode.js';
 
 export default class DataPointCreatorNode extends Node {
 
@@ -23,7 +22,7 @@ export default class DataPointCreatorNode extends Node {
    * @param providedOptions - Optional customization options.
    */
   public constructor(
-    addDataPointToModel: ( dataPoint: DataPoint ) => void,
+    addDataPointToModel: ( dataPoint: DataPoint ) => DynamicDataPointNode,
     modelViewTransform: ModelViewTransform2,
     providedOptions?: NodeOptions
   ) {
@@ -42,48 +41,18 @@ export default class DataPointCreatorNode extends Node {
     this.touchArea = this.localBounds.dilated( 15 );
     this.mouseArea = this.localBounds.dilated( 5 );
 
-    let parentScreenView: ScreenView | null = null;
-    let dataPoint: DataPoint | null = null;
-
     // Add the listener that will allow the user to click on this and create a new dataPoint, then position it in the model.
-    this.addInputListener( new SimpleDragHandler( {
+    this.addInputListener( DragListener.createForwardingListener( event => {
 
-      // Allow moving a finger (touch) across this node to interact with it
-      allowTouchSnag: true,
+      // Determine the initial position (set to be one circle radius above the pointer point)
+      const initialPosition = event.pointer.point;
 
-      start: ( event: SceneryEvent ) => {
+      // Create and add the new model element.
+      const dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
+      dataPoint.userControlledProperty.set( true );
+      const dynamicDataPointNode = addDataPointToModel( dataPoint );
 
-        // find the parent screen if not already found by moving up the scene graph
-        if ( !parentScreenView ) {
-
-          let testNode = ( this as Node ) || null; // Workaround for lint errors for this alias
-          while ( testNode !== null ) {
-            if ( testNode instanceof ScreenView ) {
-              parentScreenView = testNode;
-              break;
-            }
-            testNode = testNode.parents[ 0 ]; // move up the scene graph by one level
-          }
-          assert && assert( parentScreenView, 'unable to find parent screen view' );
-        }
-
-        // Determine the initial position (set to be one circle radius above the pointer point)
-        const initialPosition = parentScreenView!.globalToLocalPoint( event.pointer.point.plus( new Vector2( 0, -LeastSquaresRegressionConstants.DYNAMIC_DATA_POINT_RADIUS ) ) );
-
-        // Create and add the new model element.
-        dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
-        dataPoint.userControlledProperty.set( true );
-        addDataPointToModel( dataPoint );
-      },
-
-      translate: ( translationParams: { delta: Vector2; oldPosition: Vector2; position: Vector2 } ) => {
-        dataPoint!.positionProperty.value = dataPoint!.positionProperty.value.plus( modelViewTransform.viewToModelDelta( translationParams.delta ) );
-      },
-
-      end: () => {
-        dataPoint!.userControlledProperty.set( false );
-        dataPoint = null;
-      }
+      dynamicDataPointNode.dragListener.press( event );
     } ) );
 
     // Pass options through to parent.

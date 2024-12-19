@@ -138,7 +138,10 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     // Add the dataPoint creator nodes. These must be added on the backLayer but after the bucket hole for proper layering.
     DATA_POINT_CREATOR_OFFSET_POSITIONS.forEach( offset => {
       backLayer.addChild( new DataPointCreatorNode(
-        model.addUserCreatedDataPoint.bind( model ),
+        dataPoint => {
+          model.addUserCreatedDataPoint( dataPoint );
+          return dataPointsLayer.children.find( node => node instanceof DynamicDataPointNode && node.dataPoint === dataPoint ) as DynamicDataPointNode;
+        },
         modelViewTransform, {
           left: bucketHole.centerX + offset.x,
           top: bucketHole.centerY + offset.y
