@@ -57,7 +57,7 @@ export default class DataPoint {
   /**
    * Function that animates the DataPoint back to the bucket.
    */
-  public animate(): void {
+  public animateBackToBucket(): void {
     this.animatingProperty.set( true );
 
     const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );

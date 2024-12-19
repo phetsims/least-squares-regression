@@ -187,7 +187,7 @@ export default class LeastSquaresRegressionModel {
    */
   public returnAllDataPointsToBucket(): void {
     this.dataPoints.forEach( dataPoint => {
-      dataPoint.animate();
+      dataPoint.animateBackToBucket();
     } );
   }
 
@@ -210,7 +210,7 @@ export default class LeastSquaresRegressionModel {
       const isOnGraph = this.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );
       if ( !isOnGraph && !userControlled ) {
         // return the dataPoint to the bucket
-        dataPoint.animate();
+        dataPoint.animateBackToBucket();
       }
     };
 

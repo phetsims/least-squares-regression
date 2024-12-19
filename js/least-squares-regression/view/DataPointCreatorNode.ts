@@ -45,10 +45,12 @@ export default class DataPointCreatorNode extends Node {
     this.addInputListener( DragListener.createForwardingListener( event => {
 
       // Determine the initial position (set to be one circle radius above the pointer point)
-      const initialPosition = event.pointer.point;
+      const viewPosition = this.globalToParentPoint( event.pointer.point );
 
       // Create and add the new model element.
-      const dataPoint = new DataPoint( modelViewTransform.viewToModelPosition( initialPosition ) );
+      const modelPosition = modelViewTransform.viewToModelPosition( viewPosition );
+
+      const dataPoint = new DataPoint( modelPosition );
       dataPoint.userControlledProperty.set( true );
       const dynamicDataPointNode = addDataPointToModel( dataPoint );
 
