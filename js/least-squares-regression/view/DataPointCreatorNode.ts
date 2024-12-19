@@ -54,7 +54,7 @@ export default class DataPointCreatorNode extends Node {
       dataPoint.userControlledProperty.set( true );
       const dynamicDataPointNode = addDataPointToModel( dataPoint );
 
-      dynamicDataPointNode.dragListener.press( event );
+      dynamicDataPointNode.dragListener.press( event, dynamicDataPointNode );
     } ) );
 
     // Pass options through to parent.
