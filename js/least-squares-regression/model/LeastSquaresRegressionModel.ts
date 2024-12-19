@@ -196,7 +196,6 @@ export default class LeastSquaresRegressionModel {
    * Function for adding new dataPoints to this model when the user creates them, generally by clicking on
    * some sort of creator node.
    */
-  // TODO: Find all IntentionalAny, see https://github.com/phetsims/least-squares-regression/issues/94
   public addUserCreatedDataPoint( dataPoint: DataPoint ): void {
     this.dataPoints.push( dataPoint );
     this.addDataPointControlledListener( dataPoint );

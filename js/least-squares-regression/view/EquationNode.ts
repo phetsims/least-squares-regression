@@ -25,7 +25,6 @@ type SelfOptions = {
 
 type EquationNodeOptions = SelfOptions & NodeOptions;
 
-// TODO: Better name, see https://github.com/phetsims/least-squares-regression/issues/94
 type NumberStringData = {
   absoluteNumber: string;
   optionalSign: string;

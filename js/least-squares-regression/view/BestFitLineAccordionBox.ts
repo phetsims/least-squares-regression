@@ -30,7 +30,7 @@ const bestFitLineString = LeastSquaresRegressionStrings.bestFitLine;
 const residualsString = LeastSquaresRegressionStrings.residuals;
 const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
 
-export default class BestFitLineControlPanel extends AccordionBox {
+export default class BestFitLineAccordionBox extends AccordionBox {
 
   private readonly equationText: EquationNode;
   public readonly sumOfSquaredResidualsChart: SumOfSquaredResidualsChart;
@@ -168,4 +168,4 @@ export default class BestFitLineControlPanel extends AccordionBox {
   }
 }
 
-leastSquaresRegression.register( 'BestFitLineControlPanel', BestFitLineControlPanel );
+leastSquaresRegression.register( 'BestFitLineAccordionBox', BestFitLineAccordionBox );

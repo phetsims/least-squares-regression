@@ -23,14 +23,14 @@ import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.j
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 import LeastSquaresRegressionModel from '../model/LeastSquaresRegressionModel.js';
-import BestFitLineControlPanel from './BestFitLineControlPanel.js';
+import BestFitLineAccordionBox from './BestFitLineAccordionBox.js';
 import DataPointCreatorNode from './DataPointCreatorNode.js';
 import DataSetComboBox from './DataSetComboBox.js';
 import DynamicDataPointNode from './DynamicDataPointNode.js';
 import GraphAxesNode from './GraphAxesNode.js';
 import GraphNode from './GraphNode.js';
 import MyLineControlPanel from './MyLineControlPanel.js';
-import PearsonCorrelationCoefficientNode from './PearsonCorrelationCoefficientNode.js';
+import CorrelationCoefficientAccordionBox from './CorrelationCoefficientAccordionBox.js';
 import SourceAndReferenceNode from './SourceAndReferenceNode.js';
 import StaticDataPointNode from './StaticDataPointNode.js';
 
@@ -92,7 +92,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    const bestFitLineControlPanel = new BestFitLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
+    const bestFitLineAccordionBox = new BestFitLineAccordionBox( model.graph, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
@@ -154,7 +154,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     } );
 
     // Create the Pearson Correlation coefficient panel
-    const pearsonCorrelationCoefficientNode = new PearsonCorrelationCoefficientNode( model.graph, panelOptions );
+    const correlationCoefficientAccordionBox = new CorrelationCoefficientAccordionBox( model.graph, panelOptions );
 
     // Create grid checkbox with grid icon
     const gridCheckbox = new GridCheckbox( model.showGridProperty, {
@@ -190,10 +190,10 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       graphNode.update();
 
       // Update the Pearson Correlation Coefficient Panel
-      pearsonCorrelationCoefficientNode.update();
+      correlationCoefficientAccordionBox.update();
 
       // Update the Best fit Line Equation in the best Fit Line Control Panel, (regardless of the status of the node visibility )
-      bestFitLineControlPanel.updateBestFitLineEquation();
+      bestFitLineAccordionBox.updateBestFitLineEquation();
 
       // The bucket, eraser button must be present when custom data set is selected whereas the pushButton next to the comboBox box must be set to invisible
       if ( selectedDataSet === DataSet.CUSTOM ) {
@@ -237,11 +237,11 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
           }
 
           // update the control panel readouts and best fit line geometry when position changes
-          bestFitLineControlPanel.updateBestFitLineEquation();
-          bestFitLineControlPanel.sumOfSquaredResidualsChart.updateWidth();
+          bestFitLineAccordionBox.updateBestFitLineEquation();
+          bestFitLineAccordionBox.sumOfSquaredResidualsChart.updateWidth();
           myLineControlPanel.sumOfSquaredResiduals.updateWidth();
           graphNode.update();
-          pearsonCorrelationCoefficientNode.update();
+          correlationCoefficientAccordionBox.update();
         };
 
         // Update graph upon a change of position of a dataPoint
@@ -299,8 +299,8 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       listener: () => {
         model.reset();
         graphNode.reset();
-        pearsonCorrelationCoefficientNode.reset();
-        bestFitLineControlPanel.reset();
+        correlationCoefficientAccordionBox.reset();
+        bestFitLineAccordionBox.reset();
         myLineControlPanel.reset();
       },
       right: this.layoutBounds.maxX - 10,
@@ -308,11 +308,11 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     } );
 
     // Add nodes to the scene graph. Order is irrelevant for the following nodes
-    this.addChild( pearsonCorrelationCoefficientNode );
+    this.addChild( correlationCoefficientAccordionBox );
     this.addChild( gridCheckbox );
     this.addChild( eraserButton );
     this.addChild( resetAllButton );
-    this.addChild( bestFitLineControlPanel );
+    this.addChild( bestFitLineAccordionBox );
     this.addChild( myLineControlPanel );
     this.addChild( dataSetComboBox );
     this.addChild( sourceAndReferencePushButton );
@@ -328,14 +328,14 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     {
       myLineControlPanel.right = this.layoutBounds.maxX - 10;
       myLineControlPanel.top = 20;
-      bestFitLineControlPanel.left = 15;
-      bestFitLineControlPanel.top = myLineControlPanel.top;
+      bestFitLineAccordionBox.left = 15;
+      bestFitLineAccordionBox.top = myLineControlPanel.top;
       dataSetComboBox.centerX = viewGraphBounds.centerX;
       dataSetComboBox.top = myLineControlPanel.top;
       gridCheckbox.left = myLineControlPanel.left + 10;
       gridCheckbox.top = myLineControlPanel.bottom + 10;
-      pearsonCorrelationCoefficientNode.centerX = bestFitLineControlPanel.centerX;
-      pearsonCorrelationCoefficientNode.top = bestFitLineControlPanel.bottom + 10;
+      correlationCoefficientAccordionBox.centerX = bestFitLineAccordionBox.centerX;
+      correlationCoefficientAccordionBox.top = bestFitLineAccordionBox.bottom + 10;
       sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;
       sourceAndReferencePushButton.left = dataSetComboBox.right + 10;
     }
