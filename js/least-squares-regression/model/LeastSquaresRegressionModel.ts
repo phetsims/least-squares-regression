@@ -226,19 +226,18 @@ export default class LeastSquaresRegressionModel {
         this.dataPoints.remove( dataPoint );
       }
 
-      if ( dataPoint.positionProperty && dataPoint.positionUpdateListener &&
+      if ( dataPoint.positionUpdateListener &&
            dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
         dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
       }
 
-      if ( dataPoint.userControlledProperty && dataPoint.userControlledListener &&
+      if ( dataPoint.userControlledListener &&
            dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener ) ) {
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener );
       }
 
-      if ( dataPoint.returnedToOriginEmitter &&
-           dataPoint.returnedToOriginEmitter.hasListener( dataPoint.returnedToOriginListener! ) ) {
-        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener! );
+      if ( dataPoint.returnedToOriginListener && dataPoint.returnedToOriginEmitter.hasListener( dataPoint.returnedToOriginListener ) ) {
+        dataPoint.returnedToOriginEmitter.removeListener( dataPoint.returnedToOriginListener );
       }
     };
 

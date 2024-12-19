@@ -30,7 +30,6 @@ export default class DataPoint {
   // Emitter that fires when the data point has returned to its origin.
   public readonly returnedToOriginEmitter: Emitter;
 
-  // TODO https://github.com/phetsims/least-squares-regression/issues/94 should this be in the subtype?
   public positionUpdateListener?: () => void;
   public userControlledListener?: ( userControlled: boolean ) => void;
   public returnedToOriginListener?: () => void;

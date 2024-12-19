@@ -285,7 +285,7 @@ export default class Graph {
   /**
    * Add the dataPoint to the dataPointsOnGraph Array and add 'My Line' and 'Best Fit Line' model Residuals.
    */
-  public addPointAndResiduals( dataPoint: DataPoint & { positionUpdateListener?: () => void } ): void {
+  public addPointAndResiduals( dataPoint: DataPoint ): void {
     this.dataPointsOnGraph.push( dataPoint );
     this.addMyLineResidual( dataPoint );
 
