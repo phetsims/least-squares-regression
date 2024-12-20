@@ -37,8 +37,7 @@ export default class GraphNode extends Node {
     const myLineBoundaryPoints = graph.getBoundaryPoints( graph.slope( graph.angleProperty.value ), graph.interceptProperty.value );
     this.myLine = new Line(
       modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point1 ),
-      modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ),
-      {
+      modelViewTransform.modelToViewPosition( myLineBoundaryPoints.point2 ), {
         stroke: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
         lineWidth: LeastSquaresRegressionConstants.LINE_WIDTH
       } );

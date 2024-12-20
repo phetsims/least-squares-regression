@@ -115,7 +115,6 @@ export default class LeastSquaresRegressionModel {
       this.graph.setGraphDomain( selectedDataSet.xRange, selectedDataSet.yRange );
 
       // Populate the dataPoints array
-
       if ( selectedDataSet === DataSet.CUSTOM ) {
 
         // use the savedCustomDataPoints to populate the dataPoints array
