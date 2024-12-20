@@ -10,17 +10,14 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import createObservableArray, { ObservableArray } from '../../../../axon/js/createObservableArray.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
-import Residual from './Residual.js';
 
 /**
  * Graph model for handling data points, residuals, and statistics related to lines of best fit.
@@ -45,11 +42,6 @@ export default class Graph {
 
   // Bounds for the graph in model coordinates, it is a unit square. This remains the same for all DataSets
   public readonly bounds: Bounds2;
-
-  // Observable arrays for residuals
-  // Each entry is a Property<Residual>.
-  public readonly myLineResiduals: ObservableArray<Property<Residual>>;
-  public readonly bestFitLineResiduals: ObservableArray<Property<Residual>>;
 
   // Array of dataPoints currently on the graph
   public dataPointsOnGraph: DataPoint[];
@@ -103,10 +95,6 @@ export default class Graph {
 
     this.bounds = new Bounds2( 0, 0, 1, 1 );
 
-    // observable arrays of the line and squared residuals (wrapped in a property) for MyLine and BestFitLine
-    this.myLineResiduals = createObservableArray<Property<Residual>>();
-    this.bestFitLineResiduals = createObservableArray<Property<Residual>>();
-
     // array of the dataPoints that are overlapping the graph.
     this.dataPointsOnGraph = [];
 
@@ -128,8 +116,6 @@ export default class Graph {
     this.bestFitLineShowResidualsProperty.reset();
     this.bestFitLineShowSquaredResidualsProperty.reset();
     this.dataPointsOnGraph = [];
-    this.myLineResiduals.clear();
-    this.bestFitLineResiduals.clear();
   }
 
   /**
@@ -137,8 +123,6 @@ export default class Graph {
    */
   public resetOnChangeOfDataSet(): void {
     this.dataPointsOnGraph = [];
-    this.myLineResiduals.clear();
-    this.bestFitLineResiduals.clear();
   }
 
   /**
@@ -154,114 +138,10 @@ export default class Graph {
   }
 
   /**
-   * Update the model Residuals for 'My Line' and 'Best Fit Line'.
-   */
-  private update(): void {
-    this.updateMyLineResiduals();
-    this.updateBestFitLineResiduals();
-  }
-
-  /**
-   * Convert the angle of a line (measured from the horizontal x axis) to a slope.
+   * Convert the angle of a line (measured from the horizontal x-axis) to a slope.
    */
   public slope( angle: number ): number {
     return Math.tan( angle ) * this.bounds.height / this.bounds.width;
-  }
-
-  /**
-   * Add a 'My Line' model Residual to a dataPoint.
-   */
-  private addMyLineResidual( dataPoint: DataPoint ): void {
-    const myLineResidual = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
-    this.myLineResiduals.push( new Property( myLineResidual ) );
-  }
-
-  /**
-   * Add a 'Best Fit Line' model Residual to a dataPoint.
-   */
-  private addBestFitLineResidual( dataPoint: DataPoint ): void {
-    const linearFitParameters = this.getLinearFit();
-    const bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
-    this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
-  }
-
-  /**
-   * Remove the 'My Line' model Residual attached to a dataPoint.
-   */
-  private removeMyLineResidual( dataPoint: DataPoint ): void {
-    const myLineResidualsCopy = this.myLineResiduals.slice();
-    myLineResidualsCopy.forEach( myLineResidualProperty => {
-      if ( myLineResidualProperty.value.dataPoint === dataPoint ) {
-        this.myLineResiduals.remove( myLineResidualProperty );
-      }
-    } );
-  }
-
-  /**
-   * Remove a 'Best Fit Line' model Residual attached to a dataPoint.
-   */
-  private removeBestFitLineResidual( dataPoint: DataPoint ): void {
-    const bestFitLineResidualsCopy = this.bestFitLineResiduals.slice();
-    bestFitLineResidualsCopy.forEach( bestFitLineResidualProperty => {
-      if ( bestFitLineResidualProperty.value.dataPoint === dataPoint ) {
-        this.bestFitLineResiduals.remove( bestFitLineResidualProperty );
-      }
-    } );
-  }
-
-  /**
-   * Update all 'My Line' model Residuals
-   * (Necessary to update when the slope and the intercept of 'My Line' are modified)
-   */
-  public updateMyLineResiduals(): void {
-    this.myLineResiduals.forEach( residualProperty => {
-      const dataPoint = residualProperty.value.dataPoint;
-      residualProperty.value = new Residual( dataPoint, this.slope( this.angleProperty.value ), this.interceptProperty.value );
-    } );
-  }
-
-  /**
-   * Update all 'Best Fit Line' model Residuals.
-   */
-  private updateBestFitLineResiduals(): void {
-    if ( this.isLinearFitDefined() ) {
-      const linearFitParameters = this.getLinearFit();
-      this.bestFitLineResiduals.forEach( residualProperty => {
-        const dataPoint = residualProperty.value.dataPoint;
-        residualProperty.value = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
-      } );
-    }
-  }
-
-  /**
-   * Add Data Points on Graph in bulk, for performance reasons.
-   */
-  public addDataPointsOnGraphAndResidualsInBulk( dataPoints: DataPoint[] ): void {
-    // for performance reason one should add all the dataPoints on the graph
-    // then we can calculate the best Fit Line (only once)
-    // and then add all the Residuals.
-    dataPoints.forEach( dataPoint => {
-      this.dataPointsOnGraph.push( dataPoint );
-    } );
-
-    const mySlope = this.slope( this.angleProperty.value );
-    const myIntercept = this.interceptProperty.value;
-
-    // add a 'myLineResidual' for every single dataPoint
-    dataPoints.forEach( dataPoint => {
-      const myLineResidual = new Residual( dataPoint, mySlope, myIntercept );
-      this.myLineResiduals.push( new Property( myLineResidual ) );
-    } );
-
-    // add a 'best fit Line' residual  for every single dataPoint
-    // unless there is not  linearFit (because there is less than 2 data points on the board for instance)
-    if ( this.isLinearFitDefined() ) {
-      const linearFitParameters = this.getLinearFit();
-      dataPoints.forEach( dataPoint => {
-        const bestFitLineResidual = new Residual( dataPoint, linearFitParameters.slope, linearFitParameters.intercept );
-        this.bestFitLineResiduals.push( new Property( bestFitLineResidual ) );
-      } );
-    }
   }
 
   /**
@@ -284,26 +164,6 @@ export default class Graph {
    */
   public addPointAndResiduals( dataPoint: DataPoint ): void {
     this.dataPointsOnGraph.push( dataPoint );
-    this.addMyLineResidual( dataPoint );
-
-    // a BestFit line exists if there are two dataPoints or more.
-    // if there are two dataPoints on the graph, we don't add my bestFitLine residual
-    // since the residual are zero by definition
-    // if there are exactly three data points on the graph we need to add three residuals
-    if ( this.dataPointsOnGraph.length === 3 ) {
-      this.dataPointsOnGraph.forEach( dataPoint => {
-        this.addBestFitLineResidual( dataPoint );
-      } );
-    }
-    // for three dataPoints or more there is one residual for every dataPoint added
-    if ( this.dataPointsOnGraph.length > 3 ) {
-      this.addBestFitLineResidual( dataPoint );
-    }
-
-    dataPoint.positionUpdateListener = () => {
-      this.update();
-    };
-    dataPoint.positionProperty.link( dataPoint.positionUpdateListener );
   }
 
   /**
@@ -313,28 +173,9 @@ export default class Graph {
     assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
     const index = this.dataPointsOnGraph.indexOf( dataPoint );
     this.dataPointsOnGraph.splice( index, 1 );
-
-    this.removeMyLineResidual( dataPoint );
-
-    // if there are two dataPoints on the graph, remove all residuals
-    if ( this.dataPointsOnGraph.length === 2 ) {
-      this.removeBestFitLineResiduals();
-    }
-    else {
-      this.removeBestFitLineResidual( dataPoint );
-    }
-
-    this.update();
     if ( dataPoint.positionUpdateListener && dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
       dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
     }
-  }
-
-  /**
-   * Function that removes all the best Fit Line Residuals.
-   */
-  private removeBestFitLineResiduals(): void {
-    this.bestFitLineResiduals.clear();
   }
 
   /**
@@ -486,12 +327,12 @@ export default class Graph {
 
       // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
     if ( pearsonCoefficientCorrelationDenominator === 0 ) {
-        return null; //
+      return null;
     }
-      else {
-    const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-    return pearsonCoefficientCorrelation;
-      }
+    else {
+      const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+      return pearsonCoefficientCorrelation;
+    }
     }
   }
 }

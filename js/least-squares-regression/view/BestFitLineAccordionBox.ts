@@ -105,6 +105,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
     // Update the control Panel upon a change of the status of the Best Fit Line Checkbox
     // No need to unlink, present for the lifetime of the sim
     graph.bestFitLineVisibleProperty.link( enabled => {
+
       // Set Equation to invisible if there is less than one point on the graph
       if ( graph.isLinearFitDefined() ) {
         equationText.visible = enabled;

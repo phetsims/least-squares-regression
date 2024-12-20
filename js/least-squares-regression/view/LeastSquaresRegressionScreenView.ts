@@ -67,6 +67,7 @@ const DATA_POINT_CREATOR_OFFSET_POSITIONS = [
 ];
 
 export default class LeastSquaresRegressionScreenView extends ScreenView {
+  private readonly graphNode: GraphNode;
 
   public constructor( model: LeastSquaresRegressionModel ) {
 
@@ -97,14 +98,14 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
-    const graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
+    this.graphNode = new GraphNode( model.graph, viewGraphBounds, modelViewTransform );
 
     // Create the Graph Axes, including the tick marks, labels and axis titles
     let graphAxesNode = new GraphAxesNode( model.selectedDataSetProperty.value, modelViewTransform, model.showGridProperty );
 
     // Create the dataSet combo box that appears on top of the graph
     // Width of contents limited by width of graphNode for i18n
-    const dataSetLabelMaxWidth = graphNode.width / 2;
+    const dataSetLabelMaxWidth = this.graphNode.width / 2;
     const dataSetListParent = new Node();
     const dataSetComboBox = new DataSetComboBox( model.selectedDataSetProperty, model.dataSets, dataSetListParent, dataSetLabelMaxWidth );
 
@@ -180,12 +181,13 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       const dataSetBounds = new Bounds2( selectedDataSet.xRange.min, selectedDataSet.yRange.min, selectedDataSet.xRange.max, selectedDataSet.yRange.max );
       // GraphAxesNode require a special modelView Transform that is set by the dataSet
       const modelViewTransformAxes = ModelViewTransform2.createRectangleInvertedYMapping( dataSetBounds, viewGraphBounds );
+
       graphAxesNode = new GraphAxesNode( selectedDataSet, modelViewTransformAxes, model.showGridProperty );
       this.addChild( graphAxesNode );
       graphAxesNode.moveToBack(); //
 
       // Update the graphNode (will populate it with the new dataPoints)
-      graphNode.update();
+      this.graphNode.update();
 
       // Update the Pearson Correlation Coefficient Panel
       correlationCoefficientAccordionBox.update();
@@ -238,7 +240,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
           bestFitLineAccordionBox.updateBestFitLineEquation();
           bestFitLineAccordionBox.sumOfSquaredResidualsChart.updateWidth();
           myLineControlPanel.sumOfSquaredResiduals.updateWidth();
-          graphNode.update();
+          this.graphNode.update();
           correlationCoefficientAccordionBox.update();
         };
 
@@ -296,7 +298,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     const resetAllButton = new ResetAllButton( {
       listener: () => {
         model.reset();
-        graphNode.reset();
+        this.graphNode.reset();
         correlationCoefficientAccordionBox.reset();
         bestFitLineAccordionBox.reset();
         myLineControlPanel.reset();
@@ -315,7 +317,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     this.addChild( dataSetComboBox );
     this.addChild( infoButton );
     this.addChild( backLayer );
-    this.addChild( graphNode );
+    this.addChild( this.graphNode );
 
     // Order matters here. These must come last
     this.addChild( bucketFrontLayer ); //must come after back layer
@@ -337,6 +339,11 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       infoButton.centerY = dataSetComboBox.centerY;
       infoButton.left = dataSetComboBox.right + 10;
     }
+  }
+
+  public override step( dt: number ): void {
+    super.step( dt );
+    this.graphNode.step( dt );
   }
 
   /**

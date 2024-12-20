@@ -117,9 +117,7 @@ export default class LeastSquaresRegressionModel {
         savedCustomDataPoints.forEach( dataPoint => {
           this.dataPoints.push( new DataPoint( dataPoint.copy() ) );
         } );
-        // Add the Data Points on Graph and all the Residuals
-        // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
-        this.graph.addDataPointsOnGraphAndResidualsInBulk( this.dataPoints );
+
         this.dataPoints.forEach( dataPoint => {
           this.addDataPointControlledListener( dataPoint );
         } );
@@ -147,10 +145,12 @@ export default class LeastSquaresRegressionModel {
           const positionVector = new Vector2( xNormalized, yNormalized );
           this.dataPoints.push( new DataPoint( positionVector ) );
         } );
-        // Add the Data Points on Graph and all the Residuals
-        // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
-        this.graph.addDataPointsOnGraphAndResidualsInBulk( this.dataPoints );
       }
+
+      // Add the Data Points on Graph and all the Residuals
+      // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
+      this.dataPoints.forEach( dataPoint => this.graph.dataPointsOnGraph.push( dataPoint ) );
+
       // Since we added the dataPoints in Bulk, let's send a trigger to the view
       this.dataPointsAddedEmitter.emit();
     } );

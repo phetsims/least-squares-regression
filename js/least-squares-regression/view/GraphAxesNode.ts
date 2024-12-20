@@ -72,19 +72,28 @@ export default class GraphAxesNode extends Node {
 
     showGridProperty.link( showGridPropertyObserver );
 
+    const xAxisNode = new XAxisNode( dataSet, modelViewTransform );
+    const yAxisNode = new YAxisNode( dataSet, modelViewTransform );
+    const xLabelNode = new XLabelNode( dataSet, modelViewTransform );
+    const yLabelNode = new YLabelNode( dataSet, modelViewTransform );
     super( {
       children: [
         new BackgroundNode( dataSet, modelViewTransform ),
         gridNode,
-        new XAxisNode( dataSet, modelViewTransform ),
-        new YAxisNode( dataSet, modelViewTransform ),
-        new XLabelNode( dataSet, modelViewTransform ),
-        new YLabelNode( dataSet, modelViewTransform )
+        xAxisNode,
+        yAxisNode,
+        xLabelNode,
+        yLabelNode
       ]
     } );
 
     this.disposeEmitter.addListener( () => {
       showGridProperty.unlink( showGridPropertyObserver );
+      xAxisNode.dispose();
+      yAxisNode.dispose();
+      xLabelNode.dispose();
+      yLabelNode.dispose();
+      gridNode.dispose();
     } );
   }
 }
@@ -302,6 +311,10 @@ class XLabelNode extends Node {
       maxWidth: MAX_LABEL_WIDTH
     } );
     this.addChild( xLabelNode );
+
+    this.disposeEmitter.addListener( () => {
+      xLabelNode.dispose();
+    } );
   }
 }
 
@@ -327,6 +340,9 @@ class YLabelNode extends Node {
     } );
     this.addChild( yLabelNode );
 
+    this.disposeEmitter.addListener( () => {
+      yLabelNode.dispose();
+    } );
   }
 }
 
