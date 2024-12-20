@@ -125,7 +125,7 @@ class MajorTickNode extends Node {
 
     // label position
     if ( isVertical ) {
-      // center label under line, compensate for minus sign
+      // center label under the line, compensate for minus sign
       const signXOffset = ( parseFloat( value ) < 0 ) ? -( MINUS_SIGN_WIDTH / 2 ) : 0;
       tickLabelNode.left = tickLineNode.centerX - ( tickLabelNode.width / 2 ) + signXOffset;
       tickLabelNode.top = tickLineNode.bottom + TICK_LABEL_SPACING;
@@ -200,7 +200,7 @@ function tickSpacing( range: Range ): {
   const numberOfTicks = ( tickStopPosition - tickStartPosition ) / minorTickSpacing + 1; // number of ticks
   const decimalPlaces = Utils.roundSymmetric( majorTickSpacing > 1 ? 0 : -1 * Math.log( majorTickSpacing ) / Math.LN10 + 1 ); // the precision of ticks (for text purposes)
 
-  const tickSeparation = {
+  return {
     majorTickSpacing: majorTickSpacing,
     minorTickSpacing: minorTickSpacing,
     minorTicksPerMajor: minorTicksPerMajor,
@@ -209,7 +209,6 @@ function tickSpacing( range: Range ): {
     numberOfTicks: numberOfTicks,
     decimalPlaces: decimalPlaces
   };
-  return tickSeparation;
 }
 
 //----------------------------------------------------------------------------------------
@@ -386,7 +385,7 @@ class GridNode extends Node {
     const maxX = dataSet.xRange.max;
     for ( let i = 0; i < numberOfHorizontalGridLines; i++ ) {
       const modelY = tickYSeparation.tickStartPosition + tickYSeparation.minorTickSpacing * i;
-      if ( modelY !== dataSet.yRange.min ) { // skip origin, x axis will live here
+      if ( modelY !== dataSet.yRange.min ) { // skip origin, x-axis will live here
         const yOffset = modelY;
         const isMajorX = Math.abs( modelY / tickYSeparation.minorTickSpacing ) % ( tickYSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
         if ( isMajorX ) {
@@ -409,7 +408,7 @@ class GridNode extends Node {
     const maxY = dataSet.yRange.min;
     for ( let j = 0; j < numberOfVerticalGridLines; j++ ) {
       const modelX = tickXSeparation.tickStartPosition + tickXSeparation.minorTickSpacing * j;
-      if ( modelX !== dataSet.xRange.min ) { // skip origin, y axis will live here
+      if ( modelX !== dataSet.xRange.min ) { // skip origin, y-axis will live here
         const xOffset = modelX;
         const isMajorY = Math.abs( modelX / tickXSeparation.minorTickSpacing ) % ( tickXSeparation.minorTicksPerMajor ) < SMALL_EPSILON;
         if ( isMajorY ) {

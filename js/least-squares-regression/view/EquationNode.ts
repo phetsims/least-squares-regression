@@ -59,7 +59,7 @@ export default class EquationNode extends Node {
     // options for the text elements of the equation
 
     let numericalTextOptions; // font and fill options for numerical strings , i.e.  '- 9.54'
-    let stringTextOptions; // font and fill options for 'pure' strings, eg. 'y'
+    let stringTextOptions; // font and fill options for 'pure' strings, e.g., 'y'
 
     switch( options.mode ) {
       case 'myLine':
@@ -162,12 +162,11 @@ export default class EquationNode extends Node {
     const signString = isNegative ? MathSymbols.MINUS : MathSymbols.PLUS;
     const optionalSignString = isNegative ? MathSymbols.MINUS : ' ';
     const absoluteNumber = this.roundNumber( Math.abs( parseFloat( this.roundNumber( number ) ) ) );
-    const numberString = {
+    return {
       absoluteNumber: absoluteNumber,
       optionalSign: optionalSignString,
       sign: signString
     };
-    return numberString;
   }
 
   /**

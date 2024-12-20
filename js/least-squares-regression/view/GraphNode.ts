@@ -146,7 +146,7 @@ export default class GraphNode extends Node {
     this.addChild( this.bestFitLine );
   }
 
-  public step( dt: number ): void {
+  public step(): void {
     this.residualCanvasNode.invalidatePaint();
   }
 

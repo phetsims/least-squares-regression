@@ -27,7 +27,7 @@ export default class SourceAndReferenceNode extends ScreenView {
      */
     // A PhET wide decision was made to not update custom layout bounds even if they do not match the
     // default layout bounds in ScreenView. Do not change these bounds as changes could break or disturb
-    // any phet-io instrumention. https://github.com/phetsims/phet-io/issues/1939
+    // any phet-io instrumentation. https://github.com/phetsims/phet-io/issues/1939
     super( { layoutBounds: new Bounds2( 0, 0, 1024, 618 ) } );
 
     // limit the width of the dialog content for i18n
@@ -99,8 +99,7 @@ export default class SourceAndReferenceNode extends ScreenView {
     // no need to unlink, present for the lifetime of the sim
     Multilink.multilink( [ LeastSquaresRegressionStrings.sourcePatternStringProperty, selectedDataSetProperty ], ( sourcePatternString, selectedDataSet ) => {
       referenceText.setStringProperty( selectedDataSet.reference );
-      const formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
-      sourceText.string = formattedSourceString;
+      sourceText.string = StringUtils.format( sourcePatternString, selectedDataSet.source );
       panel.centerX = this.layoutBounds.centerX;
       panel.centerY = this.layoutBounds.centerY;
       button.centerX = panel.right;

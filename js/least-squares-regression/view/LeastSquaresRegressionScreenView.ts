@@ -343,14 +343,14 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
 
   public override step( dt: number ): void {
     super.step( dt );
-    this.graphNode.step( dt );
+    this.graphNode.step( );
   }
 
   /**
    * This is taken from MoleculesAndLightScreenView with modifications.
    *
-   * Update the Source and Reference 'Dialog-like' Node visibility.  This node has behavior which is identical to the about dialog
-   * window, and this code is heavily borrowed from AboutDialog.js.
+   * Update the Source and Reference 'Dialog-like' Node visibility.  This node has behavior which is identical to the
+   * AboutDialog window, and this code is heavily borrowed from AboutDialog.js.
    *
    * @param sourceAndReferenceNode - The SourceAndReferenceNode whose visibility should be updated.
    */

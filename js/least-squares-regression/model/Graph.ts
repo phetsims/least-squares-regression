@@ -217,11 +217,10 @@ export default class Graph {
   public getBoundaryPoints( slope: number, intercept: number ): { point1: Vector2; point2: Vector2 } {
     const yValueLeft = slope * this.bounds.minX + intercept;
     const yValueRight = slope * this.bounds.maxX + intercept;
-    const boundaryPoints = {
+    return {
       point1: new Vector2( this.bounds.minX, yValueLeft ),
       point2: new Vector2( this.bounds.maxX, yValueRight )
     };
-    return boundaryPoints;
   }
 
   /**
@@ -256,7 +255,7 @@ export default class Graph {
   }
 
   /**
-   * Determine if a best fit line can be defined (at least two points and no vertical alignment).
+   * Determine if the best fit line can be defined (at least two points and no vertical alignment).
    */
   public isLinearFitDefined(): boolean {
 
@@ -285,11 +284,10 @@ export default class Graph {
     const slope = slopeNumerator / slopeDenominator;
     const intercept = this.averageOfSumOfY - slope * this.averageOfSumOfX;
 
-    const fitParameters = {
+    return {
       slope: slope,
       intercept: intercept
     };
-    return fitParameters;
   }
 
   /**
@@ -304,29 +302,29 @@ export default class Graph {
       return null;
     }
     else {
-    this.getStatistics();
+      this.getStatistics();
       let pearsonCoefficientCorrelationNumerator = this.averageOfSumOfSquaresXY - this.averageOfSumOfX * this.averageOfSumOfY;
 
-    if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
-      pearsonCoefficientCorrelationNumerator = 0;
-    }
+      if ( Math.abs( pearsonCoefficientCorrelationNumerator ) < 1E-10 ) {
+        pearsonCoefficientCorrelationNumerator = 0;
+      }
 
       // for very small values, we can end up with a very small or negative number.  In this case, return null so we
       // don't get a NaN for the coefficient.
+
       const number = ( this.averageOfSumOfSquaresXX - this.averageOfSumOfX * this.averageOfSumOfX ) * ( this.averageOfSumOfSquaresYY - this.averageOfSumOfY * this.averageOfSumOfY );
-    if ( number < 1E-15 ) {
-      return null;
-    }
-    const pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
+      if ( number < 1E-15 ) {
+        return null;
+      }
+      const pearsonCoefficientCorrelationDenominator = Math.sqrt( number );
 
       // make sure the denominator is not equal to zero, this happens if all the points are aligned vertically
-    if ( pearsonCoefficientCorrelationDenominator === 0 ) {
-      return null;
-    }
-    else {
-      const pearsonCoefficientCorrelation = pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
-      return pearsonCoefficientCorrelation;
-    }
+      if ( pearsonCoefficientCorrelationDenominator === 0 ) {
+        return null;
+      }
+      else {
+        return pearsonCoefficientCorrelationNumerator / pearsonCoefficientCorrelationDenominator;
+      }
     }
   }
 }

@@ -80,9 +80,7 @@ export default class SumOfSquaredResidualsChart extends Node {
 
     // The barometer width is adjustable
     // the square of the residuals vary if the position of the point change, points are added/subtracted to the graph and if the line change position
-    Multilink.multilink( [ graph.angleProperty, graph.interceptProperty ], ( angle, intercept ) => {
-      updateWidth();
-    } );
+    Multilink.multilink( [ graph.angleProperty, graph.interceptProperty ], () => updateWidth() );
 
     // Trigger an update after all the points have been added in bulk to the model
     dataPointsAddedEmitter.addListener( updateWidth );
