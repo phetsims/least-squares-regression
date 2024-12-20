@@ -8,6 +8,7 @@
  */
 
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Disposable from '../../../../axon/js/Disposable.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
@@ -16,7 +17,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-export default class DataPoint {
+export default class DataPoint extends Disposable {
 
   // Indicates where in model space the center of this data point is.
   public readonly positionProperty: Vector2Property;
@@ -38,11 +39,23 @@ export default class DataPoint {
    * @param initialPosition - the initial position of the DataPoint in model space
    */
   public constructor( initialPosition: Vector2 ) {
+    super();
 
     this.positionProperty = new Vector2Property( initialPosition );
     this.userControlledProperty = new BooleanProperty( false );
     this.animatingProperty = new BooleanProperty( false );
     this.returnedToOriginEmitter = new Emitter();
+
+    this.disposeEmitter.addListener( () => {
+      this.positionProperty.dispose();
+      this.userControlledProperty.dispose();
+      this.animatingProperty.dispose();
+      this.returnedToOriginEmitter.dispose();
+
+      delete this.positionUpdateListener;
+      delete this.userControlledListener;
+      delete this.returnedToOriginListener;
+    } );
   }
 
   /**
@@ -58,6 +71,9 @@ export default class DataPoint {
    * Function that animates the DataPoint back to the bucket.
    */
   public animateBackToBucket(): void {
+    if ( this.isDisposed ) {
+      return;
+    }
     this.animatingProperty.set( true );
 
     const distance = this.positionProperty.initialValue.distance( this.positionProperty.value );
@@ -73,8 +89,10 @@ export default class DataPoint {
       } );
 
       animation.endedEmitter.addListener( () => {
-        this.animatingProperty.set( false );
-        this.returnedToOriginEmitter.emit();
+        if ( !this.isDisposed ) {
+          this.animatingProperty.set( false );
+          this.returnedToOriginEmitter.emit();
+        }
       } );
       animation.start();
     }

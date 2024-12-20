@@ -98,7 +98,7 @@ export default class LeastSquaresRegressionModel {
       // unlink the listeners to dataPoints
       // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
       //  see  https://github.com/phetsims/least-squares-regression/issues/11
-      this.dispose();
+      this.disposeDataPoints(); // TODO: Dispose the entire model? See https://github.com/phetsims/least-squares-regression/issues/96
 
       // Clear the dataPoints array
       this.dataPoints.clear();
@@ -162,7 +162,7 @@ export default class LeastSquaresRegressionModel {
   public reset(): void {
     this.showGridProperty.reset();
     this.selectedDataSetProperty.reset();
-    this.dispose();
+    this.disposeDataPoints();
     this.dataPoints.clear();
     this.graph.reset();
   }
@@ -171,7 +171,7 @@ export default class LeastSquaresRegressionModel {
    * Unlink listeners to dataPoint. Listeners might have been removed when the data point was removed from the graph,
    * so check that they are still attached first.
    */
-  private dispose(): void {
+  private disposeDataPoints(): void {
     this.dataPoints.forEach( dataPoint => {
       if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener! ) ) {
         dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener! );
@@ -179,6 +179,8 @@ export default class LeastSquaresRegressionModel {
       if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener! ) ) {
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener! );
       }
+
+      dataPoint.dispose();
     } );
   }
 
