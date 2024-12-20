@@ -11,9 +11,6 @@ import leastSquaresRegression from '../leastSquaresRegression.js';
 
 const LeastSquaresRegressionConstants = {
 
-  // speed for dataPoints to reach the bucket when animated
-  ANIMATION_SPEED: 0.001, //  in model units per millisecond;
-
   // Background color for sim and graph
   BACKGROUND_COLOR: 'rgb( 236, 255, 245 )',
   GRAPH_BACKGROUND_COLOR: 'rgb( 255, 255, 255 )',

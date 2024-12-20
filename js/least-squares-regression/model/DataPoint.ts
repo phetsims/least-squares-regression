@@ -15,7 +15,6 @@ import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
 export default class DataPoint extends Disposable {
 
@@ -76,7 +75,7 @@ export default class DataPoint extends Disposable {
           to: this.positionProperty.initialValue,
           easing: Easing.CUBIC_IN
         } ],
-        duration: distance / LeastSquaresRegressionConstants.ANIMATION_SPEED / 1000
+        duration: 0.5
       } );
 
       animation.endedEmitter.addListener( () => {
