@@ -10,6 +10,8 @@
 import Multilink from '../../../../axon/js/Multilink.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -20,7 +22,10 @@ import ResidualLineAndSquareNode from './ResidualLineAndSquareNode.js';
 export default class GraphNode extends Node {
   private readonly myLine: Line;
   private readonly bestFitLine: Line;
-  private readonly bestFitResiduals: Node[];
+
+  // we need to track the best fit residuals in a separate array so that we can toggle their visibility when
+  // the best fit is undefined
+  private readonly bestFitResiduals: Node[] = [];
 
   public constructor( public readonly graph: Graph,
                       public readonly viewBounds: Bounds2,
@@ -78,16 +83,12 @@ export default class GraphNode extends Node {
     // we will add all the residuals in a separate node
     const residualsLayer = new Node();
 
-    // we need to track the best fit residuals in a separate array so that we can toggle their visibility when
-    // the best fit is undefined
-    this.bestFitResiduals = [];
-
     // Handle the comings and goings of 'My Line' Residuals. Recall that graph.myLineResiduals is an
     // observable array of Property.<Residual>
     graph.myLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
-      const residualNode = ResidualLineAndSquareNode.pool.create(
+      const residualNode = new ResidualLineAndSquareNode(
         addedResidualProperty,
         LeastSquaresRegressionConstants.MY_LINE_COLOR,
         this.viewBounds,
@@ -95,15 +96,14 @@ export default class GraphNode extends Node {
         graph.myLineResidualsVisibleProperty,
         graph.myLineSquaredResidualsVisibleProperty );
       residualsLayer.addChild( residualNode );
+    } );
+    graph.myLineResiduals.addItemRemovedListener( removedResidualProperty => {
 
-      // Add the removal listener for if and when this residual is removed from the model.
-      graph.myLineResiduals.addItemRemovedListener( function removalListener( removedResidualProperty ) {
-        if ( removedResidualProperty === addedResidualProperty ) {
-          residualNode.freeToPool();
-          residualsLayer.removeChild( residualNode );
-          graph.myLineResiduals.removeItemRemovedListener( removalListener );
-        }
-      } );
+      // find the matching ResidualLineAndSquareNode
+      const residualNode = residualsLayer.children.filter( node => node instanceof ResidualLineAndSquareNode && node.residualProperty === removedResidualProperty );
+      assert && assert( residualNode.length === 1, 'ResidualLineAndSquareNode not found' );
+      residualsLayer.removeChild( residualNode[ 0 ] );
+      residualNode[ 0 ].dispose();
     } );
 
     // Handle the comings and goings of Best Fit Line Residuals. Recall that graph.bestFitResiduals is an
@@ -111,7 +111,7 @@ export default class GraphNode extends Node {
     graph.bestFitLineResiduals.addItemAddedListener( addedResidualProperty => {
 
       // Create and add the view representation for this residual.
-      const residualNode = ResidualLineAndSquareNode.pool.create(
+      const residualNode = new ResidualLineAndSquareNode(
         addedResidualProperty,
         LeastSquaresRegressionConstants.BEST_FIT_LINE_COLOR,
         this.viewBounds,
@@ -121,21 +121,16 @@ export default class GraphNode extends Node {
       residualsLayer.addChild( residualNode );
 
       this.bestFitResiduals.push( residualNode );
+    } );
+    // Add the removal listener for if and when this residual is removed from the model.
+    graph.bestFitLineResiduals.addItemRemovedListener( removedResidualProperty => {
 
-      // Add the removal listener for if and when this residual is removed from the model.
-      graph.bestFitLineResiduals.addItemRemovedListener( removedResidualProperty => {
-        if ( removedResidualProperty === addedResidualProperty ) {
-
-          // remove the residualNode from this.bestFitResiduals
-          const index = this.bestFitResiduals.indexOf( residualNode );
-          if ( index > -1 ) {
-            this.bestFitResiduals.splice( index, 1 );
-          }
-
-          residualNode.freeToPool();
-          residualsLayer.removeChild( residualNode );
-        }
-      } );
+      // Find the matching ResidualLineAndSquareNode
+      const residualNode = residualsLayer.children.filter( node => node instanceof ResidualLineAndSquareNode && node.residualProperty === removedResidualProperty );
+      affirm( residualNode.length === 1, 'ResidualLineAndSquareNode not found' );
+      arrayRemove( this.bestFitResiduals, residualNode[ 0 ] );
+      residualsLayer.removeChild( residualNode[ 0 ] );
+      residualNode[ 0 ].dispose();
     } );
 
     // Hide or show the visibility of 'MyLine' and 'BestFitLine', both listeners are present for the lifetime of the sim

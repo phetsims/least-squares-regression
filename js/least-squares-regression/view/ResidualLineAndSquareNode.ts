@@ -11,7 +11,6 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import Pool from '../../../../phet-core/js/Pool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Line, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
@@ -25,7 +24,7 @@ export default class ResidualLineAndSquareNode extends Node {
   private readonly squareVisibilityPropertyListener: ( visible: boolean ) => void;
   private readonly updateLineAndSquareListener: () => void;
 
-  public constructor( private residualProperty: Property<Residual>,
+  public constructor( public readonly residualProperty: Property<Residual>,
                       lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string },
                       private viewBounds: Bounds2,
                       private modelViewTransform: ModelViewTransform2,
@@ -54,7 +53,20 @@ export default class ResidualLineAndSquareNode extends Node {
 
     this.updateLineAndSquareListener = this.updateLineAndSquare.bind( this );
 
-    this.initialize( residualProperty, lineColor, viewBounds, modelViewTransform, lineVisibilityProperty, squareVisibilityProperty );
+    this.lineVisibilityProperty = lineVisibilityProperty;
+    this.squareVisibilityProperty = squareVisibilityProperty;
+    this.residualProperty = residualProperty;
+    this.viewBounds = viewBounds;
+    this.modelViewTransform = modelViewTransform;
+
+    // link the listeners
+    this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
+    this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
+    this.residualProperty.link( this.updateLineAndSquareListener );
+
+    // set the appropriate color for the square and line residuals
+    this.squareResidual.fill = lineColor.SQUARED_RESIDUAL_COLOR;
+    this.lineResidual.stroke = lineColor.RESIDUAL_COLOR;
   }
 
   /**
@@ -85,40 +97,15 @@ export default class ResidualLineAndSquareNode extends Node {
     this.squareResidual.clipArea = Shape.bounds( this.viewBounds );
   }
 
-  public freeToPool(): void {
+  public override dispose(): void {
 
     // unlink listeners
     this.lineVisibilityProperty.unlink( this.lineVisibilityPropertyListener );
     this.squareVisibilityProperty.unlink( this.squareVisibilityPropertyListener );
     this.residualProperty.unlink( this.updateLineAndSquareListener );
 
-    // TypeScript doesn't need to know that we're using this for different types. When it is "active", it will be
-    // the correct type.
-    ResidualLineAndSquareNode.pool.freeToPool( this );
+    super.dispose();
   }
-
-  public initialize( residualProperty: Property<Residual>, lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string }, viewBounds: Bounds2, modelViewTransform: ModelViewTransform2, lineVisibilityProperty: TReadOnlyProperty<boolean>, squareVisibilityProperty: TReadOnlyProperty<boolean> ): ResidualLineAndSquareNode {
-    this.lineVisibilityProperty = lineVisibilityProperty;
-    this.squareVisibilityProperty = squareVisibilityProperty;
-    this.residualProperty = residualProperty;
-    this.viewBounds = viewBounds;
-    this.modelViewTransform = modelViewTransform;
-
-    // link the listeners
-    this.lineVisibilityProperty.link( this.lineVisibilityPropertyListener );
-    this.squareVisibilityProperty.link( this.squareVisibilityPropertyListener );
-    this.residualProperty.link( this.updateLineAndSquareListener );
-
-    // set the appropriate color for the square and line residuals
-    this.squareResidual.fill = lineColor.SQUARED_RESIDUAL_COLOR;
-    this.lineResidual.stroke = lineColor.RESIDUAL_COLOR;
-
-    return this; // for chaining
-  }
-
-  public static readonly pool = new Pool( ResidualLineAndSquareNode, {
-    initialize: ResidualLineAndSquareNode.prototype.initialize
-  } );
 }
 
 leastSquaresRegression.register( 'ResidualLineAndSquareNode', ResidualLineAndSquareNode );
