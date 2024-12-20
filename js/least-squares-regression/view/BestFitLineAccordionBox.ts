@@ -25,11 +25,6 @@ import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
  */
 const MAX_LABEL_WIDTH = 120;
 
-// String constants from localization
-const bestFitLineString = LeastSquaresRegressionStrings.bestFitLine;
-const residualsString = LeastSquaresRegressionStrings.residuals;
-const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
-
 export default class BestFitLineAccordionBox extends AccordionBox {
 
   private readonly equationText: EquationNode;
@@ -55,7 +50,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
         touchAreaXDilation: 16,
         touchAreaYDilation: 16
       },
-      titleNode: new Text( bestFitLineString, {
+      titleNode: new Text( LeastSquaresRegressionStrings.bestFitLineStringProperty, {
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
         maxWidth: MAX_LABEL_WIDTH
       } ),
@@ -95,11 +90,11 @@ export default class BestFitLineAccordionBox extends AccordionBox {
     // Create the checkboxes
     const lineCheckbox = new Checkbox(
       graph.bestFitLineVisibleProperty,
-      new Text( bestFitLineString, textOptions )
+      new Text( LeastSquaresRegressionStrings.bestFitLineStringProperty, textOptions )
     );
 
-    const residualsCheckbox = new Checkbox( graph.bestFitLineShowResidualsProperty, new Text( residualsString, textOptions ) );
-    const squaredResidualsCheckbox = new Checkbox( graph.bestFitLineShowSquaredResidualsProperty, new Text( squaredResidualsString, textOptions ) );
+    const residualsCheckbox = new Checkbox( graph.bestFitLineShowResidualsProperty, new Text( LeastSquaresRegressionStrings.residualsStringProperty, textOptions ) );
+    const squaredResidualsCheckbox = new Checkbox( graph.bestFitLineShowSquaredResidualsProperty, new Text( LeastSquaresRegressionStrings.squaredResidualsStringProperty, textOptions ) );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );

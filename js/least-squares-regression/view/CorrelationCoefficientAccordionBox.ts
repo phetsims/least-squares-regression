@@ -20,10 +20,10 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 import Graph from '../model/Graph.js';
 
 // string
-const pattern_0r_1value = '{0} {1}';
+const pattern_0r_1value = '{0} {1}'; // TODO: https://github.com/phetsims/least-squares-regression/issues/90 move this to the i18n file
 
 // constants
-const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symbol.r );
+const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symbol.rStringProperty.value ); // TODO: https://github.com/phetsims/least-squares-regression/issues/90 move this to the i18n file
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
 export default class CorrelationCoefficientAccordionBox extends AccordionBox {
@@ -41,7 +41,7 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
         touchAreaYDilation: 16
       },
       titleYMargin: 10,
-      titleNode: new RichText( LeastSquaresRegressionStrings.correlationCoefficient, {
+      titleNode: new RichText( LeastSquaresRegressionStrings.correlationCoefficientStringProperty, {
         replaceNewlines: true,
         align: 'center',
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,

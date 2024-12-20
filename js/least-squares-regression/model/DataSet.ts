@@ -7,6 +7,8 @@
  * @author Martin Veillette (Berea College)
  */
 
+import StringProperty from '../../../../axon/js/StringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
@@ -29,195 +31,137 @@ const SOURCES = {
   HEIGHT_SHOE_SOURCE: 'Courtney Pearson, www.statcrunch.com'
 };
 
-const custom_graphTitleString = LeastSquaresRegressionStrings.custom.graphTitle;
-const temperatureCelsiusLatitude_graphTitleString = LeastSquaresRegressionStrings.temperatureCelsiusLatitude.graphTitle;
-const temperatureCelsiusLatitude_yAxisTitleString = LeastSquaresRegressionStrings.temperatureCelsiusLatitude.yAxisTitle;
-const temperatureCelsiusLatitude_xAxisTitleString = LeastSquaresRegressionStrings.temperatureCelsiusLatitude.xAxisTitle;
-const temperatureCelsiusLatitude_referenceString = LeastSquaresRegressionStrings.temperatureCelsiusLatitude.reference;
-const temperatureCelsiusLongitude_graphTitle = LeastSquaresRegressionStrings.temperatureCelsiusLongitude.graphTitle;
-const temperatureCelsiusLongitude_yAxisTitle = LeastSquaresRegressionStrings.temperatureCelsiusLongitude.yAxisTitle;
-const temperatureCelsiusLongitude_xAxisTitle = LeastSquaresRegressionStrings.temperatureCelsiusLongitude.xAxisTitle;
-const temperatureCelsiusLongitude_reference = LeastSquaresRegressionStrings.temperatureCelsiusLongitude.reference;
-const temperatureFahrenheitLatitude_graphTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.graphTitle;
-const temperatureFahrenheitLatitude_yAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.yAxisTitle;
-const temperatureFahrenheitLatitude_xAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.xAxisTitle;
-const temperatureFahrenheitLatitude_reference = LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.reference;
-const temperatureFahrenheitLongitude_graphTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.graphTitle;
-const temperatureFahrenheitLongitude_yAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.yAxisTitle;
-const temperatureFahrenheitLongitude_xAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.xAxisTitle;
-const temperatureFahrenheitLongitude_reference = LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.reference;
-const spendingSalary_graphTitle = LeastSquaresRegressionStrings.spendingSalary.graphTitle;
-const spendingSalary_yAxisTitle = LeastSquaresRegressionStrings.spendingSalary.yAxisTitle;
-const spendingSalary_xAxisTitle = LeastSquaresRegressionStrings.spendingSalary.xAxisTitle;
-const spendingSalary_reference = LeastSquaresRegressionStrings.spendingSalary.reference;
-const wageYear_graphTitle = LeastSquaresRegressionStrings.wageYear.graphTitle;
-const wageYear_yAxisTitle = LeastSquaresRegressionStrings.wageYear.yAxisTitle;
-const wageYear_xAxisTitle = LeastSquaresRegressionStrings.wageYear.xAxisTitle;
-const wageYear_reference = LeastSquaresRegressionStrings.wageYear.reference;
-const mortalityYear_graphTitle = LeastSquaresRegressionStrings.mortalityYear.graphTitle;
-const mortalityYear_yAxisTitle = LeastSquaresRegressionStrings.mortalityYear.yAxisTitle;
-const mortalityYear_xAxisTitle = LeastSquaresRegressionStrings.mortalityYear.xAxisTitle;
-const mortalityYear_reference = LeastSquaresRegressionStrings.mortalityYear.reference;
-const userYear_graphTitle = LeastSquaresRegressionStrings.userYear.graphTitle;
-const userYear_yAxisTitle = LeastSquaresRegressionStrings.userYear.yAxisTitle;
-const userYear_xAxisTitle = LeastSquaresRegressionStrings.userYear.xAxisTitle;
-const userYear_reference = LeastSquaresRegressionStrings.userYear.reference;
-const gasolineYear_graphTitle = LeastSquaresRegressionStrings.gasolineYear.graphTitle;
-const gasolineYear_yAxisTitle = LeastSquaresRegressionStrings.gasolineYear.yAxisTitle;
-const gasolineYear_xAxisTitle = LeastSquaresRegressionStrings.gasolineYear.xAxisTitle;
-const gasolineYear_reference = LeastSquaresRegressionStrings.gasolineYear.reference;
-const lifeTV_graphTitle = LeastSquaresRegressionStrings.lifeTV.graphTitle;
-const lifeTV_yAxisTitle = LeastSquaresRegressionStrings.lifeTV.yAxisTitle;
-const lifeTV_xAxisTitle = LeastSquaresRegressionStrings.lifeTV.xAxisTitle;
-const lifeTV_reference = LeastSquaresRegressionStrings.lifeTV.reference;
-const speedDistance_graphTitle = LeastSquaresRegressionStrings.speedDistance.graphTitle;
-const speedDistance_yAxisTitle = LeastSquaresRegressionStrings.speedDistance.yAxisTitle;
-const speedDistance_xAxisTitle = LeastSquaresRegressionStrings.speedDistance.xAxisTitle;
-const speedDistance_reference = LeastSquaresRegressionStrings.speedDistance.reference;
-const temperatureFahrenheitChirp_graphTitle = LeastSquaresRegressionStrings.temperatureFahrenheitChirp.graphTitle;
-const temperatureFahrenheitChirp_yAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitChirp.yAxisTitle;
-const temperatureFahrenheitChirp_xAxisTitle = LeastSquaresRegressionStrings.temperatureFahrenheitChirp.xAxisTitle;
-const temperatureFahrenheitChirp_reference = LeastSquaresRegressionStrings.temperatureFahrenheitChirp.reference;
-const temperatureCelsiusChirp_graphTitle = LeastSquaresRegressionStrings.temperatureCelsiusChirp.graphTitle;
-const temperatureCelsiusChirp_yAxisTitle = LeastSquaresRegressionStrings.temperatureCelsiusChirp.yAxisTitle;
-const temperatureCelsiusChirp_xAxisTitle = LeastSquaresRegressionStrings.temperatureCelsiusChirp.xAxisTitle;
-const temperatureCelsiusChirp_reference = LeastSquaresRegressionStrings.temperatureCelsiusChirp.reference;
-const heightShoe_graphTitle = LeastSquaresRegressionStrings.heightShoe.graphTitle;
-const heightShoe_yAxisTitle = LeastSquaresRegressionStrings.heightShoe.yAxisTitle;
-const heightShoe_xAxisTitle = LeastSquaresRegressionStrings.heightShoe.xAxisTitle;
-const heightShoe_reference = LeastSquaresRegressionStrings.heightShoe.reference;
-
 const custom = {
-  graphTitle: custom_graphTitleString,
-  yAxisTitle: '',
-  xAxisTitle: '',
-  reference: '',
+  graphTitle: LeastSquaresRegressionStrings.custom.graphTitleStringProperty,
+  yAxisTitle: new StringProperty( '' ),
+  xAxisTitle: new StringProperty( '' ),
+  reference: new StringProperty( '' ),
   source: ''
 };
 
 const temperatureCelsiusLatitude = {
-  graphTitle: temperatureCelsiusLatitude_graphTitleString,
-  yAxisTitle: temperatureCelsiusLatitude_yAxisTitleString,
-  xAxisTitle: temperatureCelsiusLatitude_xAxisTitleString,
-  reference: temperatureCelsiusLatitude_referenceString,
+  graphTitle: LeastSquaresRegressionStrings.temperatureCelsiusLatitude.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusLatitude.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusLatitude.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureCelsiusLatitude.referenceStringProperty,
   source: SOURCES.TEMPERATURE_CELSIUS_LATITUDE_SOURCE
 };
 
 const temperatureCelsiusLongitude = {
-  graphTitle: temperatureCelsiusLongitude_graphTitle,
-  yAxisTitle: temperatureCelsiusLongitude_yAxisTitle,
-  xAxisTitle: temperatureCelsiusLongitude_xAxisTitle,
-  reference: temperatureCelsiusLongitude_reference,
+  graphTitle: LeastSquaresRegressionStrings.temperatureCelsiusLongitude.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusLongitude.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusLongitude.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureCelsiusLongitude.referenceStringProperty,
   source: SOURCES.TEMPERATURE_CELSIUS_LONGITUDE_SOURCE
 };
 
 const temperatureFahrenheitLatitude = {
-  graphTitle: temperatureFahrenheitLatitude_graphTitle,
-  yAxisTitle: temperatureFahrenheitLatitude_yAxisTitle,
-  xAxisTitle: temperatureFahrenheitLatitude_xAxisTitle,
-  reference: temperatureFahrenheitLatitude_reference,
+  graphTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureFahrenheitLatitude.referenceStringProperty,
   source: SOURCES.TEMPERATURE_FAHRENHEIT_LATITUDE_SOURCE
 };
 
 const temperatureFahrenheitLongitude = {
-  graphTitle: temperatureFahrenheitLongitude_graphTitle,
-  yAxisTitle: temperatureFahrenheitLongitude_yAxisTitle,
-  xAxisTitle: temperatureFahrenheitLongitude_xAxisTitle,
-  reference: temperatureFahrenheitLongitude_reference,
+  graphTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureFahrenheitLongitude.referenceStringProperty,
   source: SOURCES.TEMPERATURE_FAHRENHEIT_LONGITUDE_SOURCE
 };
 
 const spendingSalary = {
-  graphTitle: spendingSalary_graphTitle,
-  yAxisTitle: spendingSalary_yAxisTitle,
-  xAxisTitle: spendingSalary_xAxisTitle,
-  reference: spendingSalary_reference,
+  graphTitle: LeastSquaresRegressionStrings.spendingSalary.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.spendingSalary.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.spendingSalary.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.spendingSalary.referenceStringProperty,
   source: SOURCES.SPENDING_SALARY_SOURCE
 };
 
 const wageYear = {
-  graphTitle: wageYear_graphTitle,
-  yAxisTitle: wageYear_yAxisTitle,
-  xAxisTitle: wageYear_xAxisTitle,
-  reference: wageYear_reference,
+  graphTitle: LeastSquaresRegressionStrings.wageYear.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.wageYear.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.wageYear.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.wageYear.referenceStringProperty,
   source: SOURCES.WAGE_YEAR_SOURCE
 };
 
 const mortalityYear = {
-  graphTitle: mortalityYear_graphTitle,
-  yAxisTitle: mortalityYear_yAxisTitle,
-  xAxisTitle: mortalityYear_xAxisTitle,
-  reference: mortalityYear_reference,
+  graphTitle: LeastSquaresRegressionStrings.mortalityYear.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.mortalityYear.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.mortalityYear.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.mortalityYear.referenceStringProperty,
   source: SOURCES.MORTALITY_YEAR_SOURCE
 };
 
 const userYear = {
-  graphTitle: userYear_graphTitle,
-  yAxisTitle: userYear_yAxisTitle,
-  xAxisTitle: userYear_xAxisTitle,
-  reference: userYear_reference,
+  graphTitle: LeastSquaresRegressionStrings.userYear.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.userYear.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.userYear.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.userYear.referenceStringProperty,
   source: SOURCES.USER_YEAR_SOURCE
 };
 
 const gasolineYear = {
-  graphTitle: gasolineYear_graphTitle,
-  yAxisTitle: gasolineYear_yAxisTitle,
-  xAxisTitle: gasolineYear_xAxisTitle,
-  reference: gasolineYear_reference,
+  graphTitle: LeastSquaresRegressionStrings.gasolineYear.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.gasolineYear.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.gasolineYear.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.gasolineYear.referenceStringProperty,
   source: SOURCES.GASOLINE_YEAR_SOURCE
 };
 
 const lifeTV = {
-  graphTitle: lifeTV_graphTitle,
-  yAxisTitle: lifeTV_yAxisTitle,
-  xAxisTitle: lifeTV_xAxisTitle,
-  reference: lifeTV_reference,
+  graphTitle: LeastSquaresRegressionStrings.lifeTV.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.lifeTV.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.lifeTV.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.lifeTV.referenceStringProperty,
   source: SOURCES.LIFE_TV_SOURCE
 };
 
 const speedDistance = {
-  graphTitle: speedDistance_graphTitle,
-  yAxisTitle: speedDistance_yAxisTitle,
-  xAxisTitle: speedDistance_xAxisTitle,
-  reference: speedDistance_reference,
+  graphTitle: LeastSquaresRegressionStrings.speedDistance.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.speedDistance.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.speedDistance.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.speedDistance.referenceStringProperty,
   source: SOURCES.SPEED_DISTANCE_SOURCE
 };
 
 const temperatureFahrenheitChirp = {
-  graphTitle: temperatureFahrenheitChirp_graphTitle,
-  yAxisTitle: temperatureFahrenheitChirp_yAxisTitle,
-  xAxisTitle: temperatureFahrenheitChirp_xAxisTitle,
-  reference: temperatureFahrenheitChirp_reference,
+  graphTitle: LeastSquaresRegressionStrings.temperatureFahrenheitChirp.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitChirp.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureFahrenheitChirp.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureFahrenheitChirp.referenceStringProperty,
   source: SOURCES.TEMPERATURE_FAHRENHEIT_CHIRP_SOURCE
 };
 
 const temperatureCelsiusChirp = {
-  graphTitle: temperatureCelsiusChirp_graphTitle,
-  yAxisTitle: temperatureCelsiusChirp_yAxisTitle,
-  xAxisTitle: temperatureCelsiusChirp_xAxisTitle,
-  reference: temperatureCelsiusChirp_reference,
+  graphTitle: LeastSquaresRegressionStrings.temperatureCelsiusChirp.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusChirp.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.temperatureCelsiusChirp.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.temperatureCelsiusChirp.referenceStringProperty,
   source: SOURCES.TEMPERATURE_CELSIUS_CHIRP_SOURCE
 };
 
 const heightShoe = {
-  graphTitle: heightShoe_graphTitle,
-  yAxisTitle: heightShoe_yAxisTitle,
-  xAxisTitle: heightShoe_xAxisTitle,
-  reference: heightShoe_reference,
+  graphTitle: LeastSquaresRegressionStrings.heightShoe.graphTitleStringProperty,
+  yAxisTitle: LeastSquaresRegressionStrings.heightShoe.yAxisTitleStringProperty,
+  xAxisTitle: LeastSquaresRegressionStrings.heightShoe.xAxisTitleStringProperty,
+  reference: LeastSquaresRegressionStrings.heightShoe.referenceStringProperty,
   source: SOURCES.HEIGHT_SHOE_SOURCE
 };
 
 export default class DataSet {
 
   public constructor(
-    config: { graphTitle: string; yAxisTitle: string; xAxisTitle: string; reference: string; source: string },
+    config: { graphTitle: TReadOnlyProperty<string>; yAxisTitle: TReadOnlyProperty<string>; xAxisTitle: TReadOnlyProperty<string>; reference: TReadOnlyProperty<string>; source: string },
     public readonly yRange: Range,
     public readonly xRange: Range,
     public readonly dataXY: Array<{ x: number; y: number }>,
     public readonly name = config.graphTitle,
-    public readonly yAxisTitle: string = config.yAxisTitle,
-    public readonly xAxisTitle: string = config.xAxisTitle,
-    public readonly reference: string = config.reference,
+    public readonly yAxisTitle: TReadOnlyProperty<string> = config.yAxisTitle,
+    public readonly xAxisTitle: TReadOnlyProperty<string> = config.xAxisTitle,
+    public readonly reference: TReadOnlyProperty<string> = config.reference,
     public readonly source: string = config.source
   ) {}
 

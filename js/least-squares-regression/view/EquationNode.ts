@@ -14,9 +14,6 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
-const symbolXString = LeastSquaresRegressionStrings.symbol.x;
-const symbolYString = LeastSquaresRegressionStrings.symbol.y;
-
 type SelfOptions = {
   maxDecimalPlaces?: number; // Maximum number of decimal places for slope and intercept
   mode?: 'myLine' | 'bestFitLine'; // Mode of the equation node
@@ -101,11 +98,11 @@ export default class EquationNode extends Node {
       maxWidthInterceptString = `${maxWidthInterceptString}0`;
     }
 
-    this.yText = new Text( symbolYString, stringTextOptions ); // 'y'
+    this.yText = new Text( LeastSquaresRegressionStrings.symbol.yStringProperty, stringTextOptions ); // 'y'
     this.equalText = new Text( MathSymbols.EQUAL_TO, stringTextOptions ); // the '=' sign
     this.signSlopeText = new Text( MathSymbols.PLUS, numericalTextOptions ); // + or -
     this.valueSlopeText = new Text( maxWidthSlopeString, numericalTextOptions ); // a number
-    this.xText = new Text( symbolXString, stringTextOptions ); // 'x'
+    this.xText = new Text( LeastSquaresRegressionStrings.symbol.xStringProperty, stringTextOptions ); // 'x'
     this.signInterceptText = new Text( MathSymbols.PLUS, stringTextOptions );// + or -
     this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 

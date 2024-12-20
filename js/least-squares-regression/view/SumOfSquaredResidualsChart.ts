@@ -16,8 +16,6 @@ import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.j
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
 
-const sumString = LeastSquaresRegressionStrings.sum;
-
 // constants
 const ARROW_LENGTH = 175;
 const ARROW_HEAD_WIDTH = 4;
@@ -53,7 +51,7 @@ export default class SumOfSquaredResidualsChart extends Node {
     } );
 
     // Text for the chart
-    const label = new Text( sumString, {
+    const label = new Text( LeastSquaresRegressionStrings.sumStringProperty, {
       font: FONT,
       centerX: horizontalArrow.centerX,
       top: horizontalArrow.bottom + 5,

@@ -36,8 +36,6 @@ import MyLineControlPanel from './MyLineControlPanel.js';
 import SourceAndReferenceNode from './SourceAndReferenceNode.js';
 import StaticDataPointNode from './StaticDataPointNode.js';
 
-const questionMarkString = LeastSquaresRegressionStrings.questionMark;
-
 // constants
 const GRAPH_BOUNDS = new Dimension2( 480, 480 ); // Size of the graph Node
 const GRAPH_OFFSET = new Vector2( 10, 0 ); // Offset Vector from the center of the screen
@@ -113,7 +111,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty );
-    const sourceAndReferencePushButton = new TextPushButton( questionMarkString, {
+    const sourceAndReferencePushButton = new TextPushButton( LeastSquaresRegressionStrings.questionMarkStringProperty, {
       baseColor: 'gray',
       font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
       listener: () => {

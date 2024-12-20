@@ -6,6 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
+import Multilink from '../../../../axon/js/Multilink.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
@@ -16,8 +17,6 @@ import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
-
-const sourcePatternString = LeastSquaresRegressionStrings.sourcePattern;
 
 export default class SourceAndReferenceNode extends ScreenView {
 
@@ -98,8 +97,8 @@ export default class SourceAndReferenceNode extends ScreenView {
 
     // Update the content of this node and the layout.
     // no need to unlink, present for the lifetime of the sim
-    selectedDataSetProperty.link( selectedDataSet => {
-      referenceText.string = selectedDataSet.reference;
+    Multilink.multilink( [ LeastSquaresRegressionStrings.sourcePatternStringProperty, selectedDataSetProperty ], ( sourcePatternString, selectedDataSet ) => {
+      referenceText.setStringProperty( selectedDataSet.reference );
       const formattedSourceString = StringUtils.format( sourcePatternString, selectedDataSet.source );
       sourceText.string = formattedSourceString;
       panel.centerX = this.layoutBounds.centerX;

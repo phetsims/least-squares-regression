@@ -22,14 +22,6 @@ import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
-const aString = LeastSquaresRegressionStrings.a;
-const bString = LeastSquaresRegressionStrings.b;
-const myLineString = LeastSquaresRegressionStrings.myLine;
-const residualsString = LeastSquaresRegressionStrings.residuals;
-const squaredResidualsString = LeastSquaresRegressionStrings.squaredResiduals;
-const symbolXString = LeastSquaresRegressionStrings.symbol.x;
-const symbolYString = LeastSquaresRegressionStrings.symbol.y;
-
 // constants
 const SLIDER_OPTIONS = {
   trackFill: 'black',
@@ -80,12 +72,12 @@ export default class MyLineControlPanel extends Panel {
       maxWidth: equationCharacterMaxWidth
     };
 
-    const yText = new Text( symbolYString, blackOptions ); // 'y'
+    const yText = new Text( LeastSquaresRegressionStrings.symbol.yStringProperty, blackOptions ); // 'y'
     const equalText = new Text( '=', blackOptions ); // the '=' sign
-    const aText = new Text( aString, boldOptions ); // a number
-    const xText = new Text( symbolXString, blackOptions ); // 'x'
+    const aText = new Text( LeastSquaresRegressionStrings.aStringProperty, boldOptions ); // a number
+    const xText = new Text( LeastSquaresRegressionStrings.symbol.xStringProperty, blackOptions ); // 'x'
     const signInterceptText = new Text( MathSymbols.PLUS, blackOptions );// '+'
-    const bText = new Text( bString, boldOptions );// a number
+    const bText = new Text( LeastSquaresRegressionStrings.bStringProperty, boldOptions );// a number
 
     const immutableEquationText = new Node( {
       children: [
@@ -124,8 +116,8 @@ export default class MyLineControlPanel extends Panel {
     bSlider.addMajorTick( 0 );
 
     // Create label below the sliders
-    const aSliderText = new Text( aString, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
-    const bSliderText = new Text( bString, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const aSliderText = new Text( LeastSquaresRegressionStrings.aStringProperty, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
+    const bSliderText = new Text( LeastSquaresRegressionStrings.bStringProperty, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
     const rightAlignedNode = new Node();
@@ -140,9 +132,9 @@ export default class MyLineControlPanel extends Panel {
 
     // Create three checkboxes
     const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: MAX_WIDTH };
-    const lineCheckbox = new Checkbox( graph.myLineVisibleProperty, new Text( myLineString, checkboxTextOptions ) );
-    const residualsCheckbox = new Checkbox( graph.myLineShowResidualsProperty, new Text( residualsString, checkboxTextOptions ) );
-    const squaredResidualsCheckbox = new Checkbox( graph.myLineShowSquaredResidualsProperty, new Text( squaredResidualsString, checkboxTextOptions ) );
+    const lineCheckbox = new Checkbox( graph.myLineVisibleProperty, new Text( LeastSquaresRegressionStrings.myLineStringProperty, checkboxTextOptions ) );
+    const residualsCheckbox = new Checkbox( graph.myLineShowResidualsProperty, new Text( LeastSquaresRegressionStrings.residualsStringProperty, checkboxTextOptions ) );
+    const squaredResidualsCheckbox = new Checkbox( graph.myLineShowSquaredResidualsProperty, new Text( LeastSquaresRegressionStrings.squaredResidualsStringProperty, checkboxTextOptions ) );
 
     // Expand the touch Area
     lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );

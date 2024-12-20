@@ -21,6 +21,9 @@
     ],
     "simulation": true,
     "supportsOutputJS": true,
-    "published": true
+    "published": true,
+    "simFeatures": {
+      "supportsDynamicLocale": true
+    }
   }
 }
