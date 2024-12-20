@@ -33,7 +33,7 @@ export default class EquationNode extends Node {
   // Public Text nodes
   public readonly yText: Text;
   public readonly equalText: Text;
-  public readonly signSlopeText: Text;
+  private readonly signSlopeText: Text;
   public readonly valueSlopeText: Text;
   public readonly xText: Text;
   public readonly signInterceptText: Text;

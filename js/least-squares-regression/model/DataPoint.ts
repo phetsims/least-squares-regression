@@ -59,15 +59,6 @@ export default class DataPoint extends Disposable {
   }
 
   /**
-   * Resets all the properties of DataPoint.
-   */
-  public reset(): void {
-    this.positionProperty.reset();
-    this.userControlledProperty.reset();
-    this.animatingProperty.reset();
-  }
-
-  /**
    * Function that animates the DataPoint back to the bucket.
    */
   public animateBackToBucket(): void {

@@ -24,7 +24,7 @@ export default class ResidualLineAndSquareNode extends Node {
   private readonly squareVisibilityPropertyListener: ( visible: boolean ) => void;
   private readonly updateLineAndSquareListener: () => void;
 
-  public constructor( public readonly residualProperty: Property<Residual>,
+  public constructor( private readonly residualProperty: Property<Residual>,
                       lineColor: { SQUARED_RESIDUAL_COLOR: string; RESIDUAL_COLOR: string },
                       private viewBounds: Bounds2,
                       private modelViewTransform: ModelViewTransform2,
@@ -72,7 +72,7 @@ export default class ResidualLineAndSquareNode extends Node {
   /**
    * Update the Line and Square Residual
    */
-  public updateLineAndSquare(): void {
+  private updateLineAndSquare(): void {
     const point1 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point1 );
     const point2 = this.modelViewTransform.modelToViewPosition( this.residualProperty.value.point2 );
 

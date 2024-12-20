@@ -46,10 +46,6 @@ export default class Graph {
   // Array of dataPoints currently on the graph
   public dataPointsOnGraph: DataPoint[];
 
-  // Graph domain ranges
-  public xRange!: Range;
-  public yRange!: Range;
-
   // Factors for slope and intercept conversions
   public slopeFactor!: number;
   public interceptFactor!: number;
@@ -130,8 +126,6 @@ export default class Graph {
    * for the slope and intercept.
    */
   public setGraphDomain( xRange: Range, yRange: Range ): void {
-    this.xRange = xRange;
-    this.yRange = yRange;
     this.slopeFactor = ( yRange.max - yRange.min ) / ( xRange.max - xRange.min ) / ( this.bounds.height / this.bounds.width );
     this.interceptFactor = ( yRange.max - yRange.min ) / this.bounds.height;
     this.interceptOffset = ( yRange.min );

@@ -26,9 +26,9 @@ export default class GraphNode extends Node {
   // private readonly bestFitResiduals: Node[] = [];
   private readonly residualCanvasNode: ResidualCanvasNode;
 
-  public constructor( public readonly graph: Graph,
-                      public readonly viewBounds: Bounds2,
-                      public readonly modelViewTransform: ModelViewTransform2 ) {
+  public constructor( private readonly graph: Graph,
+                      private readonly viewBounds: Bounds2,
+                      private readonly modelViewTransform: ModelViewTransform2 ) {
 
     super();
 

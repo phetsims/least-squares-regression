@@ -31,12 +31,7 @@ export default class Residual {
    */
   public readonly isSquaredResidualToTheLeft: boolean;
 
-  public constructor(
-    public readonly dataPoint: DataPoint,
-    slope: number, intercept: number ) {
-
-    // Store the dataPoint to be able to identify residual node.
-    this.dataPoint = dataPoint;
+  public constructor( dataPoint: DataPoint, slope: number, intercept: number ) {
 
     // Calculate the y-value on the line corresponding to the dataPoint's x-coordinate.
     const yValue = slope * dataPoint.positionProperty.value.x + intercept;

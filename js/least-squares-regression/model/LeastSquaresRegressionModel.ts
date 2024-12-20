@@ -206,7 +206,7 @@ export default class LeastSquaresRegressionModel {
    * Function that adds position listener and user Controlled listener;
    * Useful for dynamical points
    */
-  public addDataPointControlledListener( dataPoint: DataPoint ): void {
+  private addDataPointControlledListener( dataPoint: DataPoint ): void {
 
     dataPoint.userControlledListener = ( userControlled: boolean ) => {
       const isOnGraph = this.graph.isDataPointPositionOverlappingGraph( dataPoint.positionProperty.value );

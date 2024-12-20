@@ -17,8 +17,8 @@ import Residual from '../model/Residual.js';
 export default class ResidualCanvasNode extends CanvasNode {
 
   public constructor(
-    public readonly graph: Graph,
-    public readonly modelViewTransform: ModelViewTransform2,
+    private readonly graph: Graph,
+    private readonly modelViewTransform: ModelViewTransform2,
     stageWidth: number, stageHeight: number ) {
 
     super( {
