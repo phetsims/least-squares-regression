@@ -18,7 +18,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
-import { Node, Plane } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -112,7 +112,9 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty );
     const infoButton = new InfoButton( {
-      listener: () => this.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode ),
+      listener: () => {
+        sourceAndReferenceNode.show();
+      },
       maxWidth: 34
     } );
 
@@ -344,34 +346,6 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
   public override step( dt: number ): void {
     super.step( dt );
     this.graphNode.step( );
-  }
-
-  /**
-   * This is taken from MoleculesAndLightScreenView with modifications.
-   *
-   * Update the Source and Reference 'Dialog-like' Node visibility.  This node has behavior which is identical to the
-   * AboutDialog window, and this code is heavily borrowed from AboutDialog.js.
-   *
-   * @param sourceAndReferenceNode - The SourceAndReferenceNode whose visibility should be updated.
-   */
-  private updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode: SourceAndReferenceNode ): void {
-
-    // Renderer must be specified here because the plane is added directly to the scene (instead of to some other node
-    // that already has svg renderer)
-    const plane = new Plane( { fill: 'black', opacity: 0.3 } );
-    this.addChild( plane );
-    this.addChild( sourceAndReferenceNode );
-
-    const sourceAndReferenceListener = {
-      up: () => {
-        sourceAndReferenceNode.removeInputListener( sourceAndReferenceListener );
-        sourceAndReferenceNode.detach();
-        plane.detach();
-      }
-    };
-
-    sourceAndReferenceNode.addInputListener( sourceAndReferenceListener );
-    plane.addInputListener( sourceAndReferenceListener );
   }
 }
 
