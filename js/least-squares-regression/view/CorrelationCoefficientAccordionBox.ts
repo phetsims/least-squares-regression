@@ -49,7 +49,8 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
       } ),
       titleAlignY: 'top',
       contentXMargin: 10,
-      contentYMargin: 10
+      contentYMargin: 10,
+      expandedDefaultValue: false
     }, options );
 
     const textOptions = { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT };

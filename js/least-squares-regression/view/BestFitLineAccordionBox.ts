@@ -56,7 +56,8 @@ export default class BestFitLineAccordionBox extends AccordionBox {
       } ),
       titleXMargin: 0,
       contentXMargin: 10,
-      contentYMargin: 10
+      contentYMargin: 10,
+      expandedDefaultValue: false
     }, providedOptions );
 
     // Create the chart (barometer) displaying the sum of the squares
