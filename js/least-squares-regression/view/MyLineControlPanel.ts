@@ -30,7 +30,7 @@ const SLIDER_OPTIONS = {
   thumbTouchAreaXDilation: 8,
   majorTickLength: 18
 };
-const MAX_WIDTH = 150;
+const MAX_WIDTH = 120;
 
 export default class MyLineControlPanel extends Panel {
   public readonly sumOfSquaredResiduals: SumOfSquaredResidualsChart;

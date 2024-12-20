@@ -18,7 +18,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -105,7 +105,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Create the dataSet combo box that appears on top of the graph
     // Width of contents limited by width of graphNode for i18n
-    const dataSetLabelMaxWidth = this.graphNode.width / 2;
+    const dataSetLabelMaxWidth = 320;
     const dataSetListParent = new Node();
     const dataSetComboBox = new DataSetComboBox( model.selectedDataSetProperty, model.dataSets, dataSetListParent, dataSetLabelMaxWidth );
 
@@ -332,15 +332,21 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       myLineControlPanel.top = 20;
       bestFitLineAccordionBox.left = 15;
       bestFitLineAccordionBox.top = myLineControlPanel.top;
-      dataSetComboBox.centerX = viewGraphBounds.centerX;
-      dataSetComboBox.top = myLineControlPanel.top;
       gridCheckbox.left = myLineControlPanel.left + 10;
       gridCheckbox.top = myLineControlPanel.bottom + 10;
       correlationCoefficientAccordionBox.centerX = bestFitLineAccordionBox.centerX;
       correlationCoefficientAccordionBox.top = bestFitLineAccordionBox.bottom + 10;
-      infoButton.centerY = dataSetComboBox.centerY;
-      infoButton.left = dataSetComboBox.right + 10;
     }
+
+    ManualConstraint.create( this, [ dataSetComboBox, this.graphNode, myLineControlPanel, infoButton ], ( dataSetComboBoxProxy, graphNodeProxy, myLineControlPanelProxy, infoButtonProxy ) => {
+
+      // Compensate for the graph labels.
+      dataSetComboBoxProxy.centerX = graphNodeProxy.centerX + 20;
+      dataSetComboBoxProxy.top = myLineControlPanelProxy.top;
+
+      infoButtonProxy.centerY = dataSetComboBox.centerY;
+      infoButtonProxy.left = dataSetComboBox.right + 10;
+    } );
   }
 
   public override step( dt: number ): void {

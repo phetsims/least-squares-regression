@@ -55,7 +55,7 @@ export default class SumOfSquaredResidualsChart extends Node {
       font: FONT,
       centerX: horizontalArrow.centerX,
       top: horizontalArrow.bottom + 5,
-      maxWidth: 150
+      maxWidth: 100
     } );
     const zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
