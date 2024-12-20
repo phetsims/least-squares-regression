@@ -17,12 +17,12 @@ import DynamicDataPointNode from './DynamicDataPointNode.js';
 export default class DataPointCreatorNode extends Node {
 
   /**
-   * @param addDataPointToModel - A function for adding the created DataPoint to the model.
+   * @param addDataPoint - A function for adding the created DataPoint to the model.
    * @param modelViewTransform - The ModelViewTransform2 instance for coordinate transformations.
    * @param providedOptions - Optional customization options.
    */
   public constructor(
-    addDataPointToModel: ( dataPoint: DataPoint ) => DynamicDataPointNode,
+    addDataPoint: ( dataPoint: DataPoint ) => DynamicDataPointNode,
     modelViewTransform: ModelViewTransform2,
     providedOptions?: NodeOptions
   ) {
@@ -52,7 +52,7 @@ export default class DataPointCreatorNode extends Node {
 
       const dataPoint = new DataPoint( modelPosition );
       dataPoint.userControlledProperty.set( true );
-      const dynamicDataPointNode = addDataPointToModel( dataPoint );
+      const dynamicDataPointNode = addDataPoint( dataPoint );
 
       dynamicDataPointNode.dragListener.press( event, dynamicDataPointNode );
     } ) );
