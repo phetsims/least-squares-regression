@@ -85,14 +85,14 @@ export default class LeastSquaresRegressionModel {
       invertY: true
     } );
 
-    let savedCustomDataPoints: DataPoint[] = [];
+    let savedCustomDataPoints: Vector2[] = [];
 
     // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
     this.selectedDataSetProperty.link( ( selectedDataSet, oldSelectedDataSet ) => {
 
       // saved the position data of CUSTOM if we are going from CUSTOM to another dataSet
       if ( oldSelectedDataSet && oldSelectedDataSet === DataSet.CUSTOM ) {
-        savedCustomDataPoints = this.graph.dataPointsOnGraph;
+        savedCustomDataPoints = this.graph.dataPointsOnGraph.map( dataPoint => dataPoint.positionProperty.value.copy() );
       }
 
       // unlink the listeners to dataPoints
@@ -115,7 +115,7 @@ export default class LeastSquaresRegressionModel {
 
         // use the savedCustomDataPoints to populate the dataPoints array
         savedCustomDataPoints.forEach( dataPoint => {
-          this.dataPoints.push( dataPoint );
+          this.dataPoints.push( new DataPoint( dataPoint.copy() ) );
         } );
         // Add the Data Points on Graph and all the Residuals
         // For performance reason, we do it in bulk so that we don't constantly update the residuals after adding a dataPoint
@@ -130,21 +130,21 @@ export default class LeastSquaresRegressionModel {
 
           // For your information, only one modelViewTransform is used throughout the simulation, the bounds of the model are set by the graph bounds
           // Rescale all the {X,Y} value to the normalized graph bounds
-          const XNormalized = Utils.linear(
+          const xNormalized = Utils.linear(
             selectedDataSet.xRange.min,
             selectedDataSet.xRange.max,
             this.graph.bounds.minX,
             this.graph.bounds.maxX,
             position.x
           );
-          const YNormalized = Utils.linear(
+          const yNormalized = Utils.linear(
             selectedDataSet.yRange.min,
             selectedDataSet.yRange.max,
             this.graph.bounds.minY,
             this.graph.bounds.maxY,
             position.y
           );
-          const positionVector = new Vector2( XNormalized, YNormalized );
+          const positionVector = new Vector2( xNormalized, yNormalized );
           this.dataPoints.push( new DataPoint( positionVector ) );
         } );
         // Add the Data Points on Graph and all the Residuals
