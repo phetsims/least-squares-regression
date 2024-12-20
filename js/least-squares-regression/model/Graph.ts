@@ -16,6 +16,8 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
 
@@ -162,13 +164,9 @@ export default class Graph {
   /**
    * Remove a dataPoint and its associated residuals ('My Line' and 'Best Fit Line')
    */
-  public removePointAndResiduals( dataPoint: DataPoint ): void {
-    assert && assert( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
-    const index = this.dataPointsOnGraph.indexOf( dataPoint );
-    this.dataPointsOnGraph.splice( index, 1 );
-    if ( dataPoint.positionUpdateListener && dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
-      dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
-    }
+  public removePoint( dataPoint: DataPoint ): void {
+    affirm( this.isDataPointOnList( dataPoint ), ' need the point to be on the list to remove it' );
+    arrayRemove( this.dataPointsOnGraph, dataPoint );
   }
 
   /**
@@ -227,7 +225,7 @@ export default class Graph {
    */
   private getStatistics(): void {
     const dataPointArray = this.dataPointsOnGraph;
-    assert && assert( dataPointArray !== null, 'dataPointsOnGraph must contain data' );
+    affirm( dataPointArray !== null, 'dataPointsOnGraph must contain data' );
     const arrayLength = dataPointArray.length;
 
     const squaresXX = _.map( dataPointArray, dataPoint => dataPoint.positionProperty.value.x * dataPoint.positionProperty.value.x );

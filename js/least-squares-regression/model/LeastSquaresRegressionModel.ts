@@ -179,9 +179,6 @@ export default class LeastSquaresRegressionModel {
    */
   private disposeDataPoints(): void {
     this.dataPoints.forEach( dataPoint => {
-      if ( dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener! ) ) {
-        dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener! );
-      }
       if ( dataPoint.userControlledProperty.hasListener( dataPoint.userControlledListener! ) ) {
         dataPoint.userControlledProperty.unlink( dataPoint.userControlledListener! );
       }
@@ -231,11 +228,6 @@ export default class LeastSquaresRegressionModel {
     dataPoint.returnedToOriginListener = () => {
       if ( this.dataPoints.includes( dataPoint ) ) {
         this.dataPoints.remove( dataPoint );
-      }
-
-      if ( dataPoint.positionUpdateListener &&
-           dataPoint.positionProperty.hasListener( dataPoint.positionUpdateListener ) ) {
-        dataPoint.positionProperty.unlink( dataPoint.positionUpdateListener );
       }
 
       if ( dataPoint.userControlledListener &&

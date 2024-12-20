@@ -30,7 +30,6 @@ export default class DataPoint extends Disposable {
   // Emitter that fires when the data point has returned to its origin.
   public readonly returnedToOriginEmitter: Emitter;
 
-  public positionUpdateListener?: () => void;
   public userControlledListener?: ( userControlled: boolean ) => void;
   public returnedToOriginListener?: () => void;
 
@@ -51,7 +50,6 @@ export default class DataPoint extends Disposable {
       this.animatingProperty.dispose();
       this.returnedToOriginEmitter.dispose();
 
-      delete this.positionUpdateListener;
       delete this.userControlledListener;
       delete this.returnedToOriginListener;
     } );

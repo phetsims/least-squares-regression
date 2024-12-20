@@ -234,7 +234,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
           else {
             if ( model.graph.isDataPointOnList( addedDataPoint ) ) {
               // Remove dataPoint from dataPoint on graph and its associated residuals.
-              model.graph.removePointAndResiduals( addedDataPoint );
+              model.graph.removePoint( addedDataPoint );
             }
           }
 
