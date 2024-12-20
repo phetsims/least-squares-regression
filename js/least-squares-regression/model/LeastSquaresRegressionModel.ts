@@ -85,14 +85,19 @@ export default class LeastSquaresRegressionModel {
       invertY: true
     } );
 
-    let savedCustomDataPoints: Vector2[] = [];
+    let savedCustomDataPoints: Array<{ currentPoint: Vector2; initialPoint: Vector2 }> = [];
 
     // What to do when the selected Data Set changes. no need to unlink, present for the lifetime of the sim
     this.selectedDataSetProperty.link( ( selectedDataSet, oldSelectedDataSet ) => {
 
       // saved the position data of CUSTOM if we are going from CUSTOM to another dataSet
       if ( oldSelectedDataSet && oldSelectedDataSet === DataSet.CUSTOM ) {
-        savedCustomDataPoints = this.graph.dataPointsOnGraph.map( dataPoint => dataPoint.positionProperty.value.copy() );
+        savedCustomDataPoints = this.graph.dataPointsOnGraph.map( dataPoint => {
+          return {
+            initialPoint: dataPoint.positionProperty.initialValue.copy(),
+            currentPoint: dataPoint.positionProperty.value.copy()
+          };
+        } );
       }
 
       // unlink the listeners to dataPoints
@@ -115,7 +120,9 @@ export default class LeastSquaresRegressionModel {
 
         // use the savedCustomDataPoints to populate the dataPoints array
         savedCustomDataPoints.forEach( dataPoint => {
-          this.dataPoints.push( new DataPoint( dataPoint.copy() ) );
+          const newDataPoint = new DataPoint( dataPoint.initialPoint.copy() );
+          newDataPoint.positionProperty.value = dataPoint.currentPoint.copy();
+          this.dataPoints.push( newDataPoint );
         } );
 
         this.dataPoints.forEach( dataPoint => {
