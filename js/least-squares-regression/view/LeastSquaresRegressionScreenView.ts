@@ -15,13 +15,12 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
+import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
 import { Node, Plane } from '../../../../scenery/js/imports.js';
 import { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import TextPushButton from '../../../../sun/js/buttons/TextPushButton.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
-import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 import LeastSquaresRegressionModel from '../model/LeastSquaresRegressionModel.js';
@@ -111,13 +110,9 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
 
     // Create a Push Button (next to the ComboBox) that can activate a dialog Node (Source and Reference Node) associated with each dataSet.
     const sourceAndReferenceNode = new SourceAndReferenceNode( model.selectedDataSetProperty );
-    const sourceAndReferencePushButton = new TextPushButton( LeastSquaresRegressionStrings.questionMarkStringProperty, {
-      baseColor: 'gray',
-      font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-      listener: () => {
-        this.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode );
-      },
-      maxWidth: graphNode.width / 15
+    const infoButton = new InfoButton( {
+      listener: () => this.updateSourceAndReferenceNodeVisibility( sourceAndReferenceNode ),
+      maxWidth: 34
     } );
 
     // Create the nodes that will be used to layer things visually.
@@ -203,13 +198,13 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
         bucketFront.visible = true;
         eraserButton.visible = true;
         backLayer.visible = true;
-        sourceAndReferencePushButton.visible = false;
+        infoButton.visible = false;
       }
       else {
         bucketFront.visible = false;
         eraserButton.visible = false;
         backLayer.visible = false;
-        sourceAndReferencePushButton.visible = true;
+        infoButton.visible = true;
       }
     } );
 
@@ -318,7 +313,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     this.addChild( bestFitLineAccordionBox );
     this.addChild( myLineControlPanel );
     this.addChild( dataSetComboBox );
-    this.addChild( sourceAndReferencePushButton );
+    this.addChild( infoButton );
     this.addChild( backLayer );
     this.addChild( graphNode );
 
@@ -339,8 +334,8 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       gridCheckbox.top = myLineControlPanel.bottom + 10;
       correlationCoefficientAccordionBox.centerX = bestFitLineAccordionBox.centerX;
       correlationCoefficientAccordionBox.top = bestFitLineAccordionBox.bottom + 10;
-      sourceAndReferencePushButton.centerY = dataSetComboBox.centerY;
-      sourceAndReferencePushButton.left = dataSetComboBox.right + 10;
+      infoButton.centerY = dataSetComboBox.centerY;
+      infoButton.left = dataSetComboBox.right + 10;
     }
   }
 
