@@ -103,7 +103,7 @@ export default class LeastSquaresRegressionModel {
       // unlink the listeners to dataPoints
       // this address an issue if one is userControlling a dataPoint while changing selecting a new dataSet (only possible with multitouch)
       //  see  https://github.com/phetsims/least-squares-regression/issues/11
-      this.disposeDataPoints(); // TODO: Dispose the entire model? See https://github.com/phetsims/least-squares-regression/issues/96
+      this.disposeDataPoints();
 
       // Clear the dataPoints array
       this.dataPoints.clear();
