@@ -1,4 +1,4 @@
-// Copyright 2015-2024, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 /**
  * Render residual lines and squares.
