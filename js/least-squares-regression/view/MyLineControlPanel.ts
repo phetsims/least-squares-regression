@@ -11,7 +11,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { HStrut, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HStrut, ManualConstraint, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import VSlider from '../../../../sun/js/VSlider.js';
@@ -91,19 +91,19 @@ export default class MyLineControlPanel extends Panel {
     } );
 
     // Layout the immutable equation
-    yText.left = equationText.yText.left;
-    equalText.left = equationText.equalText.left;
-    aText.center = equationText.valueSlopeText.center;
-    xText.left = equationText.xText.left;
-    signInterceptText.left = equationText.signInterceptText.left;
-    bText.center = equationText.valueInterceptText.center;
+    yText.centerX = equationText.yText.centerX;
+    equalText.centerX = equationText.equalText.centerX;
+    aText.centerX = equationText.valueSlopeText.centerX;
+    xText.centerX = equationText.xText.centerX;
+    signInterceptText.centerX = equationText.signInterceptText.centerX;
+    bText.centerX = equationText.valueInterceptText.centerX;
 
     // create the equation panel with white background
     const equationPanel = new Panel( equationText, {
       fill: 'white',
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
-      resize: false
+      resize: true
     } );
 
     // Create two sliders: The aSlider controls the angle of the line and by proxy the slope, the bSlider controls the intercept
@@ -181,6 +181,30 @@ export default class MyLineControlPanel extends Panel {
     bSliderText.centerX = bSlider.centerX;
 
     super( mainBox, options );
+
+    ManualConstraint.create( this, [ yText, equalText, aText, xText, signInterceptText, bText,
+      equationText.valueInterceptText,
+      equationText.valueSlopeText,
+      equationText.yText,
+      equationText.equalText,
+      equationText.xText,
+      equationText.signInterceptText,
+      equationText
+    ], ( yTextProxy, equalTextProxy, aTextProxy, xTextProxy, signInterceptTextProxy, bTextProxy,
+         equationTextValueInterceptTextProxy,
+         equationTextValueSlopeTextProxy,
+         equationTextYTextProxy,
+         equationTextEqualTextProxy,
+         equationTextXTextProxy,
+         equationTextSignInterceptTextProxy
+    ) => {
+      yTextProxy.centerX = equationTextYTextProxy.centerX;
+      equalTextProxy.centerX = equationTextEqualTextProxy.centerX;
+      aTextProxy.centerX = equationTextValueSlopeTextProxy.centerX;
+      xTextProxy.centerX = equationTextXTextProxy.centerX;
+      signInterceptTextProxy.centerX = equationTextSignInterceptTextProxy.centerX;
+      bTextProxy.centerX = equationTextValueInterceptTextProxy.centerX;
+    } );
 
     // Trigger the opacity/non-opacity when checking the myLine checkbox
     graph.myLineVisibleProperty.link( enabled => {

@@ -9,7 +9,7 @@
 import Utils from '../../../../dot/js/Utils.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -118,14 +118,19 @@ export default class EquationNode extends Node {
       ]
     } );
 
-    // layout of the entire equation
-    this.yText.left = 0;
-    this.equalText.left = this.yText.right + 3;
-    this.signSlopeText.left = this.equalText.right + 1;
-    this.valueSlopeText.left = this.signSlopeText.right + 3;
-    this.xText.left = this.valueSlopeText.right + 3;
-    this.signInterceptText.left = this.xText.right + 3;
-    this.valueInterceptText.left = this.signInterceptText.right + 3;
+
+    ManualConstraint.create( this, [ this.yText, this.equalText, this.signSlopeText, this.valueSlopeText, this.xText, this.signInterceptText, this.valueInterceptText ],
+      ( yTextProxy, equalTextProxy, signSlopeTextProxy, valueSlopeTextProxy, xTextProxy, signInterceptTextProxy, valueInterceptTextProxy ) => {
+
+        // layout of the entire equation
+        yTextProxy.left = 0;
+        equalTextProxy.left = yTextProxy.right + 3;
+        signSlopeTextProxy.left = equalTextProxy.right + 1;
+        valueSlopeTextProxy.left = signSlopeTextProxy.right + 3;
+        xTextProxy.left = valueSlopeTextProxy.right + 3;
+        signInterceptTextProxy.left = xTextProxy.right + 3;
+        valueInterceptTextProxy.left = signInterceptTextProxy.right + 3;
+      } );
 
     this.addChild( mutableEquationText );
 
