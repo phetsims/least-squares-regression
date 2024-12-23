@@ -347,7 +347,7 @@ export default class DataSet {
       { x: 41.2, y: 14 }
     ] );
 
-  public static readonly TEMPERATURE_CELSIUS_LATITUDE = new DataSet( temperatureCelsiusLatitude, new Range( -20, 20 ), new Range( 0, 60 ),
+  public static readonly TEMPERATURE_CELSIUS_LATITUDE = new DataSet( temperatureCelsiusLatitude, new Range( -30, 30 ), new Range( 0, 60 ),
     [
       { x: 31.2, y: 6.6 },
       { x: 32.9, y: 3.3 },
