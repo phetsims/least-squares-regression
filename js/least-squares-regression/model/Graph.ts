@@ -51,7 +51,7 @@ export default class Graph {
   // Factors for slope and intercept conversions
   public slopeFactor!: number;
   public interceptFactor!: number;
-  public readonly interceptOffset = 0;
+  public interceptOffset!: number;
 
   // Statistical fields
   private averageOfSumOfSquaresXX!: number;
@@ -130,6 +130,7 @@ export default class Graph {
   public setGraphDomain( xRange: Range, yRange: Range ): void {
     this.slopeFactor = ( yRange.max - yRange.min ) / ( xRange.max - xRange.min ) / ( this.bounds.height / this.bounds.width );
     this.interceptFactor = ( yRange.max - yRange.min ) / this.bounds.height;
+    this.interceptOffset = ( yRange.min );
   }
 
   /**

@@ -94,7 +94,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       resize: false
     }, panelOptions ) );
 
-    // Create the "My Line" Control Panel (located to the right of the graph)
+    // Create the "My Line" Control Panel (located to the left of the graph)
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the Graph Node which is responsible for 'My Line', 'Best Fit Line' and the Residuals representation
