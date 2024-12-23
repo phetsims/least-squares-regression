@@ -130,6 +130,8 @@ export default class MyLineControlPanel extends Panel {
     rightAlignedNode.addChild( bSliderText );
     rightAlignedNode.addChild( hStrut );
 
+    const VBOX_SPACING = 10;
+
     // Create three checkboxes
     const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: MAX_WIDTH };
     const lineCheckbox = new Checkbox( graph.myLineVisibleProperty, new Text( LeastSquaresRegressionStrings.myLineStringProperty, checkboxTextOptions ) );
@@ -137,9 +139,9 @@ export default class MyLineControlPanel extends Panel {
     const squaredResidualsCheckbox = new Checkbox( graph.myLineShowSquaredResidualsProperty, new Text( LeastSquaresRegressionStrings.squaredResidualsStringProperty, checkboxTextOptions ) );
 
     // Expand the touch Area
-    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );
-    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, 8 );
-    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, 8 );
+    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
+    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
+    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
 
     // Create the barometer chart for the sum of the squares
     const sumOfSquaredResiduals = new SumOfSquaredResidualsChart(
@@ -152,7 +154,7 @@ export default class MyLineControlPanel extends Panel {
 
     // assemble all the previous nodes in a vertical box
     const mainBox = new VBox( {
-      spacing: 10,
+      spacing: VBOX_SPACING,
       children: [
         lineCheckbox,
         rightAlignedNode,

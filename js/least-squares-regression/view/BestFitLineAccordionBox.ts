@@ -47,8 +47,8 @@ export default class BestFitLineAccordionBox extends AccordionBox {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandCollapseButtonOptions: {
-        touchAreaXDilation: 16,
-        touchAreaYDilation: 16
+        touchAreaXDilation: 12,
+        touchAreaYDilation: 12
       },
       titleNode: new Text( LeastSquaresRegressionStrings.bestFitLineStringProperty, {
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
@@ -94,13 +94,15 @@ export default class BestFitLineAccordionBox extends AccordionBox {
       new Text( LeastSquaresRegressionStrings.bestFitLineStringProperty, textOptions )
     );
 
+    const VBOX_SPACING = 10;
+
     const residualsCheckbox = new Checkbox( graph.bestFitLineShowResidualsProperty, new Text( LeastSquaresRegressionStrings.residualsStringProperty, textOptions ) );
     const squaredResidualsCheckbox = new Checkbox( graph.bestFitLineShowSquaredResidualsProperty, new Text( LeastSquaresRegressionStrings.squaredResidualsStringProperty, textOptions ) );
 
     // Expand the touch Area
-    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, 8 );
-    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, 8 );
-    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, 8 );
+    lineCheckbox.touchArea = lineCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
+    residualsCheckbox.touchArea = residualsCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
+    squaredResidualsCheckbox.touchArea = squaredResidualsCheckbox.localBounds.dilatedXY( 8, VBOX_SPACING / 2 );
 
     // Update the control Panel upon a change of the status of the Best Fit Line Checkbox
     // No need to unlink, present for the lifetime of the sim
@@ -116,7 +118,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
     } );
 
     const content = new VBox( {
-      spacing: 10,
+      spacing: VBOX_SPACING,
       children: [
         lineCheckbox,
         new HBox( { children: [ new HStrut( 20 ), equationPanel ] } ),

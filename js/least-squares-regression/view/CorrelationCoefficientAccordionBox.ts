@@ -36,8 +36,8 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
       buttonXMargin: 10,
       buttonYMargin: 10,
       expandCollapseButtonOptions: {
-        touchAreaXDilation: 16,
-        touchAreaYDilation: 16
+        touchAreaXDilation: 12,
+        touchAreaYDilation: 12
       },
       titleYMargin: 10,
       titleNode: new RichText( LeastSquaresRegressionStrings.correlationCoefficientStringProperty, {
