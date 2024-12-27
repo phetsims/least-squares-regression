@@ -46,7 +46,12 @@ export default class SourceAndReferenceNode extends Dialog {
       sourceText.string = StringUtils.format( sourcePatternString, selectedDataSet.source );
     } );
 
-    super( content );
+    const VERTICAL_MARGIN = 25;
+    super( content, {
+      topMargin: VERTICAL_MARGIN,
+      closeButtonLength: 10,
+      bottomMargin: VERTICAL_MARGIN
+    } );
   }
 }
 
