@@ -10,7 +10,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import { Color, Line, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Color, Line, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -53,9 +53,11 @@ export default class SumOfSquaredResidualsChart extends Node {
     // Text for the chart
     const label = new Text( LeastSquaresRegressionStrings.sumStringProperty, {
       font: FONT,
-      centerX: horizontalArrow.centerX,
-      top: horizontalArrow.bottom + 5,
       maxWidth: 100
+    } );
+    ManualConstraint.create( this, [ label, horizontalArrow ], ( label, horizontalArrow ) => {
+      label.centerX = horizontalArrow.centerX;
+      label.top = horizontalArrow.bottom + 5;
     } );
     const zeroLabel = new Text( '0', { font: FONT, centerX: horizontalArrow.left, top: horizontalArrow.bottom + 5 } );
 
