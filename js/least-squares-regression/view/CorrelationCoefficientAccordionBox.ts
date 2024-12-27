@@ -6,6 +6,7 @@
  * @author Martin Veillette (Berea College)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
@@ -22,11 +23,12 @@ import Graph from '../model/Graph.js';
 const pattern_0r_1value = '{0} {1}'; // TODO: https://github.com/phetsims/least-squares-regression/issues/90 move this to the i18n file
 
 // constants
-const R_EQUALS = StringUtils.format( '{0} =', LeastSquaresRegressionStrings.symbol.rStringProperty.value ); // TODO: https://github.com/phetsims/least-squares-regression/issues/90 move this to the i18n file
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
 
 export default class CorrelationCoefficientAccordionBox extends AccordionBox {
   private readonly rightHandSideText: Text;
+  private readonly hStrut: HStrut;
+  private readonly leftHandSideText: Text;
 
   public constructor( private readonly graph: Graph, options?: AccordionBoxOptions ) {
 
@@ -54,8 +56,12 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
 
     const textOptions = { font: LeastSquaresRegressionConstants.PEARSON_COEFFICIENT_TEXT_FONT };
 
+    const rEqualsStringProperty = new DerivedProperty( [ LeastSquaresRegressionStrings.symbol.rStringProperty ], rString => {
+      return StringUtils.format( '{0} =', rString );
+    } );
+
     // Create the left hand side of the equation (includes the equal sign)
-    const leftHandSideText = new Text( R_EQUALS, textOptions );
+    const leftHandSideText = new Text( rEqualsStringProperty, textOptions );
 
     // Create the right hand side of the equation
     const rightHandSideText = new Text( '', textOptions );
@@ -63,9 +69,6 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
     // calculate the maximum width of the right hand side of the equation
     const rightHandSideMaxWidth = new Text( `${MathSymbols.PLUS} 0.00`, textOptions ).width;
     const hStrut = new HStrut( rightHandSideMaxWidth );
-
-    hStrut.left = leftHandSideText.right + 5;
-    rightHandSideText.left = leftHandSideText.right + 5;
 
     // Create the equation
     const equation = new Node( {
@@ -82,7 +85,7 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
       fill: LeastSquaresRegressionConstants.GRAPH_BACKGROUND_COLOR,
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
-      resize: false,
+      resize: true,
       xMargin: 10
     } );
 
@@ -93,6 +96,14 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
     super( content, options );
 
     this.rightHandSideText = rightHandSideText;
+
+    this.hStrut = hStrut;
+    this.leftHandSideText = leftHandSideText;
+    this.rightHandSideText = rightHandSideText;
+    this.leftHandSideText = leftHandSideText;
+    this.update();
+
+    rEqualsStringProperty.link( rString => this.update() );
   }
 
   public override reset(): void {
@@ -136,6 +147,9 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
 
     // Update the text on the right Hand side of the equation
     this.rightHandSideText.string = rValueString;
+
+    this.hStrut.left = this.leftHandSideText.right + 5;
+    this.rightHandSideText.left = this.leftHandSideText.right + 5;
   }
 }
 
