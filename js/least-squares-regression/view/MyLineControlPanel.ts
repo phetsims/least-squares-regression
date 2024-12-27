@@ -103,7 +103,7 @@ export default class MyLineControlPanel extends Panel {
       fill: 'white',
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
-      resize: true
+      resize: true // here
     } );
 
     // Create two sliders: The aSlider controls the angle of the line and by proxy the slope, the bSlider controls the intercept
@@ -208,7 +208,7 @@ export default class MyLineControlPanel extends Panel {
 
     // Trigger the opacity/non-opacity when checking the myLine checkbox
     graph.myLineVisibleProperty.link( enabled => {
-      equationText.visible = enabled;
+      equationText.setEquationVisible( enabled );
       aSlider.pickable = enabled; // enable/disable slider
       bSlider.pickable = enabled;// enable/disable slider
       residualsCheckbox.enabled = enabled;

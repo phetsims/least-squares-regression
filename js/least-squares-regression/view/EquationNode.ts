@@ -138,6 +138,14 @@ export default class EquationNode extends Node {
   }
 
   /**
+   * Change the visibility by changing the opacity, so that a blank equation will still take up layout space.
+   * @param equationVisible
+   */
+  public setEquationVisible( equationVisible: boolean ): void {
+    this.opacity = equationVisible ? 1 : 0;
+  }
+
+  /**
    * Sets the text of the slope and its accompanying sign.
    * @param slope - The slope value to display.
    */

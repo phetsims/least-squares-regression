@@ -71,15 +71,15 @@ export default class BestFitLineAccordionBox extends AccordionBox {
 
     // Create the 'Best Fit Line' equation
     // initial values set the spacing, the correct values for the slope and the intercept will be updated below
-    const equationText = new EquationNode( { mode: 'bestFitLine' } );
-    equationText.visible = false;
+    const equationNode = new EquationNode( { mode: 'bestFitLine' } );
+    equationNode.setEquationVisible( false );
 
     // Create a Panel to contain the Equation Node
-    const equationPanel = new Panel( equationText, {
+    const equationPanel = new Panel( equationNode, {
       fill: 'white',
       stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
-      resize: false
+      resize: true // here
     } );
 
     // Text options for checkboxes
@@ -110,7 +110,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
 
       // Set Equation to invisible if there is less than one point on the graph
       if ( graph.isLinearFitDefined() ) {
-        equationText.visible = enabled;
+        equationNode.visible = enabled;
       }
       equationPanel.opacity = enabled ? 1 : SceneryConstants.DISABLED_OPACITY;
       residualsCheckbox.enabled = enabled;
@@ -132,7 +132,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
 
     super( content, options );
 
-    this.equationText = equationText;
+    this.equationText = equationNode;
     this.sumOfSquaredResidualsChart = sumOfSquaredResidualsChart;
 
     // Update the Best Fit Line Equation initially
@@ -158,11 +158,11 @@ export default class BestFitLineAccordionBox extends AccordionBox {
 
       // Ensure the equation is visible if the Best Fit Line is enabled
       if ( this.graph.bestFitLineVisibleProperty.value ) {
-        this.equationText.visible = true;
+        this.equationText.setEquationVisible( true );
       }
     }
     else {
-      this.equationText.visible = false;
+      this.equationText.setEquationVisible( false );
     }
   }
 }
