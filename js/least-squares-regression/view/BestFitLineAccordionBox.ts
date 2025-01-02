@@ -106,16 +106,22 @@ export default class BestFitLineAccordionBox extends AccordionBox {
 
     // Update the control Panel upon a change of the status of the Best Fit Line Checkbox
     // No need to unlink, present for the lifetime of the sim
-    graph.bestFitLineVisibleProperty.link( enabled => {
+    const updateEquationNodeVisible = () => {
+
+      const enabled = graph.bestFitLineVisibleProperty.value;
 
       // Set Equation to invisible if there is less than one point on the graph
       if ( graph.isLinearFitDefined() ) {
-        equationNode.visible = enabled;
+        equationNode.opacity = enabled ? 1 : 0;
       }
       equationPanel.opacity = enabled ? 1 : SceneryConstants.DISABLED_OPACITY;
       residualsCheckbox.enabled = enabled;
       squaredResidualsCheckbox.enabled = enabled;
-    } );
+    };
+
+    graph.angleProperty.link( updateEquationNodeVisible );
+    graph.interceptProperty.link( updateEquationNodeVisible );
+    graph.bestFitLineVisibleProperty.link( updateEquationNodeVisible );
 
     const content = new VBox( {
       spacing: VBOX_SPACING,
