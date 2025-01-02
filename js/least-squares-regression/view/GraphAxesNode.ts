@@ -14,7 +14,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { Line, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Line, ManualConstraint, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
@@ -305,11 +305,14 @@ class XLabelNode extends Node {
     const xLabelNode = new Text( dataSet.xAxisTitle, {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
-      centerX: centerX,
-      bottom: bottom + 50,
       maxWidth: MAX_LABEL_WIDTH
     } );
     this.addChild( xLabelNode );
+
+    ManualConstraint.create( this, [ xLabelNode ], xLabelNodeProxy => {
+      xLabelNodeProxy.centerX = centerX;
+      xLabelNodeProxy.bottom = bottom + 50;
+    } );
 
     this.disposeEmitter.addListener( () => {
       xLabelNode.dispose();
@@ -332,12 +335,15 @@ class YLabelNode extends Node {
     const yLabelNode = new Text( dataSet.yAxisTitle, {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
-      centerY: centerY,
-      left: left - 50,
       maxWidth: MAX_LABEL_WIDTH,
       rotation: -Math.PI / 2
     } );
     this.addChild( yLabelNode );
+
+    ManualConstraint.create( this, [ yLabelNode ], xLabelNodeProxy => {
+      xLabelNodeProxy.centerY = centerY;
+      xLabelNodeProxy.left = left - 50;
+    } );
 
     this.disposeEmitter.addListener( () => {
       yLabelNode.dispose();
