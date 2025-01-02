@@ -66,7 +66,7 @@ export default class EquationNode extends Node {
         numericalTextOptions = {
           font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
           fill: LeastSquaresRegressionConstants.MY_LINE_COLOR.BASE_COLOR,
-          maxWidth: options.maxCharacterWidth
+          maxWidth: 25
         };
         stringTextOptions = {
           font: LeastSquaresRegressionConstants.TEXT_FONT,
