@@ -20,7 +20,7 @@ import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.
 import Graph from '../model/Graph.js';
 
 // string
-const pattern_0r_1value = '{0} {1}'; // TODO: https://github.com/phetsims/least-squares-regression/issues/90 move this to the i18n file
+const pattern_0r_1value = '{0} {1}'; // This "half" of the equation is intentionally not i18nized
 
 // constants
 const MAX_LABEL_WIDTH = 120; // restrict width of labels for i18n
