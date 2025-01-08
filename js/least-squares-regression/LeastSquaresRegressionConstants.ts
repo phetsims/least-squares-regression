@@ -56,12 +56,12 @@ const LeastSquaresRegressionConstants = {
   TEXT_FONT: new PhetFont( { size: 16 } ), // default font for text
   TEXT_BOLD_FONT: new PhetFont( { size: 16, weight: 'bold' } ), // default font for bold font
   PEARSON_COEFFICIENT_TEXT_FONT: new PhetFont( { size: 22, weight: 'bold' } ),
-  CHECKBOX_TEXT_FONT: new PhetFont( { size: 14 } ),
-  MAJOR_TICK_FONT: new PhetFont( { size: 14 } ),
-  SUM_RESIDUALS_FONT: new PhetFont( { size: 14 } ),
+  CHECKBOX_TEXT_FONT: new PhetFont( { size: 16 } ),
+  MAJOR_TICK_FONT: new PhetFont( { size: 16 } ),
+  SUM_RESIDUALS_FONT: new PhetFont( { size: 16 } ),
 
   REFERENCE_FONT: new PhetFont( { size: 16 } ),
-  SOURCE_FONT: new PhetFont( { size: 14 } ),
+  SOURCE_FONT: new PhetFont( { size: 16 } ),
 
   // Panels
   CONTROL_PANEL_CORNER_RADIUS: 10,
