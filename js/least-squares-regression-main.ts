@@ -19,7 +19,7 @@ simLauncher.launch( () => {
       leadDesign: 'Amanda McGarry',
       softwareDevelopment: 'Martin Veillette',
       team: 'Trish Loeblein, Ariel Paul, Kathy Perkins',
-      qualityAssurance: 'Steele Dalton, Bryan Yoelin'
+      qualityAssurance: 'Steele Dalton, Matthew Moore, Ashton Morris, Nancy Salpepi, Kathryn Woessner, Bryan Yoelin'
     }
   } );
   sim.start();
