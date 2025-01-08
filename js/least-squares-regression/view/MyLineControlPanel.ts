@@ -14,7 +14,7 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import { HStrut, ManualConstraint, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import VSlider from '../../../../sun/js/VSlider.js';
+import VSlider, { VSliderOptions } from '../../../../sun/js/VSlider.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
@@ -23,8 +23,7 @@ import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
 // constants
-const SLIDER_OPTIONS = {
-  trackFill: 'black',
+const SLIDER_OPTIONS: VSliderOptions = {
   trackSize: new Dimension2( 2, 190 ),
   thumbSize: new Dimension2( 30, 15 ),
   thumbTouchAreaXDilation: 8,
