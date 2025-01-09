@@ -20,11 +20,6 @@ import Graph from '../model/Graph.js';
 import EquationNode from './EquationNode.js';
 import SumOfSquaredResidualsChart from './SumOfSquaredResidualsChart.js';
 
-/**
- * Maximum width for label text to accommodate internationalization.
- */
-const MAX_LABEL_WIDTH = 120;
-
 export default class BestFitLineAccordionBox extends AccordionBox {
 
   private readonly equationText: EquationNode;
@@ -52,7 +47,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
       },
       titleNode: new Text( LeastSquaresRegressionStrings.bestFitLineStringProperty, {
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
-        maxWidth: MAX_LABEL_WIDTH
+        maxWidth: 120
       } ),
       titleXMargin: 0,
       contentXMargin: 10,
@@ -85,7 +80,7 @@ export default class BestFitLineAccordionBox extends AccordionBox {
     // Text options for checkboxes
     const textOptions = {
       font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT,
-      maxWidth: MAX_LABEL_WIDTH
+      maxWidth: 140
     };
 
     // Create the checkboxes

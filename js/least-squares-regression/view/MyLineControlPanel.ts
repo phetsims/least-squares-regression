@@ -132,7 +132,7 @@ export default class MyLineControlPanel extends Panel {
     const VBOX_SPACING = 10;
 
     // Create three checkboxes
-    const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: MAX_WIDTH };
+    const checkboxTextOptions = { font: LeastSquaresRegressionConstants.CHECKBOX_TEXT_FONT, maxWidth: 140 };
     const lineCheckbox = new Checkbox( graph.myLineVisibleProperty, new Text( LeastSquaresRegressionStrings.myLineStringProperty, checkboxTextOptions ) );
     const residualsCheckbox = new Checkbox( graph.myLineShowResidualsProperty, new Text( LeastSquaresRegressionStrings.residualsStringProperty, checkboxTextOptions ) );
     const squaredResidualsCheckbox = new Checkbox( graph.myLineShowSquaredResidualsProperty, new Text( LeastSquaresRegressionStrings.squaredResidualsStringProperty, checkboxTextOptions ) );
