@@ -48,7 +48,6 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
         font: LeastSquaresRegressionConstants.TEXT_BOLD_FONT,
         maxWidth: MAX_LABEL_WIDTH
       } ),
-      titleAlignY: 'top',
       contentXMargin: 10,
       contentYMargin: 10,
       expandedDefaultValue: false
