@@ -29,9 +29,6 @@
   "symbol.y": {
     "value": "y"
   },
-  "questionMark": {
-    "value": "?"
-  },
   "sourcePattern": {
     "value": "Source: {0}"
   },

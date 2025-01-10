@@ -27,7 +27,6 @@ type StringsType = {
     'yStringProperty': LocalizedStringProperty;
     'rStringProperty': LocalizedStringProperty;
   };
-  'questionMarkStringProperty': LocalizedStringProperty;
   'sourcePatternStringProperty': LocalizedStringProperty;
   'correlationCoefficientStringProperty': LocalizedStringProperty;
   'custom': {
