@@ -11,7 +11,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import merge from '../../../../phet-core/js/merge.js';
 import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
-import { HStrut, ManualConstraint, Node, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HStrut, ManualConstraint, Node, Rectangle, SceneryConstants, Text, VBox } from '../../../../scenery/js/imports.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import VSlider, { VSliderOptions } from '../../../../sun/js/VSlider.js';
@@ -78,31 +78,11 @@ export default class MyLineControlPanel extends Panel {
     const signInterceptText = new Text( MathSymbols.PLUS, blackOptions );// '+'
     const bText = new Text( LeastSquaresRegressionStrings.bStringProperty, boldOptions );// a number
 
-    const immutableEquationText = new Node( {
-      children: [
-        yText,
-        equalText,
-        aText,
-        xText,
-        signInterceptText,
-        bText
-      ]
-    } );
-
-    // Layout the immutable equation
-    yText.centerX = equationText.yText.centerX;
-    equalText.centerX = equationText.equalText.centerX;
-    aText.centerX = equationText.valueSlopeText.centerX;
-    xText.centerX = equationText.xText.centerX;
-    signInterceptText.centerX = equationText.signInterceptText.centerX;
-    bText.centerX = equationText.valueInterceptText.centerX;
-
     // create the equation panel with white background
-    const equationPanel = new Panel( equationText, {
+    const equationPanel = new Rectangle( {
       fill: 'white',
       cornerRadius: LeastSquaresRegressionConstants.SMALL_PANEL_CORNER_RADIUS,
-      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE,
-      resize: true // here
+      stroke: LeastSquaresRegressionConstants.SMALL_PANEL_STROKE
     } );
 
     // Create two sliders: The aSlider controls the angle of the line and by proxy the slope, the bSlider controls the intercept
@@ -119,16 +99,35 @@ export default class MyLineControlPanel extends Panel {
     const bSliderText = new Text( LeastSquaresRegressionStrings.bStringProperty, merge( { maxWidth: MAX_WIDTH }, boldOptions ) );
 
     // collect the immutable equation, the mutable equation and the sliders in one node
-    const rightAlignedNode = new Node();
     const hStrut = new HStrut( 20 );
-    rightAlignedNode.addChild( equationPanel );
-    rightAlignedNode.addChild( immutableEquationText );
-    rightAlignedNode.addChild( aSlider );
-    rightAlignedNode.addChild( bSlider );
-    rightAlignedNode.addChild( aSliderText );
-    rightAlignedNode.addChild( bSliderText );
-    rightAlignedNode.addChild( hStrut );
+    const rightAlignedNode = new Node( {
+      children: [
+        aSlider,
+        bSlider,
 
+        aSliderText,
+        bSliderText,
+
+        equationPanel,
+
+        equationText.yText,
+        equationText.equalText,
+        equationText.signSlopeText,
+        equationText.valueSlopeText,
+        equationText.xText,
+        equationText.signInterceptText,
+        equationText.valueInterceptText,
+
+        yText,
+        equalText,
+        aText,
+        xText,
+        signInterceptText,
+        bText,
+
+        hStrut
+      ]
+    } );
     const VBOX_SPACING = 10;
 
     // Create three checkboxes
@@ -166,43 +165,132 @@ export default class MyLineControlPanel extends Panel {
     } );
 
     // layout the internal nodes of the right Aligned Node
-    equationPanel.left = hStrut.right;
-    equationPanel.top = lineCheckbox.bottom;
-    immutableEquationText.top = equationPanel.bottom + 12;
-    immutableEquationText.left = equationPanel.left + 5;
-    aSlider.top = immutableEquationText.bottom + 10;
-    bSlider.top = immutableEquationText.bottom + 10;
-    aSlider.centerX = immutableEquationText.left + aText.centerX;
-    bSlider.centerX = immutableEquationText.left + bText.centerX;
-    aSliderText.top = aSlider.bottom + 8;
-    bSliderText.top = bSlider.bottom + 8;
-    aSliderText.centerX = aSlider.centerX;
-    bSliderText.centerX = bSlider.centerX;
+    aSlider.centerX = 70;
+    bSlider.centerX = 135;
+    aSlider.top = 10;
+    bSlider.top = 10;
 
     super( mainBox, options );
 
-    ManualConstraint.create( this, [ yText, equalText, aText, xText, signInterceptText, bText,
-      equationText.valueInterceptText,
-      equationText.valueSlopeText,
+    // Dynamic layout of the equations.
+    // Align in a grid with the "a" and "b" parts of the equation centered over the sliders, then flow the rest of the layout
+    // around that. Accommodate dynamically sizing strings.
+    // Cannot use GridBox or AlignBox because the slider horizontally centered (tick mark makes it lopsided)
+    ManualConstraint.create( this, [
+
+      aSlider,
+      bSlider,
+
+      aSliderText,
+      bSliderText,
+
       equationText.yText,
       equationText.equalText,
+      equationText.signSlopeText,
+      equationText.valueSlopeText,
       equationText.xText,
       equationText.signInterceptText,
-      equationText
-    ], ( yTextProxy, equalTextProxy, aTextProxy, xTextProxy, signInterceptTextProxy, bTextProxy,
-         equationTextValueInterceptTextProxy,
-         equationTextValueSlopeTextProxy,
-         equationTextYTextProxy,
-         equationTextEqualTextProxy,
-         equationTextXTextProxy,
-         equationTextSignInterceptTextProxy
+      equationText.valueInterceptText,
+
+      yText,
+      equalText,
+      aText,
+      xText,
+      signInterceptText,
+      bText,
+
+      equationPanel
+    ], (
+      aSliderProxy,
+      bSliderProxy,
+      aSliderTextProxy,
+      bSliderTextProxy,
+      dynamicYTextProxy,
+      dynamicEqualTextProxy,
+      dynamicSignSlopeTextProxy,
+      dynamicValueSlopeTextProxy,
+      dynamicXTextProxy,
+      dynamicSignInterceptTextProxy,
+      dynamicValueInterceptTextProxy,
+      staticYTextProxy,
+      staticEqualTextProxy,
+      staticATextProxy,
+      staticXTextProxy,
+      staticSignInterceptTextProxy,
+      staticBTextProxy,
+      equationPanelProxy
     ) => {
-      yTextProxy.centerX = equationTextYTextProxy.centerX;
-      equalTextProxy.centerX = equationTextEqualTextProxy.centerX;
-      aTextProxy.centerX = equationTextValueSlopeTextProxy.centerX;
-      xTextProxy.centerX = equationTextXTextProxy.centerX;
-      signInterceptTextProxy.centerX = equationTextSignInterceptTextProxy.centerX;
-      bTextProxy.centerX = equationTextValueInterceptTextProxy.centerX;
+
+      aSliderTextProxy.top = aSliderProxy.bottom + 8;
+      bSliderTextProxy.top = bSliderProxy.bottom + 8;
+      aSliderTextProxy.centerX = aSliderProxy.x + 1;
+      bSliderTextProxy.centerX = bSliderProxy.x + 1;
+
+      dynamicValueSlopeTextProxy.centerX = aSliderProxy.x + 1;
+      dynamicValueSlopeTextProxy.bottom = aSliderProxy.top - 35;
+
+      dynamicSignSlopeTextProxy.right = dynamicValueSlopeTextProxy.left - 5;
+      dynamicSignSlopeTextProxy.y = dynamicValueSlopeTextProxy.y;
+
+      dynamicValueInterceptTextProxy.centerX = bSliderProxy.x + 1;
+      dynamicValueInterceptTextProxy.bottom = bSliderProxy.top - 35;
+
+      staticATextProxy.bottom = aSliderProxy.top - 5;
+      staticATextProxy.centerX = aSliderProxy.x + 1;
+
+      staticBTextProxy.bottom = bSliderProxy.top - 5;
+      staticBTextProxy.centerX = bSliderProxy.x + 1;
+
+      dynamicXTextProxy.left = dynamicValueSlopeTextProxy.right + 3;
+      dynamicXTextProxy.y = dynamicValueSlopeTextProxy.y;
+
+      dynamicSignInterceptTextProxy.centerX = ( dynamicXTextProxy.right + dynamicValueInterceptTextProxy.left ) / 2;
+      dynamicSignInterceptTextProxy.y = dynamicValueInterceptTextProxy.y;
+
+      dynamicEqualTextProxy.right = dynamicSignSlopeTextProxy.left - 5;
+      dynamicEqualTextProxy.y = dynamicSignSlopeTextProxy.y;
+
+      dynamicYTextProxy.right = dynamicEqualTextProxy.left - 5;
+      dynamicYTextProxy.y = dynamicValueSlopeTextProxy.y;
+
+      staticEqualTextProxy.centerX = dynamicEqualTextProxy.centerX;
+      staticEqualTextProxy.y = staticBTextProxy.y;
+
+      staticYTextProxy.right = dynamicEqualTextProxy.left - 5;
+      staticYTextProxy.y = staticBTextProxy.y;
+
+      staticXTextProxy.centerX = dynamicXTextProxy.centerX;
+      staticXTextProxy.y = staticATextProxy.y;
+
+      staticSignInterceptTextProxy.centerX = dynamicSignInterceptTextProxy.centerX;
+      staticSignInterceptTextProxy.y = staticBTextProxy.y;
+
+      const top = Math.min(
+        dynamicYTextProxy.top,
+        dynamicEqualTextProxy.top,
+        dynamicSignSlopeTextProxy.top,
+        dynamicValueSlopeTextProxy.top,
+        dynamicXTextProxy.top,
+        dynamicSignInterceptTextProxy.top,
+        dynamicValueInterceptTextProxy.top
+      );
+
+      const bottom = Math.min(
+        dynamicYTextProxy.bottom,
+        dynamicEqualTextProxy.bottom,
+        dynamicSignSlopeTextProxy.bottom,
+        dynamicValueSlopeTextProxy.bottom,
+        dynamicXTextProxy.bottom,
+        dynamicSignInterceptTextProxy.bottom,
+        dynamicValueInterceptTextProxy.bottom
+      );
+
+      // CAUTION: Setting the width and the height outside of the proxy
+      equationPanel.setRectWidth( dynamicValueInterceptTextProxy.right - dynamicYTextProxy.left + 10 );
+      equationPanel.setRectHeight( Math.abs( bottom - top ) + 10 );
+
+      equationPanelProxy.left = dynamicYTextProxy.left - 5;
+      equationPanelProxy.top = top - 5;
     } );
 
     // Trigger the opacity/non-opacity when checking the myLine checkbox
