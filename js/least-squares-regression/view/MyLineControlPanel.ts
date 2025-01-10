@@ -321,6 +321,18 @@ export default class MyLineControlPanel extends Panel {
     } );
 
     this.sumOfSquaredResiduals = sumOfSquaredResiduals;
+
+    graph.myLineVisibleProperty.link( enabled => {
+
+      // Hide but keep the same bounds
+      equationText.yText.opacity = enabled ? 1 : 0;
+      equationText.equalText.opacity = enabled ? 1 : 0;
+      equationText.signSlopeText.opacity = enabled ? 1 : 0;
+      equationText.valueSlopeText.opacity = enabled ? 1 : 0;
+      equationText.xText.opacity = enabled ? 1 : 0;
+      equationText.signInterceptText.opacity = enabled ? 1 : 0;
+      equationText.valueInterceptText.opacity = enabled ? 1 : 0;
+    } );
   }
 
   public reset(): void {
