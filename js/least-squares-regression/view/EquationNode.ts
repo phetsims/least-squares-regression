@@ -33,7 +33,7 @@ export default class EquationNode extends Node {
   // Public Text nodes
   public readonly yText: Text;
   public readonly equalText: Text;
-  private readonly signSlopeText: Text;
+  public readonly signSlopeText: Text;
   public readonly valueSlopeText: Text;
   public readonly xText: Text;
   public readonly signInterceptText: Text;
@@ -106,33 +106,37 @@ export default class EquationNode extends Node {
     this.signInterceptText = new Text( MathSymbols.PLUS, stringTextOptions );// + or -
     this.valueInterceptText = new Text( maxWidthInterceptString, numericalTextOptions );// a number
 
-    const mutableEquationText = new Node( {
-      children: [
-        this.yText,
-        this.equalText,
-        this.signSlopeText,
-        this.valueSlopeText,
-        this.xText,
-        this.signInterceptText,
-        this.valueInterceptText
-      ]
-    } );
-
-
-    ManualConstraint.create( this, [ this.yText, this.equalText, this.signSlopeText, this.valueSlopeText, this.xText, this.signInterceptText, this.valueInterceptText ],
-      ( yTextProxy, equalTextProxy, signSlopeTextProxy, valueSlopeTextProxy, xTextProxy, signInterceptTextProxy, valueInterceptTextProxy ) => {
-
-        // layout of the entire equation
-        yTextProxy.left = 0;
-        equalTextProxy.left = yTextProxy.right + 3;
-        signSlopeTextProxy.left = equalTextProxy.right + 1;
-        valueSlopeTextProxy.left = signSlopeTextProxy.right + 3;
-        xTextProxy.left = valueSlopeTextProxy.right + 3;
-        signInterceptTextProxy.left = xTextProxy.right + 3;
-        valueInterceptTextProxy.left = signInterceptTextProxy.right + 3;
+    if ( options.mode === 'bestFitLine' ) {
+      const mutableEquationText = new Node( {
+        children: [
+          this.yText,
+          this.equalText,
+          this.signSlopeText,
+          this.valueSlopeText,
+          this.xText,
+          this.signInterceptText,
+          this.valueInterceptText
+        ]
       } );
 
-    this.addChild( mutableEquationText );
+      ManualConstraint.create( this, [ this.yText, this.equalText, this.signSlopeText, this.valueSlopeText, this.xText, this.signInterceptText, this.valueInterceptText ],
+        ( yTextProxy, equalTextProxy, signSlopeTextProxy, valueSlopeTextProxy, xTextProxy, signInterceptTextProxy, valueInterceptTextProxy ) => {
+
+          // layout of the entire equation
+          yTextProxy.left = 0;
+          equalTextProxy.left = yTextProxy.right + 3;
+          signSlopeTextProxy.left = equalTextProxy.right + 1;
+          valueSlopeTextProxy.left = signSlopeTextProxy.right + 3;
+          xTextProxy.left = valueSlopeTextProxy.right + 3;
+          signInterceptTextProxy.left = xTextProxy.right + 3;
+          valueInterceptTextProxy.left = signInterceptTextProxy.right + 3;
+        } );
+
+      this.addChild( mutableEquationText );
+    }
+    else {
+      // MyLineControlPanel does the layout to align with the sliders and static equation
+    }
 
     this.mutate( options );
   }
