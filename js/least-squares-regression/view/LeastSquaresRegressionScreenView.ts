@@ -10,7 +10,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView from '../../../../joist/js/ScreenView.js';
-import { combineOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import BucketFront from '../../../../scenery-phet/js/bucket/BucketFront.js';
 import BucketHole from '../../../../scenery-phet/js/bucket/BucketHole.js';
@@ -19,7 +18,6 @@ import InfoButton from '../../../../scenery-phet/js/buttons/InfoButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
 import { ManualConstraint, Node } from '../../../../scenery/js/imports.js';
-import { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
@@ -90,9 +88,7 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
       yMargin: 10
     };
     // Create the "Best Fit Line" Control Panel (located to the right of the graph)
-    const bestFitLineAccordionBox = new BestFitLineAccordionBox( model.graph, model.dataPointsAddedEmitter, combineOptions<AccordionBoxOptions>( {
-      resize: false
-    }, panelOptions ) );
+    const bestFitLineAccordionBox = new BestFitLineAccordionBox( model.graph, model.dataPointsAddedEmitter, panelOptions );
 
     // Create the "My Line" Control Panel (located to the left of the graph)
     const myLineControlPanel = new MyLineControlPanel( model.graph, model.dataPointsAddedEmitter, panelOptions );
