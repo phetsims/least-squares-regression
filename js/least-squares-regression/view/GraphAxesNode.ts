@@ -75,17 +75,17 @@ export default class GraphAxesNode extends Node {
     const xAxisNode = new XAxisNode( dataSet, modelViewTransform );
     const yAxisNode = new YAxisNode( dataSet, modelViewTransform );
     const xLabelNode = new XLabelNode( dataSet, modelViewTransform );
-    const yLabelNode = new YLabelNode( dataSet, modelViewTransform );
-    super( {
-      children: [
-        new BackgroundNode( dataSet, modelViewTransform ),
-        gridNode,
-        xAxisNode,
-        yAxisNode,
-        xLabelNode,
-        yLabelNode
-      ]
-    } );
+    super();
+
+    const yLabelNode = new YLabelNode( dataSet, this, yAxisNode, modelViewTransform );
+    this.children = [
+      new BackgroundNode( dataSet, modelViewTransform ),
+      gridNode,
+      xAxisNode,
+      yAxisNode,
+      xLabelNode,
+      yLabelNode
+    ];
 
     this.disposeEmitter.addListener( () => {
       showGridProperty.unlink( showGridPropertyObserver );
@@ -326,27 +326,26 @@ class XLabelNode extends Node {
 
 class YLabelNode extends Node {
 
-  public constructor( dataSet: DataSet, modelViewTransform: ModelViewTransform2 ) {
+  public constructor( dataSet: DataSet, layoutParent: Node, yAxisNode: Node, modelViewTransform: ModelViewTransform2 ) {
 
     super();
 
     const centerY = modelViewTransform.modelToViewY( ( dataSet.yRange.min + dataSet.yRange.max ) / 2 );
-    const left = modelViewTransform.modelToViewX( dataSet.xRange.min );
-    const yLabelNode = new Text( dataSet.yAxisTitle, {
+    const textNode = new Text( dataSet.yAxisTitle, {
       font: AXIS_LABEL_FONT,
       fill: AXIS_LABEL_COLOR,
       maxWidth: MAX_LABEL_WIDTH,
       rotation: -Math.PI / 2
     } );
-    this.addChild( yLabelNode );
+    this.addChild( textNode );
 
-    ManualConstraint.create( this, [ yLabelNode ], xLabelNodeProxy => {
-      xLabelNodeProxy.centerY = centerY;
-      xLabelNodeProxy.left = left - 50;
+    ManualConstraint.create( layoutParent, [ this, textNode, yAxisNode ], ( thisProxy, yLabelNodeProxy, yAxisNodeProxy ) => {
+      yLabelNodeProxy.centerY = centerY;
+      yLabelNodeProxy.right = yAxisNode.left - 7;
     } );
 
     this.disposeEmitter.addListener( () => {
-      yLabelNode.dispose();
+      textNode.dispose();
     } );
   }
 }
