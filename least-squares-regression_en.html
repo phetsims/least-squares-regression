@@ -138,7 +138,7 @@
   // Queue all of the preloads to be loaded.
   preloads.forEach( preload => loadURL( preload ) );
 
-  const targetSource = esbuild ? './dist/bundle.js' : '../chipper/dist/js/least-squares-regression/js/least-squares-regression-main.js';
+  const targetSource = esbuild ? '../chipper/dist/dev-server-runnable/least-squares-regression.js' : '../chipper/dist/js/least-squares-regression/js/least-squares-regression-main.js';
 
   // Module loading in compilation-free (development) mode will be kicked off once strings are loaded.
   // This is done in load-unbuilt-strings.js
