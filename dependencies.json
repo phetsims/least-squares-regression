@@ -1,5 +1,5 @@
 {
-  "comment": "# least-squares-regression 1.2.2-rc.1 Thu May 29 2025 01:24:04 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# least-squares-regression 1.2.2 Wed Jun 11 2025 11:25:00 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "f6d41b399ad32df2a00ab4b329981be0c574d77a",
     "branch": "HEAD"
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "f7b2d8d631b2cfcb7cea4861080e5225a37db035",
+    "sha": "9f44dc0620b8e99889ec8a5ab1687adaa5d769a3",
     "branch": "1.2"
   },
   "perennial-alias": {
