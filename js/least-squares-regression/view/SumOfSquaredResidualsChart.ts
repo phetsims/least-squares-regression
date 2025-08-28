@@ -8,7 +8,7 @@
 
 import Emitter from '../../../../axon/js/Emitter.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Line from '../../../../scenery/js/nodes/Line.js';

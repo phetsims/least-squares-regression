@@ -8,7 +8,7 @@
  */
 
 import StringProperty from '../../../../axon/js/StringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
