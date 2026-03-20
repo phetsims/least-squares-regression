@@ -21,7 +21,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "2611434c2a741c796cdea75f2e0b0119bdecb8b6",
+    "sha": "7f5f10ada3c1f8ff42aaf1802af7672893615144",
     "branch": "HEAD"
   },
   "kite": {
@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "b8c492a8675e48965b9f0c65cd697fda97221fc8",
+    "sha": "fc852d274faa2e7ec99c824024601e0c87978fbc",
     "branch": "1.2"
   },
   "perennial-alias": {
