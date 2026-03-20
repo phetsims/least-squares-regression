@@ -1,4 +1,4 @@
-// Copyright 2014-2024, University of Colorado Boulder
+// Copyright 2014-2026, University of Colorado Boulder
 
 /**
  * Contains all the model logic for the screen LeastSquaresRegressionScreen.

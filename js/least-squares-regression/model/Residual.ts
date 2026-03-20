@@ -1,4 +1,4 @@
-// Copyright 2014-2024, University of Colorado Boulder
+// Copyright 2014-2026, University of Colorado Boulder
 
 /**
  * Type that defines a residual and a square residual.
