@@ -11,7 +11,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import DragListener from '../../../../scenery/js/listeners/DragListener.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';
 import DynamicDataPointNode from './DynamicDataPointNode.js';
@@ -63,5 +62,3 @@ export default class DataPointCreatorNode extends Node {
     this.mutate( providedOptions );
   }
 }
-
-leastSquaresRegression.register( 'DataPointCreatorNode', DataPointCreatorNode );

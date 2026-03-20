@@ -13,7 +13,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Line from '../../../../scenery/js/nodes/Line.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
 import ResidualCanvasNode from './ResidualCanvasNode.js';
@@ -128,5 +127,3 @@ export default class GraphNode extends Node {
     }
   }
 }
-
-leastSquaresRegression.register( 'GraphNode', GraphNode );

@@ -18,7 +18,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
@@ -155,5 +154,3 @@ export default class CorrelationCoefficientAccordionBox extends AccordionBox {
     this.rightHandSideText.left = this.leftHandSideText.right + 5;
   }
 }
-
-leastSquaresRegression.register( 'CorrelationCoefficientAccordionBox', CorrelationCoefficientAccordionBox );

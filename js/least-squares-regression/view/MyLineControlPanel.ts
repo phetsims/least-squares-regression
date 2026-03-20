@@ -21,7 +21,6 @@ import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import VSlider, { VSliderOptions } from '../../../../sun/js/VSlider.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
@@ -345,5 +344,3 @@ export default class MyLineControlPanel extends Panel {
     this.sumOfSquaredResiduals.reset();
   }
 }
-
-leastSquaresRegression.register( 'MyLineControlPanel', MyLineControlPanel );

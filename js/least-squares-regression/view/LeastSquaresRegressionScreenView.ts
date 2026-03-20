@@ -19,7 +19,6 @@ import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.j
 import GridCheckbox from '../../../../scenery-phet/js/GridCheckbox.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 import LeastSquaresRegressionModel from '../model/LeastSquaresRegressionModel.js';
@@ -351,5 +350,3 @@ export default class LeastSquaresRegressionScreenView extends ScreenView {
     this.graphNode.step( );
   }
 }
-
-leastSquaresRegression.register( 'LeastSquaresRegressionScreenView', LeastSquaresRegressionScreenView );

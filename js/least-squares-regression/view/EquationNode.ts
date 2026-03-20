@@ -12,7 +12,6 @@ import MathSymbols from '../../../../scenery-phet/js/MathSymbols.js';
 import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 
@@ -207,5 +206,3 @@ export default class EquationNode extends Node {
     return roundedNumber;
   }
 }
-
-leastSquaresRegression.register( 'EquationNode', EquationNode );

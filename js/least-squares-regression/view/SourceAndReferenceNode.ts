@@ -12,7 +12,6 @@ import StringUtils from '../../../../phetcommon/js/util/StringUtils.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import RichText from '../../../../scenery/js/nodes/RichText.js';
 import Dialog from '../../../../sun/js/Dialog.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
@@ -55,5 +54,3 @@ export default class SourceAndReferenceNode extends Dialog {
     } );
   }
 }
-
-leastSquaresRegression.register( 'SourceAndReferenceNode', SourceAndReferenceNode );

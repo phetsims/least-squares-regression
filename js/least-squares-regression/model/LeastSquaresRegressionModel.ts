@@ -14,7 +14,6 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Bucket from '../../../../phetcommon/js/model/Bucket.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
 import DataSet from './DataSet.js';
 import Graph from './Graph.js';
@@ -244,5 +243,3 @@ export default class LeastSquaresRegressionModel {
     dataPoint.returnedToOriginEmitter.addListener( dataPoint.returnedToOriginListener );
   }
 }
-
-leastSquaresRegression.register( 'LeastSquaresRegressionModel', LeastSquaresRegressionModel );

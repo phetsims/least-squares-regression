@@ -8,7 +8,6 @@
 import Property from '../../../axon/js/Property.js';
 import Screen from '../../../joist/js/Screen.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import leastSquaresRegression from '../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from './LeastSquaresRegressionConstants.js';
 import LeastSquaresRegressionModel from './model/LeastSquaresRegressionModel.js';
 import LeastSquaresRegressionScreenView from './view/LeastSquaresRegressionScreenView.js';
@@ -24,5 +23,3 @@ export default class LeastSquaresRegressionScreen extends Screen<LeastSquaresReg
     );
   }
 }
-
-leastSquaresRegression.register( 'LeastSquaresRegressionScreen', LeastSquaresRegressionScreen );

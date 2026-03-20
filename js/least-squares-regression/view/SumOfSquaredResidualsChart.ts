@@ -16,7 +16,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import Color from '../../../../scenery/js/util/Color.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
@@ -113,5 +112,3 @@ export default class SumOfSquaredResidualsChart extends Node {
     this.updateWidth();
   }
 }
-
-leastSquaresRegression.register( 'SumOfSquaredResidualsChart', SumOfSquaredResidualsChart );

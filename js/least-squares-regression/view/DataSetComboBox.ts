@@ -10,7 +10,6 @@ import Property from '../../../../axon/js/Property.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
 import ComboBox, { ComboBoxItem } from '../../../../sun/js/ComboBox.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 
@@ -41,8 +40,6 @@ export default class DataSetComboBox extends ComboBox<DataSet> {
     } );
   }
 }
-
-leastSquaresRegression.register( 'DataSetComboBox', DataSetComboBox );
 
 /**
  * Creates an item for the combo box.

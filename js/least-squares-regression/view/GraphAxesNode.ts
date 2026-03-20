@@ -20,7 +20,6 @@ import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataSet from '../model/DataSet.js';
 
@@ -102,8 +101,6 @@ export default class GraphAxesNode extends Node {
     } );
   }
 }
-
-leastSquaresRegression.register( 'GraphAxesNode', GraphAxesNode );
 
 //----------------------------------------------------------------------------------------
 // major tick with label, orientation is vertical or horizontal

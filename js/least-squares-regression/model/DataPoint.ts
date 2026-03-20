@@ -14,7 +14,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Vector2Property from '../../../../dot/js/Vector2Property.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 
 export default class DataPoint extends Disposable {
 
@@ -91,5 +90,3 @@ export default class DataPoint extends Disposable {
     }
   }
 }
-
-leastSquaresRegression.register( 'DataPoint', DataPoint );

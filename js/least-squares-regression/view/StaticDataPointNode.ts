@@ -8,7 +8,6 @@
 
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Circle from '../../../../scenery/js/nodes/Circle.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import DataPoint from '../model/DataPoint.js';
 import DataPointNode from './DataPointNode.js';
@@ -27,5 +26,3 @@ export default class StaticDataPointNode extends DataPointNode {
     super( dataPoint, representation, modelViewTransform );
   }
 }
-
-leastSquaresRegression.register( 'StaticDataPointNode', StaticDataPointNode );

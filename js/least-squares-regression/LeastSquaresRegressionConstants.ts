@@ -7,7 +7,6 @@
  */
 
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import leastSquaresRegression from '../leastSquaresRegression.js';
 
 const LeastSquaresRegressionConstants = {
 
@@ -73,7 +72,5 @@ const LeastSquaresRegressionConstants = {
   ITEM_HIGHLIGHT_FILL: 'rgb( 236, 255, 245 )'
 
 };
-
-leastSquaresRegression.register( 'LeastSquaresRegressionConstants', LeastSquaresRegressionConstants );
 
 export default LeastSquaresRegressionConstants;

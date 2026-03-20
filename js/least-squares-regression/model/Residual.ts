@@ -8,7 +8,6 @@
  */
 
 import Vector2 from '../../../../dot/js/Vector2.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
 
 /**
@@ -49,5 +48,3 @@ export default class Residual {
     this.isSquaredResidualToTheLeft = ( slope * verticalDisplacement > 0 );
   }
 }
-
-leastSquaresRegression.register( 'Residual', Residual );

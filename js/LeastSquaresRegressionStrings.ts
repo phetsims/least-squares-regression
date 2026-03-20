@@ -120,6 +120,4 @@ type StringsType = {
 
 const LeastSquaresRegressionStrings = getStringModule( 'LEAST_SQUARES_REGRESSION' ) as StringsType;
 
-leastSquaresRegression.register( 'LeastSquaresRegressionStrings', LeastSquaresRegressionStrings );
-
 export default LeastSquaresRegressionStrings;

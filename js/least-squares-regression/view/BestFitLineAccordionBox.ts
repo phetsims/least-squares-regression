@@ -17,7 +17,6 @@ import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import Checkbox from '../../../../sun/js/Checkbox.js';
 import Panel from '../../../../sun/js/Panel.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import LeastSquaresRegressionStrings from '../../LeastSquaresRegressionStrings.js';
 import LeastSquaresRegressionConstants from '../LeastSquaresRegressionConstants.js';
 import Graph from '../model/Graph.js';
@@ -171,5 +170,3 @@ export default class BestFitLineAccordionBox extends AccordionBox {
     }
   }
 }
-
-leastSquaresRegression.register( 'BestFitLineAccordionBox', BestFitLineAccordionBox );

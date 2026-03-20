@@ -18,7 +18,6 @@ import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import affirm from '../../../../perennial-alias/js/browser-and-node/affirm.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
-import leastSquaresRegression from '../../leastSquaresRegression.js';
 import DataPoint from './DataPoint.js';
 
 /**
@@ -326,5 +325,3 @@ export default class Graph {
     }
   }
 }
-
-leastSquaresRegression.register( 'Graph', Graph );
