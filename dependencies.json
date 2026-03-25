@@ -29,7 +29,7 @@
     "branch": "HEAD"
   },
   "least-squares-regression": {
-    "sha": "369a58ea1d4e49cb39ea0e5fc27ea8fdabfe59bc",
+    "sha": "f1ca6ca5d374bf3332df3b3c8370588c540af816",
     "branch": "1.2"
   },
   "perennial-alias": {
@@ -65,7 +65,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "0d540c6206faeb787e2ca1518d013368daab5958",
+    "sha": "a75f1c9cf12cbc4b673a62a31e9bb43a6e5702a7",
     "branch": "HEAD"
   },
   "scenery-phet": {
